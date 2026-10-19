@@ -11,8 +11,8 @@ import { useSettings } from '@/queries/admin.queries'
 import { Field } from '../components/common'
 
 const LOGOS = [
-  { src: '/brand/unwomen.png', name: 'UN Women', dark: false },
-  { src: '/brand/ungc.png', name: 'UN Global Compact', dark: false },
+  { src: '/brand/unwomen.png', name: 'UN Women (white)', dark: true },
+  { src: '/brand/ungc.png', name: 'UN Global Compact', dark: true },
   { src: '/brand/weps-logo-white.png', name: 'WEPs lockup (white)', dark: true },
 ]
 const TOKENS = [

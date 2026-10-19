@@ -207,9 +207,7 @@ export function AboutPage() {
               eyebrow="Founding partners"
               title="Established by UN Women and the UN Global Compact"
             />
-            <div className="[&>div>div]:border [&>div>div]:shadow-card">
-              <PartnerLogos />
-            </div>
+            <PartnerLogos className="[&>div]:shadow-card" />
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="mb-4 font-bold font-heading text-2xl text-navy">
