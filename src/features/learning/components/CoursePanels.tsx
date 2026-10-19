@@ -13,7 +13,6 @@ import {
   XCircle,
 } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -264,7 +263,6 @@ export function OverviewBody({
         <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground text-xs">
           {course.language}
         </span>
-        <DemoLabel>Proposed course content</DemoLabel>
       </div>
       <p className="max-w-prose text-pretty leading-relaxed">{course.description}</p>
       {course.outcomes.length ? (

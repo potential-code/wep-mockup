@@ -32,7 +32,6 @@ import {
 } from 'lucide-react'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { DemoLabel } from '@/components/shared/Cards'
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -781,7 +780,6 @@ function Builder({
               <Stat icon={<BookOpen aria-hidden />} label="Units" value={units.length} />
               <Stat icon={<Blocks aria-hidden />} label="Blocks" value={blocks} />
             </dl>
-            <DemoLabel>Proposed learning content</DemoLabel>
           </section>
         </aside>
       </div>

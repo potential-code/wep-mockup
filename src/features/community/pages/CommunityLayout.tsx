@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from '@tanstack/react-router'
 import { Lock } from 'lucide-react'
 import { LayoutGroup, motion } from 'motion/react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel } from '@/components/shared/Cards'
 import { useCurrentUser } from '@/hooks/use-session'
 import { cn } from '@/lib/utils'
 
@@ -36,7 +35,6 @@ export function CommunityLayout() {
       {isSection ? (
         <>
           <PageHeader
-            eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
             title="Community"
             description="Group conversations, a signatory circle and a member marketplace."
           />

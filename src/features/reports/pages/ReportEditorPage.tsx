@@ -4,7 +4,6 @@ import { CheckCircle2, Info, Lock } from 'lucide-react'
 import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { celebrate } from '@/components/motion/Celebrate'
-import { DemoLabel } from '@/components/shared/Cards'
 import { AccessNotice, ErrorState, PageSkeleton } from '@/components/shared/States'
 import { useCurrentUser } from '@/hooks/use-session'
 import { formatDate } from '@/lib/format'
@@ -90,9 +89,7 @@ export function ReportEditorPage() {
         className="mb-0 sm:mb-0"
       />
 
-      <div>
-        <DemoLabel>Proposed feature</DemoLabel>
-      </div>
+      <div></div>
 
       <ReportStatusBar status={report.status} />
 

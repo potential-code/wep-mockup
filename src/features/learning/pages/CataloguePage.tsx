@@ -2,7 +2,6 @@ import { Link } from '@tanstack/react-router'
 import { BookOpen } from 'lucide-react'
 import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel } from '@/components/shared/Cards'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { CourseCard } from '@/features/learning/components/CourseCard'
@@ -24,12 +23,9 @@ export function CataloguePage() {
         title="Browse courses"
         description="Explore any topic in the WEPs learning library."
         actions={
-          <>
-            <DemoLabel>Proposed course content</DemoLabel>
-            <Button asChild variant="outline">
-              <Link to="/portal/learn">My learning path</Link>
-            </Button>
-          </>
+          <Button asChild variant="outline">
+            <Link to="/portal/learn">My learning path</Link>
+          </Button>
         }
       />
       <CourseFilters

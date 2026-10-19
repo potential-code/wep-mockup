@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { DemoLabel } from '@/components/shared/Cards'
 import type { Column } from '@/components/shared/DataTable'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
 import { formatCurrency, formatDate } from '@/lib/format'
@@ -113,7 +112,6 @@ export function CertificationReportPage() {
     <ReportingShell
       title="Certification and payments"
       description="Demo payments only. Refunds, failed and cancelled checkouts never add revenue."
-      actions={<DemoLabel>Demo payments</DemoLabel>}
     >
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d ? (

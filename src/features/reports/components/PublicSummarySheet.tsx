@@ -1,6 +1,5 @@
 import type { AnnualReport } from '@shared/types'
 import { Globe2 } from 'lucide-react'
-import { DemoLabel } from '@/components/shared/Cards'
 import {
   Sheet,
   SheetContent,
@@ -36,7 +35,6 @@ export function PublicSummarySheet({
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-5 px-4 pb-6">
-          <DemoLabel className="w-fit">Proposed feature</DemoLabel>
           <div>
             <p className="text-muted-foreground text-xs uppercase tracking-wide">
               {report.year} progress summary

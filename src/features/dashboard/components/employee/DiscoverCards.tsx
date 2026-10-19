@@ -1,7 +1,8 @@
 import type { Resource, Thread } from '@shared/types'
 import { Link } from '@tanstack/react-router'
-import { Award, BookMarked, Bot, MessagesSquare } from 'lucide-react'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { Award, BookMarked, MessagesSquare, Sparkles } from 'lucide-react'
+import { SectionCard } from '@/components/shared/Cards'
+import { ConciergeAvatar } from '@/components/shared/ConciergeAvatar'
 import { relativeTime } from '@/lib/format'
 
 export function RecommendedResources({ resources }: { resources: Resource[] }) {
@@ -81,7 +82,19 @@ const PROMPTS = [
 
 export function ConciergeChips() {
   return (
-    <SectionCard title="Ask the AI Concierge" action={<DemoLabel>Scripted demo</DemoLabel>}>
+    <SectionCard
+      title={
+        <span className="flex items-center gap-3">
+          <ConciergeAvatar size="md" online />
+          <span className="grid">
+            Ask the AI Concierge
+            <span className="flex items-center gap-1.5 font-normal font-sans text-muted-foreground text-xs">
+              <span className="size-1.5 rounded-full bg-success" aria-hidden /> Online
+            </span>
+          </span>
+        </span>
+      }
+    >
       <div className="flex flex-wrap gap-2">
         {PROMPTS.map((p) => (
           <Link
@@ -90,7 +103,7 @@ export function ConciergeChips() {
             search={{ prompt: p }}
             className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-navy text-sm transition-colors hover:border-blue hover:bg-blue-50"
           >
-            <Bot className="size-4 text-blue" aria-hidden />
+            <Sparkles className="size-4 text-gold-700" aria-hidden />
             {p}
           </Link>
         ))}
@@ -106,7 +119,7 @@ export function CredentialSummary({
 }) {
   if (items.length === 0) return null
   return (
-    <SectionCard title="Company credentials" action={<DemoLabel>Proposed certification</DemoLabel>}>
+    <SectionCard title="Company credentials">
       <ul className="grid gap-2">
         {items.map((c) => (
           <li key={c.purchase.id} className="flex items-center gap-3 text-sm">

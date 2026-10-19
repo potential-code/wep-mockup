@@ -2,7 +2,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { getRouteApi, Link, useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Loader2, LogIn, Mail, MailOpen, Play, Sparkles } from 'lucide-react'
 import { useState } from 'react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -164,7 +163,6 @@ export function SignInPage() {
             >
               <Sparkles className="size-4 text-gold-700" aria-hidden /> Explore the demo
             </h2>
-            <DemoLabel>Demo only</DemoLabel>
           </div>
           <p className="text-muted-foreground text-sm">
             Skip the form and open the mockup as one of these sample roles. No real accounts or

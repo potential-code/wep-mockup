@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { FileCheck2, FileQuestion } from 'lucide-react'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import type { CompanyDashboardData } from '@/queries/company.queries'
@@ -9,11 +9,7 @@ import type { CompanyDashboardData } from '@/queries/company.queries'
 export function IndicatorList({ data }: { data: CompanyDashboardData }) {
   return (
     <SectionCard
-      title={
-        <span className="flex flex-wrap items-center gap-2">
-          Company-reported indicators <DemoLabel />
-        </span>
-      }
+      title={<span className="flex flex-wrap items-center gap-2">Company-reported indicators</span>}
       description={`Self-reported, ${data.indicatorsYear} · not verified`}
       action={
         <Link to="/portal/reports" className="text-blue text-sm hover:underline">

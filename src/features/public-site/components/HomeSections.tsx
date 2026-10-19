@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
-import { DemoLabel } from '@/components/shared/Cards'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { CardGridSkeleton, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
@@ -320,7 +319,6 @@ export function ClinicsAndExperts() {
           <div>
             <p className="flex items-center gap-2 font-heading font-semibold text-lg">
               <GraduationCap className="size-5 text-gold" aria-hidden /> Expert support
-              <DemoLabel className="ms-1">Proposed feature</DemoLabel>
             </p>
             <p className="mt-1 max-w-2xl text-white/75">
               Mentors and trainers offer one-to-one sessions and group clinics. Members redeem
@@ -374,7 +372,6 @@ export function CommunitySection() {
               <h3 className="font-heading font-semibold text-lg text-navy">
                 Approved products and services
               </h3>
-              <DemoLabel>Proposed feature</DemoLabel>
             </motion.div>
             {isLoading ? (
               <CardGridSkeleton count={2} className="lg:grid-cols-2" />

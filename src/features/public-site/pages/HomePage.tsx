@@ -2,7 +2,6 @@ import { useLocation } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { scrollToTarget } from '@/components/motion/SmoothScroll'
 import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
-import { DemoLabel } from '@/components/shared/Cards'
 import { ExperiencePreview } from '../components/ExperiencePreview'
 import { HomeHero } from '../components/HomeHero'
 import {
@@ -97,11 +96,7 @@ export function HomePage() {
           <SectionHeading
             eyebrow="Inside the portal"
             title="See what your team will work with"
-            description={
-              <>
-                A preview of the proposed experience. <DemoLabel className="align-middle" />
-              </>
-            }
+            description={<>A preview of the proposed experience.</>}
           />
           <ExperiencePreview />
         </div>

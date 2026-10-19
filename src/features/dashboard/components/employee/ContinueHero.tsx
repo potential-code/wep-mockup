@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, Clock, Sparkles } from 'lucide-react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import type { useMyLearning } from '@/queries/learning.queries'
@@ -46,9 +45,6 @@ export function ContinueHero({ current, firstName }: { current?: Current; firstN
         <div className="grid gap-3">
           <p className="flex items-center gap-2 font-medium text-gold text-sm">
             Continue your learning
-            <DemoLabel className="border-white/30 bg-white/10 text-white">
-              Proposed course content
-            </DemoLabel>
           </p>
           <h2 id="continue-heading" className="font-heading font-bold text-2xl sm:text-3xl">
             {course.title}

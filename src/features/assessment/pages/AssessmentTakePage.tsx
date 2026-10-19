@@ -1,11 +1,20 @@
 import type { AssessmentSection } from '@shared/types'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, CloudCheck, Loader2 } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  CloudCheck,
+  FlaskConical,
+  Loader2,
+} from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { celebrate } from '@/components/motion/Celebrate'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { EmptyState, ErrorState, PageSkeleton } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { AnimatedBar } from '@/features/company/components/AnimatedBar'
@@ -14,6 +23,7 @@ import { cn } from '@/lib/utils'
 import {
   useAddAssessmentEvidence,
   useAssessment,
+  useFillSampleAssessment,
   useSaveAnswers,
   useSubmitAssessment,
 } from '@/queries/assessment.queries'
@@ -64,6 +74,7 @@ function Wizard({
   const save = useSaveAnswers()
   const addEvidence = useAddAssessmentEvidence()
   const submit = useSubmitAssessment()
+  const fill = useFillSampleAssessment()
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const dirty = useRef(false)
 
@@ -103,13 +114,30 @@ function Wizard({
     <div>
       <PageHeader
         breadcrumbs={[{ label: 'Assessment', to: '/portal/assessment' }, { label: 'Complete' }]}
-        title={
-          <span className="flex flex-wrap items-center gap-3">
-            Demo Company Assessment <DemoLabel>Illustrative demo</DemoLabel>
-          </span>
-        }
+        title={<span className="flex flex-wrap items-center gap-3">Demo Company Assessment</span>}
         description="Answer what you can. Your progress saves automatically and you can return at any time."
-        actions={<SaveIndicator state={saved} />}
+        actions={
+          <>
+            <SaveIndicator state={saved} />
+            <Button
+              variant="outline"
+              disabled={missing === 0 || fill.isPending}
+              onClick={() =>
+                fill.mutate(undefined, {
+                  onSuccess: (a) => {
+                    setAnswers(a.answers)
+                    setSaved('saved')
+                    toast.success('Sample answers added. Review them, then submit.')
+                    go(sections.length)
+                  },
+                })
+              }
+            >
+              <FlaskConical aria-hidden />
+              {fill.isPending ? 'Filling…' : 'Fill with sample answers'}
+            </Button>
+          </>
+        }
       />
       <div className="mb-6 grid gap-2" aria-live="polite">
         <div className="flex justify-between text-sm">

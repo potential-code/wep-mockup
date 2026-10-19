@@ -2,7 +2,7 @@ import { Link, useParams } from '@tanstack/react-router'
 import { CalendarPlus, Clock, Coins, Globe2, MapPin, ShieldCheck, Star } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Reveal } from '@/components/motion/Reveal'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -98,7 +98,6 @@ export function MentorProfilePage() {
         title={m.name}
         description={p.headline}
         breadcrumbs={[{ label: 'Mentorship', to: '/portal/mentorship' }, { label: m.name }]}
-        eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
       />
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_24rem]">
         <div className="grid min-w-0 gap-6">

@@ -2,7 +2,7 @@ import type { AnnualReport, ReportSectionKey } from '@shared/types'
 import { Flag, Info, Wand2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -91,7 +91,6 @@ export function SectionEditor({ report, sectionKey, prefill, readOnly, previous,
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <Wand2 className="size-4 text-blue" aria-hidden />
                   <p className="font-semibold text-navy text-sm">Prefill from portal records</p>
-                  <DemoLabel>Illustrative demo data</DemoLabel>
                 </div>
                 <p className="text-navy text-sm">{prefill}</p>
                 {readOnly ? null : (

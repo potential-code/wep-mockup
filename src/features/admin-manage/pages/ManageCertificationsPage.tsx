@@ -2,7 +2,7 @@ import { Award, CreditCard, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { type Column, columnsToCsvRows, DataTable } from '@/components/shared/DataTable'
 import { StatCard } from '@/components/shared/StatCard'
 import { ErrorState } from '@/components/shared/States'
@@ -105,7 +105,6 @@ export function ManageCertificationsPage() {
       <PageHeader
         title="Certifications and Payments"
         description="Proposed prices and pass rules for discussion. Certificates are issued only after a confirmed demo payment and a passed exam."
-        actions={<DemoLabel>Proposed certifications · Demo payments</DemoLabel>}
       />
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard label="Demo revenue" value={formatCurrency(revenue)} icon={CreditCard} />

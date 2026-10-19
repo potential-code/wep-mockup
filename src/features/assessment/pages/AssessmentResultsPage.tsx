@@ -19,7 +19,7 @@ export function AssessmentResultsPage() {
   if (isError || !data)
     return <ErrorState message="Results couldn’t load." onRetry={() => refetch()} />
   const a = data.assessment
-  if (!a || a.status !== 'submitted')
+  if (a?.status !== 'submitted')
     return (
       <EmptyState
         title="No results yet"

@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { useMemo } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -40,15 +40,12 @@ export function PointsPage() {
         title="Points and rewards"
         description="Earn points by learning, then use them for rewards such as mentoring."
         actions={
-          <>
-            <DemoLabel>Proposed feature</DemoLabel>
-            <Button asChild>
-              <Link to="/portal/learn">
-                Earn more points
-                <ArrowRight aria-hidden />
-              </Link>
-            </Button>
-          </>
+          <Button asChild>
+            <Link to="/portal/learn">
+              Earn more points
+              <ArrowRight aria-hidden />
+            </Link>
+          </Button>
         }
       />
       <BalanceSummary balance={balance} />

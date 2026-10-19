@@ -5,7 +5,7 @@ import { Ban, Check, Copy, MailPlus, RotateCcw, Search, Send, Sparkles, UserX } 
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, FilterBar } from '@/components/shared/Cards'
+import { FilterBar } from '@/components/shared/Cards'
 import { type Column, DataTable } from '@/components/shared/DataTable'
 import { ErrorState } from '@/components/shared/States'
 import { StatusBadge, WorkflowStatus } from '@/components/shared/StatusBadge'
@@ -537,7 +537,7 @@ function InviteMentorDialog({
         </DialogHeader>
         {created ? (
           <div className="grid gap-3">
-            <DemoLabel>Simulated — no email sent</DemoLabel>
+            <p className="text-muted-foreground text-xs">Simulated — no email sent</p>
             <div className="flex items-center gap-2 rounded-lg border bg-surface p-3">
               <code className="min-w-0 flex-1 break-all text-xs">{`/invite/${created.token}`}</code>
               <Button

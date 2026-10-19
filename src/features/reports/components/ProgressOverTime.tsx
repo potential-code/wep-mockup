@@ -1,7 +1,7 @@
 import type { AnnualReport } from '@shared/types'
 import { useMemo, useState } from 'react'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import {
   type ChartConfig,
@@ -47,11 +47,7 @@ export function ProgressOverTime({ reports }: { reports: AnnualReport[] }) {
   if (!options.length) return null
 
   return (
-    <SectionCard
-      title="Progress over time"
-      description="Company-reported; no causal claim."
-      action={<DemoLabel>Illustrative demo data</DemoLabel>}
-    >
+    <SectionCard title="Progress over time" description="Company-reported; no causal claim.">
       <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
         <div className="max-w-full overflow-x-auto pb-1">
           <ToggleGroup

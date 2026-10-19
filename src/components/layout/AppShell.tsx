@@ -55,7 +55,7 @@ export function AppShell() {
             <Outlet />
           </Guard>
         </main>
-        <footer className="mx-auto w-full max-w-[1400px] px-4 pb-6 text-muted-foreground text-xs sm:px-6 lg:px-8">
+        <footer className="mx-auto w-full max-w-[1400px] px-4 pb-24 text-muted-foreground text-xs sm:px-6 lg:px-8">
           WEPs portal mockup · {company?.name ?? ROLE_SHORT[user.role]} · Proposed features and
           illustrative demo data.
         </footer>
@@ -143,12 +143,14 @@ function AppSidebar() {
         >
           <WepsLogo className="h-auto w-full max-w-[200px]" />
         </Link>
-        <p className="mt-2 font-medium text-[11px] text-white/50 uppercase tracking-[0.14em]">
+        <p className="mt-2 truncate font-medium text-[11px] text-white/50 uppercase tracking-[0.14em]">
           {user.role === 'global_admin'
             ? 'UN Women workspace'
             : user.role === 'mentor'
               ? 'Expert workspace'
-              : 'Company portal'}
+              : !isActiveCompanyMember(user, company)
+                ? 'Applicant portal'
+                : `${ROLE_SHORT[user.role]} workspace`}
         </p>
       </SidebarHeader>
       <SidebarContent className="relative gap-0 px-1 [scrollbar-color:rgb(255_255_255/0.2)_transparent]">

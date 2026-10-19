@@ -23,7 +23,6 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { celebrate } from '@/components/motion/Celebrate'
-import { DemoLabel } from '@/components/shared/Cards'
 import type { UploadResult } from '@/components/shared/FileDrop'
 import { Button } from '@/components/ui/button'
 import { images } from '@/config/images'
@@ -370,7 +369,6 @@ export function JoinPage() {
                   onClick={fillSample}
                 >
                   <FlaskConical aria-hidden /> Fill with sample company
-                  <DemoLabel className="ms-1">Demo</DemoLabel>
                 </Button>
               </div>
               <div ref={bodyRef} className="p-4 sm:p-8 [&>*>*]:grid-cols-[minmax(0,1fr)]">
@@ -569,7 +567,6 @@ function Intro({
             onClick={onSample}
           >
             <FlaskConical aria-hidden /> Fill with sample company
-            <DemoLabel className="ms-1">Demo</DemoLabel>
           </Button>
         </div>
       </motion.div>

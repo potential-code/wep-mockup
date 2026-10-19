@@ -4,7 +4,7 @@ import { Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import {
@@ -95,7 +95,6 @@ export function AiSettingsPage() {
       <PageHeader
         title="AI Knowledge and Settings"
         description="Control what the assistant may draw on and review how it is used."
-        actions={<DemoLabel>Responses are scripted in this demo</DemoLabel>}
       />
       <Tabs defaultValue="sources">
         <TabsList className="h-auto flex-wrap">
@@ -210,7 +209,6 @@ export function AiSettingsPage() {
             title="User feedback"
             description="Illustrative feedback on assistant answers."
           >
-            <DemoLabel className="mb-3">Illustrative demo data</DemoLabel>
             <ul className="grid gap-2">
               {FEEDBACK.map((f) => (
                 <li key={f.id} className="flex items-start gap-3 rounded-xl border p-3 text-sm">

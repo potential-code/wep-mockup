@@ -1,6 +1,5 @@
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react'
 import { useState } from 'react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -79,7 +78,9 @@ export function JoinSessionDialog({
             <Button onClick={() => setJoined(true)}>Join session</Button>
           )}
         </div>
-        <DemoLabel className="justify-self-start">Demo only: no real meeting is started</DemoLabel>
+        <p className="text-muted-foreground text-xs justify-self-start">
+          Demo only: no real meeting is started
+        </p>
       </DialogContent>
     </Dialog>
   )

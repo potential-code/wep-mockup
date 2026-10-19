@@ -1,7 +1,7 @@
 import type { AnnualReport } from '@shared/types'
 import { Eye, Lock } from 'lucide-react'
 import { toast } from 'sonner'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -21,11 +21,7 @@ export function PublicDisclosureCard({
   const toggle = useTogglePublicSummary()
   const accepted = report.status === 'accepted'
   return (
-    <SectionCard
-      title="Public disclosure"
-      description="Publishing is a separate approval."
-      action={<DemoLabel>Proposed feature</DemoLabel>}
-    >
+    <SectionCard title="Public disclosure" description="Publishing is a separate approval.">
       <div className="grid gap-4">
         {accepted ? <p className="text-muted-foreground text-sm">{ACCEPTED_NOTE}</p> : null}
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface p-4">

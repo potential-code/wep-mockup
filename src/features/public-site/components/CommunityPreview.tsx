@@ -8,7 +8,6 @@ import {
   UserSearch,
 } from 'lucide-react'
 import { motion } from 'motion/react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { CompanyLogo } from '@/components/shared/UserAvatar'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
 
@@ -56,7 +55,6 @@ export function DiscussionSnippets() {
         className="flex flex-wrap items-center gap-2"
       >
         <h3 className="font-heading font-semibold text-lg text-navy">Moderated discussions</h3>
-        <DemoLabel>Illustrative snippets</DemoLabel>
       </motion.div>
       <ol className="relative grid gap-4">
         <motion.span

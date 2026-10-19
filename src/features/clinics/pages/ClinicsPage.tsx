@@ -2,7 +2,7 @@ import { PRINCIPLES } from '@shared/reference'
 import { CalendarDays, ChevronDown, List, SearchX, SlidersHorizontal } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, FilterBar } from '@/components/shared/Cards'
+import { FilterBar } from '@/components/shared/Cards'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
@@ -65,23 +65,20 @@ export function ClinicsPage() {
         title="Clinics and webinars"
         description={`Live expert-led sessions. Times shown in ${timeZoneLabel()}.`}
         actions={
-          <>
-            <DemoLabel>Proposed feature</DemoLabel>
-            <ToggleGroup
-              type="single"
-              value={view}
-              onValueChange={(v) => v && setView(v as View)}
-              variant="outline"
-              aria-label="View"
-            >
-              <ToggleGroupItem value="list" aria-label="List view">
-                <List aria-hidden /> List
-              </ToggleGroupItem>
-              <ToggleGroupItem value="calendar" aria-label="Calendar view">
-                <CalendarDays aria-hidden /> Calendar
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </>
+          <ToggleGroup
+            type="single"
+            value={view}
+            onValueChange={(v) => v && setView(v as View)}
+            variant="outline"
+            aria-label="View"
+          >
+            <ToggleGroupItem value="list" aria-label="List view">
+              <List aria-hidden /> List
+            </ToggleGroupItem>
+            <ToggleGroupItem value="calendar" aria-label="Calendar view">
+              <CalendarDays aria-hidden /> Calendar
+            </ToggleGroupItem>
+          </ToggleGroup>
         }
       />
       <FilterBar count={filtered.length}>

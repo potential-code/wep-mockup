@@ -1,5 +1,6 @@
-import { Bot, Loader2, SendHorizonal } from 'lucide-react'
+import { SendHorizonal } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { ConciergeAvatar } from '@/components/shared/ConciergeAvatar'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
@@ -44,15 +45,20 @@ export function ChatThread({
             />
           ))}
           {pending ? (
-            <div className="flex items-center gap-3 text-muted-foreground text-sm" role="status">
-              <span
-                className="grid size-8 place-items-center rounded-full bg-navy text-white"
-                aria-hidden
-              >
-                <Bot className="size-4" />
-              </span>
-              <Loader2 className="size-4 animate-spin" aria-hidden /> Looking through approved
-              sources…
+            <div className="flex items-end gap-3" role="status">
+              <ConciergeAvatar size="sm" thinking />
+              <div className="flex items-center gap-2 rounded-2xl rounded-bl-md border bg-card px-4 py-3 text-muted-foreground text-sm shadow-card">
+                <span className="flex gap-1" aria-hidden>
+                  {[0, 1, 2].map((i) => (
+                    <span
+                      key={i}
+                      className="size-1.5 animate-bounce rounded-full bg-blue"
+                      style={{ animationDelay: `${i * 150}ms` }}
+                    />
+                  ))}
+                </span>
+                Looking through approved sources…
+              </div>
             </div>
           ) : null}
           <div ref={end} />
@@ -137,5 +143,33 @@ export function SuggestedPrompts({
         </li>
       ))}
     </ul>
+  )
+}
+
+/** Greeting shown before the first message, with the concierge avatar and suggestions. */
+export function ConciergeWelcome({
+  name,
+  compact = false,
+  children,
+}: {
+  name?: string
+  compact?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div className={cn('grid gap-4', compact ? 'p-4' : 'p-5 sm:p-8')}>
+      <div className="flex items-center gap-3">
+        <ConciergeAvatar size={compact ? 'lg' : 'xl'} />
+        <div className="rounded-2xl rounded-tl-md bg-[linear-gradient(120deg,var(--blue-50),#fff)] px-4 py-3 ring-1 ring-blue/15">
+          <p className={cn('font-heading font-semibold text-navy', !compact && 'text-lg')}>
+            Hi{name ? ` ${name}` : ''}, how can I help today?
+          </p>
+          <p className="text-muted-foreground text-sm">
+            Pick a suggestion or type your own question.
+          </p>
+        </div>
+      </div>
+      {children}
+    </div>
   )
 }

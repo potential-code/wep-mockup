@@ -71,14 +71,15 @@ courses, clinics, people, logos, marketplace, resources). Never draw or invent o
 **Content**: realistic, specific, professional English. Never lorem ipsum or “Test”. Official
 WEPs content (7 principles, 6 journey stages, Join field groups, official resource titles) comes
 from `@shared/reference` and must stay accurate. Portal layouts, gamification, marketplace, AI and
-the three paid certifications are PROPOSED — label them with `<DemoLabel>` (“Proposed feature”
-/ “Illustrative demo data”) where the brief asks. Payments say “Demo payment”. AI says scripted.
+the three paid certifications are PROPOSED. One footer line on every page (portal and public)
+says “Proposed features and illustrative demo data”, so pages carry no per-card demo badges.
+Payments say “Demo payment”; simulated emails and meetings say so in plain text.
 
 ## Building blocks (use these, don’t re-invent)
 
 - `PageHeader` (`@/components/layout/PageHeader`): title, description, `actions`, `breadcrumbs`
   (`[{label,to}]`, only 2+ levels deep), `eyebrow`.
-- `SectionCard`, `DemoLabel`, `FilterBar` (`@/components/shared/Cards`).
+- `SectionCard`, `FilterBar` (`@/components/shared/Cards`).
 - `StatCard` (`@/components/shared/StatCard`): KPI with count-up, `to` makes it open records.
 - `StatusBadge` / `WorkflowStatus status="…"` (`@/components/shared/StatusBadge`) — covers every
   workflow status in the app.

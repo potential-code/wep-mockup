@@ -41,7 +41,10 @@ const DEMO_NOW = new Date('2026-10-19T09:00:00.000Z').getTime()
 
 export function relativeTime(iso?: string) {
   if (!iso) return '—'
-  const diff = new Date(iso).getTime() - DEMO_NOW
+  // The demo clock starts at DEMO_NOW on page load and then runs in real time (see services/api).
+  // Records saved in an earlier visit can sit slightly ahead of it, so treat those as just now.
+  const diff = new Date(iso).getTime() - (DEMO_NOW + performance.now())
+  if (diff > 0 && diff < 864e5) return 'just now'
   const abs = Math.abs(diff)
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' })
   if (abs < 36e5) return rtf.format(Math.round(diff / 6e4), 'minute')

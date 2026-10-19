@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { BookOpen } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel } from '@/components/shared/Cards'
 import { CardGridSkeleton, ErrorState, StatsSkeleton } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { CourseCard } from '@/features/learning/components/CourseCard'
@@ -27,14 +26,11 @@ export function LearnPage() {
             : 'Your personalised pathway'
         }
         actions={
-          <>
-            <DemoLabel>Proposed course content</DemoLabel>
-            <Button asChild variant="outline">
-              <Link to="/portal/learn/catalogue">
-                <BookOpen aria-hidden /> Browse courses
-              </Link>
-            </Button>
-          </>
+          <Button asChild variant="outline">
+            <Link to="/portal/learn/catalogue">
+              <BookOpen aria-hidden /> Browse courses
+            </Link>
+          </Button>
         }
       />
       {q.isLoading ? (

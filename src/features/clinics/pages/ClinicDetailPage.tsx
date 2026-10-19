@@ -13,7 +13,7 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
@@ -276,7 +276,6 @@ export function ClinicDetailPage() {
               <li>+10 points for submitting feedback</li>
               <li className="text-muted-foreground">Registration is free and spends no points.</li>
             </ul>
-            <DemoLabel className="mt-3">Proposed rules</DemoLabel>
           </SectionCard>
         </aside>
       </div>

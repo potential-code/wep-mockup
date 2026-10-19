@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Stagger, StaggerItem } from '@/components/motion/Reveal'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
@@ -59,7 +59,6 @@ export function AssessmentPage() {
             title={
               <span className="flex flex-wrap items-center gap-2">
                 {assessment?.name ?? 'Demo Company Assessment'}{' '}
-                <DemoLabel>Illustrative demo</DemoLabel>
               </span>
             }
           >

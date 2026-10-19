@@ -4,7 +4,7 @@ import { Save } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { type Column, DataTable } from '@/components/shared/DataTable'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -156,7 +156,6 @@ export function GamificationPage() {
       <PageHeader
         title="Gamification"
         description="Points rules, thresholds and adjustment records."
-        actions={<DemoLabel>Proposed rules</DemoLabel>}
       />
       <Tabs defaultValue="thresholds">
         <TabsList>

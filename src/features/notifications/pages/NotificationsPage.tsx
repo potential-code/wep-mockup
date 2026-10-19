@@ -18,7 +18,7 @@ import {
 import { type ComponentType, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, FilterBar, SectionCard } from '@/components/shared/Cards'
+import { FilterBar, SectionCard } from '@/components/shared/Cards'
 import { EmptyState, ErrorState } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
@@ -250,7 +250,9 @@ function EmailDrawer({ n, onClose }: { n: Notification | null; onClose: () => vo
               <SheetDescription>The email that goes with this notification.</SheetDescription>
             </SheetHeader>
             <div className="grid gap-3 px-4 pb-6">
-              <DemoLabel className="justify-self-start">Simulated — no email sent</DemoLabel>
+              <p className="text-muted-foreground text-xs justify-self-start">
+                Simulated — no email sent
+              </p>
               <div className="overflow-hidden rounded-xl border bg-card">
                 <div className="grid gap-0.5 border-b bg-surface p-3 text-sm">
                   <p>

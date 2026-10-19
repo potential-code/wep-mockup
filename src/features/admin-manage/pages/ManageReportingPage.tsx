@@ -2,7 +2,7 @@ import { CalendarClock, Check, CircleX, CopyCheck, FilePlus2 } from 'lucide-reac
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { StatCard } from '@/components/shared/StatCard'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
@@ -149,7 +149,6 @@ export function ManageReportingPage() {
             title="Report template sections"
             description="Sections companies complete. Required sections block submission until finished."
           >
-            <DemoLabel className="mb-3">Demo configuration</DemoLabel>
             <ul className="grid gap-2">
               {REPORT_TEMPLATE_SECTIONS.map((s, i) => (
                 <li key={s.key}>

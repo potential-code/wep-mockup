@@ -2,28 +2,28 @@ import type { AiScript } from '@shared/types'
 
 export const aiScripts: AiScript[] = [
   {
-    id: 'ai-learn-next-procurement',
+    id: 'ai-learn-next-hr',
     roles: ['employee'],
-    prompt: 'What should I learn next in Procurement?',
+    prompt: 'What should I learn next in HR?',
     answer: [
-      'Your Procurement learning path has three courses: Gender-responsive Procurement (the designated course), Supplier Engagement and Action Planning. Gender-responsive Procurement comes first because completing it and passing its quiz is what unlocks the Procurement Clinic.',
-      'If you have already finished the designated course, Supplier Engagement is the natural next step. It covers how to collect ownership data from suppliers in a proportionate way and how to support women-owned businesses through onboarding.',
-      'The Gender-responsive Procurement Toolbox from WEPs / UN Women is a useful companion reading for both courses.',
+      'Your Human Resources pathway has three courses: Inclusive Recruitment in Practice (the designated course), Fair Progression and Equal Pay, and Health, Wellbeing and Safety at Work. Inclusive Recruitment comes first because completing it is what unlocks the Inclusive Recruitment Clinic.',
+      'You are one lesson from finishing it. After that, Fair Progression and Equal Pay is the natural next step: you have already started it, and it shows how to review promotion decisions and run a first pay equity check.',
+      'The Structured Interview Guide and the Pay Equity Review Workbook are useful companions for both courses.',
     ],
     sources: [
       {
-        label: 'Gender-responsive Procurement course',
-        to: '/portal/learn/crs-gender-responsive-procurement',
+        label: 'Inclusive Recruitment in Practice',
+        to: '/portal/learn/crs-inclusive-recruitment',
       },
-      { label: 'Supplier Engagement course', to: '/portal/learn/crs-supplier-engagement' },
+      { label: 'Fair Progression and Equal Pay', to: '/portal/learn/crs-fair-progression-pay' },
       {
-        label: 'Gender-responsive Procurement Toolbox',
-        to: '/portal/resources/res-procurement-toolbox',
+        label: 'Structured Interview Guide',
+        to: '/portal/resources/res-structured-interview-guide',
       },
     ],
     actions: [
-      { label: 'Open course', to: '/portal/learn/crs-gender-responsive-procurement' },
-      { label: 'View Procurement Clinic', to: '/portal/clinics/evt-procurement-clinic' },
+      { label: 'Continue course', to: '/portal/learn/crs-inclusive-recruitment' },
+      { label: 'Browse courses', to: '/portal/learn/catalogue' },
     ],
   },
   {
@@ -57,8 +57,8 @@ export const aiScripts: AiScript[] = [
     prompt: 'How many points do I need for mentoring?',
     answer: [
       'A 30-minute mentoring session costs 500 redeemable points. Points are deducted once, when the booking is confirmed, and refunded if the mentor cancels or you cancel more than 24 hours before the session.',
-      'You currently have 620 redeemable points, so you can book one session now and would have 120 points left afterwards.',
-      'Mentors in the directory include procurement specialists such as Dr Sofia Bennett and James Liu, who can help you work through supplier baselines and targets.',
+      'You currently have 620 redeemable points, so you can book a session now. Your lifetime total and clinic progress stay the same when you spend.',
+      'Mentors in the directory cover hiring, pay equity, procurement and reporting. Dr Sofia Bennett is a good first choice for inclusive recruitment questions.',
     ],
     sources: [
       { label: 'Your points', to: '/portal/points' },

@@ -17,7 +17,7 @@ import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Reveal } from '@/components/motion/Reveal'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -129,11 +129,7 @@ export function ResourcesPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Resources"
-        description="Official WEPs guidance, toolkits and templates."
-        actions={<DemoLabel>Portal materials are illustrative</DemoLabel>}
-      />
+      <PageHeader title="Resources" description="Official WEPs guidance, toolkits and templates." />
 
       <div className="relative mb-4">
         <Search

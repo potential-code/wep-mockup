@@ -3,7 +3,7 @@ import { CalendarCheck, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Stagger, StaggerItem } from '@/components/motion/Reveal'
-import { DemoLabel, FilterBar } from '@/components/shared/Cards'
+import { FilterBar } from '@/components/shared/Cards'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -61,7 +61,6 @@ export function MentorshipPage() {
       <PageHeader
         title="Mentorship"
         description="Book a 30-minute session with a WEPs expert using your points."
-        eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
         actions={
           <Button asChild variant="outline">
             <Link to="/portal/mentorship/bookings">

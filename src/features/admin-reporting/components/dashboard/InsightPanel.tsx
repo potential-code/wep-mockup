@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, Lightbulb, Sparkles } from 'lucide-react'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 
 /** Evidence-based observations with follow-up links and a hand-off to the AI concierge. */
@@ -12,11 +12,7 @@ export function InsightPanel({
   search: Record<string, unknown>
 }) {
   return (
-    <SectionCard
-      title="Insights"
-      description="Each links to its evidence."
-      action={<DemoLabel>Scripted AI demo</DemoLabel>}
-    >
+    <SectionCard title="Insights" description="Each links to its evidence.">
       <ul className="grid gap-3">
         {insights.slice(0, 3).map((i) => (
           <li key={i.text} className="flex gap-3 text-sm">

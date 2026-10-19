@@ -2,7 +2,6 @@ import type { CertificationOffering, CertificationPurchase, PurchaseStatus } fro
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check, CircleDot, ListChecks } from 'lucide-react'
 import { motion } from 'motion/react'
-import { DemoLabel } from '@/components/shared/Cards'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/format'
@@ -22,7 +21,6 @@ export function ProposedNotice() {
       className="flex flex-wrap items-center gap-2 text-sm"
       aria-label="Proposed feature notice"
     >
-      <DemoLabel>Proposed feature</DemoLabel>
       <p className="text-muted-foreground">Illustrative certifications. Payments are simulated.</p>
     </aside>
   )

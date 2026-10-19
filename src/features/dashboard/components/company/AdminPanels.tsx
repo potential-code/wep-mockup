@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { Bot, FileText, MessagesSquare, UserRound } from 'lucide-react'
+import { FileText, MessagesSquare, UserRound } from 'lucide-react'
 import { SectionCard } from '@/components/shared/Cards'
+import { ConciergeAvatar } from '@/components/shared/ConciergeAvatar'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { StatusBadge, WorkflowStatus } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
@@ -141,7 +142,7 @@ export function SupportPanel({ data }: { data: CompanyDashboardData }) {
             to="/portal/concierge"
             className="flex min-w-0 items-center gap-2.5 rounded-xl border border-blue/30 bg-blue-50 p-3 hover:border-blue"
           >
-            <Bot className="size-4 shrink-0 text-blue" aria-hidden />
+            <ConciergeAvatar size="sm" online />
             <span>
               AI reporting assistance <span className="text-muted-foreground">· scripted demo</span>
             </span>

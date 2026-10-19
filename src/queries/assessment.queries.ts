@@ -6,6 +6,7 @@ import { qk } from './keys'
 export const useAssessment = () =>
   useQuery({ queryKey: qk('assessment'), queryFn: svc.getAssessment })
 export const useSaveAnswers = () => useMutation({ mutationFn: svc.saveAnswers })
+export const useFillSampleAssessment = () => useMutation({ mutationFn: svc.fillSampleAssessment })
 export const useAddAssessmentEvidence = () =>
   useMutation({
     mutationFn: (v: { questionId: string; fileName: string }) =>

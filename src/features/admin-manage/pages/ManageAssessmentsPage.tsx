@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, Plus, Save } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { StatCard } from '@/components/shared/StatCard'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -104,7 +104,6 @@ export function ManageAssessmentsPage() {
       <PageHeader
         title="Assessments"
         description="Configure the demo self-assessment: question groups, evidence fields and assignment. Not the official WEPs Gender Gap Analysis Tool."
-        actions={<DemoLabel>Demo configuration</DemoLabel>}
       />
       <div className="mb-6 grid gap-4 sm:grid-cols-2">
         <StatCard label="Active questions" value={active} hint={`of ${total}`} />

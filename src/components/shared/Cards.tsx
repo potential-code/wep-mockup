@@ -61,26 +61,6 @@ export function CardHeaderBand({
   )
 }
 
-/** "Proposed / illustrative" label required by the brief for non-official features and data. */
-export function DemoLabel({
-  children = 'Illustrative demo data',
-  className,
-}: {
-  children?: ReactNode
-  className?: string
-}) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center gap-1 rounded-full border border-gold/40 bg-gold-50 px-2 py-0.5 font-medium text-[11px] text-gold-700 uppercase tracking-wide',
-        className,
-      )}
-    >
-      {children}
-    </span>
-  )
-}
-
 export function FilterBar({
   children,
   count,

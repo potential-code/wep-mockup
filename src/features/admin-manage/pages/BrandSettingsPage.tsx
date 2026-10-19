@@ -2,7 +2,7 @@ import { Lock } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
@@ -84,7 +84,6 @@ export function BrandSettingsPage() {
             title="Theme tokens"
             description="Read-only. Provisional, verify with UN Women before launch."
           >
-            <DemoLabel className="mb-3">Provisional</DemoLabel>
             <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {TOKENS.map((t) => (
                 <li key={t.name} className="overflow-hidden rounded-xl border">

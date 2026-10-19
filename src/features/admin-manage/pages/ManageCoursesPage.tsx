@@ -16,7 +16,6 @@ import {
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel } from '@/components/shared/Cards'
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog'
 import { type Column, DataTable } from '@/components/shared/DataTable'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
@@ -137,14 +136,11 @@ export function ManageCoursesPage() {
         title="Courses and Learning Paths"
         description="Build, edit and publish courses with modules, units and pre and post tests. Assign each course to departments."
         actions={
-          <>
-            <DemoLabel>Proposed learning content</DemoLabel>
-            <Button asChild>
-              <Link to="/admin/manage/courses/$courseId" params={{ courseId: 'new' }}>
-                <Plus aria-hidden /> New course
-              </Link>
-            </Button>
-          </>
+          <Button asChild>
+            <Link to="/admin/manage/courses/$courseId" params={{ courseId: 'new' }}>
+              <Plus aria-hidden /> New course
+            </Link>
+          </Button>
         }
       />
       <div className="mb-5 flex flex-wrap items-center gap-2">

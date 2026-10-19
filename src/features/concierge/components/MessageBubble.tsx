@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { Bot, FileText, Info, PencilLine } from 'lucide-react'
+import { FileText, Info, PencilLine } from 'lucide-react'
 import { useState } from 'react'
+import { ConciergeAvatar } from '@/components/shared/ConciergeAvatar'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import type { ChatEntry } from '../hooks/useConciergeChat'
@@ -21,7 +22,7 @@ export function MessageBubble({
   if (message.from === 'user') {
     return (
       <div className="flex justify-end">
-        <p className="max-w-[85%] rounded-2xl rounded-br-md bg-blue px-4 py-2.5 text-sm text-white">
+        <p className="max-w-[85%] rounded-2xl rounded-br-md bg-[linear-gradient(135deg,var(--blue),var(--blue-600))] px-4 py-2.5 text-sm text-white shadow-card">
           {message.text.join(' ')}
         </p>
       </div>
@@ -30,15 +31,10 @@ export function MessageBubble({
   const done = revealed || !animate
   return (
     <div className="flex gap-3">
-      <span
-        className="grid size-8 shrink-0 place-items-center rounded-full bg-navy text-white"
-        aria-hidden
-      >
-        <Bot className="size-4" />
-      </span>
+      <ConciergeAvatar size="sm" />
       <div
         className={cn(
-          'grid min-w-0 flex-1 gap-3 rounded-2xl rounded-tl-md border bg-card p-4 text-sm',
+          'grid min-w-0 flex-1 gap-3 rounded-2xl rounded-tl-md border bg-card p-4 text-sm shadow-card',
           message.unavailable && 'border-dashed border-warning/50 bg-warning-soft/30',
           message.isDraft && 'border-gold/50 bg-gold-50/40',
         )}

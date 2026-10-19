@@ -4,7 +4,7 @@
 
 import { fullName } from '@shared/permissions'
 import type { ActionItem, ActionStatus, Evidence } from '@shared/types'
-import { assessmentSections } from '@/mocks/seed/assessment'
+import { assessmentSections, asteriaAssessment } from '@/mocks/seed/assessment'
 import {
   ApiError,
   audit,
@@ -87,6 +87,33 @@ export async function addAssessmentEvidence(questionId: string, fileName: string
   )
   a.evidence[questionId] = [...(a.evidence[questionId] ?? []), fileName]
   commit()
+}
+
+/**
+ * Demo shortcut: fills every unanswered question with Asteria's realistic 2026 answers and
+ * attaches the matching sample evidence. Answers already given are kept. Nothing is submitted.
+ */
+export async function fillSampleAssessment() {
+  await delay(400)
+  requireCapability('assessment.manage')
+  await saveAnswers({})
+  const user = requireUser()
+  const a = findOr404(
+    db.assessments,
+    (x) => x.companyId === user.companyId && x.status !== 'archived',
+    'Assessment',
+  )
+  const sample = asteriaAssessment
+  for (const [id, value] of Object.entries(sample.answers)) {
+    if (!a.answers[id]) a.answers[id] = value
+  }
+  for (const [id, files] of Object.entries(sample.evidence)) {
+    if (!a.evidence[id]?.length) a.evidence[id] = [...files]
+  }
+  if (a.strengths.length === 0) a.strengths = [...sample.strengths]
+  a.updatedAt = now()
+  commit()
+  return out(a)
 }
 
 export async function submitAssessment() {

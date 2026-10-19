@@ -3,7 +3,7 @@ import { Mail, Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import { type Column, DataTable } from '@/components/shared/DataTable'
 import { ErrorState } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -248,7 +248,7 @@ function Editor({ initial, onClose }: { initial: CommsTemplate; onClose: () => v
         <section aria-label="Email preview" className="grid gap-2">
           <div className="flex items-center justify-between">
             <h3 className="font-heading font-semibold text-navy text-sm">Email preview</h3>
-            <DemoLabel>Simulated, no email sent</DemoLabel>
+            <p className="text-muted-foreground text-xs">Simulated, no email sent</p>
           </div>
           <div className="overflow-hidden rounded-xl border bg-card">
             <div className="border-b bg-surface p-3 text-xs">
