@@ -1,0 +1,37 @@
+# Production stack for Dokploy: one static nginx container, no backend or
+# database (the mockup keeps its demo data in each visitor's browser).
+#
+# Dokploy: Create Service > Compose, point it at this file, then add a domain
+# for service `wep-mockup`, container port 80. Do not add `ports:` — Traefik
+# reaches the container over dokploy-network.
+#
+# Basic auth defaults to admin / Potential. Override BASIC_AUTH_USER and
+# BASIC_AUTH_PASS in Dokploy > Environment to change it.
+#
+# To run it outside Dokploy:
+#   docker network create dokploy-network        # once
+#   docker compose up --build
+
+services:
+  wep-mockup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-admin}
+      BASIC_AUTH_PASS: ${BASIC_AUTH_PASS:-Potential}
+    expose:
+      - "80"
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - dokploy-network
+
+networks:
+  # Created by Dokploy on the host. Traefik only routes to containers on it.
+  dokploy-network:
+    external: true
