@@ -35,7 +35,10 @@ export function InsightPanel({
         ))}
       </ul>
       <Button asChild className="mt-5 w-full sm:w-auto">
-        <Link to="/portal/concierge">
+        <Link
+          to="/portal/concierge"
+          search={{ prompt: 'Prepare a portfolio summary with source records' }}
+        >
           <Sparkles aria-hidden /> Ask AI for an evidence-linked summary
         </Link>
       </Button>

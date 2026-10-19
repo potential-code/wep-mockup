@@ -10,7 +10,7 @@ export function DocumentList({ documents }: { documents: ApplicationDocument[] }
   if (documents.length === 0)
     return <p className="text-muted-foreground text-sm">No documents uploaded.</p>
   return (
-    <ul className="grid gap-3">
+    <ul className="grid grid-cols-[minmax(0,1fr)] gap-3">
       {documents.map((d) => (
         <li key={d.id} className="rounded-xl border p-3">
           <div className="flex items-center gap-3">
@@ -31,7 +31,7 @@ export function DocumentList({ documents }: { documents: ApplicationDocument[] }
             </Button>
           </div>
           {d.previous?.length ? (
-            <ul className="mt-2 grid gap-1 border-t pt-2 text-muted-foreground text-xs">
+            <ul className="mt-2 grid grid-cols-[minmax(0,1fr)] gap-1 border-t pt-2 text-muted-foreground text-xs">
               {d.previous.map((p) => (
                 <li key={p.version}>
                   Earlier version {p.version}: {p.fileName} · replaced, kept for the record

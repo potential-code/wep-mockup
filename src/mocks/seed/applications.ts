@@ -1,4 +1,6 @@
 import type { Application, ApplicationData } from '@shared/types'
+import { companies } from './companies'
+import { users } from './users'
 
 // Join applications. Cedar Works is waiting on a registration document (brief §26); Kestrel
 // Energy is under review; Blue Dune Trading was not approved; the rest are historical approvals.
@@ -361,36 +363,77 @@ export const applications: Application[] = [
     ],
     reviewNotes: [],
   },
-  ...(
-    [
-      ['app-asteria', 'WEPS-2023-0112', 'c-asteria', 'Asteria Group', '2023-03-01', '2023-03-14'],
-      ['app-nova', 'WEPS-2024-0021', 'c-nova', 'Nova Supply', '2024-01-08', '2024-01-22'],
-      ['app-orbit', 'WEPS-2024-0154', 'c-orbit', 'Orbit Logistics', '2024-04-22', '2024-05-06'],
-    ] as const
-  ).map(
-    ([id, reference, companyId, name, submitted, decided]): Application => ({
-      id,
-      reference,
-      status: 'approved',
-      companyId,
-      applicantEmail: `ceo@${companyId.replace('c-', '')}-demo.com`,
-      data: { ...kestrelData, company: { ...kestrelData.company, name } },
-      documents: docs(id, `${submitted}T10:00:00.000Z`),
-      currentStep: 8,
-      createdAt: `${submitted}T09:00:00.000Z`,
-      submittedAt: `${submitted}T10:00:00.000Z`,
-      decidedAt: `${decided}T10:00:00.000Z`,
-      infoRequests: [],
-      timeline: [
-        { id: 't1', at: `${submitted}T10:00:00.000Z`, actor: name, label: 'Application submitted' },
-        {
-          id: 't2',
-          at: `${decided}T10:00:00.000Z`,
-          actor: 'UN Women',
-          label: 'Approved and workspace activated',
-        },
-      ],
-      reviewNotes: [],
-    }),
-  ),
+  ...approvedHistory(),
 ]
+
+/** Historical approved applications: one per approved company, built from its company record. */
+function approvedHistory(): Application[] {
+  return companies
+    .filter((c) => c.signatoryStatus === 'approved' && c.memberSince)
+    .map((c, i) => {
+      const ceo = users.find((u) => u.id === c.ceoId)
+      const decided = (c.memberSince as string).slice(0, 10)
+      const submitted = new Date(new Date(decided).getTime() - 14 * 864e5)
+        .toISOString()
+        .slice(0, 10)
+      const id = `app-${c.id.replace('c-', '')}`
+      const data: ApplicationData = {
+        ...kestrelData,
+        company: {
+          ...kestrelData.company,
+          name: c.name,
+          ownership: c.ownership,
+          ownerGender: c.ownerGender ?? '',
+          sector: c.sector,
+          region: c.region,
+          country: c.country,
+          website: c.website,
+          employeeCount: String(c.employeeCount),
+          ungcMember: c.ungcMember ? 'yes' : 'no',
+        },
+        presence: { otherCountries: [], legallyRegistered: 'yes' },
+        executive: {
+          ...kestrelData.executive,
+          firstName: ceo?.firstName ?? '',
+          lastName: ceo?.lastName ?? '',
+          email: ceo?.email ?? '',
+          title: ceo?.title ?? 'Chief Executive Officer',
+          quote: c.ceoCommitment ?? '',
+        },
+        genderBalance: {
+          employees: String(c.genderBalance?.employees ?? ''),
+          management: String(c.genderBalance?.management ?? ''),
+          board: String(c.genderBalance?.board ?? ''),
+        },
+      }
+      return {
+        id,
+        reference: `WEPS-${decided.slice(0, 4)}-${String(100 + i * 37).padStart(4, '0')}`,
+        status: 'approved',
+        companyId: c.id,
+        applicantEmail: ceo?.email ?? '',
+        data,
+        documents: docs(id, `${submitted}T10:00:00.000Z`),
+        currentStep: 8,
+        createdAt: `${submitted}T09:00:00.000Z`,
+        submittedAt: `${submitted}T10:00:00.000Z`,
+        decidedAt: `${decided}T10:00:00.000Z`,
+        infoRequests: [],
+        timeline: [
+          {
+            id: 't1',
+            at: `${submitted}T10:00:00.000Z`,
+            actor: c.name,
+            label: 'Application submitted',
+          },
+          {
+            id: 't2',
+            at: `${decided}T10:00:00.000Z`,
+            actor: 'UN Women',
+            label: 'Approved and workspace activated',
+          },
+        ],
+        reviewNotes: [],
+      }
+    })
+}

@@ -205,8 +205,8 @@ function Editor({
         </div>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
-        <div className="grid gap-6">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
           <SectionCard title="Course record">
             <div className="grid gap-4">
               <Field label="Title" required>
@@ -422,7 +422,7 @@ function Editor({
           </SectionCard>
         </div>
 
-        <aside className="grid content-start gap-6">
+        <aside className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-6">
           <SectionCard title="Summary">
             <dl className="grid gap-3 text-sm">
               <div className="flex justify-between">

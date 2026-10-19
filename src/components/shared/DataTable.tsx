@@ -83,7 +83,7 @@ export function DataTable<T>({
   const rest = columns.slice(1).filter((c) => !c.hideOnMobile)
 
   return (
-    <div className="grid gap-3">
+    <div className="grid min-w-0 gap-3">
       {/* Desktop table */}
       <div className="hidden overflow-x-auto rounded-2xl border bg-card shadow-card md:block">
         <Table>
@@ -174,7 +174,7 @@ export function DataTable<T>({
       </div>
 
       {/* Mobile cards */}
-      <ul className="grid gap-2 md:hidden">
+      <ul className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 md:hidden">
         {isLoading ? (
           Array.from({ length: 4 }, (_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static placeholders
@@ -189,7 +189,7 @@ export function DataTable<T>({
         ) : (
           visible.map((row) => (
             <li key={getRowId(row)}>
-              <div className="relative grid gap-2 rounded-2xl border bg-card p-4 shadow-card">
+              <div className="relative grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 rounded-2xl border bg-card p-4 shadow-card">
                 {onRowClick ? (
                   <button
                     type="button"

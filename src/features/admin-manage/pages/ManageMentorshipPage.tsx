@@ -166,7 +166,7 @@ export function ManageMentorshipPage() {
         />
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 [&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
         <SectionCard
           title="Expert profiles awaiting approval"
           description="Profiles are published to learners only after approval."

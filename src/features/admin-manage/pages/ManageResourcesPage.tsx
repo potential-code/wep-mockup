@@ -128,7 +128,7 @@ export function ManageResourcesPage() {
   if (error) return <ErrorState message={error.message} onRetry={refetch} />
 
   return (
-    <div>
+    <div className="[&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
       <PageHeader
         title="Resources"
         description="Upload, tag, version, schedule and archive library material."

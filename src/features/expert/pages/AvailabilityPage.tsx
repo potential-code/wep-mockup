@@ -68,7 +68,7 @@ export function AvailabilityPage() {
         title="Availability"
         description={`Click a time to open or close it. Times in ${tzName(tz)} (${tzAbbrev(tz)}). Booked slots are locked.`}
       />
-      <div className="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[1.6fr_1fr]">
         <SectionCard
           title="Weekly slots"
           action={

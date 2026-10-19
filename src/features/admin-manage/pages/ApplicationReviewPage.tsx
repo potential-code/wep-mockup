@@ -55,8 +55,8 @@ export function ApplicationReviewPage() {
         description={`${app.data.company.sector} · ${app.data.company.country} · submitted ${formatDate(app.submittedAt)}`}
         actions={<WorkflowStatus status={app.status} />}
       />
-      <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
-        <div className="grid content-start gap-6">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-6">
           {approvedCompanyId ? (
             <section
               className="rounded-2xl border border-success/30 bg-success-soft p-6"

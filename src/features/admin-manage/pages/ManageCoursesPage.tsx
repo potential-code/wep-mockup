@@ -111,7 +111,7 @@ export function ManageCoursesPage() {
   if (error) return <ErrorState message={error.message} onRetry={refetch} />
 
   return (
-    <div>
+    <div className="[&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
       <PageHeader
         title="Courses and Learning Paths"
         description="Create and maintain learning content. Designated courses unlock department clinics."

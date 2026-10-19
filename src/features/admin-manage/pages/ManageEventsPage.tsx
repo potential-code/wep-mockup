@@ -83,7 +83,7 @@ export function ManageEventsPage() {
   if (events.error) return <ErrorState message={events.error.message} onRetry={events.refetch} />
 
   return (
-    <div>
+    <div className="[&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
       <PageHeader
         title="Clinics and Events"
         description="Schedule clinics and webinars, track attendance and notify participants of changes."

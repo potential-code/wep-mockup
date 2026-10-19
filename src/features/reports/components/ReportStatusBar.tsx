@@ -9,7 +9,7 @@ export function ReportStatusBar({ status }: { status: ReportStatus }) {
   return (
     <nav
       aria-label="Report workflow"
-      className="overflow-x-auto rounded-2xl border bg-card p-4 shadow-card"
+      className="relative overflow-x-auto rounded-2xl border bg-card p-4 shadow-card"
     >
       <ol className="flex min-w-max items-center gap-2">
         {WORKFLOW.map((step, i) => {

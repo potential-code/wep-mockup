@@ -72,7 +72,7 @@ export function ReportEditorPage() {
     )
 
   return (
-    <div className="grid gap-5">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
       <PageHeader
         breadcrumbs={[{ label: 'Annual reports', to: '/portal/reports' }, { label: String(year) }]}
         title={`${year} annual report`}
@@ -172,7 +172,7 @@ export function ReportEditorPage() {
           />
         </>
       ) : editable ? (
-        <div className="grid items-start gap-5 lg:grid-cols-[18rem_1fr]">
+        <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
           <SectionNavigator report={report} active={active} onSelect={setActive} />
           <SectionEditor
             key={active}
@@ -194,7 +194,7 @@ export function ReportEditorPage() {
         />
       )}
 
-      <div className="grid items-start gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 lg:grid-cols-2">
         <VersionsPanel
           report={report}
           people={people}

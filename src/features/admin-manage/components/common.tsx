@@ -136,7 +136,7 @@ export function Detail({ label, children }: { label: string; children: ReactNode
 /** Compact sticky-ish bar for editor actions. */
 export function ActionBar({ children }: { children: ReactNode }) {
   return (
-    <div className="sticky bottom-0 z-10 -mx-5 mt-6 flex flex-wrap items-center justify-end gap-2 border-t bg-card/95 px-5 py-3 backdrop-blur sm:-mx-6 sm:px-6">
+    <div className="sticky bottom-0 z-10 -mx-4 mt-6 flex flex-wrap items-center justify-end gap-2 border-t bg-card/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
       {children}
     </div>
   )

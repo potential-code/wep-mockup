@@ -1,3 +1,4 @@
+import { departmentLabel } from '@shared/reference'
 import { Link } from '@tanstack/react-router'
 import { CheckCircle2, UserX } from 'lucide-react'
 import { useState } from 'react'
@@ -11,7 +12,6 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { dayLong, timeIn, tzAbbrev } from '@/features/mentorship/lib/time'
-import { sentenceCase } from '@/lib/format'
 import { useMarkAttendance, useRoster } from '@/queries/clinics.queries'
 import { useSendClinicFollowUp } from '@/queries/mentorship.queries'
 import { JoinSessionDialog } from './JoinSessionDialog'
@@ -78,7 +78,7 @@ export function ClinicSession({ id }: { id: string }) {
                     <div className="min-w-0 flex-1">
                       <p className="font-medium text-navy">{p.name}</p>
                       <p className="text-muted-foreground text-xs">
-                        {[p.company, p.department ? sentenceCase(p.department) : '']
+                        {[p.company, p.department ? departmentLabel(p.department) : '']
                           .filter(Boolean)
                           .join(' · ')}
                       </p>
