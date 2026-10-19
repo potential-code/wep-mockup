@@ -1,0 +1,672 @@
+
+WEPs Portal Mockup Design and Functional Instructions
+Developer handoff for the UN Women Women’s Empowerment Principles portal
+Prepared by Potential.com | 19 October 2026 | Version 1.0
+Purpose of this document
+Build a polished, clickable WEPs portal mockup that shows how companies can apply, receive approval, onboard their teams, learn, obtain expert support, participate in community activities, purchase proposed certifications, and submit annual reports through one connected experience.
+This brief gives designers and developers the context, page content, permissions, states, sample scenarios and interaction rules needed to build the mockup without prior knowledge of UN Women, WEPs or the opportunity.
+What the first delivery must demonstrate
+An attractive public website and modern company application with an administrator review loop.
+Five stakeholder roles with distinct dashboards and shared company records.
+Department-based learning, points that unlock clinics, and points redeemed for human mentorship.
+Annual reporting with history, community discussions and moderated company product and service listings.
+One UN Women workspace with clearly separated Reporting and Platform Management sections.
+Build an experience prototype with coherent sample data and working transitions. Use simulated invitations, AI responses, payments, calendars and downloads where live services are not configured. Label demo entry and payment states clearly.
+Important product distinction
+Company application requirements and the official WEPs framework are source-based. Portal layouts, gamification, marketplace flows, AI features and the three paid certification concepts are proposed features requested for this mockup. Do not present them as existing or endorsed WEPs services.
+Reading guide and delivery scope
+Use the sections below as a build sequence. Public discovery and onboarding establish the company record. Role-based dashboards then expose the connected learning, implementation, community and reporting experience.
+Sections
+ | Content
+ | 1 to 4
+ | Background, stakeholders, design system and information architecture
+ | 5 to 7
+ | Public home, Join form, sign-in and application review
+ | 8 to 10
+ | Company profile, permissions and all stakeholder dashboards
+ | 11 to 17
+ | Assessment, learning, resources, clinics, mentorship, AI and certifications
+ | 18 to 21
+ | Community, marketplace, annual reports and gamification
+ | 22 to 25
+ | UN Women reporting, platform management and notifications
+ | 26 to 28
+ | Demo data, walkthroughs, delivery acceptance and source register
+ | Scope of this instruction set
+Every primary navigation item must open a designed screen with useful content. Every primary call to action must cause a visible state change, open a complete detail screen or show a meaningful confirmation. Do not deliver a collection of disconnected dashboard images.
+The prototype must support desktop presentation and responsive use. Retain enough sample information for filters, empty states, approval requests, completion, reporting history and eligibility checks to be demonstrated.
+Primary presentation route
+Public home > Join application > UN Women application review > company CEO dashboard > company team invitation > employee learning > clinic unlock > mentorship booking > annual report > UN Women portfolio reporting.
+Naming convention
+Use WEPs in the interface. Use UN Women / WEPs Global Administrator for the global role, Company CEO / Executive Sponsor, Company Administrator / WEPs Focal Point, Company Employee, and Mentor / Trainer. The CEO may also hold company administrator permissions. Do not add other stakeholder roles for this run.
+1 Background and product objectives
+UN Women works on gender equality and women’s empowerment. WEPs is a framework established by UN Women and the UN Global Compact that helps businesses advance these goals across their workplaces, markets and communities. Companies join as organisations; people participate through their company accounts. [S1]
+Opportunity and existing pain points
+In the 16 October discussion, the WEPs team described fragmented participation and limited capacity to connect learning, live support and results. Their follow-up document identifies separate touchpoints for assessments, surveys, learning, webinars, resources, action planning and reporting. It also describes limited visibility into engagement, needs and subsequent company action. [S5, S6]
+The portal should connect those activities around one company record and linked employee profiles. UN Women should be able to understand a company’s needs, the support it used, its implementation progress and its annual submissions without assembling separate spreadsheets.
+Official framework and proposed portal flow
+The official WEPs journey has six stages: Consider, Sign, Activate, Engage, Sustain and Report. Keep these names when describing the official journey. They are different from a proposed portal workflow or course completion sequence. [S1]
+Use principle tags for leadership; fair treatment; health and safety; education and advancement; enterprise and supply chains; community advocacy; and measurement and reporting. Link each tag to its official principle page. These are navigation themes, not invented certification levels. [S1]
+Desired demonstration outcomes
+Companies understand their next action, can delegate work and can find relevant support.
+Employees receive learning suited to their department and see how preparation unlocks live participation.
+Mentors and trainers manage the support they actually provide.
+UN Women sees engagement, operational exceptions, submitted evidence and reporting progress in one place.
+Potential supplies the modular platform foundation. The prototype illustrates a WEPs-specific configuration; deployment, integrations and final scope are agreed later. [S7]
+2 Stakeholders and permission model
+Role
+ | Scope and responsibility
+ | UN Women Global Administrator
+ | All companies and users; applications; programmes; content; approvals; reporting; points rules; mentor and trainer management.
+ | Company CEO / Executive Sponsor
+ | Own company profile, leadership commitment, delegation, priorities, reporting approval, certification purchases and company listings.
+ | Company Administrator / WEPs Focal Point
+ | Delegated management of own company users, assessments, action plan, learning coordination, reports and listings.
+ | Company Employee
+ | Own learning, resources, eligible sessions, points, community participation and assigned contributions.
+ | Mentor / Trainer
+ | Own expertise profile and availability, assigned sessions, webinars or clinics, shared materials and relevant participation records.
+ | Rules that apply everywhere
+Companies self-apply. The global administrator reviews, approves or requests further information before portal activation. Administrators may also invite a company or CEO into the same application process.
+A CEO can appoint an existing colleague or invite a new company administrator. Allow selectable permissions for profile editing, team management, assessment, action planning, reporting, purchasing and marketplace submissions.
+The CEO can perform administrator functions from one account. Do not force duplicate accounts or a second onboarding journey.
+Employees are attached to one company in this mockup and have a department. They do not see the company baseline assessment, billing or unpublished annual reports by default.
+Mentors/trainers choose one-to-one, group sessions or both. Their dashboard adapts to those capabilities; this does not create extra stakeholder roles.
+Company access, signatory status, certification status and points are separate attributes. Payment or activity points never confer signatory status.
+Show permission-aware navigation and actions. Do not rely only on hiding menu items: direct access to an unauthorised prototype route must also show an access message or return the user to their dashboard.
+3 Visual design and interaction system
+Design direction
+Create a modern institutional experience that feels welcoming, credible and easy to navigate. Use generous white space, strong photography, clear hierarchy, restrained colour and purposeful motion. Public pages can be more expressive; authenticated workspaces should prioritise clarity and completing tasks.
+Follow the WEPs identity at weps.org. Before implementation, obtain approved WEPs and UN Women assets and verify their colours, typography, spacing and permitted logo combinations. Preserve supplied logo artwork and proportions. Do not redraw logos or treat an invented emblem as official.
+Provisional design tokens for the mockup
+Element
+ | Instruction
+ | Colour
+ | Use white and pale neutral surfaces, deep navy text, blue primary actions, and small warm accent details. Suggested starting tokens: #153B55, #167CB3, #F4F7FA and #D6A44A. These are proposed UI colours, not verified official brand codes.
+ | Typography
+ | Use an approved brand font if supplied; otherwise use a clean sans serif. Suggested scale: hero 48 to 60 px, page title 30 to 36 px, section 22 to 26 px, body 16 px, labels 14 px.
+ | Components
+ | Use consistent 12 to 16 px card radii, subtle borders, light shadows, clear status badges, named icons and readable chart labels.
+ | Layout
+ | Design at 1440 px desktop with an approximately 1200 px public content width. Portal uses a 240 px sidebar, top utility bar and responsive main canvas.
+ | Motion
+ | Use 150 to 250 ms transitions, gentle hero entry and short progress celebrations. Respect reduced motion; avoid scroll hijacking and continuous distracting effects.
+ | Usability and responsive behaviour
+Provide keyboard navigation, visible focus, text labels for icons and accessible contrast. Never encode chart or status meaning through colour alone.
+At mobile widths, collapse side navigation into a drawer; stack cards; keep key actions visible; provide a usable scroll or card alternative for wide tables.
+Use skeleton loading, helpful empty states, inline field errors, confirmations for submitted actions and consistent back navigation.
+Every dashboard should have an obvious next action. Avoid displaying every available metric above the fold.
+4 Site map and shared portal navigation
+Public routes
+Home; About WEPs and Principles; Explore Resources; Clinics and Events preview; Company Directory preview; Join WEPs; Sign In. The public navigation may link to existing official pages for supporting content, but the main Home, Join and Sign In experiences must be designed within the prototype.
+Company workspace navigation
+Navigation
+ | Access and purpose
+ | Dashboard
+ | All company users; content adapts by role.
+ | Company Profile and Team
+ | CEO and delegated company administrator manage; employee sees an approved summary.
+ | Assessment
+ | CEO and authorised company administrator only.
+ | Action Plan
+ | CEO and administrator manage; employees see only assigned contributions.
+ | Learn
+ | All company users; department and role determine recommendations.
+ | Resources
+ | View and download permitted materials.
+ | Clinics
+ | Browse webinars and clinics, see requirements, register and attend.
+ | Mentorship
+ | Find human experts and book eligible one-to-one sessions.
+ | AI Concierge
+ | Profile-aware assistance and reporting support within permissions.
+ | Certification
+ | Company offerings, payment, exam progress and credentials; purchasing and company exams restricted to authorised representatives.
+ | Community
+ | Discussions, Signatory Circle and Products and Services.
+ | Annual Reports
+ | CEO and authorised administrator; draft, submit, revise and view history.
+ | Points and Rewards
+ | Personal points, eligibility milestones, redemption history and bookings.
+ | Global administrator workspace
+Use two clearly labelled sidebar groups: Reporting and Platform Management. Reporting contains portfolio views and analysis. Platform Management contains configuration, publishing, approvals and operational tools. A consistent global search and notifications menu is available across both.
+Shared top bar
+Show page title or breadcrumb, organisation name, notification bell, contextual help and user menu. Show personal points for company users. Demo mode has a discreet role switch and Reset Demo action; normal sign-in does not expose production impersonation.
+5 Public home page
+Purpose: explain the value of WEPs, inspire companies to participate and provide a clear route to apply or return to their portal. This is a redesigned mockup landing page; proposed wording below is original copy for review.
+Page order
+ | Content and behaviour
+ | 1 Header
+ | Approved WEPs identity, About, Principles, Resources, Clinics, Community preview, Sign In and prominent Join WEPs action. Sticky header becomes compact on scroll.
+ | 2 Hero
+ | Headline: Turn commitment into measurable progress. Supporting copy: Connect your company with learning, practical tools, expert support and a community advancing gender equality. Actions: Join WEPs and Sign In. Use an approved business image and a subtle portal preview.
+ | 3 Value overview
+ | Three concise themes: build capability, put plans into action, and track progress. Each opens the relevant public explanation or preview.
+ | 4 Principles
+ | Seven numbered visual cards linking to official principle explanations. Use short labels with accessible expanded descriptions.
+ | 5 Journey
+ | A compact explanation of the six official WEPs stages, clearly distinguished from portal navigation.
+ | 6 Experience preview
+ | Show a company progress panel, learning card, clinic card and reporting preview with illustrative data labels.
+ | 7 Learning and resources
+ | Feature an approved roadmap, an action planning resource and a relevant procurement resource. Use real source links and proposed thumbnail designs where needed.
+ | 8 Clinics and experts
+ | Three upcoming demo events plus an expert support introduction. Show date, timezone, topic and eligibility; use Explore Clinics action.
+ | 9 Company community
+ | Preview moderated discussions and approved products/services; give no unauthenticated posting access.
+ | 10 Final action and footer
+ | Invite eligible companies to apply. Include official contact route, source links, accessibility, privacy and terms placeholders for client-approved content.
+ | Use scroll reveals and short card transitions. All content remains visible without animation. Do not invent partner endorsements, live impact totals or testimonials. Use approved case material or explicitly illustrative statistics.
+6 Join WEPs application page
+Purpose: let a company submit its own application in a clear, modern interface while preserving the information required by the official Join page. Reference [S2]. Use an eight-step wizard with save and resume, a progress indicator, review screen and upload feedback.
+Step
+ | Source field groups to preserve
+ | 1 Company
+ | Name; ownership; owner gender; sector; region; country; website; employee count; UNGC membership; asset owner/fund manager and fund name where relevant.
+ | 2 Geographic presence
+ | Other legally established implementation countries; legal registration status and registration upload.
+ | 3 Executive
+ | CEO first/last name, gender, email and title; signed official CEO statement PDF; CEO quote and portrait.
+ | 4 Contacts
+ | Primary and secondary contacts: first/last name, gender, email, title and telephone.
+ | 5 Gender balance
+ | Women among employees, management and board/executive/partners; investment committee where applicable.
+ | 6 Existing plans
+ | Whether a written Gender Action Plan exists.
+ | 7 Referral and support
+ | Sponsor/referral, other referral details and optional financial contribution interest.
+ | 8 Review
+ | Review and submit; show uploaded documents and incomplete items.
+ | The official form uses the unmodified CEO statement template and a CEO photo, with the portrait limited to one file of up to 8 MB in the listed image formats. Link the current official template and field guidance rather than creating replacements. [S2]
+Proposed experience enhancements
+Offer a short eligibility introduction, field-level help, saved progress and a review summary with Edit links.
+Show conditional fields only when relevant. Use controlled options for sector, country and other classifications; do not fabricate official option lists.
+Validate email syntax, required information and upload states. Include sample states for valid upload, wrong file type, too large and missing document.
+After submission show an application reference, submission date, status and next steps. Applicants can access application status while awaiting approval; the full company portal remains locked.
+Contribution interest is optional and separate from membership approval or the proposed paid certifications. Do not request a payment as a condition of application submission.
+7 Application review and sign in
+Application workflow
+Draft > Submitted > Under Review > Additional Information Requested > Resubmitted > Approved. Also provide a Not Approved outcome with a reason. Every transition appears in an activity timeline. Approval creates or activates the company workspace and grants signatory access according to the agreed WEPs process.
+Administrator opens the application, reviews grouped fields and documents, and selects Approve or Request Information. Requests specify the exact missing item, message and optional due date.
+The applicant receives a simulated email notification and sees the same request on the status screen. Previously submitted information remains saved. Resubmission preserves previous document versions and review notes.
+Detect an existing company match and offer a reviewed claim/reactivation route. Do not create a second signatory automatically. Administrator-invited companies follow the same validation and review.
+Sign in page
+Use a split layout: brand image and short value statement on one side; email sign-in and invitation acceptance on the other. Include Forgot Password, Join WEPs, and a clearly labelled Explore Demo section.
+Demo button
+ | Destination
+ | Sign in as UN Women Administrator
+ | Executive Dashboard with reporting and management navigation.
+ | Sign in as Company CEO
+ | Asteria Group executive dashboard.
+ | Sign in as Company Administrator
+ | Asteria Group operational company dashboard.
+ | Sign in as Company Employee
+ | Department choice: HR, Procurement or Marketing; opens the corresponding personal dashboard.
+ | Sign in as Mentor or Trainer
+ | Expert workspace; sample profile supports one-to-one and clinics.
+ | Invitation experience
+Company invite includes company name, inviter, role, department, accept action and expiry state. Accepting leads through identity setup to the relevant portal. Mentor/trainer invitations originate from UN Women. Expired or already accepted invitations show useful recovery guidance. Never show real passwords or send real invitations from the demo.
+8 Company profile team and delegation
+Company profile
+Use a large company header with logo, approved name, country, sector, signatory status and member-since field. Below it place tabs for Overview, Company Details, Team and Permissions, Action Plan, and Activity. Annual Reports is accessible from the main navigation and profile summary.
+Overview displays approved company summary, executive commitment, priority principles, participation and report status.
+Company Details allows authorised edits to company and contact information. Changes to identity or approved public information can show a review-pending state.
+Keep the private workspace separate from the public company profile. Provide Preview Public Profile showing only approved information; private assessments, files and billing never appear there.
+Team management
+Show a searchable table with name, email, department, role, invitation status, last activity and learning progress. Provide Invite User, Resend Invitation, Edit Department, Assign Administrator and Remove Company Access actions. Removing access does not erase historical company reporting evidence.
+Delegation panel
+The CEO can select permissions individually: edit company profile, invite/manage employees, manage assessment and action plan, prepare annual reports, submit annual reports, manage marketplace listings and purchase certifications. Default a new company administrator to operational responsibilities; financial and final submission privileges are explicit toggles.
+Show a confirmation summary before granting permissions. Preserve one account when a CEO also performs administration. Multiple company administrators may exist, with the CEO retaining visibility into who has which rights.
+Department structure
+Seed Human Resources, Procurement, Marketing and Communications, Sustainability and Reporting, Operations, and Leadership. Department drives learning recommendations; it is not an additional stakeholder role. Employees can request a correction rather than silently change the reporting structure.
+Action plan
+Include a practical action board under company management: action title, principle, baseline, target, owner, department, deadline, status and evidence. Company administrators create and assign; employees see only their assigned contributions. Link actions to learning, expert support and annual report sections.
+9 Company CEO and administrator dashboards
+Company CEO dashboard
+Purpose: provide a concise executive view of company participation and decisions. Start with Welcome, company name and two actions: Review Company Progress and Manage Team.
+Top cards: employees activated, company learning completion, actions on track and annual report status. Each opens its underlying records.
+Company priorities: three approved priorities with accountable colleagues, deadlines and progress. Use a seven-principle summary for navigation, not an unexplained composite score.
+Decisions required: approve an action plan, confirm an annual report, assign an administrator or approve a certification purchase.
+Engagement and results: department participation chart, action completion trend and clearly labelled company-reported indicators with period and evidence status.
+Upcoming support: relevant clinics, booked mentoring and recommended next support. Include certification and community shortcuts lower on the page.
+When the CEO also acts as company administrator, expose operational tools through Manage Company. Keep one account and one company record.
+Company administrator dashboard
+Purpose: coordinate the team and keep the company moving. Start with an operational checklist and a prominent next action.
+Top cards: invited versus active users, completed learning, upcoming eligible clinics, overdue company actions and annual reporting deadline.
+Team readiness: departments with enrolled users, completed prerequisites and clinic eligibility. Clicking a department opens a filtered team view.
+Assessment and action plan: baseline status, priority gaps, actions requiring evidence and links to manage owners and deadlines.
+Work queue: pending invitations, incomplete assessment inputs, upcoming sessions, report revisions and unpublished marketplace submissions.
+Support and resources: recommended templates, available mentors, AI reporting assistance and recent community discussions.
+Coherent example
+Asteria Group has 24 invited users, 18 activated and 12 users who completed the current learning path. Display activation as 18/24 = 75 percent and path completion as 12/18 = 67 percent rounded. Do not confuse invited users with the denominator for active learner completion.
+10 Employee and mentor trainer dashboards
+Employee dashboard
+Purpose: make the next useful action immediately clear. Display name, company and department, with a personal learning and points summary.
+Hero panel: Continue Your Learning, current course, completed steps, estimated remaining time and points available.
+Personal cards: path completion, lifetime points, redeemable points, next eligible clinic and next booked session.
+Your department pathway: a sequenced list of courses with Available, In Progress, Complete and Locked states. Explain why each recommendation is relevant.
+Unlock your next clinic: show prerequisites and the remaining milestone. Once complete, replace the locked state with Register.
+Your company contributions: assigned action, owner, deadline and submission button. Do not expose the full confidential company assessment.
+Recommended resources, community discussions and AI Concierge sit below the primary action. Employees can view company credential summaries but cannot purchase or sit company exams unless authorised.
+Department examples
+Department
+ | Proposed learning themes
+ | HR
+ | Inclusive recruitment, fair progression and pay, workplace wellbeing.
+ | Procurement
+ | Gender-responsive procurement, supplier engagement and implementation planning.
+ | Marketing
+ | Inclusive communications, responsible representation and community engagement.
+ | Leadership
+ | Accountability, sponsorship, action planning and evidence-based reporting.
+ | Mentor and trainer dashboard
+Use one combined workspace with support-format preferences. A one-to-one expert sees upcoming bookings, availability and shared goals. A trainer sees scheduled webinars/clinics, attendee readiness, materials and follow-up. A person offering both sees both areas.
+Top cards: upcoming sessions, assigned companies, participants supported and follow-up tasks.
+Calendar with date/timezone, format, company or cohort and preparation status. Actions: View Booking, Join Session and Manage Availability.
+Expert profile editor: expertise, languages, sectors, biography, delivery formats and time slots. UN Women approves profile publication.
+Post-session actions: attendance, agreed follow-up, approved materials and feedback. Experts see only information shared for their sessions; private notes remain distinct from company-visible follow-up.
+11 Assessment and action planning experience
+Purpose: help authorised company representatives establish a baseline and turn identified needs into a practical plan. This company assessment is distinct from employee course quizzes and paid certification exams.
+Assessment landing page
+Display the current assessment name, purpose, owner, status, completion percentage and last updated date.
+Show a clear Start or Continue action and an archive of previous assessment periods. Employees do not see this tab by default.
+Group questions into manageable sections. Show explanatory help, saved answers, evidence attachments and a final review screen.
+The mockup can use a short illustrative diagnostic. Label it Demo Company Assessment. Do not claim that invented questions or scoring reproduce the official Gender Gap Analysis Tool.
+Results page
+Present strengths, gaps and recommended next actions, with principle and department tags. Show completion of evidence and the assessment period. Any maturity labels or scores must identify the methodology; use a plain needs summary if the methodology is not approved.
+Each identified need links to a resource, suggested course, relevant clinic, mentor and Add to Action Plan button. This is the main connection between diagnosis and support.
+Action editor and tracking
+An action contains title, purpose, principle, owner, department, baseline, target, due date, evidence requirements and review status. Example: Review recruitment shortlisting practices; HR owner; proposed target for the next reporting period; supporting review document.
+Create as Draft, request CEO review if configured, then move to In Progress, Evidence Submitted, Complete or Needs Revision.
+An employee assigned a contribution can upload a document or update a task without gaining access to unrelated company records.
+Record who updated an action and when. Show overdue actions and missing evidence in company and global reporting.
+Link assessments to annual reporting through explicit references. A learning activity can support an action, but course completion alone must not mark a company action implemented.
+12 Learn and department learning paths
+Purpose: give each employee a relevant self-paced pathway, with visible progress and an understandable route to live support. Company CEOs and administrators may also learn through a role-appropriate pathway.
+Learning landing page
+Top area: My Learning Path, department, progress, next recommended action and points already earned.
+Path cards show title, objective, estimated time, lesson count, prerequisite, points and progress. Include filters for principle, topic, status and language.
+Provide Continue Learning plus a separate Browse Courses catalogue. A personalised pathway can be generated from department, profile interests and company priorities, with a visible explanation.
+Course detail and player
+Show overview, learning outcomes, modules, total points and related clinic. The player uses a content canvas, lesson navigation, captions/transcript, resource links, completion controls and knowledge checks. Include video, reading, quiz and reflection activity examples.
+Save progress between visits. Completing a lesson updates the employee dashboard, course progress and points ledger.
+Use an illustrative 70 percent quiz threshold for demo courses and allow a retry. Label the threshold as a configurable demo rule.
+Award points for a unique verified completion event. Reopening a lesson or refreshing a page never awards the same points again.
+On path completion, show a short celebration and a direct action to register for the now-eligible clinic.
+Path generation scenario
+HR users receive inclusive recruitment and workplace practice examples; Procurement receives supplier and procurement examples; Marketing receives inclusive communications. Use proposed course content for the demo and label it accordingly. Official resources can be linked with attribution.
+Administrator visibility
+Company administrators can see assignment, progress and readiness for their own team. Global administrators manage catalogue entries, pathway rules and aggregate completion. Keep assessment results and quiz performance scoped to the intended role.
+13 Resources library
+Purpose: make relevant practical guidance easy to discover, preview, download and reuse in company actions and reporting.
+Library layout
+Use a featured resource area, prominent search and a filter bar. Provide grid and list views. Filters include principle, topic, department, file type, language and access level. Add My Saved Resources and Recently Viewed.
+Every resource card includes title, short description, source/publisher, format, language, relevant principle and View or Download action.
+The detail page includes an accessible preview, summary, publication metadata, related materials and links to related courses, clinics or action-plan tasks.
+Use a document viewer for PDFs and presentations with download controls. Provide a usable alternative when embedded preview is unavailable.
+Suggested source-linked examples
+Use these official titles as relevant examples, with links to their WEPs pages: WEPs Transparency and Accountability Roadmap; WEPs Gender Action Plan Template; and the Gender-responsive Procurement Toolbox. Label proposed preview art appropriately and respect member-only access. [S3, S4]
+For materials requiring an authorised account, show a source link and access note rather than pretending to have downloaded restricted content. Use a sample placeholder document to demonstrate the preview interaction if necessary.
+Connected actions
+Save to My Resources; Share to a permitted community thread; Attach Reference to a company action; Ask AI About This Resource.
+The AI action opens the concierge with the resource context and source reference. It does not automatically expose company information in the public community.
+Show a clear empty state when no resources match filters, with Clear Filters and suggested alternatives.
+Management
+Global administrators upload, tag, version, schedule and archive resources. Metadata includes owner, source URL, file version, language and permitted audience. Changes to an existing resource do not erase historical references in submitted company reports.
+14 Clinics webinars and event participation
+Purpose: connect self-paced preparation with live learning. Use Clinics as the main user-facing tab; allow event types Webinar and Clinic in filters and details.
+Event catalogue and detail
+Offer List and Calendar views with topic, principle, format, date, language and eligibility filters. Display the user’s timezone prominently.
+Cards show title, facilitator, date/time, duration, format, available places and status: Locked, Eligible, Registered, Waitlisted, Completed or Recording Available.
+Detail page includes objectives, agenda, speaker profile, required preparation, earned points, registration action, calendar action and follow-up resources.
+Unlock behaviour
+For the demo, completing the designated four lessons and path quiz earns 200 qualifying points and unlocks a clinic. The eligibility panel must show both required learning completion and the qualifying milestone. This prevents unrelated community points from bypassing preparation.
+Registration does not spend points. Use lifetime qualifying learning points for access, so later mentorship redemption does not remove clinic eligibility. If prerequisites are incomplete, show exactly what remains and link to Continue Learning.
+Registration and attendance
+Register reserves a place and updates the dashboard and calendar. Full events offer Join Waitlist. Cancellation releases the place; simulate the resulting state.
+Show joining instructions only to registered eligible users. A demo join action opens a simulated session page, not a real external meeting.
+After the session, record attendance separately from registration. Display materials, recording if permitted, feedback and a practical follow-up action.
+Award attendance points once after confirmed participation; registering or repeatedly opening the event does not earn attendance points.
+Trainer controls
+Trainers see their assigned session roster, participant preparation, materials and follow-up. Global administrators create schedules, assign facilitators, define prerequisites and capacities, and view attendance reporting. Support time changes and cancellation notices.
+15 Human mentorship and booking calendar
+Purpose: let eligible users find relevant human expertise and redeem earned points for one-to-one support. Include both company-focused advice and employee support within programme rules.
+Mentor discovery
+Use expert cards with photo, name, expertise, sector, languages, delivery format and next available slot. Filters include topic, language, sector and availability.
+A detail screen shows biography, support themes, session length, shared preparation requirements, calendar and points cost.
+Recommended matches explain their relevance using the user’s department, company priorities or selected goal. Users can browse other suitable mentors.
+Booking flow
+Choose expert > choose timezone and available slot > select purpose and optional company action > review shared context > review points cost > confirm booking. The final confirmation shows local date/time, points deducted and cancellation terms.
+Proposed demo rule: a 30-minute session costs 500 redeemable personal points. The company administrator can coordinate a company session using their own authorised booking account; do not silently pool employee balances.
+If the balance is too low, display the exact shortfall and links to eligible learning activities. Show no misleading Book Now action that fails without explanation.
+Reserve the slot and points together. Double-clicking confirmation must not create duplicate bookings or deductions. A slot no longer available prompts selection of another slot.
+Show Booked, Completed, Cancelled and No Show states. Proposed demo cancellation rule: cancellation at least 24 hours before the session restores points; later cancellation requires administrator review.
+After the session
+Show agreed next actions, shared resources and feedback. Mentor private notes remain private. Any company-visible follow-up is clearly labelled and shared only with authorised participants.
+Expert calendar
+Mentors manage availability, unavailable periods, session limits and booking details. The prototype uses a simulated calendar. Production calendar and conferencing integrations are separately scoped.
+16 AI Concierge and community assistant
+Purpose: provide useful, profile-aware guidance grounded in approved WEPs information, available resources and authorised user data.
+Personal concierge screen
+Use a full chat workspace with conversation history, suggested prompts and a contextual side panel. Show the active company and role, relevant sources and suggested next actions. Also provide a small launcher from other portal screens.
+Employee prompts: What should I learn next in Procurement; why is this clinic locked; how many points do I need for mentoring?
+Company administrator prompts: Which actions need evidence; help draft this year’s progress narrative; which departments need follow-up?
+CEO prompts: Summarise our current priorities and decisions; show the progress of our annual report.
+Global administrator prompts: Which companies have overdue reports; compare clinic readiness by department; prepare a portfolio summary with source records.
+Required answer behaviour
+Use the signed-in profile and permissions. Cite the relevant resource or record and explain which period or filter is being used. Provide action buttons such as Open Course, View Report or Go to Booking. Clearly mark generated report text as a draft for review.
+The assistant can prepare a draft or prefill a form, but submission, company approval, purchases and disclosure require the user’s explicit final action. It cannot invent missing company indicators or treat an unsupported claim as verified evidence.
+Community assistant
+Community discussions contain a visibly labelled AI participant answering general WEPs questions from approved knowledge. It can reply in a public thread or a signatory-only thread according to that space’s access rules. It must not bring private company assessments, billing, personal conversations or report drafts into a shared discussion.
+Prototype implementation
+Seed at least six useful scripted conversations covering employee, company administrator and global reporting needs. Demo responses must match the sample records and demonstrate sources, suggested actions and an unavailable-data response. Do not imply live AI connectivity if the prototype uses scripted responses.
+17 Company certification purchase and exams
+Purpose: demonstrate the requested paid company certification experience. The three offerings, names, exam rules and USD 1,200 prices below are proposed demo products. They are not represented as existing WEPs certifications or a prerequisite to signatory status.
+Proposed demo certification
+ | Price
+ | Illustrative focus
+ | Company Leadership and Accountability
+ | USD 1,200
+ | Leadership responsibilities and implementation planning.
+ | Company Inclusive Workplace Practices
+ | USD 1,200
+ | Workplace policies, people practices and application.
+ | Company Gender Responsive Business Practices
+ | USD 1,200
+ | Procurement, communications and community practice.
+ | Catalogue and purchase
+Display three equal certification cards with scope, price, exam requirement, company eligibility and View Details action. CEO and purchasing-authorised administrators can select Purchase for Company. Employees may view company credential status but cannot pay or take the company exam by default.
+Purchase detail shows billing company, item, currency, amount and any separately identified charges. Open a simulated Stripe checkout with Demo Payment clearly visible. Provide successful, cancelled and failed examples. No real charges occur in the prototype.
+Exam and credential flow
+Purchase > Payment Confirmed > Exam Available > Exam Submitted > Passed or Retry Required > Certificate Issued. Payment alone does not issue a certificate. A passed exam without confirmed payment also does not issue it.
+Proposed demo exam: ten questions, 80 percent pass mark, completed by an authorised company representative. Include pass, fail, retry and saved progress states. Final methodology, retake limits and assessment integrity are configurable product decisions.
+Credential screen shows company, certification title, issue date, unique reference and download/verification action. Use Sample Certificate on prototype outputs; do not invent official seals or accreditation claims.
+Track each offering independently. Never display the same payment as revenue three times. Refund and cancellation states remain visible in the payment record.
+The production design uses Stripe payment confirmation to update purchase state, with duplicate-event protection. Expiry, renewal, accreditation and the real payment account require confirmation before launch; the demo should not invent these policies.
+18 Community discussions and Signatory Circle
+Purpose: enable shared learning and peer exchange across the platform through group discussions. There are no private one-to-one community chats in this scope.
+Community navigation
+Subtab
+ | Audience and content
+ | Discussions
+ | Approved authenticated platform participants, including company users and mentors/trainers. Topic threads, questions, replies, attachments and announcements.
+ | Signatory Circle
+ | Users attached to approved signatory companies, plus global administrators for moderation. Excludes mentors/trainers unless they separately hold an eligible company membership.
+ | Products and Services
+ | Browse approved company listings; CEO or authorised company administrator can submit and manage own company listings.
+ | Discussion layout
+Use topic channels such as General Questions, HR and Workplace, Procurement, Learning and Clinics, and Reporting. A main feed shows searchable threads; a side panel shows community guidance, trending topics and upcoming activities.
+Create Post opens a composer with title, topic, body, optional attachment and audience. The selected audience is visible before publishing.
+Members can reply in threads, react, bookmark, follow and report content. No Direct Message button or private chat inbox appears.
+The AI assistant can answer general questions in the thread, with a label and resource links. Human members can continue the discussion.
+Provide pinned administrator announcements, an unanswered-question filter and moderation states for hidden, flagged and restored posts.
+Signatory boundary
+Pending applicants have no access to member community spaces. The Signatory Circle checks the company’s approved status and the user’s active membership. An access change affects the circle immediately in the prototype state.
+Points and community quality
+Award a small capped number of points for eligible helpful contributions, with moderation. Do not reward every reply or reaction without limits. Company administrators cannot view private personal concierge conversations through community activity.
+A mentor’s booked one-to-one session is an expert support appointment, not a private community messaging feature. Keep these experiences visually and functionally distinct.
+19 Community products and services marketplace
+Purpose: let companies showcase products and services to the WEPs community, subject to UN Women approval. Treat approval as publication permission, not a product endorsement.
+Browse experience
+Use a searchable grid with product/service type, category, company, location, delivery coverage and price or quotation basis. Detail pages include images, description, provider profile, proposed value, price/currency, relevant documents and purchase route.
+For this mockup, use Visit Provider to Purchase for the primary transaction route, labelled as an external provider link. This demonstrates purchasing without assuming an unapproved marketplace payment model. Certification checkout remains a separate Stripe flow. In-platform marketplace checkout can be a later agreed extension.
+Submit a listing
+Only a CEO or company administrator with marketplace permission sees Submit Product or Service.
+Form fields: title, product/service type, category, company, description, images, delivery region, price/currency or quotation note, purchase URL and supporting information.
+Preview the listing before submission. Company users see status and reviewer feedback; other users see only approved published listings.
+Approval flow
+Draft > Submitted > Under Review > Changes Requested > Resubmitted > Approved and Published. Include Rejected, Withdrawn and Archived states. A material edit to a published listing creates a revision for review while retaining the last approved version until replaced.
+The administrator review screen shows listing content, company status, documents and decision actions. Require a reason for requested changes or rejection. Publication creates a listing activity record and a notification to the submitting company.
+Visibility and measurement
+Default published listings to the authenticated WEPs community. If a public catalogue preview is enabled, global administrators explicitly approve public visibility; never expose pending submissions. Track listing views and outbound purchase clicks. Do not report marketplace sales or revenue when the transaction happens externally and no confirmed sales data exists.
+20 Annual company reports and reporting history
+Purpose: let companies prepare and submit yearly progress reports, respond to feedback and retain prior submissions. Use Annual Reports as a dedicated company navigation tab.
+Reporting landing page
+Show the current reporting year, due date, assigned preparer, status and Start or Continue Report action.
+History table includes year, submitted version, submission date, status, reviewed date and View/Download. Permit comparison with a previous year where indicator definitions match.
+CEO and authorised administrator can access the full report. Employees can contribute to assigned supporting tasks without seeing the entire draft.
+Proposed report structure
+Use a configurable demo template: company snapshot; executive narrative; priority actions; learning and support used; principle-related progress; indicators and evidence; challenges and next-year priorities; final review and declaration. This is a proposed portal form, not a claimed reproduction of an official reporting submission. [S1, S5]
+Prefill available profile, learning and attendance data with source and period labels. Company indicator values remain editable and require units, coverage, period and optional evidence. Missing data stays missing; do not silently substitute zero.
+Submission and review
+Draft > Ready for Company Approval > Submitted > Under Review > Changes Requested > Resubmitted > Accepted. The CEO approves, or a specifically delegated administrator submits. Submission creates a dated version snapshot.
+Request Changes identifies report sections and required revisions. The company can revise without deleting the prior submitted version.
+Accepted is a report review status; it does not mean independent verification of every outcome or certification.
+Separate report preparation/submission from public disclosure. Provide Preview Public Summary and an explicit approved-publication step.
+Progress over time
+Show action status and selected reported indicators across periods, with baseline, current value, unit and evidence status. Do not claim programme causality from participation alone. Keep reports accessible after annual rollover and when individual company contacts change.
+21 Gamification and eligibility rules
+Purpose: make progress visible and encourage useful participation. Points support learning and expert engagement; they are separate from company status, impact evidence and paid certifications.
+Demo action
+ | Points
+ | Award control
+ | Complete personal profile
+ | 20
+ | Once per user.
+ | Complete a learning lesson
+ | 25
+ | Once per unique lesson completion.
+ | Pass the designated path quiz
+ | 100
+ | Once per designated quiz.
+ | Attend a confirmed clinic
+ | 75
+ | Once per attended event.
+ | Complete a feedback form
+ | 10
+ | Once per form.
+ | Helpful community contribution
+ | 5
+ | Maximum 20 points daily, subject to moderation.
+ | Submit an assigned action contribution
+ | 25
+ | Once after accepted contribution, maximum 100 per month.
+ | Redeem a 30 minute mentoring session
+ | Minus 500
+ | Deduct once when booking confirms.
+ | Two balances and one preparation rule
+Lifetime points measure achievements. Redeemable points are the spendable balance. Qualifying learning points are the subset earned from specified preparation. Display them with plain explanations; they need not be three equally prominent dashboard cards.
+A designated path has four lessons worth 100 points plus a quiz worth 100. Clinic access requires all designated lessons complete, the quiz passed and 200 qualifying learning points. Unrelated points cannot replace preparation. Booking a clinic consumes no points.
+Mentorship requires 500 redeemable points. Example: an employee has 620 lifetime points and 620 available; booking deducts 500, leaving 120 available and 620 lifetime. Clinic eligibility remains intact.
+Ledger and experience
+Points history shows action, date, amount, source record and resulting balance. Repeated clicks, retries and page reloads do not duplicate awards.
+Rewards view shows available opportunities, shortfall and how to earn the missing points. Show both locked and unlocked states.
+No points for paying for a certification. No unlimited points for downloads, logins or repeated posts. Corrections use an adjustment record with a reason.
+Use personal milestones and badges. Optional community leaderboards can rank contribution or learning only; do not label companies with high engagement points as having the best gender equality outcomes.
+22 UN Women reporting workspace
+Purpose: give the global administrator a simple, reliable place to understand the whole programme. Reporting is a distinct navigation group, with a persistent date range and filters for country, sector, company, department, principle and programme where applicable.
+Reporting tab
+ | Required content and drill down
+ | Executive Dashboard
+ | Headline metrics, participation funnel, reporting completion, priority exceptions, geographic distribution and support demand. Click any card to open its filtered records.
+ | Analytics
+ | Learning and clinic trends, pathway drop-off, resource use, mentor engagement and department comparisons. Display metric definitions and denominators.
+ | Companies
+ | All company records with application status, size, country, sector, activation and assigned contacts. Includes pending and approved companies.
+ | Signatories
+ | Approved signatory subset with status, active teams, last activity, current report status and company progress.
+ | All Users
+ | Searchable user list by company, department, role, invitation state, last activity, learning and points.
+ | Learning and Clinics
+ | Enrolment, completion, readiness, registration, attendance and feedback with course or event drill downs.
+ | Mentorship
+ | Experts, available versus booked slots, completed sessions, no-shows, redemption and follow-up.
+ | Assessments and Actions
+ | Baseline completion, priority themes, action deadlines, evidence coverage and accepted contributions.
+ | Annual Reports
+ | Company/year matrix, overdue submissions, review status, versions and comparison-ready indicators.
+ | Community and Marketplace
+ | Discussion participation, unanswered questions, listing approvals, views and outbound purchase clicks.
+ | Certification and Payments
+ | Purchases, confirmed payments, exam attempts, pass outcomes, issued company credentials and refunds.
+ | Report Builder
+ | Saved filtered views, selected fields/charts, export preview and reusable report layouts.
+ | Tables support search, sorting, filters, pagination, column selection and CSV export. Charts have a table alternative. Exported data must use the current filters and label the period, scope and export timestamp. Report Builder generates a useful demo file or a preview, never a nonfunctional export button.
+23 Executive reporting and impact definitions
+Executive dashboard composition
+Start with a concise headline and the current reporting period. Use six main cards: approved signatories, active companies, activated users, learning completion, confirmed clinic attendance and annual reporting completion. Below, provide a company progression funnel, reporting status distribution and an attention-required queue.
+Company funnel: submitted applications > approved companies > activated companies > assessed companies > companies with action plans > companies reporting. Cohort and time scope must be consistent.
+Attention queue: information requests awaiting response, inactive companies, clinic preparation gaps, overdue actions, report revisions and marketplace reviews.
+Insight panel: concise evidence-based observations and suggested follow-up. The global AI assistant can explain the records behind a finding.
+Metric definitions
+Metric
+ | Definition for the prototype
+ | Approved signatories
+ | Distinct companies currently approved as signatories; do not count employees or applications.
+ | Active companies
+ | Approved companies with at least one authenticated user activity in the selected period.
+ | Activated users
+ | Invited users who accepted and accessed their portal.
+ | Path completion rate
+ | Users who completed their assigned path divided by users assigned that path, within the stated cohort.
+ | Clinic attendance rate
+ | Confirmed attendees divided by registered participants, excluding cancelled registrations.
+ | Reporting completion
+ | Companies with an accepted report for the selected year divided by companies required to report that year.
+ | Action completion
+ | Completed actions divided by actions due in the selected period, with the evidence/review status visible.
+ | Company reported outcomes
+ | Submitted indicator values with unit, period, coverage and evidence status; separate from platform activity.
+ | Avoid misleading impact presentation
+Show platform activity, implementation evidence and company-reported outcomes as distinct layers. A company may complete learning without reporting a change in workplace outcomes. Cross-year comparisons require consistent units, boundaries and indicator definitions. Suppress or aggregate small sensitive groups where needed for the intended reporting audience.
+24 UN Women platform management workspace
+Purpose: manage the programme without navigating through reporting screens to find operational controls. Keep list > detail > edit/review > confirmation patterns consistent.
+Management tab
+ | Capabilities to show
+ | Applications and Approvals
+ | Review company submissions; request documents; approve; resolve duplicate records; show decision history.
+ | Companies and Access
+ | Invite CEOs; update status; manage authorised contacts; handle company access and profile revisions.
+ | Users and Invitations
+ | Invite mentors/trainers; inspect company-managed invitations; resend, revoke or suspend access with reasons.
+ | Courses and Learning Paths
+ | Create/edit course records, lessons, quizzes, points and prerequisites; assign by department; preview and publish.
+ | Resources
+ | Upload, preview, tag, version, set audience, publish and archive files or source links.
+ | Clinics and Events
+ | Set schedule/timezone, capacity, facilitator, prerequisites, registration window, attendance and materials.
+ | Mentorship
+ | Approve expert profiles, define support topics, monitor availability and bookings, manage exceptions.
+ | Assessments and Action Plans
+ | Configure demo forms and approved templates, question groups, evidence fields and assignment rules.
+ | Annual Reporting
+ | Set year, reporting population, template, deadlines, reminders, review workflow and public disclosure settings.
+ | Certifications and Payments
+ | Configure proposed offerings, prices, exams and pass rules; review transactions, credentials and payment states.
+ | Community and Marketplace
+ | Manage channels and moderation queue; review listings; request changes; publish or archive.
+ | Gamification
+ | Set points, qualifying learning milestones, redemption prices, caps, cancellation rules and adjustment reasons.
+ | Communications
+ | Templates, audience segments, triggers, schedule and notification history.
+ | AI Knowledge and Settings
+ | Approved sources, resource versions, suggested prompts, profile context permissions and feedback review.
+ | Brand and General Settings
+ | Approved logos, theme, languages, support links and integration status placeholders.
+ | Activity and Audit
+ | Administrative changes, approvals, report submissions, points adjustments and publication decisions.
+ | Every editor supports Save Draft, Preview, Publish/Activate and Archive where relevant. Required fields and audience visibility must be clear. Do not place real API keys or payment credentials in the mockup. Integration panels show status and intended connection purpose only.
+25 Notifications search and recurring tasks
+Notification centre
+Show an in-platform list with unread/read state, date, related company or activity, and a direct link to the required action. Email previews demonstrate the same event without sending messages. Users can manage nonessential preferences; critical account and reporting notices remain distinguishable.
+Trigger
+ | Recipient and resulting action
+ | Application submitted
+ | Applicant confirmation and administrator review queue.
+ | Information requested
+ | Applicant sees the requested item and resumes the saved application.
+ | Company approved
+ | CEO receives portal activation and team setup action.
+ | Employee invited
+ | Employee accepts company membership and begins profile setup.
+ | Preparation completed
+ | Learner sees the clinic unlock and registration action.
+ | Event approaching or changed
+ | Registered users see schedule/timezone and joining details.
+ | Mentorship booked or cancelled
+ | User and expert see booking status; points adjustment appears if applicable.
+ | Report due or revision requested
+ | Company preparer and authorised approver receive section-specific actions.
+ | Certification payment or exam result
+ | Purchasing/exam representative sees next step; credential issued only when conditions are met.
+ | Listing reviewed
+ | Submitting CEO/administrator sees approval or requested changes.
+ | Search
+Global search searches only records the active role may access. Company search can find courses, resources, sessions and its own records. Global administrator search can also find companies, users, applications and reports. Label result types and preserve filters after opening and returning from a detail screen.
+Annual rollover
+Global administrators create a new reporting year and specify which companies are in scope. Copy forward reusable profile information and previous priorities as editable references. Do not overwrite prior reports or carry prior outcome values into a new year without review.
+Task visibility
+Show open tasks in the relevant dashboard: owner, due date, status and action. A task resolved in a detail screen disappears from the dashboard queue and updates the count. This consistency is essential to a convincing demo.
+26 Demonstration data and sample scenarios
+Use fictional organisations and people for all nonpublic sample records. Label the environment Illustrative Demo Data. Do not imply that these companies or people are real WEPs participants.
+Sample record
+ | Purpose and consistent state
+ | Asteria Group
+ | Approved signatory; main company scenario. 24 invitations, 18 activated users, 12 path completers. CEO Leila Mansour; focal point Nora Aziz.
+ | Maya Chen from HR
+ | Employee with 175 qualifying learning points; the final lesson adds 25 and unlocks the clinic at 200 after the quiz is already passed.
+ | Omar Reed from Procurement
+ | Employee with 620 lifetime and available points, designated path complete. Redeems 500 for mentoring and retains 120 available.
+ | Elena Martin from Marketing
+ | Different department path and resource recommendations; assigned communications contribution.
+ | Dr Sofia Bennett
+ | Fictional mentor/trainer offering one-to-one sessions and a procurement clinic. Show timezone, languages, biography and availability.
+ | Cedar Works
+ | New application with additional registration information requested; applicant can revise and resubmit.
+ | Harbour Services
+ | Approved company with an annual report awaiting changes and overdue evidence.
+ | Nova Supply
+ | Approved company with one marketplace listing awaiting moderation.
+ | Asteria reporting history
+ | Accepted 2024 report, accepted 2025 report and draft 2026 report. All dates and values are illustrative.
+ | Certification purchases
+ | One offering unpaid, one paid with exam available, one paid with passed exam and sample certificate.
+ | Reporting seed totals
+Use a small coherent portfolio: ten company records consisting of eight approved signatories, one application under review and one awaiting information. Six approved companies are active this month. For the annual reporting demo, all eight approved companies are required to report: five accepted, one under review, one changes requested and one draft. Reporting completion is 5/8 = 62.5 percent.
+Eight companies include 120 invited users, 96 activated and 60 completed assigned paths. Use 60/96 only when the dashboard explicitly defines the cohort as 96 assigned activated users. All drill-down records must reconcile with totals. Seed supporting records, not just top-line card values.
+27 Required clickable walkthroughs
+Prepare the demo so these scenarios work without developer explanation. Keep state across role changes and provide Reset Demo to restore the starting data.
+Walkthrough
+ | Visible result
+ | 1 Application and clarification
+ | Submit a sample application; switch to UN Women; request a document; return to applicant status; replace the document and resubmit; approve and activate the company.
+ | 2 Delegation and invitations
+ | CEO appoints a company administrator; sets permissions; administrator invites an employee with department; simulated invitation acceptance opens the correct personal dashboard.
+ | 3 Learning unlock
+ | HR employee completes the final prerequisite; points ledger updates; clinic changes from Locked to Eligible; registration appears in the dashboard and trainer roster.
+ | 4 Mentoring redemption
+ | Procurement employee chooses an expert and slot; 500 points are deducted once; calendar booking appears for both parties. Cancellation demonstrates the configured restoration rule.
+ | 5 Certification
+ | Company representative selects a USD 1,200 offering; demo checkout succeeds; exam unlocks; passing creates a sample company credential. Also demonstrate payment cancellation and exam failure.
+ | 6 Community and listing
+ | Employee posts a group question and receives an AI reply; Signatory Circle stays restricted; company administrator submits a service listing; global administrator approves; listing appears with provider purchase link.
+ | 7 Annual report
+ | Company prepares 2026 report, attaches evidence and requests approval; CEO submits; global administrator requests a change; resubmission creates a new version while history remains available.
+ | 8 Portfolio reporting
+ | Global administrator filters reporting year and country; drills into an overdue company; opens the same company report; exports the filtered view and asks AI for an evidence-linked summary.
+ | Demo state management
+Use a consistent shared data model across roles: company, user membership, application, assessment, action, course progress, points event, clinic registration, mentor booking, report version, certification purchase/exam and community listing. Local prototype state is sufficient; separate mock totals or unrelated screens are not.
+28 Delivery checklist and source register
+Acceptance checklist
+All five roles open the correct dashboard; CEO plus administrator uses one account; no additional stakeholder roles are introduced.
+Home, Join and Sign In are complete; application status supports clarification before approval; pending applicants cannot access the full company workspace.
+Each requested portal tab has catalogue/list, detail and action states where relevant. Assessment, purchasing and reports follow company permissions.
+Points, clinic preparation and mentoring redemption reconcile; no duplicate awards or bookings; paid certification requires both confirmed payment and exam pass.
+Community supports group threads only; Signatory Circle is restricted; company listings require review and have a clear purchase route.
+Annual reports retain versions and past years; global reporting reconciles to underlying records and shows metric definitions.
+Reporting and Platform Management are separate administrator navigation groups; all primary buttons work; responsive layouts, keyboard focus and reduced motion are checked.
+Deliver the clickable prototype, design components, sample-data reset, source assets, screen inventory and a short walkthrough. Document any simulated integration clearly in the handoff.
+Source register and content authority
+S1  WEPs About and official framework: https://www.weps.org/about. Accessed 19 October 2026. Source for context, principles and the six-stage official journey.
+S2  WEPs Join: https://www.weps.org/join. Accessed 19 October 2026. Source for company application field groups, executive statement and portrait guidance.
+S3  WEPs Home and Resources: https://www.weps.org/ and https://www.weps.org/resources. Source links for public discovery and resource examples.
+S4  WEPs Learn 2026: https://www.weps.org/event/weps-learn-2026-commitment-action. Context for clinics and structured company learning.
+S5  Women’s Empowerment Principles Platform Pain Points and Opportunity, supplied by UN Women after the meeting. Source for fragmentation and connected engagement/reporting needs.
+S6  UN Women meeting on 16 October 2026 and email follow-up on 16 and 19 October 2026. Context for preparation before live sessions, expert support and the proposed mockup.
+S7  Potential.com Profile Platform Capabilities and Case Studies and Enterprise Platform Technical Positioning supplied by Potential. Basis for configurable platform capabilities.
+Product authority: Rawzaba Alhalabi’s instructions of 19 October 2026 define the five roles and proposed portal scope. Certification titles, points, demo people, sample metrics and detailed UI behaviours in this brief are prototype specifications for review, not existing WEPs policy.
+
+     36 w:color w:val="FFFFFF"
+     36 w:fill="183C56"
+    148 w:fill="F1F5F8"
+    133 w:fill="FFFFFF"
