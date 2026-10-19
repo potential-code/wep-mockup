@@ -220,4 +220,47 @@ export const aiScripts: AiScript[] = [
     sources: [{ label: 'Annual reports', to: '/portal/reports/2026' }],
     actions: [{ label: 'Open reports', to: '/portal/reports/2026' }],
   },
+  {
+    id: 'ai-resource-context',
+    roles: ['employee', 'company_admin', 'ceo'],
+    prompt: 'Summarise this resource and suggest how my team could use it',
+    answer: [
+      'In short: this resource sets out practical steps your team can adopt without new systems. Start with the section closest to your department’s work, and treat the checklists as a conversation starter rather than a compliance test.',
+      'A sensible way to use it is to pick one recommendation, link it to an action in your company action plan, and ask a colleague in the relevant department to review it with you. If you would like human advice, a 30-minute mentoring session can help you turn it into a plan.',
+      'This summary is general guidance. Open the resource itself for the exact wording and version.',
+    ],
+    sources: [{ label: 'Resource library', to: '/portal/resources' }],
+    actions: [
+      { label: 'Open resource library', to: '/portal/resources' },
+      { label: 'Open action plan', to: '/portal/action-plan' },
+      { label: 'Browse mentors', to: '/portal/mentorship' },
+    ],
+  },
+  {
+    id: 'ai-mentor-week',
+    roles: ['mentor'],
+    prompt: 'What is on my calendar this week?',
+    answer: [
+      'You have one-to-one bookings from Harbour Services and Nova Supply this week and next, plus two group clinics coming up: the Inclusive Recruitment Clinic on 4 November and the Gender-responsive Procurement Clinic on 12 November.',
+      'Each booking shows only the context the participant chose to share. Open a session to see their goal and any linked action before you join.',
+    ],
+    sources: [{ label: 'Your calendar', to: '/expert/calendar' }],
+    actions: [
+      { label: 'Open calendar', to: '/expert/calendar' },
+      { label: 'Manage availability', to: '/expert/availability' },
+    ],
+  },
+  {
+    id: 'ai-mentor-followup-draft',
+    roles: ['mentor'],
+    prompt: 'Draft a follow-up note for my last session',
+    isDraft: true,
+    answer: [
+      'Thank you for your time today. A short summary of what we agreed: start with your 40 largest suppliers by spend, keep the ownership self-declaration to a single question, and revisit the data after the next clinic.',
+      'I have attached the Gender-responsive Procurement Toolbox as a companion reading. Please let me know if anything is unclear.',
+      'This is a draft based on the shared context only. Edit it freely before adding it to the session record, and keep anything sensitive in your private note.',
+    ],
+    sources: [{ label: 'Your calendar', to: '/expert/calendar' }],
+    actions: [{ label: 'Open sessions', to: '/expert/calendar' }],
+  },
 ]

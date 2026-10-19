@@ -24,3 +24,5 @@ export const useRoster = (eventId: string) =>
   useQuery({ queryKey: qk('roster', eventId), queryFn: () => svc.getRoster(eventId) })
 export const useUpsertEvent = () =>
   useMutation({ mutationFn: (e: ClinicEvent) => svc.upsertEvent(e) })
+
+export type { ClinicStatus, Eligibility } from '@/services/clinics.service'

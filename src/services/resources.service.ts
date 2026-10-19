@@ -18,7 +18,10 @@ import {
 
 export async function listPublicResources() {
   await delay()
-  return out(db.resources.filter((r) => r.status === 'published' && r.access === 'public'))
+  // Official WEPs items are listed with their source link even when member-only.
+  return out(
+    db.resources.filter((r) => r.status === 'published' && (r.access === 'public' || r.official)),
+  )
 }
 
 export async function listResources() {

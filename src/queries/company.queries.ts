@@ -57,3 +57,6 @@ export const useCompanyDashboard = () =>
   useQuery({ queryKey: qk('dashboard', 'company'), queryFn: dash.getCompanyDashboard })
 export const useEmployeeDashboard = () =>
   useQuery({ queryKey: qk('dashboard', 'employee'), queryFn: dash.getEmployeeDashboard })
+
+export type CompanyDashboardData = NonNullable<ReturnType<typeof useCompanyDashboard>['data']>
+export type TeamMember = NonNullable<ReturnType<typeof useTeam>['data']>[number]

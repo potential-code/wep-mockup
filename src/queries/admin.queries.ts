@@ -10,20 +10,27 @@ export const useCompaniesTable = (f: rep.ReportingFilters) =>
   useQuery({ queryKey: qk('companies-table', f), queryFn: () => rep.getCompaniesTable(f) })
 export const useCompanyDetail = (id: string) =>
   useQuery({ queryKey: qk('company-detail', id), queryFn: () => rep.getCompanyDetail(id) })
-export const useUsersTable = () =>
-  useQuery({ queryKey: qk('users-table'), queryFn: rep.getUsersTable })
-export const useLearningReport = () =>
-  useQuery({ queryKey: qk('learning-report'), queryFn: rep.getLearningReport })
-export const useMentorshipReport = () =>
-  useQuery({ queryKey: qk('mentorship-report'), queryFn: rep.getMentorshipReport })
-export const useAssessmentsReport = () =>
-  useQuery({ queryKey: qk('assessments-report'), queryFn: rep.getAssessmentsReport })
-export const useAnnualReportsMatrix = () =>
-  useQuery({ queryKey: qk('reports-matrix'), queryFn: rep.getAnnualReportsMatrix })
-export const useCommunityReport = () =>
-  useQuery({ queryKey: qk('community-report'), queryFn: rep.getCommunityReport })
-export const useCertificationReport = () =>
-  useQuery({ queryKey: qk('certification-report'), queryFn: rep.getCertificationReport })
+export const useUsersTable = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('users-table', f), queryFn: () => rep.getUsersTable(f) })
+export const useLearningReport = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('learning-report', f), queryFn: () => rep.getLearningReport(f) })
+export const useAnalytics = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('analytics', f), queryFn: () => rep.getAnalytics(f) })
+export const useMentorshipReport = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('mentorship-report', f), queryFn: () => rep.getMentorshipReport(f) })
+export const useAssessmentsReport = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('assessments-report', f), queryFn: () => rep.getAssessmentsReport(f) })
+export const useAnnualReportsMatrix = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('reports-matrix', f), queryFn: () => rep.getAnnualReportsMatrix(f) })
+export const useCommunityReport = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('community-report', f), queryFn: () => rep.getCommunityReport(f) })
+export const useCertificationReport = (f: rep.ReportingFilters) =>
+  useQuery({
+    queryKey: qk('certification-report', f),
+    queryFn: () => rep.getCertificationReport(f),
+  })
+export const useBuilderDataset = (f: rep.ReportingFilters) =>
+  useQuery({ queryKey: qk('builder-dataset', f), queryFn: () => rep.getBuilderDataset(f) })
 export type { ReportingFilters } from '@/services/admin-reporting.service'
 export { toCsv } from '@/services/admin-reporting.service'
 
@@ -63,3 +70,22 @@ export const useOpenReportingYear = () =>
     mutationFn: (v: { year: number; companyIds: string[]; dueDate: string }) =>
       svc.openReportingYear(v.year, v.companyIds, v.dueDate),
   })
+
+export const useAdminCourses = () =>
+  useQuery({ queryKey: qk('admin-courses'), queryFn: svc.listAdminCourses })
+export const useAdminCourse = (id: string) =>
+  useQuery({ queryKey: qk('admin-course', id), queryFn: () => svc.getAdminCourse(id) })
+export const useAssessmentConfig = () =>
+  useQuery({ queryKey: qk('assessment-config'), queryFn: svc.getAssessmentConfig })
+export const useReportingConfig = () =>
+  useQuery({ queryKey: qk('reporting-config'), queryFn: svc.getReportingConfig })
+export const useNotificationHistory = () =>
+  useQuery({ queryKey: qk('notification-history'), queryFn: svc.listNotificationHistory })
+export const useChangeEvent = () =>
+  useMutation({
+    mutationFn: (v: { eventId: string; startsAt?: string; cancel?: boolean; message: string }) =>
+      svc.changeEvent(v.eventId, v),
+  })
+export { REPORT_TEMPLATE_SECTIONS } from '@/services/admin.service'
+export const useAiScripts = () =>
+  useQuery({ queryKey: qk('ai-scripts'), queryFn: svc.listAiScripts })

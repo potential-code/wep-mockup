@@ -19,7 +19,10 @@ import {
   requireCapability,
   requireUser,
 } from './api'
+import { evaluateClinicEligibility } from './clinics.service'
 import { award, pointsBalance } from './points.service'
+
+const sentence = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ')
 
 const decorateMentor = (p: MentorProfile) => {
   const u = db.users.find((x) => x.id === p.userId)
@@ -89,6 +92,8 @@ export async function bookSession(input: {
   purpose: string
   actionId?: string
   shareContext: boolean
+  /** What the expert may see. Defaults to everything when `shareContext` is true. */
+  share?: { role: boolean; company: boolean; department: boolean; action: boolean }
   requestKey: string
 }) {
   await delay(500)
@@ -97,7 +102,7 @@ export async function bookSession(input: {
   const prior = db.bookings.find((b) => b.id === `bk-${input.requestKey}`)
   if (prior) return out(prior)
   const slot = findOr404(db.slots, (s) => s.id === input.slotId, 'Time slot')
-  if (slot.status !== 'open')
+  if (slot.status !== 'open' || slot.startsAt <= now())
     throw new ApiError('That time was just taken. Please choose another slot.', 'conflict')
   const profile = findOr404(db.mentorProfiles, (p) => p.userId === slot.mentorId, 'Expert')
   const balance = pointsBalance(user.id)
@@ -108,7 +113,20 @@ export async function bookSession(input: {
     )
   }
   const company = db.companies.find((c) => c.id === user.companyId)
-  const action = input.actionId ? db.actions.find((a) => a.id === input.actionId) : undefined
+  const share = input.shareContext
+    ? (input.share ?? { role: true, company: true, department: true, action: true })
+    : { role: false, company: false, department: false, action: false }
+  const action =
+    input.actionId && share.action ? db.actions.find((a) => a.id === input.actionId) : undefined
+  const sharedParts = [
+    share.role || share.company
+      ? [fullName(user), share.role ? user.title : '', share.company ? company?.name : '']
+          .filter(Boolean)
+          .join(', ')
+      : '',
+    share.department && user.department ? `Department: ${sentence(user.department)}` : '',
+    action ? `Linked action: ${action.title}` : '',
+  ].filter(Boolean)
   const booking: MentorBooking = {
     id: `bk-${input.requestKey}`,
     slotId: slot.id,
@@ -116,15 +134,8 @@ export async function bookSession(input: {
     userId: user.id,
     companyId: user.companyId,
     purpose: input.purpose,
-    actionId: input.actionId,
-    sharedContext: input.shareContext
-      ? [
-          `${fullName(user)}, ${user.title}${company ? `, ${company.name}` : ''}`,
-          action ? `Linked action: ${action.title}` : '',
-        ]
-          .filter(Boolean)
-          .join('. ')
-      : 'No additional context shared.',
+    actionId: action?.id,
+    sharedContext: sharedParts.length ? sharedParts.join('. ') : 'No additional context shared.',
     status: 'booked',
     pointsCost: profile.pointsCost,
     createdAt: now(),
@@ -364,4 +375,188 @@ export async function listAllMentorData() {
     slots: db.slots,
     bookings: db.bookings,
   })
+}
+
+/* ---------------------------------------------------------------- mentee feedback -- */
+
+export async function submitBookingFeedback(bookingId: string, rating: number, comment: string) {
+  await delay(250)
+  const user = requireUser()
+  const b = findOr404(
+    db.bookings,
+    (x) => x.id === bookingId && x.userId === user.id && x.status === 'completed',
+    'Completed booking',
+  )
+  b.feedback = { rating, comment }
+  commit()
+  return out(b)
+}
+
+/* ---------------------------------------------------------------- expert schedule -- */
+
+export interface ExpertScheduleItem {
+  id: string
+  kind: 'booking' | 'clinic'
+  startsAt: string
+  durationMin: number
+  title: string
+  /** Company (one-to-one) or cohort description (clinic). */
+  who: string
+  format: string
+  status: string
+  preparation: string
+  preparationOk: boolean
+  attendees: number
+  prepared: number
+  timezone: string
+}
+
+export async function getExpertSchedule() {
+  await delay()
+  const user = requireCapability('expert.workspace')
+  const items: ExpertScheduleItem[] = []
+  for (const b of db.bookings.filter((x) => x.mentorId === user.id)) {
+    const slot = db.slots.find((s) => s.id === b.slotId)
+    const mentee = db.users.find((u) => u.id === b.userId)
+    const company = db.companies.find((c) => c.id === b.companyId)
+    const shared = b.sharedContext !== 'No additional context shared.'
+    items.push({
+      id: b.id,
+      kind: 'booking',
+      startsAt: slot?.startsAt ?? b.createdAt,
+      durationMin: slot?.durationMin ?? 30,
+      title: b.purpose,
+      who: [mentee ? fullName(mentee) : '', company?.name].filter(Boolean).join(' · '),
+      format: 'One-to-one',
+      status: b.status,
+      preparation: shared ? 'Context shared' : 'No context shared',
+      preparationOk: shared,
+      attendees: 1,
+      prepared: shared ? 1 : 0,
+      timezone: user.timezone,
+    })
+  }
+  for (const e of db.events.filter((x) => x.facilitatorId === user.id)) {
+    const regs = db.registrations.filter((r) => r.eventId === e.id && r.status !== 'cancelled')
+    const prepared = regs.filter((r) => evaluateClinicEligibility(r.userId, e.id).courseComplete)
+    const companies = new Set(
+      regs.map((r) => db.users.find((u) => u.id === r.userId)?.companyId).filter(Boolean),
+    )
+    items.push({
+      id: e.id,
+      kind: 'clinic',
+      startsAt: e.startsAt,
+      durationMin: e.durationMin,
+      title: e.title,
+      who: `${regs.length} registered · ${companies.size} ${companies.size === 1 ? 'company' : 'companies'}`,
+      format: e.type === 'clinic' ? 'Group clinic' : 'Webinar',
+      status: e.status === 'completed' ? 'completed' : e.status,
+      preparation: regs.length
+        ? `${prepared.length} of ${regs.length} prepared`
+        : 'No registrations',
+      preparationOk: regs.length > 0 && prepared.length === regs.length,
+      attendees: regs.length,
+      prepared: prepared.length,
+      timezone: e.timezone,
+    })
+  }
+  return out({
+    timezone: user.timezone,
+    items: items.sort((a, b) => a.startsAt.localeCompare(b.startsAt)),
+  })
+}
+
+/** One-to-one session detail. The expert only receives what the mentee chose to share. */
+export async function getExpertBooking(bookingId: string) {
+  await delay()
+  const user = requireCapability('expert.workspace')
+  const b = findOr404(db.bookings, (x) => x.id === bookingId && x.mentorId === user.id, 'Booking')
+  const slot = db.slots.find((s) => s.id === b.slotId)
+  const mentee = db.users.find((u) => u.id === b.userId)
+  const company = db.companies.find((c) => c.id === b.companyId)
+  const action = b.actionId ? db.actions.find((a) => a.id === b.actionId) : undefined
+  return out({
+    booking: b,
+    startsAt: slot?.startsAt ?? b.createdAt,
+    durationMin: slot?.durationMin ?? 30,
+    timezone: user.timezone,
+    menteeName: mentee ? fullName(mentee) : 'Participant',
+    menteeAvatar: mentee?.avatar,
+    companyName: company?.name,
+    actionTitle: action?.title,
+  })
+}
+
+/** Sends the agreed follow-up of a group session to everyone marked as attended. */
+export async function sendClinicFollowUp(
+  eventId: string,
+  input: { note: string; resourceIds: string[] },
+) {
+  await delay(300)
+  const user = requireCapability('expert.workspace')
+  const event = findOr404(
+    db.events,
+    (e) => e.id === eventId && e.facilitatorId === user.id,
+    'Session',
+  )
+  const attended = db.registrations.filter((r) => r.eventId === eventId && r.status === 'attended')
+  for (const r of attended)
+    notify({
+      userId: r.userId,
+      category: 'mentorship',
+      title: `Follow-up from ${event.title}`,
+      body: input.note.slice(0, 140),
+      link: `/portal/clinics/${event.id}`,
+      critical: false,
+    })
+  commit()
+  return out({ sent: attended.length })
+}
+
+/* ---------------------------------------------------------------- availability prefs -- */
+
+export interface UnavailablePeriod {
+  id: string
+  from: string
+  to: string
+  reason: string
+}
+export interface AvailabilityPrefs {
+  maxPerDay: number
+  maxPerWeek: number
+  noticeHours: number
+  unavailable: UnavailablePeriod[]
+}
+
+const PREFS_KEY = 'weps-mockup:expert-availability'
+const DEFAULT_PREFS: AvailabilityPrefs = {
+  maxPerDay: 4,
+  maxPerWeek: 12,
+  noticeHours: 24,
+  unavailable: [{ id: 'un-1', from: '2026-11-23', to: '2026-11-27', reason: 'Conference travel' }],
+}
+
+export async function getAvailabilityPrefs() {
+  await delay(120)
+  requireCapability('expert.workspace')
+  try {
+    const raw = localStorage.getItem(`${PREFS_KEY}`)
+    if (raw) return out(JSON.parse(raw) as AvailabilityPrefs)
+  } catch {
+    // fall back to defaults
+  }
+  return out(DEFAULT_PREFS)
+}
+
+export async function saveAvailabilityPrefs(prefs: AvailabilityPrefs) {
+  await delay(250)
+  requireCapability('expert.workspace')
+  if (prefs.maxPerDay < 1 || prefs.maxPerWeek < prefs.maxPerDay)
+    throw new ApiError('The weekly limit must be at least the daily limit.')
+  try {
+    localStorage.setItem(PREFS_KEY, JSON.stringify(prefs))
+  } catch {
+    // storage unavailable: keep going, the demo still confirms
+  }
+  return out(prefs)
 }

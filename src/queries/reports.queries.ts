@@ -16,6 +16,7 @@ export const useSaveIndicators = () =>
   useMutation({
     mutationFn: (v: { year: number; indicators: ReportIndicator[] }) =>
       svc.saveIndicators(v.year, v.indicators),
+    onError: () => {},
   })
 export const useAttachReportEvidence = () =>
   useMutation({

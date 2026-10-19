@@ -54,7 +54,7 @@ export const personas: User[] = [
     role: 'company_admin',
     companyId: 'c-asteria',
     department: 'sustainability',
-    permissions: [...DEFAULT_ADMIN_PERMISSIONS, 'submit_reports'],
+    permissions: [...DEFAULT_ADMIN_PERMISSIONS, 'submit_reports', 'purchase_certifications'],
     activatedAt: '2023-03-22T09:00:00.000Z',
     lastActiveAt: '2026-10-19T08:12:00.000Z',
   },

@@ -38,3 +38,5 @@ export const useAdjustPoints = () =>
     mutationFn: (v: { userId: string; amount: number; reason: string }) =>
       pts.adjustPoints(v.userId, v.amount, v.reason),
   })
+
+export type { LedgerRow } from '@/services/points.service'

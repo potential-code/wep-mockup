@@ -129,6 +129,12 @@ export const companies: Company[] = [
     priorities: [],
     priorityPrinciples: [3, 4, 1],
     publicProfileApproved: true,
+    pendingProfileRevision: {
+      field: 'summary',
+      value:
+        'Hospital and diagnostics network with a strong focus on women’s health leadership, nurse career progression and a new return-to-practice programme for clinicians.',
+      requestedAt: '2026-10-15T10:00:00.000Z',
+    },
     lastActivityAt: '2026-10-11T09:20:00.000Z',
     genderBalance: { employees: 63, management: 41, board: 36 },
   },

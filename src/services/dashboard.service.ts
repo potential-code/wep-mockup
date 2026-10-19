@@ -136,6 +136,21 @@ export function tasksFor(userId: string): Task[] {
       })
     }
   }
+  if (manages) {
+    const asm = db.assessments.find((x) => x.companyId === cid && x.status !== 'archived')
+    if (!asm || asm.status === 'not_started' || asm.status === 'in_progress') {
+      tasks.push({
+        id: 't-asm',
+        title: asm ? 'Finish the company assessment' : 'Start the company assessment',
+        detail: asm
+          ? `${Object.keys(asm.answers).length} answers saved so far`
+          : 'Establish your baseline',
+        to: asm ? '/portal/assessment/take' : '/portal/assessment',
+        kind: 'assessment',
+        severity: 'warning',
+      })
+    }
+  }
   if (isCeo || user.permissions.includes('prepare_reports')) {
     const r = db.reports.find((x) => x.companyId === cid && x.year === db.settings.reportingYear)
     if (r && ['draft', 'changes_requested', 'not_started'].includes(r.status)) {

@@ -89,7 +89,7 @@ export interface DemoDb {
 }
 
 const STORAGE_KEY = 'weps-demo-db'
-const VERSION = 1
+const VERSION = 2
 
 const clone = <T>(value: T): T => structuredClone(value)
 

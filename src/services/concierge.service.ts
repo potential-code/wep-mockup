@@ -34,6 +34,9 @@ export async function getConversation(id: string) {
   )
 }
 
+/** Replies flag when no approved data backs the answer, so the UI can say so plainly. */
+export type AiReply = ChatMessage & { unavailable?: boolean }
+
 const words = (s: string) =>
   new Set(
     s
@@ -82,7 +85,7 @@ export async function ask(input: {
     aiScripts.filter((s) => s.roles.includes(user.role)),
   )
   const contextLead = convo.context ? [`Using “${convo.context.label}” as context.`] : []
-  const reply: ChatMessage = script
+  const reply: AiReply = script
     ? {
         id: newId('m'),
         from: 'ai',
@@ -90,6 +93,7 @@ export async function ask(input: {
         sources: script.sources,
         actions: script.actions,
         isDraft: script.isDraft,
+        unavailable: script.unavailable,
         at: now(),
       }
     : {
@@ -102,6 +106,7 @@ export async function ask(input: {
         ],
         sources: [{ label: 'About the WEPs', to: '/about' }],
         actions: [{ label: 'Browse resources', to: '/portal/resources' }],
+        unavailable: true,
         at: now(),
       }
   convo.messages.push(userMsg, reply)

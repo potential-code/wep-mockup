@@ -1,4 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
+
+export type { AiReply } from '@/services/concierge.service'
+
 import * as svc from '@/services/concierge.service'
 import { qk } from './keys'
 

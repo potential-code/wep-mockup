@@ -70,6 +70,24 @@ const canSee = (companyId: string) => {
   return user
 }
 
+/** Names for people referenced on a report (preparer, approver, submitters, evidence uploaders). */
+function peopleFor(r: AnnualReport): Record<string, string> {
+  const ids = new Set<string>(
+    [
+      r.preparerId,
+      r.approverId,
+      ...r.versions.map((v) => v.submittedById),
+      ...r.evidence.map((e) => e.uploadedById),
+    ].filter(Boolean) as string[],
+  )
+  const map: Record<string, string> = {}
+  for (const id of ids) {
+    const u = db.users.find((x) => x.id === id)
+    if (u) map[id] = fullName(u)
+  }
+  return map
+}
+
 /** Prefill from portal records, labelled with source and period. */
 function prefillSupport(companyId: string) {
   const members = db.users.filter((u) => u.companyId === companyId).map((u) => u.id)
@@ -96,6 +114,7 @@ export async function listCompanyReports() {
     history: rows,
     dueDate: db.settings.reportingDueDate,
     canSubmit: user.role === 'ceo' || user.permissions.includes('submit_reports'),
+    people: Object.assign({}, ...rows.map(peopleFor)) as Record<string, string>,
   })
 }
 
@@ -113,6 +132,7 @@ export async function getReport(year: number) {
     report: r,
     previous: previous ?? null,
     preparerName: preparer ? fullName(preparer) : undefined,
+    people: peopleFor(r),
     canSubmit: user.role === 'ceo' || user.permissions.includes('submit_reports'),
     canEdit: ['draft', 'changes_requested', 'ready_for_approval', 'not_started'].includes(r.status),
     supportPrefill: prefillSupport(r.companyId),
@@ -270,6 +290,8 @@ export async function togglePublicSummary(year: number, approved: boolean) {
     (x) => x.companyId === user.companyId && x.year === year,
     'Report',
   )
+  if (r.status !== 'accepted')
+    throw new ApiError('A public summary can be approved once the report is accepted.', 'conflict')
   r.publicSummaryApproved = approved
   commit()
 }
@@ -283,6 +305,7 @@ export async function getReportForReview(reportId: string) {
   return out({
     report: r,
     company: db.companies.find((c) => c.id === r.companyId),
+    people: peopleFor(r),
     previous: db.reports.find((x) => x.companyId === r.companyId && x.year === r.year - 1) ?? null,
   })
 }

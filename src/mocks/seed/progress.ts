@@ -342,14 +342,49 @@ const generatedEvents: PointsEvent[] = generatedProgress.flatMap((p) => {
 })
 
 const leilaEvents: PointsEvent[] = [
-  ev('u-leila', 'profile_complete', 20, 'profile:u-leila', 'Personal profile completed', '2026-05-01T10:00:00.000Z'),
-  ...lessonEvents('u-leila', 'crs-leadership-accountability', lessons('crs-leadership-accountability', 4), true, 5),
+  ev(
+    'u-leila',
+    'profile_complete',
+    20,
+    'profile:u-leila',
+    'Personal profile completed',
+    '2026-05-01T10:00:00.000Z',
+  ),
+  ...lessonEvents(
+    'u-leila',
+    'crs-leadership-accountability',
+    lessons('crs-leadership-accountability', 4),
+    true,
+    5,
+  ),
 ]
 
 const noraEvents: PointsEvent[] = [
-  ev('u-nora', 'profile_complete', 20, 'profile:u-nora', 'Personal profile completed', '2026-03-22T10:00:00.000Z'),
-  ...lessonEvents('u-nora', 'crs-evidence-reporting', lessons('crs-evidence-reporting', 2), false, 9),
-  ev('u-nora', 'clinic_attend', 75, 'attend:evt-gap-analysis-webinar', 'Attended From Baseline to Action Plan', '2026-08-20T11:00:00.000Z', false, '/portal/clinics/evt-gap-analysis-webinar'),
+  ev(
+    'u-nora',
+    'profile_complete',
+    20,
+    'profile:u-nora',
+    'Personal profile completed',
+    '2026-03-22T10:00:00.000Z',
+  ),
+  ...lessonEvents(
+    'u-nora',
+    'crs-evidence-reporting',
+    lessons('crs-evidence-reporting', 2),
+    false,
+    9,
+  ),
+  ev(
+    'u-nora',
+    'clinic_attend',
+    75,
+    'attend:evt-gap-analysis-webinar',
+    'Attended From Baseline to Action Plan',
+    '2026-08-20T11:00:00.000Z',
+    false,
+    '/portal/clinics/evt-gap-analysis-webinar',
+  ),
 ]
 
 export const pointsEvents: PointsEvent[] = [

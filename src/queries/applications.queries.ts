@@ -49,4 +49,5 @@ export const useAddReviewNote = () =>
   useMutation({ mutationFn: (v: { id: string; note: string }) => svc.addReviewNote(v.id, v.note) })
 export const useInviteCompany = () => useMutation({ mutationFn: svc.inviteCompany })
 
+export { emptyApplicationData, sampleApplicationData } from '@/mocks/seed/applications'
 export { checkApplication, validateUpload } from '@/services/applications.service'

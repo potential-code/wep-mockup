@@ -4,7 +4,6 @@ import { ROLE_SHORT } from '@shared/reference'
 import { Link, Outlet, useLocation, useMatches, useNavigate } from '@tanstack/react-router'
 import { Hourglass } from 'lucide-react'
 import { AppTopBar } from '@/components/layout/AppTopBar'
-import { ConciergeLauncher } from '@/features/concierge/components/ConciergeLauncher'
 import { DemoControls } from '@/components/layout/DemoControls'
 import { PageTransition } from '@/components/motion/PageTransition'
 import { WepsLogo } from '@/components/shared/Logo'
@@ -27,6 +26,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { buildNav, homeFor } from '@/config/nav'
+import { ConciergeLauncher } from '@/features/concierge/components/ConciergeLauncher'
 import { useCurrentUser } from '@/hooks/use-session'
 
 export function AppShell() {

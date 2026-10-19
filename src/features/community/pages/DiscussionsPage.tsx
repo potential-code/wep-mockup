@@ -1,5 +1,11 @@
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder'
+import { SpaceFeed } from '../components/SpaceFeed'
 
 export function DiscussionsPage() {
-  return <PagePlaceholder title="Discussions" />
+  return (
+    <SpaceFeed
+      space="discussions"
+      title="Discussions"
+      description="Ask questions and share practice with the wider WEPs community."
+    />
+  )
 }

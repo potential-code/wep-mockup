@@ -137,8 +137,18 @@ export async function getEvent(eventId: string) {
   const reg = db.registrations.find(
     (r) => r.eventId === eventId && r.userId === user.id && r.status !== 'cancelled',
   )
+  const fac = db.users.find((u) => u.id === event.facilitatorId)
+  const prof = db.mentorProfiles.find((m) => m.userId === event.facilitatorId)
   return out({
     ...decorate(user.id, event),
+    facilitator: {
+      name: fac ? fullName(fac) : 'UN Women',
+      title: fac?.title ?? 'UN Women',
+      headline: prof?.headline,
+      bio: prof?.bio,
+      expertise: prof?.expertise ?? [],
+      avatar: fac?.avatar,
+    },
     eligibility: evaluateClinicEligibility(user.id, eventId),
     registration: reg ?? null,
     materials: event.materials.map((m) => ({

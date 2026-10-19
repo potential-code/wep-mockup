@@ -3,7 +3,16 @@
 // audit log, annual reporting cycle.
 
 import { fullName } from '@shared/permissions'
-import type { CommsTemplate, Course, Invitation, PlatformSettings } from '@shared/types'
+import type {
+  AnnualReport,
+  ClinicEvent,
+  CommsTemplate,
+  Course,
+  Invitation,
+  PlatformSettings,
+} from '@shared/types'
+import { aiScripts } from '@/mocks/seed/ai-scripts'
+import { assessmentSections } from '@/mocks/seed/assessment'
 import {
   ApiError,
   audit,
@@ -12,10 +21,12 @@ import {
   delay,
   findOr404,
   newId,
+  notify,
   now,
   out,
   requireCapability,
 } from './api'
+import { reportStatusFor } from './metrics'
 
 export async function getSettings() {
   await delay()
@@ -162,13 +173,196 @@ export async function upsertCourse(course: Course) {
   return out(course)
 }
 
+/** Every course, including drafts, with learner counts. */
+export async function listAdminCourses() {
+  await delay()
+  requireCapability('admin.manage')
+  return out(
+    db.courses.map((course) => {
+      const prog = db.progress.filter((p) => p.courseId === course.id)
+      return {
+        course,
+        enrolled: prog.length,
+        completed: prog.filter((p) => p.completedAt).length,
+      }
+    }),
+  )
+}
+
+export async function getAdminCourse(courseId: string) {
+  await delay(150)
+  requireCapability('admin.manage')
+  return out({
+    course: db.courses.find((c) => c.id === courseId) ?? null,
+    courses: db.courses.map((c) => ({ id: c.id, title: c.title })),
+    events: db.events.map((e) => ({ id: e.id, title: e.title })),
+  })
+}
+
+export async function getAssessmentConfig() {
+  await delay()
+  requireCapability('admin.manage')
+  const submitted = db.assessments.filter((a) => a.status === 'submitted').length
+  return out({
+    sections: assessmentSections,
+    assessments: db.assessments.length,
+    submitted,
+    inProgress: db.assessments.filter((a) => a.status === 'in_progress').length,
+  })
+}
+
+export const REPORT_TEMPLATE_SECTIONS = [
+  { key: 'snapshot', label: 'Company snapshot', carried: true },
+  { key: 'narrative', label: 'CEO narrative', carried: false },
+  { key: 'actions', label: 'Actions taken', carried: false },
+  { key: 'support', label: 'Support received', carried: false },
+  { key: 'principles', label: 'Progress by principle', carried: false },
+  { key: 'indicators', label: 'Indicators', carried: false },
+  { key: 'challenges', label: 'Challenges and next steps', carried: false },
+  { key: 'declaration', label: 'Declaration', carried: false },
+] as const
+
+export async function getReportingConfig() {
+  await delay()
+  requireCapability('admin.manage')
+  const year = db.settings.reportingYear
+  return out({
+    settings: db.settings,
+    companies: db.companies
+      .filter((c) => c.signatoryStatus === 'approved')
+      .map((c) => ({
+        company: c,
+        status: reportStatusFor(c.id, year),
+        priorities: c.priorities.length,
+        hasNextYear: db.reports.some((r) => r.companyId === c.id && r.year === year + 1),
+      })),
+  })
+}
+
 /** Open a new reporting year: copy reusable profile information forward, never outcomes. */
 export async function openReportingYear(year: number, companyIds: string[], dueDate: string) {
   await delay(500)
   requireCapability('admin.manage')
+  if (companyIds.length === 0) throw new ApiError('Select at least one company.')
+  const prevYear = db.settings.reportingYear
+  for (const companyId of companyIds) {
+    if (db.reports.some((r) => r.companyId === companyId && r.year === year)) continue
+    const prev = db.reports.find((r) => r.companyId === companyId && r.year === prevYear)
+    const emptySections = Object.fromEntries(
+      (
+        [
+          'snapshot',
+          'narrative',
+          'actions',
+          'support',
+          'principles',
+          'indicators',
+          'challenges',
+          'declaration',
+        ] as const
+      ).map((k) => [k, '']),
+    ) as AnnualReport['sections']
+    const falseFlags = Object.fromEntries(
+      Object.keys(emptySections).map((k) => [k, false]),
+    ) as AnnualReport['sectionComplete']
+    db.reports.push({
+      id: newId('rep'),
+      companyId,
+      year,
+      status: 'not_started',
+      dueDate,
+      sections: { ...emptySections, snapshot: prev?.sections.snapshot ?? '' },
+      sectionComplete: falseFlags,
+      indicators: (prev?.indicators ?? []).map((i) => ({
+        ...i,
+        id: `${i.id}-${year}`,
+        value: null,
+        previousValue: i.value,
+        evidence: undefined,
+        period: `FY${year - 1}`,
+      })),
+      evidence: [],
+      versions: [],
+      changeRequests: [],
+      publicSummaryApproved: false,
+      updatedAt: now(),
+    })
+  }
   db.settings.reportingYear = year
   db.settings.reportingDueDate = dueDate
   audit('Reporting year opened', String(year), `${companyIds.length} companies in scope`)
   commit()
   return out(db.settings)
+}
+
+/** Notification history across the platform, newest first, with recipient names. */
+export async function listNotificationHistory() {
+  await delay()
+  requireCapability('admin.manage')
+  return out(
+    db.notifications
+      .slice()
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, 200)
+      .map((n) => {
+        const u = db.users.find((x) => x.id === n.userId)
+        return { notification: n, recipient: u ? fullName(u) : n.userId }
+      }),
+  )
+}
+
+/** Reschedule or cancel an event and notify everyone registered. */
+export async function changeEvent(
+  eventId: string,
+  change: { startsAt?: string; cancel?: boolean; message: string },
+) {
+  await delay(400)
+  requireCapability('admin.manage')
+  const e = findOr404(db.events, (x) => x.id === eventId, 'Event')
+  if (!change.message.trim()) throw new ApiError('Add a short message for registered participants.')
+  const before = e.startsAt
+  if (change.cancel) e.status = 'cancelled'
+  else if (change.startsAt) e.startsAt = change.startsAt
+  const regs = db.registrations.filter(
+    (r) => r.eventId === eventId && ['registered', 'waitlisted'].includes(r.status),
+  )
+  for (const r of regs) {
+    const u = db.users.find((x) => x.id === r.userId)
+    notify({
+      userId: r.userId,
+      category: 'clinic',
+      title: change.cancel ? `${e.title} is cancelled` : `${e.title} has a new time`,
+      body: change.message,
+      link: `/portal/clinics/${e.id}`,
+      critical: true,
+      emailPreview: {
+        to: u?.email ?? '',
+        subject: change.cancel ? `Cancelled: ${e.title}` : `New time: ${e.title}`,
+        body: [`Dear ${u?.firstName ?? 'participant'},`, change.message],
+      },
+    })
+  }
+  audit(
+    change.cancel ? 'Event cancelled' : 'Event rescheduled',
+    e.title,
+    `${regs.length} participants notified${change.cancel ? '' : ` · was ${before}`}`,
+  )
+  commit()
+  return out({ event: e as ClinicEvent, notified: regs.length })
+}
+
+/** Scripted concierge prompts, grouped by role, for the AI settings screen. */
+export async function listAiScripts() {
+  await delay(150)
+  requireCapability('admin.manage')
+  return out(
+    aiScripts.map((s) => ({
+      id: s.id,
+      roles: s.roles,
+      prompt: s.prompt,
+      sources: s.sources.length,
+      unavailable: Boolean(s.unavailable),
+      isDraft: Boolean(s.isDraft),
+    })),
+  )
 }
