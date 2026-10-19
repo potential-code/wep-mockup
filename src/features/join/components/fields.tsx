@@ -32,7 +32,7 @@ export function Field({
 }: FieldShell & { id: string; children: ReactNode }) {
   return (
     <div className={cn('grid content-start gap-1.5', className)}>
-      <Label htmlFor={id} className="text-navy">
+      <Label htmlFor={id} className="font-semibold text-navy">
         {label}
         {required ? <span className="text-danger"> *</span> : null}
       </Label>
@@ -87,7 +87,7 @@ export function TextField({
           onChange={(e) => onChange(e.target.value)}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-err` : help ? `${id}-help` : undefined}
-          className={cn('h-10 bg-card', suffix && 'pe-9')}
+          className={cn('h-11 rounded-lg', suffix && 'pe-9')}
           {...input}
         />
         {suffix ? (
@@ -126,7 +126,7 @@ export function TextAreaField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={!!error}
-        className="bg-card"
+        className="rounded-lg"
       />
     </Field>
   )
@@ -161,7 +161,7 @@ export function SelectField({
       className={className}
     >
       <Select value={value || undefined} onValueChange={onChange}>
-        <SelectTrigger id={id} className="h-10 w-full bg-card" aria-invalid={!!error}>
+        <SelectTrigger id={id} className="!h-11 w-full rounded-lg" aria-invalid={!!error}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -196,7 +196,7 @@ export function ChoiceField({
   const id = useId()
   return (
     <fieldset className={cn('grid content-start gap-1.5', className)}>
-      <legend className="mb-1.5 font-medium text-navy text-sm">
+      <legend className="mb-1.5 font-semibold text-navy text-sm">
         {label}
         {required ? <span className="text-danger"> *</span> : null}
       </legend>
@@ -206,8 +206,10 @@ export function ChoiceField({
             key={o.value}
             htmlFor={`${id}-${o.value}`}
             className={cn(
-              'flex min-h-10 cursor-pointer items-center gap-2 rounded-lg border bg-card px-3.5 py-2 font-normal text-sm transition-colors has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50',
-              value === o.value ? 'border-blue bg-blue-50 text-navy' : 'hover:border-blue/50',
+              'flex min-h-10 cursor-pointer items-center gap-2 rounded-xl border bg-white px-3.5 py-2 font-normal text-sm shadow-[var(--shadow-field)] transition-all has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50',
+              value === o.value
+                ? 'border-blue bg-blue-50 font-medium text-navy ring-2 ring-blue/15'
+                : 'hover:-translate-y-px hover:border-blue/50',
             )}
           >
             <RadioGroupItem id={`${id}-${o.value}`} value={o.value} />
@@ -230,6 +232,31 @@ export const YES_NO = [
   { value: 'no', label: 'No' },
 ]
 
+/** Tinted panel that lifts a block of fields off the white step card. */
+export function Panel({
+  children,
+  className,
+  tone = 'blue',
+}: {
+  children: ReactNode
+  className?: string
+  tone?: 'blue' | 'gold'
+}) {
+  return (
+    <div
+      className={cn(
+        'relative grid min-w-0 gap-4 rounded-2xl border p-4 shadow-[inset_0_1px_0_rgb(255_255_255/0.9)] sm:p-6',
+        tone === 'gold'
+          ? 'border-gold/35 bg-[linear-gradient(160deg,var(--gold-50),rgb(251_244_230/0.35))]'
+          : 'border-blue-100/80 bg-[linear-gradient(160deg,rgb(232_243_250/0.75),rgb(244_247_250/0.6))]',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
 export function FieldGroup({
   title,
   description,
@@ -240,14 +267,19 @@ export function FieldGroup({
   children: ReactNode
 }) {
   return (
-    <div className="grid gap-4">
+    <Panel>
       {title ? (
-        <div>
-          <h3 className="font-heading font-semibold text-navy">{title}</h3>
-          {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}
+        <div className="flex gap-3">
+          <span aria-hidden className="mt-1 h-5 w-1 shrink-0 rounded-full bg-gold" />
+          <div>
+            <h3 className="font-heading font-semibold text-navy">{title}</h3>
+            {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}
+          </div>
         </div>
       ) : null}
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2">{children}</div>
-    </div>
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-x-5 gap-y-4 sm:grid-cols-2">
+        {children}
+      </div>
+    </Panel>
   )
 }

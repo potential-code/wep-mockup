@@ -99,7 +99,11 @@ export function InvitationPage() {
           hint={`Ask ${data.inviterName} to resend it. Nothing else is needed from you.`}
         />
       ) : data ? (
-        <form onSubmit={submit} className="grid gap-6" noValidate>
+        <form
+          onSubmit={submit}
+          className="grid gap-6 rounded-2xl border border-white bg-white/80 p-6 shadow-lift backdrop-blur sm:p-8"
+          noValidate
+        >
           <header className="grid gap-2">
             <h1 className="font-bold font-heading text-3xl text-navy">Accept your invitation</h1>
             <p className="text-muted-foreground">
@@ -167,7 +171,7 @@ export function InvitationPage() {
               <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden /> {formError}
             </p>
           ) : null}
-          <Button type="submit" size="xl" disabled={accept.isPending}>
+          <Button type="submit" size="xl" variant="gloss-blue" disabled={accept.isPending}>
             {accept.isPending ? (
               <>
                 <Loader2 className="animate-spin" aria-hidden /> Setting up your account…

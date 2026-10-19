@@ -27,16 +27,16 @@ export function PathwayList({
   return (
     <SectionCard
       title="Your department pathway"
-      description={`${title} · sequenced for ${departmentLabel}`}
+      description={`${title} · ${departmentLabel}`}
       action={
         <Link to="/portal/learn" className="font-medium text-blue text-sm hover:underline">
-          Open learning path
+          View all
         </Link>
       }
       bodyClassName="p-0 sm:p-0"
     >
       <ol className="divide-y">
-        {courses.map((row, i) => {
+        {courses.slice(0, 3).map((row, i) => {
           const s = STATE[row.state]
           const locked = row.state === 'locked'
           const inner = (
@@ -66,11 +66,7 @@ export function PathwayList({
                   ) : null}
                 </div>
                 <p className="text-muted-foreground text-sm">{row.reason}</p>
-                {locked ? (
-                  <p className="text-sm text-warning">
-                    Finish the previous course in this pathway to unlock it.
-                  </p>
-                ) : row.completion.done > 0 ? (
+                {!locked && row.completion.done > 0 ? (
                   <div className="flex items-center gap-3">
                     <Progress
                       value={row.completion.percent}

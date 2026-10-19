@@ -1,12 +1,13 @@
 import { useGSAP } from '@gsap/react'
 import { Link } from '@tanstack/react-router'
 import { gsap } from 'gsap'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useRef } from 'react'
+import { CornerArcs, DotGrid, ForAllBars } from '@/components/shared/BrandMotif'
 import { Button } from '@/components/ui/button'
 import { images } from '@/config/images'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
-import { PortalPreview } from './PortalPreview'
+import { PrinciplesOrbit } from './PrinciplesOrbit'
 
 export function HomeHero() {
   const root = useRef<HTMLElement>(null)
@@ -25,28 +26,14 @@ export function HomeHero() {
         )
         .from('[data-hero="copy"]', { y: 20, opacity: 0, duration: 0.7 }, 0.9)
         .from('[data-hero="cta"]', { y: 16, opacity: 0, duration: 0.7 }, 1.05)
-        .from(
-          '[data-float]',
-          { y: 50, opacity: 0, scale: 0.94, duration: 1, stagger: 0.18, ease: 'power3.out' },
-          0.8,
-        )
-      gsap.utils.toArray<HTMLElement>('[data-float]').forEach((el, i) => {
-        gsap.to(el, {
-          y: i % 2 ? 10 : -10,
-          duration: 3 + i * 0.6,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: 1.8,
-        })
-      })
       gsap.to('[data-hero="bg"] img', {
         yPercent: 12,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true },
       })
       gsap.to('[data-hero="preview"]', {
-        y: -50,
+        y: -70,
+        rotate: 8,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true },
       })
@@ -57,7 +44,7 @@ export function HomeHero() {
   return (
     <section
       ref={root}
-      className="relative isolate overflow-hidden bg-navy-900 pt-28 pb-20 text-white sm:pt-36 lg:pb-28"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-navy-900 pt-28 text-white sm:pt-36"
     >
       <div data-hero="bg" aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
         <img
@@ -75,7 +62,14 @@ export function HomeHero() {
         aria-hidden
         className="-z-10 absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy-900 to-transparent"
       />
-      <div className="container-public grid items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]">
+      <CornerArcs corner="bl" size={420} className="-z-10" />
+      <ForAllBars className="-z-10 top-24 right-[-40px] hidden opacity-60 md:block" size={280} />
+      <DotGrid className="-z-10 top-32 left-[46%] hidden lg:block" cols={6} rows={4} />
+      <div
+        aria-hidden
+        className="-z-10 absolute top-0 bottom-0 left-[max(1rem,calc((100vw-1200px)/2))] w-px bg-gradient-to-b from-transparent via-white/10 to-transparent"
+      />
+      <div className="container-public grid flex-1 items-center gap-12 pb-20 lg:grid-cols-[1.3fr_0.7fr] xl:grid-cols-[1.25fr_0.75fr]">
         <div className="grid gap-7">
           <p
             data-hero="eyebrow"
@@ -83,7 +77,7 @@ export function HomeHero() {
           >
             Women’s Empowerment Principles
           </p>
-          <h1 className="font-bold font-heading text-[2.5rem] leading-[1.06] sm:text-5xl xl:text-[3.5rem]">
+          <h1 className="font-bold font-heading text-[2.5rem] leading-[1.06] sm:text-5xl xl:text-[3.6rem]">
             <span className="block overflow-hidden pb-1">
               <span data-hero="line" className="block">
                 Turn commitment into
@@ -100,27 +94,24 @@ export function HomeHero() {
             advancing gender equality.
           </p>
           <div data-hero="cta" className="flex flex-wrap gap-3">
-            <Button asChild variant="gold" size="xl">
+            <Button asChild variant="gold" size="xl" className="group rounded-full">
               <Link to="/join">
-                Join WEPs <ArrowRight aria-hidden />
+                Join WEPs{' '}
+                <ArrowRight
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
               </Link>
             </Button>
-            <Button asChild variant="outline-light" size="xl">
+            <Button asChild variant="outline-light" size="xl" className="rounded-full">
               <Link to="/sign-in">Sign in</Link>
             </Button>
           </div>
         </div>
-        <div className="hidden pb-8 lg:block">
-          <PortalPreview />
+        <div className="mx-auto w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none">
+          <PrinciplesOrbit />
         </div>
       </div>
-      <a
-        href="#value"
-        aria-label="Scroll to content"
-        className="-translate-x-1/2 absolute bottom-6 left-1/2 hidden size-10 place-items-center rounded-full border border-white/30 text-white/80 transition hover:bg-white/10 sm:grid"
-      >
-        <ChevronDown className="size-5" aria-hidden />
-      </a>
     </section>
   )
 }

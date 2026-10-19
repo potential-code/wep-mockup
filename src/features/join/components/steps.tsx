@@ -10,7 +10,15 @@ import {
   OWNERSHIP_OPTIONS,
   REFERRAL_SOURCES,
 } from '../join-utils'
-import { ChoiceField, FieldGroup, SelectField, TextAreaField, TextField, YES_NO } from './fields'
+import {
+  ChoiceField,
+  FieldGroup,
+  Panel,
+  SelectField,
+  TextAreaField,
+  TextField,
+  YES_NO,
+} from './fields'
 
 export interface StepProps {
   data: ApplicationData
@@ -134,42 +142,46 @@ export function PresenceStep({ data, set, err, documents, setDoc, showMissing }:
       selected.includes(country) ? selected.filter((x) => x !== country) : [...selected, country],
     )
   return (
-    <div className="grid gap-8">
-      <fieldset className="grid gap-2">
-        <legend className="font-medium text-navy text-sm">Other countries where you operate</legend>
-        <p className="text-muted-foreground text-xs">
-          Select every country where you have offices or staff, besides your headquarters.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {COUNTRIES.filter((x) => x !== data.company.country).map((country) => {
-            const on = selected.includes(country)
-            return (
-              <button
-                key={country}
-                type="button"
-                aria-pressed={on}
-                onClick={() => toggle(country)}
-                className={cn(
-                  'min-h-9 rounded-full border px-3.5 text-sm transition-colors',
-                  on
-                    ? 'border-blue bg-blue-50 font-medium text-navy'
-                    : 'bg-card hover:border-blue/50',
-                )}
-              >
-                {country}
-              </button>
-            )
-          })}
-        </div>
-      </fieldset>
-      <ChoiceField
-        label="Is the company legally registered?"
-        required
-        value={data.presence.legallyRegistered}
-        onChange={(v) => set('presence.legallyRegistered', v)}
-        options={YES_NO}
-        error={err('presence.legallyRegistered')}
-      />
+    <div className="grid gap-6">
+      <Panel>
+        <fieldset className="grid gap-2">
+          <legend className="font-semibold text-navy text-sm">
+            Other countries where you operate
+          </legend>
+          <p className="text-muted-foreground text-xs">
+            Select every country where you have offices or staff, besides your headquarters.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {COUNTRIES.filter((x) => x !== data.company.country).map((country) => {
+              const on = selected.includes(country)
+              return (
+                <button
+                  key={country}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => toggle(country)}
+                  className={cn(
+                    'min-h-9 rounded-full border px-3.5 text-sm shadow-[var(--shadow-field)] transition-all',
+                    on
+                      ? 'border-blue bg-blue font-medium text-white shadow-[0_6px_14px_-6px_rgb(22_124_179/0.7)]'
+                      : 'bg-white hover:-translate-y-px hover:border-blue/50',
+                  )}
+                >
+                  {country}
+                </button>
+              )
+            })}
+          </div>
+        </fieldset>
+        <ChoiceField
+          label="Is the company legally registered?"
+          required
+          value={data.presence.legallyRegistered}
+          onChange={(v) => set('presence.legallyRegistered', v)}
+          options={YES_NO}
+          error={err('presence.legallyRegistered')}
+        />
+      </Panel>
       <FileDrop
         label="Legal registration document"
         hint="PDF, JPG or PNG, up to 20 MB"
@@ -192,7 +204,11 @@ function PersonFields({
   err,
   requiredEmail,
   requiredName,
+  title,
+  description,
 }: {
+  title?: string
+  description?: string
   prefix: string
   person: ContactPerson
   set: StepProps['set']
@@ -201,7 +217,7 @@ function PersonFields({
   requiredName?: boolean
 }) {
   return (
-    <FieldGroup>
+    <FieldGroup title={title} description={description}>
       <TextField
         label="First name"
         required={requiredName}
@@ -263,13 +279,15 @@ export function ExecutiveStep(p: StepProps) {
         requiredEmail
         requiredName
       />
-      <TextAreaField
-        label="A line from your CEO (optional)"
-        help="May appear on your public profile once approved. Maximum two sentences."
-        value={data.executive.quote}
-        onChange={(v) => set('executive.quote', v)}
-      />
-      <div className="grid gap-5 rounded-2xl border bg-surface/60 p-4 sm:p-5">
+      <Panel>
+        <TextAreaField
+          label="A line from your CEO (optional)"
+          help="May appear on your public profile once approved. Maximum two sentences."
+          value={data.executive.quote}
+          onChange={(v) => set('executive.quote', v)}
+        />
+      </Panel>
+      <Panel tone="gold" className="gap-5">
         <div className="flex gap-3 text-sm">
           <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
           <p>
@@ -310,42 +328,32 @@ export function ExecutiveStep(p: StepProps) {
             validate={(f) => validateUpload('ceo_portrait', f.fileName, f.sizeKb)}
           />
         </div>
-      </div>
+      </Panel>
     </div>
   )
 }
 
 export function ContactsStep({ data, set, err }: StepProps) {
   return (
-    <div className="grid gap-8">
-      <section aria-labelledby="primary-contact" className="grid gap-3">
-        <h3 id="primary-contact" className="font-heading font-semibold text-navy">
-          Primary contact
-        </h3>
-        <p className="-mt-2 text-muted-foreground text-sm">
-          Receives application updates. Usually your HR, sustainability or DEI lead.
-        </p>
-        <PersonFields
-          prefix="contacts.primary"
-          person={data.contacts.primary}
-          set={set}
-          err={err}
-          requiredEmail
-          requiredName
-        />
-      </section>
-      <section aria-labelledby="secondary-contact" className="grid gap-3">
-        <h3 id="secondary-contact" className="font-heading font-semibold text-navy">
-          Secondary contact{' '}
-          <span className="font-normal text-muted-foreground text-sm">(optional)</span>
-        </h3>
-        <PersonFields
-          prefix="contacts.secondary"
-          person={data.contacts.secondary}
-          set={set}
-          err={err}
-        />
-      </section>
+    <div className="grid gap-6">
+      <PersonFields
+        title="Primary contact"
+        description="Receives application updates. Usually your HR, sustainability or DEI lead."
+        prefix="contacts.primary"
+        person={data.contacts.primary}
+        set={set}
+        err={err}
+        requiredEmail
+        requiredName
+      />
+      <PersonFields
+        title="Secondary contact (optional)"
+        description="A back-up person UN Women can reach if the primary contact is away."
+        prefix="contacts.secondary"
+        person={data.contacts.secondary}
+        set={set}
+        err={err}
+      />
     </div>
   )
 }
@@ -358,8 +366,11 @@ function Bar({ label, value }: { label: string; value: string }) {
         <span>{label}</span>
         <span className="font-medium text-navy">{value ? `${n}%` : '—'}</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-muted">
-        <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${n}%` }} />
+      <div className="h-2.5 overflow-hidden rounded-full bg-white shadow-[inset_0_1px_2px_rgb(12_37_55/0.12)]">
+        <div
+          className="h-full rounded-full bg-[linear-gradient(90deg,var(--blue),var(--navy))] transition-all duration-500"
+          style={{ width: `${n}%` }}
+        />
       </div>
     </div>
   )
@@ -416,13 +427,13 @@ export function GenderStep({ data, set, err }: StepProps) {
           />
         ) : null}
       </FieldGroup>
-      <div className="grid gap-3 rounded-2xl border bg-surface/60 p-4">
-        <p className="font-medium text-navy text-sm">Preview</p>
+      <Panel tone="gold" className="gap-3">
+        <p className="font-semibold text-navy text-sm">Live preview</p>
         <Bar label="Employees" value={g.employees} />
         <Bar label="Management" value={g.management} />
         <Bar label="Board" value={g.board} />
         {asset ? <Bar label="Investment committee" value={g.investmentCommittee ?? ''} /> : null}
-      </div>
+      </Panel>
     </div>
   )
 }
@@ -430,20 +441,22 @@ export function GenderStep({ data, set, err }: StepProps) {
 export function PlansStep({ data, set, err }: StepProps) {
   return (
     <div className="grid gap-6">
-      <ChoiceField
-        label="Does your company already have a Gender Action Plan?"
-        required
-        value={data.plans.hasGenderActionPlan}
-        onChange={(v) => set('plans.hasGenderActionPlan', v)}
-        options={[
-          { value: 'yes', label: 'Yes' },
-          { value: 'in_progress', label: 'In development' },
-          { value: 'no', label: 'Not yet' },
-        ]}
-        error={err('plans.hasGenderActionPlan')}
-        help="A written set of goals and actions on gender equality in the workplace, marketplace and community."
-      />
-      <div className="flex gap-3 rounded-2xl border border-blue/20 bg-blue-50 p-4 text-sm">
+      <Panel>
+        <ChoiceField
+          label="Does your company already have a Gender Action Plan?"
+          required
+          value={data.plans.hasGenderActionPlan}
+          onChange={(v) => set('plans.hasGenderActionPlan', v)}
+          options={[
+            { value: 'yes', label: 'Yes' },
+            { value: 'in_progress', label: 'In development' },
+            { value: 'no', label: 'Not yet' },
+          ]}
+          error={err('plans.hasGenderActionPlan')}
+          help="A written set of goals and actions on gender equality in the workplace, marketplace and community."
+        />
+      </Panel>
+      <div className="flex gap-3 rounded-2xl border border-blue/20 bg-white p-4 text-sm shadow-card">
         <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
         <p>
           You do not need a plan to join. After approval the portal helps you build one, step by
@@ -473,7 +486,7 @@ export function ReferralStep({ data, set, err }: StepProps) {
           help="For example the name of the event or colleague."
         />
       </FieldGroup>
-      <div className="grid gap-3 rounded-2xl border border-gold/40 bg-gold-50/60 p-4 sm:p-5">
+      <Panel tone="gold" className="gap-3">
         <div>
           <h3 className="font-heading font-semibold text-navy">
             Financial contribution (optional)
@@ -493,7 +506,7 @@ export function ReferralStep({ data, set, err }: StepProps) {
             { value: 'no', label: 'No, thank you' },
           ]}
         />
-      </div>
+      </Panel>
     </div>
   )
 }

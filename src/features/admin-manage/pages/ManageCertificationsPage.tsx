@@ -64,17 +64,15 @@ export function ManageCertificationsPage() {
       cell: (r) => formatCurrency(r.purchase.amount),
     },
     {
-      key: 'ref',
-      header: 'Reference',
-      hideOnMobile: true,
-      sortValue: (r) => r.purchase.paymentRef,
-      cell: (r) => r.purchase.paymentRef ?? '—',
-    },
-    {
       key: 'paid',
-      header: 'Paid',
+      header: 'Paid / reference',
       sortValue: (r) => r.purchase.paidAt,
-      cell: (r) => formatDate(r.purchase.paidAt),
+      cell: (r) => (
+        <div>
+          <p>{formatDate(r.purchase.paidAt)}</p>
+          <p className="text-muted-foreground text-xs">{r.purchase.paymentRef ?? '—'}</p>
+        </div>
+      ),
     },
   ]
   const credCols: Column<Row>[] = [
@@ -106,12 +104,11 @@ export function ManageCertificationsPage() {
     <div>
       <PageHeader
         title="Certifications and Payments"
-        description="Configure offerings and pass rules, and monitor transactions and credentials."
+        description="Proposed prices and pass rules for discussion. Certificates are issued only after a confirmed demo payment and a passed exam."
         actions={<DemoLabel>Proposed certifications · Demo payments</DemoLabel>}
       />
-      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard label="Demo revenue" value={formatCurrency(revenue)} icon={CreditCard} />
-        <StatCard label="Paid purchases" value={paid.length} />
         <StatCard
           label="Certificates issued"
           value={rows.filter((r) => r.purchase.status === 'certificate_issued').length}
@@ -128,10 +125,6 @@ export function ManageCertificationsPage() {
         </TabsList>
 
         <TabsContent value="offerings" className="grid gap-4 pt-3">
-          <p className="rounded-xl border bg-gold-50/60 p-3 text-sm">
-            Prices, exam length and pass marks are proposed values for discussion. A certificate is
-            issued only after payment is confirmed and the exam is passed. No real charges are made.
-          </p>
           <div className="grid gap-4 lg:grid-cols-3">
             {OFFERINGS.map((o) => (
               <SectionCard key={o.id} title={o.title} description={o.focus}>

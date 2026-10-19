@@ -72,7 +72,6 @@ export function ManageReportingPage() {
     return {
       total: list.length,
       submitted,
-      accepted: list.filter((c) => c.status === 'accepted').length,
     }
   }, [data])
 
@@ -91,7 +90,7 @@ export function ManageReportingPage() {
           </Button>
         }
       />
-      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard label="Reporting year" value={String(year)} icon={CalendarClock} />
         <StatCard label="Deadline" value={formatDate(data.settings.reportingDueDate)} tone="gold" />
         <StatCard
@@ -99,7 +98,6 @@ export function ManageReportingPage() {
           value={`${stats.submitted} / ${stats.total}`}
           progress={stats.total ? (stats.submitted / stats.total) * 100 : 0}
         />
-        <StatCard label="Accepted" value={stats.accepted} tone="success" />
       </div>
 
       <Tabs defaultValue="population">

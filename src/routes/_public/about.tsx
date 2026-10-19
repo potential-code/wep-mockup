@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { AboutPage } from '@/features/public-site/pages/AboutPage'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+// The public site is a single landing page: old section URLs land on the matching section.
 export const Route = createFileRoute('/_public/about')({
-  staticData: { title: 'About WEPs and the Principles' },
-  component: AboutPage,
+  beforeLoad: () => {
+    throw redirect({ to: '/', hash: 'about', replace: true })
+  },
 })

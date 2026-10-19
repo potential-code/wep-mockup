@@ -1,10 +1,10 @@
 import { BarChart3, Download, Table2 } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
+import { CardHeaderBand } from '@/components/shared/Cards'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { LayerBadge } from './LayerBadge'
 import { MetricInfo } from './MetricInfo'
-import { METRICS, type MetricKey } from './metric-definitions'
+import type { MetricKey } from './metric-definitions'
 import { useCsvExport } from './useExport'
 
 export interface TableAlt {
@@ -38,7 +38,7 @@ export function ChartCard({
     <section
       className={cn('flex min-w-0 flex-col rounded-2xl border bg-card shadow-card', className)}
     >
-      <div className="flex flex-wrap items-start justify-between gap-2 px-5 pt-5">
+      <CardHeaderBand className="gap-2 px-5">
         <div className="grid min-w-0 gap-1">
           <div className="flex items-center gap-1">
             <h3 className="font-heading font-semibold text-navy">{title}</h3>
@@ -58,12 +58,7 @@ export function ChartCard({
             {asTable ? 'View as chart' : 'View as table'}
           </Button>
         </div>
-      </div>
-      {metric ? (
-        <div className="px-5 pt-2">
-          <LayerBadge layer={METRICS[metric].layer} />
-        </div>
-      ) : null}
+      </CardHeaderBand>
       <div className="min-w-0 flex-1 p-5">
         {asTable ? (
           <div className="grid gap-2">

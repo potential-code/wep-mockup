@@ -13,6 +13,10 @@ bun run build      # typecheck + production build to dist/
 bun run lint
 ```
 
+## Password protection
+
+The dev and preview servers use HTTP Basic Auth (user `admin`, password `Potential`). The browser asks once and reuses it across the whole site. Override with `BASIC_AUTH_USER` / `BASIC_AUTH_PASS`, or turn it off with `BASIC_AUTH=off`. Static hosting needs its own equivalent (e.g. nginx `auth_basic`).
+
 ## Demo
 
 - Sign in page → **Explore the demo** buttons open the portal as any role.

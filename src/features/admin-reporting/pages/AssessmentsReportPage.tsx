@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import type { Column } from '@/components/shared/DataTable'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { StatusBadge, WorkflowStatus } from '@/components/shared/StatusBadge'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatDate, formatPercent } from '@/lib/format'
 import { useAssessmentsReport } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
@@ -24,6 +25,7 @@ export function AssessmentsReportPage() {
   const go = useGoto()
   const d = q.data
   const [od, setOd] = useState('all')
+  const [view, setView] = useState('actions')
 
   const actionCols = useMemo<Column<ActionRow>[]>(
     () => [
@@ -34,14 +36,6 @@ export function AssessmentsReportPage() {
         cell: (r) => <span className="font-medium text-navy">{r.action.title}</span>,
       },
       { key: 'c', header: 'Company', sortValue: (r) => r.companyName, cell: (r) => r.companyName },
-      {
-        key: 'p',
-        header: 'Principle',
-        sortValue: (r) => r.action.principle,
-        exportValue: (r) => `P${r.action.principle}`,
-        cell: (r) => <PrincipleTag id={r.action.principle} linked={false} />,
-        hideOnMobile: true,
-      },
       {
         key: 'due',
         header: 'Deadline',
@@ -66,6 +60,14 @@ export function AssessmentsReportPage() {
         header: 'Evidence files',
         sortValue: (r) => r.evidenceCount,
         cell: (r) => r.evidenceCount,
+      },
+      {
+        key: 'p',
+        header: 'Principle',
+        sortValue: (r) => r.action.principle,
+        exportValue: (r) => `P${r.action.principle}`,
+        cell: (r) => <PrincipleTag id={r.action.principle} linked={false} />,
+        hideOnMobile: true,
       },
       {
         key: 'o',
@@ -136,19 +138,22 @@ export function AssessmentsReportPage() {
     <ReportingShell
       showPrinciple
       title="Assessments and actions"
-      description="Baseline completion, priority themes by principle, action deadlines, evidence coverage and accepted contributions."
+      description="Baseline, priority themes, deadlines and evidence."
     >
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d && t ? (
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               <Stat
                 label="Baseline completed"
                 value={`${assessed} of ${d.baseline.length}`}
-                hint="Approved companies with a submitted assessment"
+                hint="Approved companies"
               />
-              <Stat label="Actions" value={t.total} hint={`${t.active} active`} />
-              <Stat label="Overdue" value={t.overdue} hint="Due date passed, not complete" />
+              <Stat
+                label="Overdue actions"
+                value={t.overdue}
+                hint={`of ${t.total} actions (${t.active} active)`}
+              />
               <Stat
                 label="Evidence coverage"
                 value={formatPercent(t.active ? (t.withEvidence / t.active) * 100 : 0)}
@@ -157,12 +162,12 @@ export function AssessmentsReportPage() {
               <Stat
                 label="Accepted contributions"
                 value={t.acceptedContributions}
-                hint="Complete with accepted evidence"
+                hint="Complete, evidence accepted"
               />
             </div>
             <ChartCard
               title="Priority themes by principle"
-              description="Actions by principle: complete, overdue and other. Priority companies chose the principle as a focus."
+              description="Actions by principle: complete, overdue and other."
               metric="action_completion"
               table={{
                 headers: ['Principle', 'Actions', 'Complete', 'Overdue', 'Companies prioritising'],
@@ -191,10 +196,13 @@ export function AssessmentsReportPage() {
                 ]}
               />
             </ChartCard>
-            <section className="grid gap-3">
-              <h2 className="font-heading font-semibold text-lg text-navy">
-                Action deadlines and evidence
-              </h2>
+            <Tabs value={view} onValueChange={setView}>
+              <TabsList aria-label="Assessment records">
+                <TabsTrigger value="actions">Action deadlines and evidence</TabsTrigger>
+                <TabsTrigger value="baseline">Baseline by company</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            {view === 'actions' ? (
               <ReportTable
                 title="Actions"
                 columns={actionCols}
@@ -216,11 +224,7 @@ export function AssessmentsReportPage() {
                   />
                 }
               />
-            </section>
-            <section className="grid gap-3">
-              <h2 className="font-heading font-semibold text-lg text-navy">
-                Baseline completion by company
-              </h2>
+            ) : (
               <ReportTable
                 title="Baseline completion"
                 columns={baseCols}
@@ -230,7 +234,7 @@ export function AssessmentsReportPage() {
                 searchLabel="Search companies"
                 onRowClick={(r) => go(`/admin/reporting/companies/${r.company.id}`)}
               />
-            </section>
+            )}
           </div>
         ) : null}
       </QueryState>

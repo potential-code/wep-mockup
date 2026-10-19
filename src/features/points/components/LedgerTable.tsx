@@ -1,21 +1,62 @@
+import type { PointsAction } from '@shared/types'
 import { Link } from '@tanstack/react-router'
-import { ArrowUpRight } from 'lucide-react'
+import {
+  ArrowUpRight,
+  BookOpenCheck,
+  CalendarCheck,
+  ClipboardCheck,
+  Handshake,
+  type LucideIcon,
+  Medal,
+  MessageSquareHeart,
+  MessageSquareText,
+  RotateCcw,
+  SlidersHorizontal,
+  UserRoundCheck,
+} from 'lucide-react'
 import { DataTable } from '@/components/shared/DataTable'
 import { EmptyState } from '@/components/shared/States'
 import { formatDate } from '@/lib/format'
 import type { LedgerRow } from '@/queries/learning.queries'
 
-const ACTION_LABEL: Record<string, string> = {
-  profile_complete: 'Profile',
-  lesson_complete: 'Lesson',
-  quiz_pass: 'Quiz',
-  clinic_attend: 'Clinic',
-  feedback: 'Feedback',
-  community_contribution: 'Community',
-  action_contribution: 'Action plan',
-  mentor_redeem: 'Mentoring',
-  mentor_refund: 'Refund',
-  adjustment: 'Adjustment',
+/** Label and icon per ledger action, shared with the rules table. */
+export const ACTION_META: Record<PointsAction, { label: string; icon: LucideIcon }> = {
+  profile_complete: { label: 'Profile', icon: UserRoundCheck },
+  lesson_complete: { label: 'Lesson', icon: BookOpenCheck },
+  quiz_pass: { label: 'Quiz', icon: Medal },
+  clinic_attend: { label: 'Clinic', icon: CalendarCheck },
+  feedback: { label: 'Feedback', icon: MessageSquareText },
+  community_contribution: { label: 'Community', icon: MessageSquareHeart },
+  action_contribution: { label: 'Action plan', icon: ClipboardCheck },
+  mentor_redeem: { label: 'Mentoring', icon: Handshake },
+  mentor_refund: { label: 'Refund', icon: RotateCcw },
+  adjustment: { label: 'Adjustment', icon: SlidersHorizontal },
+}
+
+/** Round icon chip: gold for qualifying awards, blue for other awards, muted for spends. */
+export function ActionIcon({
+  action,
+  amount,
+  qualifying,
+}: {
+  action: PointsAction
+  amount: number
+  qualifying?: boolean
+}) {
+  const Icon = ACTION_META[action]?.icon ?? SlidersHorizontal
+  return (
+    <span
+      className={`grid size-9 shrink-0 place-items-center rounded-full ${
+        amount < 0
+          ? 'bg-secondary text-muted-foreground'
+          : qualifying
+            ? 'bg-gold-50 text-gold-700 ring-1 ring-gold/30'
+            : 'bg-blue-50 text-blue ring-1 ring-blue/15'
+      }`}
+    >
+      <Icon className="size-4" strokeWidth={1.75} aria-hidden />
+    </span>
+  )
 }
 
 export function LedgerTable({ rows, isLoading }: { rows: LedgerRow[]; isLoading?: boolean }) {
@@ -25,7 +66,7 @@ export function LedgerTable({ rows, isLoading }: { rows: LedgerRow[]; isLoading?
       rows={rows}
       isLoading={isLoading}
       getRowId={(r) => r.id}
-      pageSize={8}
+      pageSize={5}
       empty={
         <EmptyState
           title="No points yet"
@@ -38,12 +79,15 @@ export function LedgerTable({ rows, isLoading }: { rows: LedgerRow[]; isLoading?
           header: 'Action',
           sortValue: (r) => r.sourceLabel,
           cell: (r) => (
-            <div className="grid">
-              <span className="font-medium text-navy">{r.sourceLabel}</span>
-              <span className="text-muted-foreground text-xs">
-                {ACTION_LABEL[r.action] ?? r.action}
-                {r.qualifying ? ' · qualifying' : ''}
-              </span>
+            <div className="flex items-center gap-3">
+              <ActionIcon action={r.action} amount={r.amount} qualifying={r.qualifying} />
+              <div className="grid min-w-0">
+                <span className="font-medium text-navy">{r.sourceLabel}</span>
+                <span className="text-muted-foreground text-xs">
+                  {ACTION_META[r.action]?.label ?? r.action}
+                  {r.qualifying ? ' · qualifying' : ''}
+                </span>
+              </div>
             </div>
           ),
         },
@@ -60,7 +104,7 @@ export function LedgerTable({ rows, isLoading }: { rows: LedgerRow[]; isLoading?
           sortValue: (r) => r.amount,
           cell: (r) => (
             <span
-              className={`font-semibold tabular-nums ${r.amount < 0 ? 'text-danger' : 'text-success'}`}
+              className={`inline-flex rounded-full px-2.5 py-0.5 font-semibold tabular-nums ${r.amount < 0 ? 'bg-danger-soft text-danger' : 'bg-success-soft text-success'}`}
             >
               {r.amount > 0 ? '+' : '−'}
               {Math.abs(r.amount)}

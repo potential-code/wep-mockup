@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { DirectoryPage } from '@/features/public-site/pages/DirectoryPage'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+// The public site is a single landing page: old section URLs land on the matching section.
 export const Route = createFileRoute('/_public/directory')({
-  staticData: { title: 'Company Directory' },
-  component: DirectoryPage,
+  beforeLoad: () => {
+    throw redirect({ to: '/', hash: 'community', replace: true })
+  },
 })

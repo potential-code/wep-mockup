@@ -42,10 +42,28 @@ export interface NavItem {
   capability?: Capability
   /** Exact match for active state (dashboards). */
   exact?: boolean
+  /** Search params carried over from the current URL (reporting filters stay applied). */
+  keepSearch?: readonly string[]
 }
 
+/** URL keys for the UN Women reporting filters, shared by every reporting screen. */
+export const REPORTING_FILTER_KEYS = [
+  'year',
+  'country',
+  'sector',
+  'company',
+  'dept',
+  'principle',
+  'sup',
+] as const
+
 export interface NavGroup {
+  /** Gold section heading shown above the group. */
+  section?: string
   label?: string
+  /** Folds the items under the label; opens automatically when it holds the current page. */
+  collapsible?: boolean
+  defaultOpen?: boolean
   items: NavItem[]
 }
 
@@ -134,47 +152,66 @@ const expert: NavGroup[] = [
     ],
   },
   {
-    label: 'Shared',
+    // Brief §4 and §18: mentors take part in Discussions and use permitted materials and the
+    // concierge; Signatory Circle stays hidden for them.
+    label: 'Engage',
     items: [
-      { label: 'Community', to: '/portal/community', icon: MessagesSquare },
-      { label: 'Resources', to: '/portal/resources', icon: FolderOpen },
-      { label: 'AI Concierge', to: '/portal/concierge', icon: Bot },
+      {
+        label: 'Community',
+        to: '/portal/community',
+        icon: MessagesSquare,
+        capability: 'community.discussions',
+      },
+      {
+        label: 'Resources',
+        to: '/portal/resources',
+        icon: FolderOpen,
+        capability: 'resources.use',
+      },
+      { label: 'AI Concierge', to: '/portal/concierge', icon: Bot, capability: 'concierge.use' },
     ],
   },
 ]
 
+const report = (label: string, to: string, icon: LucideIcon, exact?: boolean): NavItem => ({
+  label,
+  to,
+  icon,
+  exact,
+  keepSearch: REPORTING_FILTER_KEYS,
+})
+
+// Brief §22 and §24 list every tab below. The most-used ones stay visible; the rest sit in
+// collapsible groups so the sidebar reads simply in a demo.
 const admin: NavGroup[] = [
   {
-    label: 'Reporting',
+    section: 'Reporting',
     items: [
-      { label: 'Executive Dashboard', to: '/admin/reporting', icon: Gauge, exact: true },
-      { label: 'Analytics', to: '/admin/reporting/analytics', icon: BarChart3 },
-      { label: 'Companies', to: '/admin/reporting/companies', icon: Building2 },
-      { label: 'Signatories', to: '/admin/reporting/signatories', icon: ShieldCheck },
-      { label: 'All Users', to: '/admin/reporting/users', icon: Users },
-      { label: 'Learning and Clinics', to: '/admin/reporting/learning', icon: GraduationCap },
-      { label: 'Mentorship', to: '/admin/reporting/mentorship', icon: UsersRound },
-      {
-        label: 'Assessments and Actions',
-        to: '/admin/reporting/assessments',
-        icon: ClipboardCheck,
-      },
-      { label: 'Annual Reports', to: '/admin/reporting/annual-reports', icon: FileText },
-      {
-        label: 'Community and Marketplace',
-        to: '/admin/reporting/community',
-        icon: MessagesSquare,
-      },
-      {
-        label: 'Certification and Payments',
-        to: '/admin/reporting/certification',
-        icon: HandCoins,
-      },
-      { label: 'Report Builder', to: '/admin/reporting/report-builder', icon: FileBarChart },
+      report('Executive Dashboard', '/admin/reporting', Gauge, true),
+      report('Companies', '/admin/reporting/companies', Building2),
+      report('Annual Reports', '/admin/reporting/annual-reports', FileText),
+      report('Report Builder', '/admin/reporting/report-builder', FileBarChart),
     ],
   },
   {
-    label: 'Platform Management',
+    label: 'More reports',
+    collapsible: true,
+    items: [
+      report('Analytics', '/admin/reporting/analytics', BarChart3),
+      report('Signatories', '/admin/reporting/signatories', ShieldCheck),
+      report('All Users', '/admin/reporting/users', Users),
+      report('Learning and Clinics', '/admin/reporting/learning', GraduationCap),
+      report('Mentorship', '/admin/reporting/mentorship', UsersRound),
+      report('Assessments and Actions', '/admin/reporting/assessments', ClipboardCheck),
+      report('Community and Marketplace', '/admin/reporting/community', MessagesSquare),
+      report('Certification and Payments', '/admin/reporting/certification', HandCoins),
+    ],
+  },
+  {
+    section: 'Platform Management',
+    label: 'Programme',
+    collapsible: true,
+    defaultOpen: true,
     items: [
       {
         label: 'Applications and Approvals',
@@ -183,6 +220,14 @@ const admin: NavGroup[] = [
       },
       { label: 'Companies and Access', to: '/admin/manage/companies', icon: Building2 },
       { label: 'Users and Invitations', to: '/admin/manage/users', icon: Users },
+      { label: 'Annual Reporting', to: '/admin/manage/reporting', icon: FileText },
+      { label: 'Certifications and Payments', to: '/admin/manage/certifications', icon: Award },
+    ],
+  },
+  {
+    label: 'Content',
+    collapsible: true,
+    items: [
       { label: 'Courses and Learning Paths', to: '/admin/manage/courses', icon: BookOpen },
       { label: 'Resources', to: '/admin/manage/resources', icon: FolderOpen },
       { label: 'Clinics and Events', to: '/admin/manage/events', icon: Presentation },
@@ -192,9 +237,13 @@ const admin: NavGroup[] = [
         to: '/admin/manage/assessments',
         icon: ClipboardCheck,
       },
-      { label: 'Annual Reporting', to: '/admin/manage/reporting', icon: FileText },
-      { label: 'Certifications and Payments', to: '/admin/manage/certifications', icon: Award },
       { label: 'Community and Marketplace', to: '/admin/manage/community', icon: Store },
+    ],
+  },
+  {
+    label: 'Settings',
+    collapsible: true,
+    items: [
       { label: 'Gamification', to: '/admin/manage/gamification', icon: Trophy },
       { label: 'Communications', to: '/admin/manage/communications', icon: Mail },
       { label: 'AI Knowledge and Settings', to: '/admin/manage/ai', icon: Sparkles },

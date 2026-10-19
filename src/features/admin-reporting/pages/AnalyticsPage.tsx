@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { SectionCard } from '@/components/shared/Cards'
 import { EmptyState } from '@/components/shared/States'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAnalytics } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
-import { BarsChart, HeatGrid, TrendChart } from '../components/charts'
+import { BarsChart, TrendChart } from '../components/charts'
 import { useReportingFilters } from '../components/filters'
 import { DefinitionsList } from '../components/MetricInfo'
 import { QueryState } from '../components/QueryState'
@@ -14,21 +15,20 @@ export function AnalyticsPage() {
   const { filters, suppress } = useReportingFilters()
   const q = useAnalytics(filters)
   const d = q.data
+  const [view, setView] = useState('trends')
 
   const maxSteps = Math.max(0, ...(d?.pathways.map((p) => p.steps.length) ?? [0]))
-  const heat = useMemo(
+  const completion = useMemo(
     () =>
-      (d?.pathways ?? []).map((p) => ({
-        label: p.department,
-        cells: Array.from({ length: maxSteps }, (_, i) => {
-          const s = p.steps[i]
-          if (!s || p.assigned === 0) return { pct: null, text: '—' }
-          if (suppress && p.assigned < 5) return { pct: null, text: '<5' }
-          const pct = Math.round((s.reached / p.assigned) * 100)
-          return { pct, text: `${pct}%` }
-        }),
-      })),
-    [d, maxSteps, suppress],
+      (d?.pathways ?? []).map((p) => {
+        const last = p.steps[p.steps.length - 1]
+        const hidden = (suppress && p.assigned < 5) || p.assigned === 0
+        return {
+          department: p.department,
+          completion: hidden || !last ? 0 : Math.round((last.reached / p.assigned) * 100),
+        }
+      }),
+    [d, suppress],
   )
   const stepNames = Array.from({ length: maxSteps }, (_, i) => (i === 0 ? 'Assigned' : `L${i}`))
 
@@ -40,7 +40,19 @@ export function AnalyticsPage() {
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d ? (
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-            <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
+            <Tabs value={view} onValueChange={setView}>
+              <TabsList
+                className="max-w-full flex-wrap group-data-[orientation=horizontal]/tabs:h-auto"
+                aria-label="Analytics view"
+              >
+                <TabsTrigger value="trends">Trends</TabsTrigger>
+                <TabsTrigger value="mentors">Mentor engagement</TabsTrigger>
+                <TabsTrigger value="pathways">Pathway drop-off</TabsTrigger>
+                <TabsTrigger value="resources">Resource use</TabsTrigger>
+                <TabsTrigger value="departments">Departments</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            {view === 'trends' ? (
               <ChartCard
                 title="Learning and clinic trends"
                 description="Monthly lessons, path completions and confirmed attendance, April–October 2026."
@@ -60,6 +72,8 @@ export function AnalyticsPage() {
                   ]}
                 />
               </ChartCard>
+            ) : null}
+            {view === 'mentors' ? (
               <ChartCard
                 title="Mentor engagement"
                 description="Sessions booked, completed and no-shows by month of booking."
@@ -80,33 +94,40 @@ export function AnalyticsPage() {
                   ]}
                 />
               </ChartCard>
-            </div>
+            ) : null}
 
-            <ChartCard
-              title="Pathway drop-off by lesson step"
-              description="Share of assigned learners who completed each lesson of their department's designated course."
-              metric="drop_off"
-              table={{
-                headers: ['Department', 'Course', 'Assigned', ...stepNames.slice(1)],
-                rows: d.pathways.map((p) => [
-                  p.department,
-                  p.course,
-                  cell(p.assigned, suppress),
-                  ...p.steps
-                    .slice(1)
-                    .map((s) =>
-                      suppress && p.assigned < 5 && p.assigned > 0
-                        ? '<5 suppressed'
-                        : `${s.reached} (${p.assigned ? Math.round((s.reached / p.assigned) * 100) : 0}%)`,
-                    ),
-                ]),
-              }}
-              footer="Darker cells mean more learners reached the step. Departments with fewer than 5 learners are suppressed."
-            >
-              <HeatGrid columns={stepNames} rows={heat} />
-            </ChartCard>
+            {view === 'pathways' ? (
+              <ChartCard
+                title="Pathway drop-off by department"
+                description="Share of assigned learners who reached the last lesson of their path."
+                metric="drop_off"
+                table={{
+                  headers: ['Department', 'Course', 'Assigned', ...stepNames.slice(1)],
+                  rows: d.pathways.map((p) => [
+                    p.department,
+                    p.course,
+                    cell(p.assigned, suppress),
+                    ...p.steps
+                      .slice(1)
+                      .map((s) =>
+                        suppress && p.assigned < 5 && p.assigned > 0
+                          ? '<5 suppressed'
+                          : `${s.reached} (${p.assigned ? Math.round((s.reached / p.assigned) * 100) : 0}%)`,
+                      ),
+                  ]),
+                }}
+              >
+                <BarsChart
+                  horizontal
+                  labelWidth={150}
+                  data={completion}
+                  xKey="department"
+                  series={[{ key: 'completion', label: 'Reached last lesson (%)' }]}
+                />
+              </ChartCard>
+            ) : null}
 
-            <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
+            {view === 'resources' ? (
               <ChartCard
                 title="Resource use"
                 description={`Most-opened resources (${d.resourceEvents} opens in scope).`}
@@ -133,9 +154,11 @@ export function AnalyticsPage() {
                   />
                 )}
               </ChartCard>
+            ) : null}
+            {view === 'departments' ? (
               <ChartCard
                 title="Department comparison"
-                description="Learners, path completions and clinic attendance. Groups under 5 are suppressed."
+                description="Groups under 5 are suppressed."
                 metric="path_completion"
                 table={{
                   headers: [
@@ -173,11 +196,11 @@ export function AnalyticsPage() {
                   ]}
                 />
               </ChartCard>
-            </div>
+            ) : null}
 
             <SectionCard
               title="Metric definitions and denominators"
-              description="Every chart above uses these definitions."
+              description="Used by every view above."
             >
               <DefinitionsList
                 metrics={[

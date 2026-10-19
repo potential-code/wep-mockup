@@ -28,7 +28,7 @@ export function AnnualReportsMatrixPage() {
   return (
     <ReportingShell
       title="Annual reports"
-      description="Company by year matrix with review status, overdue submissions, versions and comparison-ready indicators."
+      description="Company by year, with review status, versions and overdue submissions."
       actions={
         <Button
           variant="outline"
@@ -177,9 +177,7 @@ export function AnnualReportsMatrixPage() {
               </table>
             </div>
             <p className="text-muted-foreground text-xs">
-              Comparison-ready means at least two accepted reports. Cross-year comparison still
-              requires consistent units, boundaries and indicator definitions, checked in each
-              report review. Indicator values are company-reported and not verified by this portal.
+              Comparison-ready means two or more accepted reports. Values are company-reported.
             </p>
           </div>
         ) : null}

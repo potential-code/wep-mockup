@@ -12,7 +12,7 @@ import { useReportingFilters, useUrlParam } from '../components/filters'
 import { QueryState, Stat } from '../components/QueryState'
 import { ReportingShell } from '../components/ReportingShell'
 import { ReportTable } from '../components/ReportTable'
-import { cell, chartVal } from '../components/suppress'
+import { cell } from '../components/suppress'
 
 type Data = NonNullable<ReturnType<typeof useLearningReport>['data']>
 type CourseRow = Data['courses'][number]
@@ -77,12 +77,6 @@ export function LearningReportPage() {
         cell: (r) => formatDate(r.event.startsAt),
       },
       {
-        key: 'st',
-        header: 'Status',
-        sortValue: (r) => r.event.status,
-        cell: (r) => <WorkflowStatus status={r.event.status} />,
-      },
-      {
         key: 'reg',
         header: 'Registered',
         sortValue: (r) => r.registered,
@@ -90,18 +84,24 @@ export function LearningReportPage() {
       },
       { key: 'att', header: 'Attended', sortValue: (r) => r.attended, cell: (r) => r.attended },
       {
-        key: 'ns',
-        header: 'No-shows',
-        sortValue: (r) => r.noShow,
-        cell: (r) => r.noShow,
-        hideOnMobile: true,
-      },
-      {
         key: 'rating',
         header: 'Feedback',
         sortValue: (r) => r.rating ?? 0,
         exportValue: (r) => r.rating?.toFixed(1),
         cell: (r) => (r.rating ? `${r.rating.toFixed(1)} / 5 (${r.feedbackCount})` : '—'),
+      },
+      {
+        key: 'st',
+        header: 'Status',
+        sortValue: (r) => r.event.status,
+        cell: (r) => <WorkflowStatus status={r.event.status} />,
+      },
+      {
+        key: 'ns',
+        header: 'No-shows',
+        sortValue: (r) => r.noShow,
+        cell: (r) => r.noShow,
+        hideOnMobile: true,
       },
     ],
     [],
@@ -148,12 +148,12 @@ export function LearningReportPage() {
   return (
     <ReportingShell
       title="Learning and clinics"
-      description="Enrolment, completion, readiness, registration, attendance and feedback. Open a course or event for the breakdown."
+      description="Open a course or event for the breakdown."
     >
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d && t ? (
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               <Stat label="Activated learners" value={t.learners} />
               <Stat
                 label="Completed path"
@@ -161,7 +161,6 @@ export function LearningReportPage() {
                 hint={rate(t.completed, t.learners)}
               />
               <Stat label="Clinic ready" value={t.ready} hint={rate(t.ready, t.learners)} />
-              <Stat label="Registrations" value={t.registered} />
               <Stat
                 label="Attendance rate"
                 value={rate(t.attended, t.attendanceBase)}
@@ -173,7 +172,7 @@ export function LearningReportPage() {
               <ChartCard
                 className="lg:col-span-3"
                 title="Monthly learning and clinic activity"
-                description="Lessons completed, path completions and confirmed attendance."
+                description="Lessons, path completions and attendance."
                 metric="path_completion"
                 table={{
                   headers: ['Month', 'Lessons completed', 'Path completions', 'Attendance'],
@@ -249,36 +248,7 @@ export function LearningReportPage() {
                   onRowClick={(r) => setEventId(r.event.id)}
                 />
               </TabsContent>
-              <TabsContent value="departments" className="mt-4 grid gap-4">
-                <ChartCard
-                  title="Learners by department"
-                  description="Groups under 5 are suppressed to protect individuals."
-                  table={{
-                    headers: ['Department', 'Learners', 'Completed', 'Ready', 'Registered'],
-                    rows: d.departments.map((r) => [
-                      r.department,
-                      cell(r.learners, suppress),
-                      cell(r.completed, suppress),
-                      cell(r.ready, suppress),
-                      cell(r.registered, suppress),
-                    ]),
-                  }}
-                >
-                  <BarsChart
-                    data={d.departments.map((r) => ({
-                      department: r.department,
-                      learners: chartVal(r.learners, suppress),
-                      completed: chartVal(r.completed, suppress),
-                      ready: chartVal(r.ready, suppress),
-                    }))}
-                    xKey="department"
-                    series={[
-                      { key: 'learners', label: 'Learners' },
-                      { key: 'completed', label: 'Completed' },
-                      { key: 'ready', label: 'Ready' },
-                    ]}
-                  />
-                </ChartCard>
+              <TabsContent value="departments" className="mt-4">
                 <ReportTable
                   title="Departments"
                   columns={deptCols}

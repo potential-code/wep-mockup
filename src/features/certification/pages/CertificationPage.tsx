@@ -1,4 +1,3 @@
-import { Award, Info } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { AccessNotice, CardGridSkeleton, ErrorState } from '@/components/shared/States'
 import { useCertifications } from '@/queries/certification.queries'
@@ -11,7 +10,7 @@ export function CertificationPage() {
       <PageHeader
         eyebrow="Company certifications"
         title="Certification"
-        description="Three proposed company certifications, each with its own payment, exam and sample credential."
+        description="Three company certifications, each with its own payment and exam."
       />
       <ProposedNotice />
       {isLoading ? (
@@ -25,10 +24,8 @@ export function CertificationPage() {
       ) : data ? (
         <>
           {!data.canPurchase ? (
-            <p className="flex items-start gap-2 rounded-xl border bg-card p-3 text-muted-foreground text-sm">
-              <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
-              You can see your company’s credential status here. Only the CEO or an admin with
-              purchasing authority can pay for or sit a company exam.
+            <p className="text-muted-foreground text-sm">
+              View only. The CEO or an admin with purchasing authority can pay for and sit exams.
             </p>
           ) : null}
           <div className="grid gap-5 md:grid-cols-3">
@@ -36,10 +33,6 @@ export function CertificationPage() {
               <OfferingCard key={row.offering.id} row={row} index={i} />
             ))}
           </div>
-          <p className="flex items-center gap-2 text-muted-foreground text-sm">
-            <Award className="size-4" aria-hidden />
-            Each certification is tracked independently: paying for one does not unlock another.
-          </p>
         </>
       ) : null}
     </div>

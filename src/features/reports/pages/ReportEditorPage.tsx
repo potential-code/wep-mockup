@@ -90,11 +90,8 @@ export function ReportEditorPage() {
         className="mb-0 sm:mb-0"
       />
 
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-gold/30 bg-gold-50/60 px-4 py-3 text-sm">
+      <div>
         <DemoLabel>Proposed feature</DemoLabel>
-        <p className="min-w-0 flex-1 text-navy">
-          This is a proposed portal form. It is not a reproduction of the official submission.
-        </p>
       </div>
 
       <ReportStatusBar status={report.status} />
@@ -110,8 +107,7 @@ export function ReportEditorPage() {
               Version {justSubmitted} submitted
             </p>
             <p className="text-muted-foreground text-sm">
-              UN Women has been notified. The report is now locked for review and a dated snapshot
-              is stored in the version history.
+              UN Women has been notified. The report is locked for review.
             </p>
           </div>
         </div>
@@ -137,10 +133,6 @@ export function ReportEditorPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-muted-foreground text-xs">
-            Edit each section and mark it complete to resolve the request, then resubmit. Earlier
-            versions stay in the history.
-          </p>
         </div>
       ) : null}
 

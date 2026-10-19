@@ -21,7 +21,6 @@ export function YearComparison({ reports }: { reports: AnnualReport[] }) {
   return (
     <SectionCard
       title="Compare with previous year"
-      description="Values are comparable only where the indicator, unit and coverage match."
       action={
         <Select value={year} onValueChange={setYear}>
           <SelectTrigger className="w-44" aria-label="Year to compare">

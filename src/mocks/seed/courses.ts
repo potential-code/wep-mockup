@@ -1489,17 +1489,100 @@ const evidenceReporting: Course = {
   ],
 }
 
+/**
+ * Course builder structure: two modules over the non-quiz lessons, a short ungraded pre-test
+ * drawn from the post-test questions, and builder settings.
+ */
+const withBuilder = (
+  course: Course,
+  modules: [string, string],
+  difficulty: Course['difficulty'],
+  updatedAt: string,
+): Course => {
+  const units = course.lessons.filter((l) => l.type !== 'quiz')
+  const split = Math.ceil(units.length / 2)
+  const quiz = course.lessons.find((l) => l.type === 'quiz')?.quiz ?? []
+  return {
+    ...course,
+    modules: [
+      {
+        id: `${course.id}-m1`,
+        title: modules[0],
+        lessonIds: units.slice(0, split).map((l) => l.id),
+      },
+      { id: `${course.id}-m2`, title: modules[1], lessonIds: units.slice(split).map((l) => l.id) },
+    ],
+    preTest: {
+      title: `${course.title}: starting check`,
+      questions: quiz.slice(0, 3).map((q, i) => ({ ...q, id: `${course.id}-pre${i + 1}` })),
+    },
+    difficulty,
+    certificate: true,
+    updatedAt,
+  }
+}
+
 export const courses: Course[] = [
-  inclusiveRecruitment,
-  fairProgressionPay,
-  workplaceWellbeing,
-  genderResponsiveProcurement,
-  supplierEngagement,
-  inclusiveCommunications,
-  responsibleRepresentation,
-  leadershipAccountability,
-  actionPlanning,
-  evidenceReporting,
+  withBuilder(
+    inclusiveRecruitment,
+    ['Understanding bias in hiring', 'Building a fair process'],
+    'beginner',
+    '2026-10-12T09:00:00Z',
+  ),
+  withBuilder(
+    fairProgressionPay,
+    ['Pay equity basics', 'Fair promotion decisions'],
+    'intermediate',
+    '2026-10-08T09:00:00Z',
+  ),
+  withBuilder(
+    workplaceWellbeing,
+    ['A safe workplace', 'Wellbeing in practice'],
+    'beginner',
+    '2026-09-30T09:00:00Z',
+  ),
+  withBuilder(
+    genderResponsiveProcurement,
+    ['Why procurement matters', 'Changing how you buy'],
+    'beginner',
+    '2026-10-15T09:00:00Z',
+  ),
+  withBuilder(
+    supplierEngagement,
+    ['Setting expectations', 'Working with suppliers'],
+    'intermediate',
+    '2026-09-22T09:00:00Z',
+  ),
+  withBuilder(
+    inclusiveCommunications,
+    ['Spotting stereotypes', 'Launching inclusive campaigns'],
+    'beginner',
+    '2026-10-14T09:00:00Z',
+  ),
+  withBuilder(
+    responsibleRepresentation,
+    ['Consent and casting', 'Telling the story'],
+    'intermediate',
+    '2026-09-18T09:00:00Z',
+  ),
+  withBuilder(
+    leadershipAccountability,
+    ['Strategy and governance', 'Targets and commitments'],
+    'advanced',
+    '2026-10-10T09:00:00Z',
+  ),
+  withBuilder(
+    actionPlanning,
+    ['Choosing priorities', 'Delivering the plan'],
+    'intermediate',
+    '2026-10-02T09:00:00Z',
+  ),
+  withBuilder(
+    evidenceReporting,
+    ['Data and evidence', 'Reporting progress'],
+    'advanced',
+    '2026-09-26T09:00:00Z',
+  ),
 ]
 
 export const learningPaths: LearningPath[] = [

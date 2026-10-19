@@ -13,6 +13,7 @@ import type {
 } from '@shared/types'
 import { aiScripts } from '@/mocks/seed/ai-scripts'
 import { assessmentSections } from '@/mocks/seed/assessment'
+import { learningPaths } from '@/mocks/seed/courses'
 import {
   ApiError,
   audit,
@@ -165,12 +166,29 @@ export async function reviewProfileRevision(companyId: string, approve: boolean)
 export async function upsertCourse(course: Course) {
   await delay(300)
   requireCapability('admin.manage')
-  const i = db.courses.findIndex((c) => c.id === course.id)
-  if (i >= 0) db.courses[i] = course
-  else db.courses.push({ ...course, id: course.id || newId('crs') })
-  audit(course.published ? 'Course published' : 'Course saved as draft', course.title)
+  const saved = { ...course, id: course.id || newId('crs'), updatedAt: new Date().toISOString() }
+  const i = db.courses.findIndex((c) => c.id === saved.id)
+  if (i >= 0) db.courses[i] = saved
+  else db.courses.push(saved)
+  audit(saved.published ? 'Course published' : 'Course saved as draft', saved.title)
   commit()
-  return out(course)
+  return out(saved)
+}
+
+/** Removes a course nobody has started and no pathway uses; otherwise unpublish it. */
+export async function deleteCourse(courseId: string) {
+  await delay(300)
+  requireCapability('admin.manage')
+  const course = db.courses.find((c) => c.id === courseId)
+  if (!course) throw new ApiError('Course not found.')
+  if (learningPaths.some((p) => p.courseIds.includes(courseId)))
+    throw new ApiError('This course is part of a department pathway. Unpublish it instead.')
+  if (db.progress.some((p) => p.courseId === courseId))
+    throw new ApiError('Learners have started this course. Unpublish it instead.')
+  db.courses = db.courses.filter((c) => c.id !== courseId)
+  audit('Course deleted', course.title)
+  commit()
+  return out({ id: courseId })
 }
 
 /** Every course, including drafts, with learner counts. */

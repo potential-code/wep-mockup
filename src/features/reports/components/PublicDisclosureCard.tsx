@@ -23,7 +23,7 @@ export function PublicDisclosureCard({
   return (
     <SectionCard
       title="Public disclosure"
-      description="Submitting a report does not publish anything. Publication is a separate approval."
+      description="Publishing is a separate approval."
       action={<DemoLabel>Proposed feature</DemoLabel>}
     >
       <div className="grid gap-4">

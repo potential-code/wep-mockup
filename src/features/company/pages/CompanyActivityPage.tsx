@@ -1,8 +1,10 @@
 import { fullName } from '@shared/permissions'
 import { Activity } from 'lucide-react'
 import { motion } from 'motion/react'
+import { useState } from 'react'
 import { SectionCard } from '@/components/shared/Cards'
 import { EmptyState, ErrorState } from '@/components/shared/States'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCurrentUser } from '@/hooks/use-session'
 import { formatDateTime, relativeTime } from '@/lib/format'
@@ -12,15 +14,13 @@ export function CompanyActivityPage() {
   const { company } = useCurrentUser()
   const activity = useCompanyActivity(company?.id)
   const team = useTeam(company?.id)
+  const [shown, setShown] = useState(5)
   const nameOf = (id: string) => {
     const u = team.data?.find((m) => m.id === id)
     return u ? fullName(u) : id === 'u-admin' ? 'UN Women' : 'System'
   }
   return (
-    <SectionCard
-      title="Company activity"
-      description="A record of who changed what, kept for reporting evidence."
-    >
+    <SectionCard title="Company activity" description="Who changed what">
       {activity.isLoading ? (
         <div className="grid gap-3" role="status" aria-label="Loading">
           {[0, 1, 2, 3].map((i) => (
@@ -37,7 +37,7 @@ export function CompanyActivityPage() {
         />
       ) : (
         <ol className="relative grid gap-5 border-s ps-6">
-          {activity.data.map((a, i) => (
+          {activity.data.slice(0, shown).map((a, i) => (
             <motion.li
               key={a.id}
               initial={{ opacity: 0, x: -8 }}
@@ -60,6 +60,11 @@ export function CompanyActivityPage() {
           ))}
         </ol>
       )}
+      {activity.data && activity.data.length > shown ? (
+        <Button variant="outline" size="sm" className="mt-5" onClick={() => setShown((n) => n + 5)}>
+          Load more
+        </Button>
+      ) : null}
     </SectionCard>
   )
 }

@@ -1,4 +1,3 @@
-import { Info } from 'lucide-react'
 import { useMemo } from 'react'
 import { DemoLabel } from '@/components/shared/Cards'
 import type { Column } from '@/components/shared/DataTable'
@@ -30,15 +29,12 @@ export function CertificationReportPage() {
         sortValue: (r) => r.offering.title,
         cell: (r) => <span className="font-medium text-navy">{r.offering.title}</span>,
       },
-      { key: 'i', header: 'Checkouts', sortValue: (r) => r.initiated, cell: (r) => r.initiated },
       {
         key: 'c',
         header: 'Confirmed payments',
         sortValue: (r) => r.confirmed,
         cell: (r) => r.confirmed,
       },
-      { key: 'a', header: 'Exam attempts', sortValue: (r) => r.attempts, cell: (r) => r.attempts },
-      { key: 'p', header: 'Passed', sortValue: (r) => r.passed, cell: (r) => r.passed },
       {
         key: 'is',
         header: 'Credentials issued',
@@ -54,6 +50,9 @@ export function CertificationReportPage() {
         cell: (r) => formatCurrency(r.confirmedRevenue),
         align: 'end',
       },
+      { key: 'i', header: 'Checkouts', sortValue: (r) => r.initiated, cell: (r) => r.initiated },
+      { key: 'a', header: 'Exam attempts', sortValue: (r) => r.attempts, cell: (r) => r.attempts },
+      { key: 'p', header: 'Passed', sortValue: (r) => r.passed, cell: (r) => r.passed },
     ],
     [],
   )
@@ -86,18 +85,18 @@ export function CertificationReportPage() {
         cell: (r) => (r.purchase.paidAt ? formatDate(r.purchase.paidAt) : '—'),
       },
       {
-        key: 'at',
-        header: 'Attempts',
-        sortValue: (r) => r.purchase.attempts.length,
-        cell: (r) => r.purchase.attempts.length,
-      },
-      {
         key: 'am',
         header: 'Amount (demo)',
         sortValue: (r) => r.purchase.amount,
         exportValue: (r) => r.purchase.amount,
         cell: (r) => formatCurrency(r.purchase.amount),
         align: 'end',
+      },
+      {
+        key: 'at',
+        header: 'Attempts',
+        sortValue: (r) => r.purchase.attempts.length,
+        cell: (r) => r.purchase.attempts.length,
       },
       {
         key: 'cr',
@@ -113,37 +112,24 @@ export function CertificationReportPage() {
   return (
     <ReportingShell
       title="Certification and payments"
-      description="Purchases, confirmed payments, exam attempts, pass outcomes, issued company credentials and refunds."
+      description="Demo payments only. Refunds, failed and cancelled checkouts never add revenue."
       actions={<DemoLabel>Demo payments</DemoLabel>}
     >
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d ? (
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7">
-              <Stat label="Checkouts started" value={d.totals.initiated} />
-              <Stat label="Confirmed payments" value={d.totals.confirmed} />
-              <Stat label="Exam attempts" value={d.totals.attempts} />
-              <Stat label="Passed" value={d.totals.passed} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <Stat label="Purchases confirmed" value={d.totals.confirmed} />
               <Stat label="Credentials issued" value={d.totals.issued} />
-              <Stat label="Refunds" value={d.totals.refunded} />
               <Stat
-                label="Confirmed revenue"
+                label="Confirmed demo revenue"
                 value={formatCurrency(d.totals.confirmedRevenue)}
-                hint="Demo, non-refunded"
+                hint="Non-refunded, no points earned"
               />
-            </div>
-            <div className="flex gap-2 rounded-xl border border-gold/40 bg-gold-50 p-3 text-sm">
-              <Info className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden />
-              <p>
-                Each purchase is one payment record and is counted once per stage: revenue is the
-                sum of confirmed, non-refunded payments only. Failed, cancelled and refunded
-                checkouts never add revenue. Demo payment, no real transactions. Certification
-                payments earn no points.
-              </p>
             </div>
             <ChartCard
               title="Purchase to credential funnel"
-              description="Distinct purchase records reaching each stage. Stages are nested, not added together."
+              description="Purchase records reaching each stage (nested)."
               metric="confirmed_payments"
               table={{
                 headers: ['Stage', 'Purchases'],

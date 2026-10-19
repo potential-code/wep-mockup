@@ -68,7 +68,6 @@ export function MyBookingsPage() {
     <div>
       <PageHeader
         title="My bookings"
-        description="Upcoming mentoring sessions, past sessions and the follow-up your expert shared."
         breadcrumbs={[{ label: 'Mentorship', to: '/portal/mentorship' }, { label: 'My bookings' }]}
         actions={
           <Button asChild>

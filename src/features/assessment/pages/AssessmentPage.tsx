@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Archive, ArrowRight, ClipboardCheck, RotateCcw } from 'lucide-react'
+import { Archive, ArrowRight, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -33,7 +33,7 @@ export function AssessmentPage() {
     <div>
       <PageHeader
         title="Company assessment"
-        description="Establish a baseline, find the gaps that matter and turn them into a practical action plan."
+        description="Set a baseline, find the gaps, plan the actions."
         actions={
           submitted ? (
             <Button asChild>
@@ -62,7 +62,6 @@ export function AssessmentPage() {
                 <DemoLabel>Illustrative demo</DemoLabel>
               </span>
             }
-            description="A short diagnostic for company representatives. It is separate from employee course quizzes and paid certification exams, and it does not reproduce the official Gender Gap Analysis Tool."
           >
             <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
               <Meta label="Period" value={assessment?.period ?? '2026'} />
@@ -82,32 +81,15 @@ export function AssessmentPage() {
               </div>
               <AnimatedBar value={completion} label="Assessment completion" />
             </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {submitted ? (
-                <>
-                  <Button asChild>
-                    <Link to="/portal/assessment/results">See results and needs</Link>
-                  </Button>
-                  {manage ? (
-                    <Button variant="outline" onClick={() => setConfirming(true)}>
-                      <RotateCcw aria-hidden /> Start a new period
-                    </Button>
-                  ) : null}
-                </>
-              ) : manage ? (
-                <Button asChild>
-                  <Link to="/portal/assessment/take">
-                    {status === 'in_progress' ? 'Continue' : 'Start'}
-                  </Link>
+            {submitted && manage ? (
+              <div className="mt-5">
+                <Button variant="outline" onClick={() => setConfirming(true)}>
+                  <RotateCcw aria-hidden /> Start a new period
                 </Button>
-              ) : (
-                <p className="text-muted-foreground text-sm">
-                  Only people with assessment rights can complete this.
-                </p>
-              )}
-            </div>
+              </div>
+            ) : null}
           </SectionCard>
-          <SectionCard title="Sections" description="Answers save as you go.">
+          <SectionCard title="Sections">
             <ul className="grid gap-3">
               {sections.map((s) => {
                 const done = s.questions.filter((q) => answered[q.id]).length
@@ -131,15 +113,12 @@ export function AssessmentPage() {
           </SectionCard>
         </StaggerItem>
         <StaggerItem>
-          <SectionCard
-            title="Previous periods"
-            description="Archived assessments stay available for comparison."
-          >
+          <SectionCard title="Previous periods">
             {archive.length === 0 ? (
               <p className="text-muted-foreground text-sm">Nothing archived yet.</p>
             ) : (
               <ul className="grid gap-3">
-                {archive.map((a) => (
+                {archive.slice(0, 3).map((a) => (
                   <li key={a.id} className="flex items-start gap-3 rounded-xl border p-3.5">
                     <Archive className="mt-0.5 size-4 text-muted-foreground" aria-hidden />
                     <div className="text-sm">
@@ -153,12 +132,6 @@ export function AssessmentPage() {
                 ))}
               </ul>
             )}
-            <div className="mt-4 flex items-start gap-2 text-muted-foreground text-xs">
-              <ClipboardCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
-              <p>
-                Employees don’t see this tab by default; it’s for assessment owners and the CEO.
-              </p>
-            </div>
           </SectionCard>
         </StaggerItem>
       </Stagger>

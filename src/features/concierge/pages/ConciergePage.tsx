@@ -1,6 +1,6 @@
 import type { Conversation } from '@shared/types'
 import { getRouteApi } from '@tanstack/react-router'
-import { History, PanelRight, Sparkles } from 'lucide-react'
+import { History, PanelRight } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { DemoLabel } from '@/components/shared/Cards'
@@ -88,20 +88,10 @@ function Workspace({ context }: { context?: Conversation['context'] }) {
     <div>
       <PageHeader
         title="AI Concierge"
-        description="Ask about your learning path, clinics, points, action plan or reports. Answers cite the records they come from."
-        eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
+        description="Ask about your learning, clinics, points or reports."
+        eyebrow={<DemoLabel>Proposed feature · scripted demo</DemoLabel>}
       />
-      <p
-        role="note"
-        className="mb-4 flex items-center gap-2 rounded-xl border border-gold/40 bg-gold-50 px-4 py-2.5 text-sm"
-      >
-        <Sparkles className="size-4 shrink-0 text-gold-700" aria-hidden />
-        <span>
-          <strong>Scripted demo responses — no live AI.</strong> Replies are pre-written for this
-          mockup and nothing you ask leaves your browser.
-        </span>
-      </p>
-      <div className="grid h-[calc(100dvh-19rem)] min-h-[30rem] gap-4 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_17rem]">
+      <div className="grid h-[calc(100dvh-15rem)] min-h-[30rem] gap-4 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_17rem]">
         <div className="hidden overflow-y-auto rounded-2xl border bg-card p-3 lg:block">
           {history}
         </div>
@@ -176,7 +166,7 @@ function Workspace({ context }: { context?: Conversation['context'] }) {
             ) : null}
             <Composer onSend={chat.send} disabled={chat.pending} />
             <p className="text-muted-foreground text-xs">
-              The concierge never submits anything for you. Check sources before you act.
+              Scripted demo replies. You review and submit everything yourself.
             </p>
           </div>
         </section>

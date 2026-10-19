@@ -83,16 +83,10 @@ export function TeamPage() {
           <UserAvatar name={fullName(m)} src={m.avatar} />
           <div className="min-w-0">
             <p className="truncate font-medium text-navy">{fullName(m)}</p>
-            <p className="truncate text-muted-foreground text-xs">{m.title}</p>
+            <p className="truncate text-muted-foreground text-xs">{m.email}</p>
           </div>
         </div>
       ),
-    },
-    {
-      key: 'email',
-      header: 'Email',
-      sortValue: (m) => m.email,
-      cell: (m) => <span className="text-sm">{m.email}</span>,
     },
     {
       key: 'department',
@@ -106,13 +100,17 @@ export function TeamPage() {
       sortValue: (m) => ROLE_SHORT[m.role],
       cell: (m) => <span className="text-sm">{ROLE_SHORT[m.role]}</span>,
     },
-    { key: 'status', header: 'Invitation', cell: (m) => <MemberStatus m={m} /> },
     {
-      key: 'last',
-      header: 'Last activity',
+      key: 'status',
+      header: 'Invitation',
       sortValue: (m) => m.lastActiveAt ?? '',
       cell: (m) => (
-        <span className="text-sm">{m.lastActiveAt ? relativeTime(m.lastActiveAt) : 'Not yet'}</span>
+        <div className="grid justify-items-start gap-1">
+          <MemberStatus m={m} />
+          <span className="text-muted-foreground text-xs">
+            Last active {m.lastActiveAt ? relativeTime(m.lastActiveAt) : 'not yet'}
+          </span>
+        </div>
       ),
     },
     {
@@ -144,7 +142,7 @@ export function TeamPage() {
       <TeamTabs active="team" />
       <PageHeader
         title="Team"
-        description="Everyone invited to your company workspace, with their department and learning progress."
+        description="Everyone invited to your company workspace."
         actions={
           can('company.manage_team') ? (
             <Button onClick={() => setInviting(true)}>

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 let lenisInstance: Lenis | null = null
 /** Smooth-scroll to an element or offset on public pages (falls back to native). */
 export function scrollToTarget(target: string | HTMLElement | number) {
-  if (lenisInstance) lenisInstance.scrollTo(target, { offset: -80 })
+  if (lenisInstance) lenisInstance.scrollTo(target, { offset: -56 })
   else if (typeof target === 'number') window.scrollTo({ top: target, behavior: 'smooth' })
   else
     (typeof target === 'string' ? document.querySelector(target) : target)?.scrollIntoView({

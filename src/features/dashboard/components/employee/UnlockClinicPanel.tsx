@@ -51,6 +51,7 @@ export function UnlockClinicPanel({
         registered={registered}
         onRegister={onRegister}
         registering={register.isPending}
+        compact
         className="rounded-t-none border-0 border-t shadow-none"
       />
     </SectionCard>

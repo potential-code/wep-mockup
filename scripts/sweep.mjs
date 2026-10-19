@@ -8,10 +8,6 @@ const executablePath =
 const base = process.env.BASE ?? 'http://localhost:5173'
 const R = [
   ['/', null],
-  ['/about', null],
-  ['/resources', null],
-  ['/clinics', null],
-  ['/directory', null],
   ['/join', null],
   ['/application-status', null],
   ['/sign-in', null],
@@ -110,7 +106,10 @@ const browser = await chromium.launch({ executablePath })
 const widths = (process.env.WIDTHS ?? '1440,390').split(',').map(Number)
 let issues = 0
 for (const width of widths) {
-  const ctx = await browser.newContext({ viewport: { width, height: 900 } })
+  const ctx = await browser.newContext({
+    viewport: { width, height: 900 },
+    httpCredentials: { username: 'admin', password: 'Potential' },
+  })
   for (const [path, persona] of R) {
     const page = await ctx.newPage()
     const errs = []

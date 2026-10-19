@@ -54,6 +54,8 @@ export function MarketplacePage() {
   const [company, setCompany] = useState(ALL)
   const [region, setRegion] = useState(ALL)
   const [basis, setBasis] = useState(ALL)
+  const [more, setMore] = useState(false)
+  const [visible, setVisible] = useState(6)
   const uniq = (f: (d: NonNullable<typeof data>[number]) => string) =>
     [...new Set((data ?? []).map(f))].sort()
 
@@ -79,7 +81,7 @@ export function MarketplacePage() {
         <div className="grid gap-1">
           <h2 className="text-section text-navy">Products and Services</h2>
           <p className="max-w-2xl text-muted-foreground text-sm">
-            Offers from signatory companies. You buy directly from the provider on their own site.
+            Offers from signatory companies. Buy directly from the provider.
           </p>
         </div>
         {can('marketplace.manage') ? (
@@ -97,14 +99,11 @@ export function MarketplacePage() {
           </div>
         ) : null}
       </div>
-      <p className="flex items-start gap-2 rounded-xl border border-gold/40 bg-gold-50 p-3 text-sm">
-        <Info className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden />
+      <p className="flex items-center gap-2 text-muted-foreground text-sm">
+        <Info className="size-4 shrink-0 text-gold-700" aria-hidden />
         <span>
-          <strong className="text-navy">
-            Approval means publication permission, not endorsement.
-          </strong>{' '}
-          UN Women does not endorse, recommend or guarantee any listed product or service, and no
-          sales are processed here.
+          <strong className="text-navy">Approval is not endorsement.</strong> No sales are processed
+          here.
         </span>
       </p>
       <div className="grid gap-2 sm:flex sm:flex-wrap">
@@ -133,25 +132,32 @@ export function MarketplacePage() {
           onChange={setCategory}
           options={uniq((d) => d.listing.category)}
         />
-        <FilterSelect
-          label="Company"
-          value={company}
-          onChange={setCompany}
-          options={uniq((d) => d.companyName)}
-        />
-        <FilterSelect
-          label="Coverage"
-          value={region}
-          onChange={setRegion}
-          options={uniq((d) => d.listing.region)}
-        />
-        <FilterSelect
-          label="Pricing"
-          value={basis}
-          onChange={setBasis}
-          options={['fixed', 'quotation']}
-        />
+        <Button variant="outline" aria-expanded={more} onClick={() => setMore((v) => !v)}>
+          {more ? 'Fewer filters' : 'More filters'}
+        </Button>
       </div>
+      {more ? (
+        <div className="grid gap-2 sm:flex sm:flex-wrap">
+          <FilterSelect
+            label="Company"
+            value={company}
+            onChange={setCompany}
+            options={uniq((d) => d.companyName)}
+          />
+          <FilterSelect
+            label="Coverage"
+            value={region}
+            onChange={setRegion}
+            options={uniq((d) => d.listing.region)}
+          />
+          <FilterSelect
+            label="Pricing"
+            value={basis}
+            onChange={setBasis}
+            options={['fixed', 'quotation']}
+          />
+        </div>
+      ) : null}
       <p className="text-muted-foreground text-sm" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? 'listing' : 'listings'}
       </p>
@@ -182,11 +188,16 @@ export function MarketplacePage() {
         />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((d) => (
+          {filtered.slice(0, visible).map((d) => (
             <ListingCard key={d.listing.id} data={d} />
           ))}
         </div>
       )}
+      {filtered.length > visible ? (
+        <Button variant="outline" className="w-fit" onClick={() => setVisible((n) => n + 6)}>
+          Load more
+        </Button>
+      ) : null}
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import {
   ArrowRight,
-  CalendarClock,
   CalendarDays,
   CheckCircle2,
   Circle,
@@ -14,9 +13,10 @@ import { Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { SectionCard } from '@/components/shared/Cards'
 import { StatCard } from '@/components/shared/StatCard'
 import { Button } from '@/components/ui/button'
-import { daysUntil, formatDate } from '@/lib/format'
+import { formatDate } from '@/lib/format'
 import type { CompanyDashboardData } from '@/queries/company.queries'
 import { AssessmentPanel, SupportPanel, TeamReadiness } from './AdminPanels'
+import { ExpandableList } from './ExpandableList'
 import { TaskRow } from './TaskRow'
 
 const RANK = { critical: 0, warning: 1, info: 2 } as const
@@ -54,7 +54,7 @@ function checklist(d: CompanyDashboardData): Step[] {
     {
       label: `Prepare the ${d.report.year} annual report`,
       done: submittedReport,
-      detail: `${d.report.sectionsDone} of ${d.report.sectionsTotal} sections complete`,
+      detail: `${d.report.sectionsDone} of ${d.report.sectionsTotal} sections · due ${formatDate(d.report.dueDate)}`,
       to: '/portal/reports',
     },
   ]
@@ -68,19 +68,18 @@ export function AdminDashboard({
   data: CompanyDashboardData
   firstName: string
 }) {
-  const { stats, actions, report } = data
+  const { stats, actions } = data
   const next = [...data.tasks].sort((a, b) => RANK[a.severity] - RANK[b.severity])[0]
   const steps = checklist(data)
   const doneCount = steps.filter((s) => s.done).length
   const eligible = data.departments.reduce((n, d) => n + d.eligible, 0)
-  const daysLeft = daysUntil(report.dueDate)
 
   return (
     <div>
       <PageHeader
         eyebrow={data.company.name}
         title={`Hello, ${firstName}`}
-        description="Keep the team moving. Your checklist and work queue show what needs attention first."
+        description="What needs attention first."
       />
       <Stagger className="grid grid-cols-[minmax(0,1fr)] gap-6">
         <StaggerItem>
@@ -130,7 +129,7 @@ export function AdminDashboard({
             </div>
           </div>
         </StaggerItem>
-        <StaggerItem className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <StaggerItem className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             label="Active users"
             value={stats.activated}
@@ -164,32 +163,22 @@ export function AdminDashboard({
             search={{ flag: 'overdue' }}
             hint={`${actions.missingEvidence} also need evidence`}
           />
-          <StatCard
-            label="Report deadline"
-            value={daysLeft}
-            suffix=" days"
-            icon={CalendarClock}
-            tone="navy"
-            to="/portal/reports"
-            hint={`Due ${formatDate(report.dueDate)}`}
-          />
         </StaggerItem>
         <StaggerItem className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-5">
           <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-6 lg:col-span-3">
             <SectionCard
               title="Work queue"
-              description={`${data.tasks.length} open ${data.tasks.length === 1 ? 'task' : 'tasks'}. Resolve one and it leaves this list.`}
+              description={`${data.tasks.length} open ${data.tasks.length === 1 ? 'task' : 'tasks'}`}
             >
               {data.tasks.length === 0 ? (
                 <p className="flex items-center gap-2 text-muted-foreground text-sm">
                   <CheckCircle2 className="size-5 text-success" aria-hidden /> Your queue is empty.
                 </p>
               ) : (
-                <ul className="grid gap-3">
-                  {data.tasks.map((t) => (
-                    <TaskRow key={t.id} task={t} />
-                  ))}
-                </ul>
+                <ExpandableList
+                  items={data.tasks}
+                  render={(t) => <TaskRow key={t.id} task={t} />}
+                />
               )}
             </SectionCard>
             <TeamReadiness rows={data.departments} />

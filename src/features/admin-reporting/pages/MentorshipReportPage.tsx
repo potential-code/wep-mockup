@@ -71,7 +71,7 @@ export function MentorshipReportPage() {
   return (
     <ReportingShell
       title="Mentorship"
-      description="Experts, available versus booked slots, completed sessions, no-shows, point redemption and follow-up."
+      description="Slot supply is shown in full; session counts exclude cancelled bookings."
     >
       <QueryState
         isLoading={q.isLoading}
@@ -80,24 +80,18 @@ export function MentorshipReportPage() {
         hasData={!!q.data}
       >
         <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">
-            <Stat label="Experts" value={rows.length} />
-            <Stat label="Open slots" value={sum('open')} />
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <Stat
               label="Booked slots"
               value={sum('booked')}
-              hint={`${formatPercent(slots ? (sum('booked') / slots) * 100 : 0)} utilisation`}
+              hint={`${sum('open')} open · ${formatPercent(slots ? (sum('booked') / slots) * 100 : 0)} used`}
             />
+            <Stat label="Experts" value={rows.length} hint="Published mentors" />
             <Stat label="Completed sessions" value={sum('completed')} />
             <Stat
               label="No-shows"
               value={sum('noShows')}
               hint={`${formatPercent(sum('completed') + sum('noShows') ? (sum('noShows') / (sum('completed') + sum('noShows'))) * 100 : 0)} of held sessions`}
-            />
-            <Stat
-              label="Points redeemed"
-              value={sum('pointsRedeemed').toLocaleString('en-GB')}
-              hint={`${sum('followUps')} follow-ups shared`}
             />
           </div>
           <ChartCard
@@ -130,10 +124,6 @@ export function MentorshipReportPage() {
             searchText={(r) => r.name}
             searchLabel="Search experts"
           />
-          <p className="text-muted-foreground text-xs">
-            Company and department filters apply to who booked; expert slot supply is shown in full.
-            Session counts exclude cancelled bookings.
-          </p>
         </div>
       </QueryState>
     </ReportingShell>

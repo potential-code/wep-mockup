@@ -20,6 +20,7 @@ const browser = await chromium.launch({
 const context = await browser.newContext({
   viewport: { width: 1440, height: 900 },
   acceptDownloads: true,
+  httpCredentials: { username: 'admin', password: 'Potential' },
 })
 const page = await context.newPage()
 page.setDefaultTimeout(8000)
@@ -347,13 +348,13 @@ await walkthrough(3, 'Learning unlock', async () => {
     await shot('lesson-complete')
     return `toast: ${(await toastText(/25/).first().textContent()).trim()}`
   })
-  await step('Points ledger updates (195 → 220 redeemable)', async () => {
+  await step('Points ledger updates (620 → 645 redeemable)', async () => {
     await page.keyboard.press('Escape')
     await go('/portal/points', 'u-maya')
     const after = await page
       .getByRole('link', { name: /redeemable points/ })
       .getAttribute('aria-label')
-    assert(/220/.test(after), `before "${before}", after "${after}"`)
+    assert(/645/.test(after), `before "${before}", after "${after}"`)
     await expectVisible(
       main()
         .getByText('200 / 200')
@@ -798,10 +799,7 @@ await walkthrough(8, 'Portfolio reporting', async () => {
     await page.goBack()
     await page.waitForLoadState('networkidle')
     await expectVisible(main().getByText(/Country: Kenya/), 'filters kept after back')
-    await main()
-      .getByRole('navigation', { name: 'Reporting sections' })
-      .getByRole('link', { name: 'Companies' })
-      .click()
+    await page.getByRole('link', { name: 'Companies', exact: true }).first().click()
     await page.waitForURL(/\/admin\/reporting\/companies/)
     await page.waitForLoadState('networkidle')
     const [dl] = await Promise.all([

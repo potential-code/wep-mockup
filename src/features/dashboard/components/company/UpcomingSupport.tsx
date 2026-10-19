@@ -11,10 +11,14 @@ export function UpcomingSupport({ data }: { data: CompanyDashboardData }) {
   return (
     <SectionCard
       title="Upcoming support"
-      description="Clinics, mentoring and a suggested next step"
+      action={
+        <Link to="/portal/clinics" className="text-blue text-sm hover:underline">
+          View all
+        </Link>
+      }
     >
       <ul className="grid gap-3 text-sm">
-        {data.upcomingEvents.slice(0, 2).map((e) => (
+        {data.upcomingEvents.slice(0, 1).map((e) => (
           <li key={e.id}>
             <Link
               to="/portal/clinics/$eventId"
@@ -29,7 +33,7 @@ export function UpcomingSupport({ data }: { data: CompanyDashboardData }) {
             </Link>
           </li>
         ))}
-        {data.bookings.slice(0, 2).map((b) => (
+        {data.bookings.slice(0, 1).map((b) => (
           <li key={b.booking.id}>
             <Link
               to="/portal/mentorship/bookings"

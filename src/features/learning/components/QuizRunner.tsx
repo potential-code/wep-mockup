@@ -1,11 +1,11 @@
 import { DEMO_RULES } from '@shared/rules'
-import type { Lesson } from '@shared/types'
+import type { QuizQuestion } from '@shared/types'
 import { CheckCircle2, RotateCcw, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
-import { useSubmitQuiz } from '@/queries/learning.queries'
+import { useSubmitPreTest, useSubmitQuiz } from '@/queries/learning.queries'
 
 export interface QuizOutcome {
   score: number
@@ -17,23 +17,41 @@ export interface QuizOutcome {
 
 type Result = Awaited<ReturnType<ReturnType<typeof useSubmitQuiz>['mutateAsync']>>
 
-/** One question at a time, then a review with explanations. Pass mark is a configurable demo value. */
+/**
+ * One question at a time, then a review with explanations. The post-test uses the configurable
+ * demo pass mark; the pre-test is an ungraded starting check.
+ */
 export function QuizRunner({
   courseId,
-  lesson,
+  lessonId,
+  questions,
+  kind = 'post',
   bestScore,
   onResult,
 }: {
   courseId: string
-  lesson: Lesson
+  /** The post-test quiz lesson. Omitted for the pre-test. */
+  lessonId?: string
+  questions: QuizQuestion[]
+  kind?: 'pre' | 'post'
   bestScore?: number
   onResult: (r: QuizOutcome) => void
 }) {
-  const questions = lesson.quiz ?? []
+  const pre = kind === 'pre'
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [result, setResult] = useState<Result | null>(null)
-  const submit = useSubmitQuiz()
+  const submitQuiz = useSubmitQuiz()
+  const submitPre = useSubmitPreTest()
+  const pending = submitQuiz.isPending || submitPre.isPending
+  const send = () => {
+    const onSuccess = (r: Result) => {
+      setResult(r)
+      onResult(r)
+    }
+    if (pre) submitPre.mutate({ courseId, answers }, { onSuccess })
+    else submitQuiz.mutate({ courseId, lessonId: lessonId as string, answers }, { onSuccess })
+  }
   const q = questions[index]
   const last = index === questions.length - 1
 
@@ -50,17 +68,22 @@ export function QuizRunner({
           role="status"
           className={cn(
             'rounded-2xl border p-5',
-            result.passed
-              ? 'border-success/40 bg-success-soft/40'
-              : 'border-warning/40 bg-warning-soft/40',
+            pre
+              ? 'border-blue/30 bg-blue-50/60'
+              : result.passed
+                ? 'border-success/40 bg-success-soft/40'
+                : 'border-warning/40 bg-warning-soft/40',
           )}
         >
           <p className="font-heading font-semibold text-navy text-xl">
-            {result.passed ? 'Passed' : 'Not quite yet'}: {result.score}%
+            {pre ? 'Starting point recorded' : result.passed ? 'Passed' : 'Not quite yet'}:{' '}
+            {result.score}%
           </p>
           <p className="text-sm">
-            {result.correct} of {result.total} correct · pass mark {result.passMark}% (demo
-            threshold, configurable by UN Women).
+            {result.correct} of {result.total} correct ·{' '}
+            {pre
+              ? 'not graded, no points. Compare it with your post-test at the end.'
+              : `pass mark ${result.passMark}% (demo threshold, configurable by UN Women).`}
           </p>
         </div>
         <ol className="grid gap-3">
@@ -98,9 +121,9 @@ export function QuizRunner({
             )
           })}
         </ol>
-        {!result.passed ? (
+        {pre || !result.passed ? (
           <Button onClick={retry} className="justify-self-start">
-            <RotateCcw aria-hidden /> Retry quiz
+            <RotateCcw aria-hidden /> {pre ? 'Retake pre-test' : 'Retake post-test'}
           </Button>
         ) : null}
       </div>
@@ -116,7 +139,7 @@ export function QuizRunner({
             Question {index + 1} of {questions.length}
           </span>
           <span className="text-muted-foreground">
-            Pass mark {DEMO_RULES.quizPassMark}% (demo)
+            {pre ? 'Not graded' : `Pass mark ${DEMO_RULES.quizPassMark}% (demo)`}
             {bestScore ? ` · best ${bestScore}%` : ''}
           </span>
         </div>
@@ -156,20 +179,10 @@ export function QuizRunner({
         </Button>
         {last ? (
           <Button
-            disabled={submit.isPending || Object.keys(answers).length < questions.length}
-            onClick={() =>
-              submit.mutate(
-                { courseId, lessonId: lesson.id, answers },
-                {
-                  onSuccess: (r) => {
-                    setResult(r)
-                    onResult(r)
-                  },
-                },
-              )
-            }
+            disabled={pending || Object.keys(answers).length < questions.length}
+            onClick={send}
           >
-            {submit.isPending ? 'Checking…' : 'Submit answers'}
+            {pending ? 'Checking…' : 'Submit answers'}
           </Button>
         ) : (
           <Button disabled={answers[q.id] === undefined} onClick={() => setIndex((i) => i + 1)}>

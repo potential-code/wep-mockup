@@ -1,5 +1,5 @@
 import { PRINCIPLES } from '@shared/reference'
-import { CalendarDays, Globe2, List, SearchX } from 'lucide-react'
+import { CalendarDays, ChevronDown, List, SearchX, SlidersHorizontal } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { DemoLabel, FilterBar } from '@/components/shared/Cards'
@@ -27,7 +27,12 @@ export function ClinicsPage() {
   const { data, isLoading, isError, refetch } = useEvents()
   const [view, setView] = useState<View>('list')
   const [f, setF] = useState(INITIAL)
-  const set = (k: keyof typeof INITIAL) => (v: string) => setF((s) => ({ ...s, [k]: v }))
+  const [more, setMore] = useState(false)
+  const [shown, setShown] = useState(6)
+  const set = (k: keyof typeof INITIAL) => (v: string) => {
+    setShown(6)
+    setF((s) => ({ ...s, [k]: v }))
+  }
 
   const rows = data ?? []
   const topics = [...new Set(rows.map((r) => r.event.topic))].sort()
@@ -58,50 +63,33 @@ export function ClinicsPage() {
     <>
       <PageHeader
         title="Clinics and webinars"
-        description="Live expert-led sessions that turn what you learn into practice. Clinics unlock when you finish your department pathway; webinars are open to all."
+        description={`Live expert-led sessions. Times shown in ${timeZoneLabel()}.`}
         actions={
-          <ToggleGroup
-            type="single"
-            value={view}
-            onValueChange={(v) => v && setView(v as View)}
-            variant="outline"
-            aria-label="View"
-          >
-            <ToggleGroupItem value="list" aria-label="List view">
-              <List aria-hidden /> List
-            </ToggleGroupItem>
-            <ToggleGroupItem value="calendar" aria-label="Calendar view">
-              <CalendarDays aria-hidden /> Calendar
-            </ToggleGroupItem>
-          </ToggleGroup>
+          <>
+            <DemoLabel>Proposed feature</DemoLabel>
+            <ToggleGroup
+              type="single"
+              value={view}
+              onValueChange={(v) => v && setView(v as View)}
+              variant="outline"
+              aria-label="View"
+            >
+              <ToggleGroupItem value="list" aria-label="List view">
+                <List aria-hidden /> List
+              </ToggleGroupItem>
+              <ToggleGroupItem value="calendar" aria-label="Calendar view">
+                <CalendarDays aria-hidden /> Calendar
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </>
         }
       />
-      <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border bg-blue-50/60 px-4 py-2.5 text-sm">
-        <Globe2 className="size-4 text-blue" aria-hidden />
-        <span className="text-navy">
-          Times shown in your timezone: <strong>{timeZoneLabel()}</strong>
-        </span>
-        <DemoLabel>Proposed feature · illustrative sessions</DemoLabel>
-      </div>
-
       <FilterBar count={filtered.length}>
         <FilterSelect
           label="Topic"
           value={f.topic}
           onChange={set('topic')}
           options={topics.map((t) => ({ value: t, label: t }))}
-        />
-        <FilterSelect
-          label="Principle"
-          value={f.principle}
-          onChange={set('principle')}
-          options={PRINCIPLES.map((p) => ({ value: String(p.id), label: `P${p.id} · ${p.short}` }))}
-        />
-        <FilterSelect
-          label="Format"
-          value={f.format}
-          onChange={set('format')}
-          options={Object.entries(FORMAT_LABEL).map(([value, label]) => ({ value, label }))}
         />
         <FilterSelect
           label="Date"
@@ -113,12 +101,6 @@ export function ClinicsPage() {
           ]}
         />
         <FilterSelect
-          label="Language"
-          value={f.language}
-          onChange={set('language')}
-          options={languages.map((t) => ({ value: t, label: t }))}
-        />
-        <FilterSelect
           label="Eligibility"
           value={f.eligibility}
           onChange={set('eligibility')}
@@ -128,12 +110,41 @@ export function ClinicsPage() {
             { value: 'locked', label: 'Locked for me' },
           ]}
         />
+        <Button variant="outline" size="sm" aria-expanded={more} onClick={() => setMore((v) => !v)}>
+          <SlidersHorizontal aria-hidden /> More filters
+          <ChevronDown aria-hidden className={more ? 'rotate-180' : ''} />
+        </Button>
         {dirty ? (
           <Button variant="ghost" size="sm" onClick={() => setF(INITIAL)}>
             Clear filters
           </Button>
         ) : null}
       </FilterBar>
+      {more ? (
+        <div className="-mt-2 mb-5 flex flex-wrap items-center gap-2">
+          <FilterSelect
+            label="Principle"
+            value={f.principle}
+            onChange={set('principle')}
+            options={PRINCIPLES.map((p) => ({
+              value: String(p.id),
+              label: `P${p.id} · ${p.short}`,
+            }))}
+          />
+          <FilterSelect
+            label="Format"
+            value={f.format}
+            onChange={set('format')}
+            options={Object.entries(FORMAT_LABEL).map(([value, label]) => ({ value, label }))}
+          />
+          <FilterSelect
+            label="Language"
+            value={f.language}
+            onChange={set('language')}
+            options={languages.map((t) => ({ value: t, label: t }))}
+          />
+        </div>
+      ) : null}
 
       {isLoading ? (
         <CardGridSkeleton />
@@ -154,11 +165,18 @@ export function ClinicsPage() {
         />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((r) => (
+          {filtered.slice(0, shown).map((r) => (
             <ClinicCard key={r.event.id} row={r} />
           ))}
         </div>
       )}
+      {view === 'list' && filtered.length > shown ? (
+        <div className="mt-5 flex justify-center">
+          <Button variant="outline" onClick={() => setShown((n) => n + 6)}>
+            Show more sessions ({filtered.length - shown} more)
+          </Button>
+        </div>
+      ) : null}
     </>
   )
 }

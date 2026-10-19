@@ -19,6 +19,7 @@ import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { UserAvatar } from '@/components/shared/UserAvatar'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { downloadText, timeZoneLabel } from '@/lib/format'
 import { useCancelRegistration, useEvent, useRegister } from '@/queries/clinics.queries'
 import { ClinicStatusBadge } from '../components/ClinicStatusBadge'
@@ -109,46 +110,54 @@ export function ClinicDetailPage() {
             </dl>
           </div>
 
-          <SectionCard title="What you will do">
-            <ul className="grid list-disc gap-1.5 ps-5">
-              {e.objectives.map((o) => (
-                <li key={o}>{o}</li>
-              ))}
-            </ul>
-          </SectionCard>
-
-          <SectionCard title="Agenda" description={`${e.durationMin} minutes`}>
-            <ol className="grid gap-2">
-              {e.agenda.map((a) => (
-                <li key={a.time + a.item} className="flex gap-3 text-sm">
-                  <span className="w-12 shrink-0 font-mono text-blue tabular-nums">{a.time}</span>
-                  <span>{a.item}</span>
-                </li>
-              ))}
-            </ol>
-          </SectionCard>
-
-          <SectionCard title="Your facilitator">
-            <div className="flex gap-4">
-              <UserAvatar name={facilitator.name} src={facilitator.avatar} className="size-14" />
-              <div className="grid gap-1">
-                <p className="font-semibold text-navy">{facilitator.name}</p>
-                <p className="text-muted-foreground text-sm">
-                  {facilitator.headline ?? facilitator.title}
-                </p>
-                {facilitator.bio ? <p className="mt-1 text-sm">{facilitator.bio}</p> : null}
-                {facilitator.expertise.length ? (
-                  <p className="mt-1 text-muted-foreground text-xs">
-                    Expertise: {facilitator.expertise.join(' · ')}
-                  </p>
-                ) : null}
-              </div>
-            </div>
-          </SectionCard>
-
-          <SectionCard title="Required preparation">
-            <p>{e.preparation}</p>
-          </SectionCard>
+          <Tabs defaultValue="overview">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="agenda">Agenda</TabsTrigger>
+              <TabsTrigger value="facilitator">Facilitator</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview" className="mt-4">
+              <SectionCard title="What you will do" description={`Preparation: ${e.preparation}`}>
+                <ul className="grid list-disc gap-1.5 ps-5">
+                  {e.objectives.map((o) => (
+                    <li key={o}>{o}</li>
+                  ))}
+                </ul>
+              </SectionCard>
+            </TabsContent>
+            <TabsContent value="agenda" className="mt-4">
+              <SectionCard title="Agenda" description={`${e.durationMin} minutes`}>
+                <ol className="grid gap-2">
+                  {e.agenda.map((a) => (
+                    <li key={a.time + a.item} className="flex gap-3 text-sm">
+                      <span className="w-12 shrink-0 font-mono text-blue tabular-nums">
+                        {a.time}
+                      </span>
+                      <span>{a.item}</span>
+                    </li>
+                  ))}
+                </ol>
+              </SectionCard>
+            </TabsContent>
+            <TabsContent value="facilitator" className="mt-4">
+              <SectionCard title="Your facilitator">
+                <div className="flex gap-4">
+                  <UserAvatar
+                    name={facilitator.name}
+                    src={facilitator.avatar}
+                    className="size-14"
+                  />
+                  <div className="grid gap-1">
+                    <p className="font-semibold text-navy">{facilitator.name}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {facilitator.headline ?? facilitator.title}
+                    </p>
+                    {facilitator.bio ? <p className="mt-1 text-sm">{facilitator.bio}</p> : null}
+                  </div>
+                </div>
+              </SectionCard>
+            </TabsContent>
+          </Tabs>
 
           {past ? (
             <SectionCard title="After the session">
@@ -211,20 +220,13 @@ export function ClinicDetailPage() {
           {past ? null : isRegistered || status === 'waitlisted' ? (
             <SectionCard title={isRegistered ? 'You are registered' : 'You are on the waitlist'}>
               <div className="grid gap-3">
-                <p className="text-muted-foreground text-sm">
-                  {isRegistered
-                    ? 'Registering spent no points. Joining details are below.'
-                    : 'We will notify you if a place opens. You keep your place in the queue.'}
-                </p>
+                {isRegistered ? null : (
+                  <p className="text-muted-foreground text-sm">
+                    We will notify you if a place opens.
+                  </p>
+                )}
                 {isRegistered ? (
                   <>
-                    <div className="rounded-xl bg-muted/60 p-3 text-sm">
-                      <p className="font-medium text-navy">Joining instructions</p>
-                      <p className="text-muted-foreground">
-                        {e.location ?? 'Online'}. Use the button below at the start time. Demo
-                        session: no real meeting link.
-                      </p>
-                    </div>
                     <Button onClick={() => setJoinOpen(true)}>
                       <Video aria-hidden /> Join session
                     </Button>

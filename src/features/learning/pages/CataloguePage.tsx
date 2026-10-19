@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { BookOpen } from 'lucide-react'
+import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { DemoLabel } from '@/components/shared/Cards'
 import { CardGridSkeleton, EmptyState, ErrorState } from '@/components/shared/States'
@@ -13,6 +14,7 @@ export function CataloguePage() {
   const mine = useMyLearning()
   const rows = courses.data ?? []
   const { f, setF, filtered, active, clear } = useCourseFilters(rows)
+  const [shown, setShown] = useState(6)
   const designatedId = mine.data?.designatedCourseId
 
   return (
@@ -20,7 +22,7 @@ export function CataloguePage() {
       <PageHeader
         breadcrumbs={[{ label: 'Learn', to: '/portal/learn' }, { label: 'Browse courses' }]}
         title="Browse courses"
-        description="Every course in the WEPs learning library. Your department pathway is recommended first, but you can explore any topic."
+        description="Explore any topic in the WEPs learning library."
         actions={
           <>
             <DemoLabel>Proposed course content</DemoLabel>
@@ -55,7 +57,7 @@ export function CataloguePage() {
         />
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((row) => (
+          {filtered.slice(0, shown).map((row) => (
             <li key={row.course.id}>
               <CourseCard
                 row={row}
@@ -71,6 +73,13 @@ export function CataloguePage() {
           ))}
         </ul>
       )}
+      {filtered.length > shown ? (
+        <div className="flex justify-center">
+          <Button variant="outline" onClick={() => setShown((n) => n + 6)}>
+            Show more courses ({filtered.length - shown} more)
+          </Button>
+        </div>
+      ) : null}
     </>
   )
 }

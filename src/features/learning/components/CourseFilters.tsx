@@ -1,5 +1,5 @@
 import { PRINCIPLES } from '@shared/reference'
-import { Search, X } from 'lucide-react'
+import { ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -95,6 +95,7 @@ export function CourseFilters({
 }) {
   const topics = [...new Set(rows.map((r) => r.course.topic))].sort()
   const languages = [...new Set(rows.map((r) => r.course.language))]
+  const [more, setMore] = useState(false)
   const set = (patch: Partial<CourseFilterState>) => onChange({ ...state, ...patch })
   return (
     <div className="mb-5 grid gap-3">
@@ -115,34 +116,21 @@ export function CourseFilters({
           </div>
         ) : null}
         <Pick
-          label="Principle"
-          value={state.principle}
-          onChange={(principle) => set({ principle })}
-          options={PRINCIPLES.map((p) => ({ value: String(p.id), label: `P${p.id} · ${p.short}` }))}
-        />
-        <Pick
           label="Topic"
           value={state.topic}
           onChange={(topic) => set({ topic })}
           options={topics.map((t) => ({ value: t, label: t }))}
         />
-        <Pick
-          label="Status"
-          value={state.status}
-          onChange={(status) => set({ status })}
-          options={[
-            { value: 'available', label: 'Available' },
-            { value: 'in_progress', label: 'In progress' },
-            { value: 'complete', label: 'Complete' },
-            { value: 'locked', label: 'Locked' },
-          ]}
-        />
-        <Pick
-          label="Language"
-          value={state.language}
-          onChange={(language) => set({ language })}
-          options={languages.map((l) => ({ value: l, label: l }))}
-        />
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-10"
+          aria-expanded={more}
+          onClick={() => setMore((v) => !v)}
+        >
+          <SlidersHorizontal aria-hidden /> More filters
+          <ChevronDown aria-hidden className={more ? 'rotate-180' : ''} />
+        </Button>
         {active ? (
           <Button variant="ghost" size="sm" onClick={onClear}>
             <X aria-hidden /> Clear filters
@@ -152,6 +140,36 @@ export function CourseFilters({
           {count} {count === 1 ? 'course' : 'courses'}
         </span>
       </div>
+      {more ? (
+        <div className="flex flex-wrap items-center gap-2">
+          <Pick
+            label="Principle"
+            value={state.principle}
+            onChange={(principle) => set({ principle })}
+            options={PRINCIPLES.map((p) => ({
+              value: String(p.id),
+              label: `P${p.id} · ${p.short}`,
+            }))}
+          />
+          <Pick
+            label="Status"
+            value={state.status}
+            onChange={(status) => set({ status })}
+            options={[
+              { value: 'available', label: 'Available' },
+              { value: 'in_progress', label: 'In progress' },
+              { value: 'complete', label: 'Complete' },
+              { value: 'locked', label: 'Locked' },
+            ]}
+          />
+          <Pick
+            label="Language"
+            value={state.language}
+            onChange={(language) => set({ language })}
+            options={languages.map((l) => ({ value: l, label: l }))}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

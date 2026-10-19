@@ -1,14 +1,6 @@
 import type { CertificationOffering, CertificationPurchase, PurchaseStatus } from '@shared/types'
 import { Link } from '@tanstack/react-router'
-import {
-  ArrowRight,
-  Building2,
-  Check,
-  CircleDot,
-  FlaskConical,
-  ListChecks,
-  Target,
-} from 'lucide-react'
+import { ArrowRight, Check, CircleDot, ListChecks } from 'lucide-react'
 import { motion } from 'motion/react'
 import { DemoLabel } from '@/components/shared/Cards'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
@@ -27,23 +19,11 @@ export const statusOf = (p: CertificationPurchase | null): PurchaseStatus => p?.
 export function ProposedNotice() {
   return (
     <aside
-      className="flex flex-wrap items-start gap-3 rounded-2xl border border-gold/40 bg-gold-50 p-4"
+      className="flex flex-wrap items-center gap-2 text-sm"
       aria-label="Proposed feature notice"
     >
-      <FlaskConical className="mt-0.5 size-5 shrink-0 text-gold-700" aria-hidden />
-      <div className="grid min-w-0 flex-1 gap-1 text-sm">
-        <div className="flex flex-wrap items-center gap-2">
-          <DemoLabel>Proposed feature</DemoLabel>
-          <p className="font-semibold text-navy">
-            Proposed demo certifications: not existing WEPs certifications and not required for
-            signatory status.
-          </p>
-        </div>
-        <p className="text-muted-foreground">
-          Names, price, exam rules and the sample certificate are illustrative. Payments are
-          simulated and no real charge is made.
-        </p>
-      </div>
+      <DemoLabel>Proposed feature</DemoLabel>
+      <p className="text-muted-foreground">Illustrative certifications. Payments are simulated.</p>
     </aside>
   )
 }
@@ -155,7 +135,7 @@ export function OfferingCard({ row, index }: { row: OfferingRow; index: number }
           <p className="text-muted-foreground text-sm">{o.focus}</p>
         </div>
         <ul className="grid gap-1.5 text-sm">
-          {o.scope.map((s) => (
+          {o.scope.slice(0, 3).map((s) => (
             <li key={s} className="flex gap-2">
               <Check className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
               <span>{s}</span>
@@ -169,16 +149,6 @@ export function OfferingCard({ row, index }: { row: OfferingRow; index: number }
             <dd>
               {o.examQuestions} questions · {o.passMark}% to pass
             </dd>
-          </div>
-          <div className="flex items-center gap-2">
-            <Building2 className="size-4 text-blue" aria-hidden />
-            <dt className="sr-only">Eligibility</dt>
-            <dd>Company certification for approved signatories</dd>
-          </div>
-          <div className="flex items-center gap-2">
-            <Target className="size-4 text-blue" aria-hidden />
-            <dt className="sr-only">Purchaser</dt>
-            <dd>Purchased by the CEO or an authorised admin</dd>
           </div>
         </dl>
         <Button asChild variant="outline">

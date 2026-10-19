@@ -66,7 +66,7 @@ export function ExpertCalendarPage() {
     <div>
       <PageHeader
         title="Calendar"
-        description={`All times in ${tzName(tz)} (${tzAbbrev(tz)}). Bookings and clinics appear together.`}
+        description={`Times in ${tzName(tz)} (${tzAbbrev(tz)})`}
         actions={
           <Button asChild variant="outline">
             <Link to="/expert/availability">
@@ -213,7 +213,6 @@ function WeekChip({ item, onOpen }: { item: ExpertScheduleItem; onOpen: () => vo
         {timeIn(item.startsAt, item.timezone)} · {item.format}
       </span>
       <span className="line-clamp-2 text-navy">{item.title}</span>
-      <span className="text-muted-foreground">{item.preparation}</span>
     </button>
   )
 }

@@ -41,6 +41,7 @@ export function SpaceFeed({
   const [following, setFollowing] = useState(false)
   const [bookmarked, setBookmarked] = useState(false)
   const [composing, setComposing] = useState(false)
+  const [visible, setVisible] = useState(5)
   const [posted, setPosted] = useState<{ id: string; title: string } | null>(null)
 
   const filtered = useMemo(() => {
@@ -60,7 +61,7 @@ export function SpaceFeed({
     const counts = new Map<string, number>()
     for (const v of data ?? [])
       for (const tag of v.thread.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1)
-    return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6)
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4)
   }, [data])
 
   if (error) {
@@ -105,7 +106,7 @@ export function SpaceFeed({
         <div className="grid gap-1">
           <h2 className="text-section text-navy">{title}</h2>
           <p className="max-w-2xl text-muted-foreground text-sm">
-            {description} Audience: {AUDIENCE[space]}.
+            {description} {AUDIENCE[space]}.
           </p>
         </div>
         <Button onClick={() => setComposing(true)}>
@@ -181,20 +182,24 @@ export function SpaceFeed({
           ) : (
             <ul className="grid gap-3">
               <AnimatePresence initial={false}>
-                {filtered.map((v) => (
+                {filtered.slice(0, visible).map((v) => (
                   <ThreadCard key={v.thread.id} view={v} isAdmin={user?.role === 'global_admin'} />
                 ))}
               </AnimatePresence>
             </ul>
           )}
+          {filtered.length > visible ? (
+            <Button variant="outline" className="w-fit" onClick={() => setVisible((n) => n + 5)}>
+              Load more
+            </Button>
+          ) : null}
         </div>
         <aside className="grid gap-4" aria-label="Community information">
           <SectionCard title="Community guidance">
             <ul className="grid gap-2 text-muted-foreground text-sm">
-              <li>Be respectful and keep it constructive.</li>
-              <li>Don’t share confidential company data or personal details.</li>
-              <li>Conversations happen in group threads; there are no direct messages.</li>
-              <li>Report anything that breaks these guidelines.</li>
+              <li>Be respectful and constructive.</li>
+              <li>Don’t share confidential company data.</li>
+              <li>Group threads only; no direct messages.</li>
             </ul>
           </SectionCard>
           <SectionCard title="Trending topics">

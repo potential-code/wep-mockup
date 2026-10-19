@@ -6,10 +6,9 @@ import {
   ShieldCheck,
   UserCheck,
 } from 'lucide-react'
-import { useMemo } from 'react'
-import { SectionCard } from '@/components/shared/Cards'
+import { useMemo, useState } from 'react'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
-import { WorkflowStatus } from '@/components/shared/StatusBadge'
+import { Button } from '@/components/ui/button'
 import { useExecutiveDashboard } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
 import { BarsChart, DonutChart, FunnelBars } from '../components/charts'
@@ -45,6 +44,7 @@ export function ExecutiveDashboardPage() {
   const q = useExecutiveDashboard(filters)
   const search = searchProp(filterSearch)
   const d = q.data
+  const [more, setMore] = useState(false)
 
   const demand = useMemo(
     () =>
@@ -81,7 +81,7 @@ export function ExecutiveDashboardPage() {
                 metric="approved_signatories"
                 label="Approved signatories"
                 value={d.cards.approvedSignatories}
-                hint="Distinct approved companies in this scope."
+                hint="Distinct approved companies."
                 icon={ShieldCheck}
                 to="/admin/reporting/signatories"
                 search={search}
@@ -90,7 +90,7 @@ export function ExecutiveDashboardPage() {
                 metric="active_companies"
                 label="Active companies"
                 value={d.cards.activeCompanies}
-                hint={`of ${d.cards.approvedSignatories} approved had portal activity this month.`}
+                hint={`of ${d.cards.approvedSignatories} approved, active this month.`}
                 icon={Building2}
                 to="/admin/reporting/companies"
                 search={search}
@@ -100,7 +100,7 @@ export function ExecutiveDashboardPage() {
                 metric="activated_users"
                 label="Activated users"
                 value={d.cards.activatedUsers}
-                hint={`${d.cards.activatedUsers} of ${d.cards.invitedUsers} invited users accepted and signed in.`}
+                hint={`${d.cards.activatedUsers} of ${d.cards.invitedUsers} invited users`}
                 icon={UserCheck}
                 to="/admin/reporting/users"
                 search={search}
@@ -114,7 +114,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.learningCompletion}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.completedPaths} of ${d.cards.activatedUsers} activated users completed their assigned path (portfolio cohort).`}
+                hint={`${d.cards.completedPaths} of ${d.cards.activatedUsers} activated users`}
                 icon={GraduationCap}
                 to="/admin/reporting/learning"
                 search={search}
@@ -127,7 +127,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.clinicAttendance}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.clinicAttended} attended of ${d.cards.clinicRegistered} registered for completed events.`}
+                hint={`${d.cards.clinicAttended} of ${d.cards.clinicRegistered} registered`}
                 icon={CalendarCheck}
                 to="/admin/reporting/learning"
                 search={search}
@@ -140,7 +140,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.reportingCompletion}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.reportsAccepted} of ${d.cards.reportsRequired} required ${filters.year} reports accepted.`}
+                hint={`${d.cards.reportsAccepted} of ${d.cards.reportsRequired} required ${filters.year} reports accepted`}
                 icon={ClipboardCheck}
                 to="/admin/reporting/annual-reports"
                 search={search}
@@ -151,8 +151,7 @@ export function ExecutiveDashboardPage() {
               Read in layers:
               <LayerBadge layer="activity" />
               <LayerBadge layer="evidence" />
-              <LayerBadge layer="outcomes" />A company can complete learning without reporting a
-              change in workplace outcomes.
+              <LayerBadge layer="outcomes" />
             </p>
           </section>
 
@@ -160,7 +159,7 @@ export function ExecutiveDashboardPage() {
             <ChartCard
               className="lg:col-span-2"
               title="Company progression funnel"
-              description="One cohort: stages after “Approved” count approved companies only."
+              description="One cohort, approved companies only after “Approved”."
               metric="funnel"
               table={{
                 headers: ['Stage', 'Companies', '% of previous stage'],
@@ -179,17 +178,12 @@ export function ExecutiveDashboardPage() {
             </ChartCard>
             <ChartCard
               title="Reporting status"
-              description={`Approved companies by ${filters.year} report status.`}
+              description={`${filters.year} report status.`}
               metric="reporting_completion"
               table={{
                 headers: ['Status', 'Companies'],
                 rows: d.statusDist.map((s) => [STATUS_LABEL[s.status] ?? s.status, s.count]),
               }}
-              footer={
-                <span className="flex flex-wrap items-center gap-2">
-                  Most urgent: <WorkflowStatus status="changes_requested" />
-                </span>
-              }
             >
               <DonutChart
                 data={d.statusDist.map((s) => ({
@@ -208,57 +202,57 @@ export function ExecutiveDashboardPage() {
             <InsightPanel insights={d.insights} search={search} />
           </div>
 
-          <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
-            <ChartCard
-              title="Geographic distribution"
-              description="Approved signatories by UN Women region."
-              metric="approved_signatories"
-              table={{
-                headers: ['Region', 'Approved signatories'],
-                rows: d.regions.map((r) => [r.region, r.count]),
-              }}
-            >
-              <BarsChart
-                horizontal
-                labelWidth={150}
-                data={[...d.regions].sort((a, b) => b.count - a.count)}
-                xKey="region"
-                series={[{ key: 'count', label: 'Approved signatories' }]}
-              />
-            </ChartCard>
-            <ChartCard
-              title="Support demand by department"
-              description="Clinic registrations and mentoring bookings. Groups under 5 are suppressed."
-              metric="clinic_attendance"
-              table={{
-                headers: ['Department', 'Clinic registrations', 'Mentoring bookings'],
-                rows: d.demand.map((r) => [
-                  r.department,
-                  cell(r.clinic, suppress),
-                  cell(r.mentoring, suppress),
-                ]),
-              }}
-            >
-              <BarsChart
-                data={demand}
-                xKey="department"
-                series={[
-                  { key: 'clinic', label: 'Clinic registrations' },
-                  { key: 'mentoring', label: 'Mentoring bookings' },
-                ]}
-              />
-            </ChartCard>
-          </div>
-
-          <SectionCard
-            title="Scope of this view"
-            description={`${d.scope.companies} companies and ${d.scope.users} approved-company users are included.`}
+          <Button
+            variant="outline"
+            className="w-fit"
+            aria-expanded={more}
+            onClick={() => setMore((v) => !v)}
           >
-            <p className="text-muted-foreground text-sm">
-              Change the filters above to re-scope every card, chart and queue. Filters stay in the
-              address, so you can share a view or return from a record to the same scope.
-            </p>
-          </SectionCard>
+            {more ? 'Hide' : 'Show'} geography and support demand
+          </Button>
+          {more ? (
+            <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
+              <ChartCard
+                title="Geographic distribution"
+                description="Approved signatories by UN Women region."
+                metric="approved_signatories"
+                table={{
+                  headers: ['Region', 'Approved signatories'],
+                  rows: d.regions.map((r) => [r.region, r.count]),
+                }}
+              >
+                <BarsChart
+                  horizontal
+                  labelWidth={150}
+                  data={[...d.regions].sort((a, b) => b.count - a.count)}
+                  xKey="region"
+                  series={[{ key: 'count', label: 'Approved signatories' }]}
+                />
+              </ChartCard>
+              <ChartCard
+                title="Support demand by department"
+                description="Groups under 5 are suppressed."
+                metric="clinic_attendance"
+                table={{
+                  headers: ['Department', 'Clinic registrations', 'Mentoring bookings'],
+                  rows: d.demand.map((r) => [
+                    r.department,
+                    cell(r.clinic, suppress),
+                    cell(r.mentoring, suppress),
+                  ]),
+                }}
+              >
+                <BarsChart
+                  data={demand}
+                  xKey="department"
+                  series={[
+                    { key: 'clinic', label: 'Clinic registrations' },
+                    { key: 'mentoring', label: 'Mentoring bookings' },
+                  ]}
+                />
+              </ChartCard>
+            </div>
+          ) : null}
         </div>
       )}
     </ReportingShell>

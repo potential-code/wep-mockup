@@ -68,10 +68,7 @@ export function PointsBanner({ points }: { points: PointsSummary }) {
         </div>
         <Progress value={pct} aria-label="Progress towards one mentoring session" />
         {enough ? (
-          <p className="text-sm text-success">
-            You have enough points to book now. {formatNumber(points.redeemable - points.cost)}{' '}
-            would remain afterwards.
-          </p>
+          <p className="text-sm text-success">You have enough points to book now.</p>
         ) : (
           <p className="text-sm text-warning">
             You need <strong>{formatNumber(points.shortfall)} more points</strong> to book a

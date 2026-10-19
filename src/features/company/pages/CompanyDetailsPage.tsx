@@ -1,6 +1,5 @@
 import { COUNTRIES, SECTORS } from '@shared/reference'
 import type { Company, CompanySize } from '@shared/types'
-import { Link } from '@tanstack/react-router'
 import { Clock3, Save } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -96,8 +95,8 @@ function DetailsForm({ company, editable }: { company: Company; editable: boolea
             <p>
               <span className="font-semibold text-navy">Review pending.</span> Your requested{' '}
               {pending.field} (“{pending.value.slice(0, 80)}
-              {pending.value.length > 80 ? '…' : ''}”) was sent to UN Women on{' '}
-              {formatDate(pending.requestedAt)}. The approved version stays public until then.
+              {pending.value.length > 80 ? '…' : ''}”) sent {formatDate(pending.requestedAt)}. The
+              approved version stays public meanwhile.
             </p>
           </div>
         ) : null}
@@ -105,8 +104,8 @@ function DetailsForm({ company, editable }: { company: Company; editable: boolea
           title="Company information"
           description={
             editable
-              ? 'Name, country and summary are identity and public information, so changes are reviewed by UN Women.'
-              : 'You can view these details. Ask your administrator to change them.'
+              ? 'Name, country and summary changes are reviewed by UN Women.'
+              : 'View only. Ask your administrator to change these.'
           }
         >
           <fieldset disabled={!editable || update.isPending} className="grid gap-4 sm:grid-cols-2">
@@ -210,7 +209,7 @@ function DetailsForm({ company, editable }: { company: Company; editable: boolea
           </div>
         ) : null}
       </div>
-      <SectionCard title="Company contacts" description="Who UN Women and colleagues contact">
+      <SectionCard title="Company contacts">
         <ul className="grid gap-4">
           {contacts.map((u) => (
             <li key={u.id} className="flex items-center gap-3">
@@ -231,13 +230,6 @@ function DetailsForm({ company, editable }: { company: Company; editable: boolea
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-muted-foreground text-xs">
-          The executive sponsor is set by UN Women. The focal point is appointed by the CEO in{' '}
-          <Link to="/portal/company/permissions" className="text-blue underline">
-            Permissions
-          </Link>
-          .
-        </p>
       </SectionCard>
     </form>
   )

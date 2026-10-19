@@ -1,11 +1,10 @@
 import { Link } from '@tanstack/react-router'
-import { Building2, CalendarClock, CalendarDays, ClipboardCheck, UsersRound } from 'lucide-react'
+import { Building2, CalendarDays, ClipboardCheck, UsersRound } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { SectionCard } from '@/components/shared/Cards'
 import { StatCard } from '@/components/shared/StatCard'
 import { EmptyState, ErrorState, PageSkeleton } from '@/components/shared/States'
-import { Button } from '@/components/ui/button'
 import { useCurrentUser } from '@/hooks/use-session'
 import { useExpertDashboard, useExpertSchedule } from '@/queries/mentorship.queries'
 import { ScheduleItemCard } from '../components/ScheduleItemCard'
@@ -34,32 +33,19 @@ export function ExpertDashboardPage() {
   const clinics = upcoming.filter((i) => i.kind === 'clinic')
   const hasOne = d.formats.includes('one_to_one')
   const hasGroup = d.formats.includes('group')
+  const viewAll = (
+    <Link to="/expert/calendar" className="font-medium text-blue text-sm hover:underline">
+      View all
+    </Link>
+  )
   const pending = d.profile?.pendingApproval
 
   return (
     <div>
-      <PageHeader
-        title={`Welcome back, ${user?.firstName ?? ''}`}
-        description="Your sessions, participants and follow-up in one place."
-        actions={
-          <>
-            <Button asChild variant="outline">
-              <Link to="/expert/availability">
-                <CalendarClock aria-hidden /> Manage availability
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link to="/expert/calendar">
-                <CalendarDays aria-hidden /> Open calendar
-              </Link>
-            </Button>
-          </>
-        }
-      />
+      <PageHeader title={`Welcome back, ${user?.firstName ?? ''}`} />
       {pending ? (
         <p role="status" className="mb-6 rounded-xl border border-gold/40 bg-gold-50 p-4 text-sm">
-          Your profile changes are awaiting UN Women approval. The directory keeps showing your
-          current profile until then.{' '}
+          Your profile changes are awaiting UN Women approval.{' '}
           <Link to="/expert/profile" className="font-medium underline">
             View profile
           </Link>
@@ -99,7 +85,7 @@ export function ExpertDashboardPage() {
       </Stagger>
 
       <div className="grid gap-6 xl:grid-cols-[1fr_1.4fr]">
-        <SectionCard title="Next up" description="Your next confirmed session.">
+        <SectionCard title="Next up">
           {next ? (
             <ScheduleItemCard item={next} />
           ) : (
@@ -111,13 +97,10 @@ export function ExpertDashboardPage() {
         </SectionCard>
         <div className="grid gap-6">
           {hasOne ? (
-            <SectionCard
-              title="One-to-one bookings"
-              description="Participants’ shared context is on each booking."
-            >
+            <SectionCard title="One-to-one bookings" action={viewAll}>
               {oneToOne.length ? (
                 <div className="grid gap-3">
-                  {oneToOne.map((i) => (
+                  {oneToOne.slice(0, 3).map((i) => (
                     <ScheduleItemCard key={i.id} item={i} compact />
                   ))}
                 </div>
@@ -127,13 +110,10 @@ export function ExpertDashboardPage() {
             </SectionCard>
           ) : null}
           {hasGroup ? (
-            <SectionCard
-              title="Scheduled clinics"
-              description="Attendee readiness shows who has finished the designated course."
-            >
+            <SectionCard title="Scheduled clinics" action={viewAll}>
               {clinics.length ? (
                 <div className="grid gap-3">
-                  {clinics.map((i) => (
+                  {clinics.slice(0, 3).map((i) => (
                     <ScheduleItemCard key={i.id} item={i} compact />
                   ))}
                 </div>

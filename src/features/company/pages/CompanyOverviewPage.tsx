@@ -26,10 +26,7 @@ export function CompanyOverviewPage() {
   return (
     <Stagger className="grid gap-6 lg:grid-cols-3">
       <StaggerItem className="grid content-start gap-6 lg:col-span-2">
-        <SectionCard
-          title="About the company"
-          description="Approved summary shown in the directory"
-        >
+        <SectionCard title="About the company">
           <p className="leading-relaxed">{company.summary}</p>
         </SectionCard>
         {company.ceoCommitment ? (
@@ -55,10 +52,7 @@ export function CompanyOverviewPage() {
             </figure>
           </SectionCard>
         ) : null}
-        <SectionCard
-          title="Priority principles"
-          description="Where the company is focusing its WEPs work. A navigation theme, not a score."
-        >
+        <SectionCard title="Priority principles">
           <ul className="grid gap-3 sm:grid-cols-2">
             {company.priorityPrinciples.map((id) => {
               const p = PRINCIPLES.find((x) => x.id === id)
@@ -74,7 +68,7 @@ export function CompanyOverviewPage() {
       </StaggerItem>
       {manages && stats && report ? (
         <StaggerItem className="grid content-start gap-6">
-          <SectionCard title="Participation" description="Employees on the portal">
+          <SectionCard title="Participation">
             <dl className="grid gap-4 text-sm">
               <div>
                 <div className="mb-1.5 flex justify-between">
@@ -98,9 +92,6 @@ export function CompanyOverviewPage() {
                   label="Learning completion"
                   barClassName="bg-gold"
                 />
-                <p className="mt-1.5 text-muted-foreground text-xs">
-                  Completion is measured against activated employees, not everyone invited.
-                </p>
               </div>
             </dl>
             <Button asChild variant="outline" size="sm" className="mt-4">

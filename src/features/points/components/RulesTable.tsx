@@ -1,6 +1,7 @@
 import { POINTS_RULES } from '@shared/rules'
+import type { PointsAction } from '@shared/types'
 import { Check } from 'lucide-react'
-import { DemoLabel, SectionCard } from '@/components/shared/Cards'
+import { SectionCard } from '@/components/shared/Cards'
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ActionIcon } from './LedgerTable'
 
 export function RulesTable() {
   const rows = Object.entries(POINTS_RULES)
@@ -16,7 +18,6 @@ export function RulesTable() {
     <SectionCard
       title="How points work"
       description="Points reward verified learning and contribution. One award per unique event, so repeats and reloads never add points twice."
-      action={<DemoLabel>Demo rules</DemoLabel>}
       bodyClassName="px-0 sm:px-0"
     >
       <Table>
@@ -31,10 +32,23 @@ export function RulesTable() {
         <TableBody>
           {rows.map(([key, r]) => (
             <TableRow key={key}>
-              <TableCell className="whitespace-normal font-medium text-navy">{r.label}</TableCell>
-              <TableCell className="text-end font-semibold tabular-nums">
-                {r.amount > 0 ? '+' : '−'}
-                {Math.abs(r.amount)}
+              <TableCell className="whitespace-normal font-medium text-navy">
+                <span className="flex items-center gap-3">
+                  <ActionIcon
+                    action={key as PointsAction}
+                    amount={r.amount}
+                    qualifying={r.qualifying}
+                  />
+                  {r.label}
+                </span>
+              </TableCell>
+              <TableCell className="text-end">
+                <span
+                  className={`inline-flex rounded-full px-2.5 py-0.5 font-semibold tabular-nums ${r.amount < 0 ? 'bg-danger-soft text-danger' : 'bg-gold-50 text-gold-700'}`}
+                >
+                  {r.amount > 0 ? '+' : '−'}
+                  {Math.abs(r.amount)}
+                </span>
               </TableCell>
               <TableCell>
                 {r.qualifying ? (

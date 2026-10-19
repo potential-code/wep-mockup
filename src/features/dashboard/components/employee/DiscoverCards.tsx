@@ -10,12 +10,12 @@ export function RecommendedResources({ resources }: { resources: Resource[] }) {
       title="Recommended resources"
       action={
         <Link to="/portal/resources" className="font-medium text-blue text-sm hover:underline">
-          Library
+          View all
         </Link>
       }
     >
       <ul className="grid gap-3">
-        {resources.map((r) => (
+        {resources.slice(0, 3).map((r) => (
           <li key={r.id}>
             <Link
               to="/portal/resources/$resourceId"
@@ -46,12 +46,12 @@ export function CommunityThreads({ threads }: { threads: Thread[] }) {
       title="Community discussions"
       action={
         <Link to="/portal/community" className="font-medium text-blue text-sm hover:underline">
-          Join in
+          View all
         </Link>
       }
     >
       <ul className="grid gap-3">
-        {threads.map((t) => (
+        {threads.slice(0, 3).map((t) => (
           <li key={t.id}>
             <Link
               to="/portal/community/thread/$threadId"
@@ -81,11 +81,7 @@ const PROMPTS = [
 
 export function ConciergeChips() {
   return (
-    <SectionCard
-      title="Ask the AI Concierge"
-      action={<DemoLabel>Scripted demo</DemoLabel>}
-      description="Quick questions to get started."
-    >
+    <SectionCard title="Ask the AI Concierge" action={<DemoLabel>Scripted demo</DemoLabel>}>
       <div className="flex flex-wrap gap-2">
         {PROMPTS.map((p) => (
           <Link
@@ -110,11 +106,7 @@ export function CredentialSummary({
 }) {
   if (items.length === 0) return null
   return (
-    <SectionCard
-      title="Company credentials"
-      description="Issued to your company. View only."
-      action={<DemoLabel>Proposed certification</DemoLabel>}
-    >
+    <SectionCard title="Company credentials" action={<DemoLabel>Proposed certification</DemoLabel>}>
       <ul className="grid gap-2">
         {items.map((c) => (
           <li key={c.purchase.id} className="flex items-center gap-3 text-sm">

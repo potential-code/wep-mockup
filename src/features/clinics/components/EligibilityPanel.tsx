@@ -22,6 +22,7 @@ export function EligibilityPanel({
   registering,
   className,
   footer,
+  compact,
 }: {
   eligibility: Eligibility
   eventTitle?: string
@@ -31,6 +32,8 @@ export function EligibilityPanel({
   registering?: boolean
   className?: string
   footer?: ReactNode
+  /** Dashboard variant: no helper sentence, no second Continue button. */
+  compact?: boolean
 }) {
   const reduced = usePrefersReducedMotion()
   const e = eligibility
@@ -70,11 +73,13 @@ export function EligibilityPanel({
                   ? 'You are eligible to register'
                   : 'Unlock this clinic'}
             </h3>
-            <p className="text-muted-foreground text-sm">
-              {e.eligible
-                ? `You have met every requirement${eventTitle ? ` for ${eventTitle}` : ''}. Registration is free and spends no points.`
-                : 'Finish the designated pathway course and reach the qualifying points below.'}
-            </p>
+            {compact && !e.eligible ? null : (
+              <p className="text-muted-foreground text-sm">
+                {e.eligible
+                  ? `You have met every requirement${eventTitle ? ` for ${eventTitle}` : ''}. Registration is free and spends no points.`
+                  : 'Finish the designated pathway course and reach the qualifying points below.'}
+              </p>
+            )}
           </div>
         </div>
 
@@ -122,7 +127,7 @@ export function EligibilityPanel({
                 {registering ? 'Registering…' : 'Register for the clinic'}
               </Button>
             </motion.div>
-          ) : e.courseId ? (
+          ) : e.courseId && !compact ? (
             <motion.div key="continue" exit={{ opacity: 0 }}>
               <Button asChild>
                 <Link to="/portal/learn/$courseId" params={{ courseId: e.courseId }}>

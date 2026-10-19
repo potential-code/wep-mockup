@@ -1,6 +1,7 @@
 // Learning paths, course player and quiz rules (brief §12). Points come from unique,
 // verified completion events; reopening a lesson never re-awards.
 
+import { unitsOf } from '@shared/courses'
 import { departmentLabel } from '@shared/reference'
 import { DEMO_RULES } from '@shared/rules'
 import type { Course, CourseProgress, DepartmentId, LearningPath } from '@shared/types'
@@ -224,11 +225,15 @@ export async function submitQuiz(
   const course = findOr404(db.courses, (c) => c.id === courseId, 'Course')
   const lesson = findOr404(course.lessons, (l) => l.id === lessonId, 'Quiz')
   const questions = lesson.quiz ?? []
+  const p = ensureProgress(user.id, courseId)
+  const alreadyPassed = p.completedLessonIds.includes(lessonId)
+  if (!alreadyPassed && unitsOf(course).some((l) => !p.completedLessonIds.includes(l.id)))
+    throw new ApiError('Complete every unit before taking the post-test.')
   const correct = questions.filter((q) => answers[q.id] === q.correctIndex).length
   const score = Math.round((correct / Math.max(1, questions.length)) * 100)
   const passed = score >= DEMO_RULES.quizPassMark
-  const p = ensureProgress(user.id, courseId)
   p.quizScores[lessonId] = Math.max(score, p.quizScores[lessonId] ?? 0)
+  p.quizAttempts = { ...p.quizAttempts, [lessonId]: (p.quizAttempts?.[lessonId] ?? 0) + 1 }
   p.lastLessonId = lessonId
   let pointsAwarded = 0
   let result: ReturnType<typeof maybeComplete> = {
@@ -258,7 +263,7 @@ export async function submitQuiz(
     passed,
     correct,
     total: questions.length,
-    passMark: DEMO_RULES.quizPassMark,
+    passMark: DEMO_RULES.quizPassMark as number,
     review: questions.map((q) => ({
       id: q.id,
       correct: answers[q.id] === q.correctIndex,
@@ -267,6 +272,37 @@ export async function submitQuiz(
     })),
     pointsAwarded,
     ...result,
+    balance: pointsBalance(user.id),
+  })
+}
+
+/** Ungraded starting check before the modules. Records the score; never awards points. */
+export async function submitPreTest(courseId: string, answers: Record<string, number>) {
+  await delay(300)
+  const user = requireCapability('learn.use')
+  const course = findOr404(db.courses, (c) => c.id === courseId, 'Course')
+  const questions = course.preTest?.questions ?? []
+  if (!questions.length) throw new ApiError('This course has no pre-test.')
+  const correct = questions.filter((q) => answers[q.id] === q.correctIndex).length
+  const score = Math.round((correct / questions.length) * 100)
+  const p = ensureProgress(user.id, courseId)
+  p.preTestScores = [...(p.preTestScores ?? []), score]
+  commit()
+  return out({
+    score,
+    passed: true,
+    correct,
+    total: questions.length,
+    passMark: 0,
+    review: questions.map((q) => ({
+      id: q.id,
+      correct: answers[q.id] === q.correctIndex,
+      correctIndex: q.correctIndex,
+      explanation: q.explanation,
+    })),
+    pointsAwarded: 0,
+    courseCompleted: false,
+    clinicUnlocked: undefined as string | undefined,
     balance: pointsBalance(user.id),
   })
 }

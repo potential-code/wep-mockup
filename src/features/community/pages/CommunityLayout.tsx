@@ -38,7 +38,7 @@ export function CommunityLayout() {
           <PageHeader
             eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
             title="Community"
-            description="Group conversations, a closed circle for signatories and a marketplace of member products and services. There are no private messages."
+            description="Group conversations, a signatory circle and a member marketplace."
           />
           <LayoutGroup id="community-tabs">
             <nav

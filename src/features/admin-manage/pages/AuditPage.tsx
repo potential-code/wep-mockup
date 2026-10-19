@@ -129,7 +129,6 @@ export function AuditPage() {
         rows={rows}
         getRowId={(a) => a.id}
         isLoading={isLoading}
-        pageSize={15}
         initialSort={{ key: 'at', dir: 'desc' }}
         onExport={(cols, sorted) => {
           const t = columnsToCsvRows(cols, sorted)

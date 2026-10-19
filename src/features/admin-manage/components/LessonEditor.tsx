@@ -46,6 +46,8 @@ export function LessonEditor({
   onClose: () => void
   onSave: (lesson: Lesson) => void
 }) {
+  // The course builder edits units here; the post-test quiz has its own card.
+  const types = TYPES.filter((t) => t.id !== 'quiz' || lesson?.type === 'quiz')
   const [draft, setDraft] = useState<Lesson | null>(lesson)
   const [touched, setTouched] = useState(false)
   useEffect(() => {
@@ -68,12 +70,14 @@ export function LessonEditor({
     <Sheet open={Boolean(lesson)} onOpenChange={(o) => !o && onClose()}>
       <SheetContent className="w-full overflow-y-auto sm:max-w-xl">
         <SheetHeader>
-          <SheetTitle>Edit lesson</SheetTitle>
-          <SheetDescription>Changes apply to the course when you save the course.</SheetDescription>
+          <SheetTitle>Edit unit</SheetTitle>
+          <SheetDescription>
+            The course saves automatically when you save the unit.
+          </SheetDescription>
         </SheetHeader>
         {draft ? (
           <div className="grid gap-4 px-4 pb-4">
-            <Field label="Lesson title" required>
+            <Field label="Unit title" required>
               <Input
                 value={draft.title}
                 onChange={(e) => set({ title: e.target.value })}
@@ -100,7 +104,7 @@ export function LessonEditor({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {TYPES.map((t) => (
+                    {types.map((t) => (
                       <SelectItem key={t.id} value={t.id}>
                         {t.label}
                       </SelectItem>
@@ -240,7 +244,7 @@ export function LessonEditor({
               onSave(cleaned)
             }}
           >
-            Save lesson
+            Save unit
           </Button>
         </SheetFooter>
       </SheetContent>

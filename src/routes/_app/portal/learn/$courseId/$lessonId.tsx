@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { LessonPlayerPage } from '@/features/learning/pages/LessonPlayerPage'
+import { CourseItemPage } from '@/features/learning/pages/CourseViewPage'
 
 export const Route = createFileRoute('/_app/portal/learn/$courseId/$lessonId')({
-  staticData: { title: 'Lesson', capability: 'learn.use' },
-  component: LessonPlayerPage,
+  staticData: { title: 'Course', capability: 'learn.use' },
+  component: CourseItemPage,
 })

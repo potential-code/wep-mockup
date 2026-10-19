@@ -61,20 +61,22 @@ export function CompanyReportDetailPage() {
               </div>
             </section>
 
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">
-              <Stat label="Invited users" value={d.stats.invited} />
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               <Stat
-                label="Activated"
+                label="Activated users"
                 value={d.stats.activated}
-                hint={`${d.stats.activationRate}% of invited`}
+                hint={`of ${d.stats.invited} invited (${d.stats.activationRate}%)`}
               />
               <Stat
                 label="Path completions"
                 value={d.stats.completed}
                 hint={`${d.stats.completionRate}% of activated`}
               />
-              <Stat label="Clinic registrations" value={d.registrations} />
-              <Stat label="Mentoring bookings" value={d.bookings} />
+              <Stat
+                label="Clinic registrations"
+                value={d.registrations}
+                hint={`${d.bookings} mentoring bookings`}
+              />
               <Stat label="Certifications" value={d.purchases.length} hint="Demo purchases" />
             </div>
 

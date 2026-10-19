@@ -36,11 +36,11 @@ export function AttentionQueue({
 }) {
   const [all, setAll] = useState(false)
   const sorted = [...items].sort((a, b) => ORDER[a.severity] - ORDER[b.severity])
-  const shown = all ? sorted : sorted.slice(0, 6)
+  const shown = all ? sorted : sorted.slice(0, 3)
   return (
     <SectionCard
       title="Attention required"
-      description="Information requests, inactive companies, clinic preparation gaps, overdue actions, report revisions and marketplace reviews."
+      description="Top items first. Each opens its record."
       action={
         <span className="rounded-full bg-danger-soft px-2.5 py-0.5 font-semibold text-danger text-xs">
           {items.length} open
@@ -86,7 +86,7 @@ export function AttentionQueue({
           })}
         </ul>
       )}
-      {sorted.length > 6 ? (
+      {sorted.length > 3 ? (
         <Button variant="ghost" size="sm" className="mt-3" onClick={() => setAll((v) => !v)}>
           {all ? 'Show fewer' : `Show all ${sorted.length}`}
         </Button>

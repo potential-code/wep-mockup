@@ -63,7 +63,10 @@ export function ApplicationsPage() {
       sortValue: (a) => a.data.company.name,
       cell: (a) => (
         <span className="flex flex-wrap items-center gap-2">
-          <span className="font-medium text-navy">{a.data.company.name}</span>
+          <span className="grid">
+            <span className="font-medium text-navy">{a.data.company.name}</span>
+            <span className="text-muted-foreground text-xs">{a.data.company.sector}</span>
+          </span>
           {a.duplicateOfCompanyId ? (
             <StatusBadge tone="warning" icon={AlertTriangle}>
               Possible duplicate
@@ -78,13 +81,6 @@ export function ApplicationsPage() {
       header: 'Country',
       sortValue: (a) => a.data.company.country,
       cell: (a) => a.data.company.country,
-    },
-    {
-      key: 'sector',
-      header: 'Sector',
-      hideOnMobile: true,
-      sortValue: (a) => a.data.company.sector,
-      cell: (a) => a.data.company.sector,
     },
     {
       key: 'submitted',

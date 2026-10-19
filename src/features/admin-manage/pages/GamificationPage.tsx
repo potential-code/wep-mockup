@@ -10,6 +10,7 @@ import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatDateTime } from '@/lib/format'
 import { useAudit, useSettings, useUpdateSettings, useUsersTable } from '@/queries/admin.queries'
 import { Field } from '../components/common'
@@ -115,7 +116,12 @@ export function GamificationPage() {
     {
       key: 'label',
       header: 'Action',
-      cell: (r) => <span className="font-medium text-navy">{r.label}</span>,
+      cell: (r) => (
+        <div>
+          <p className="font-medium text-navy">{r.label}</p>
+          <p className="text-muted-foreground text-xs">{r.control}</p>
+        </div>
+      ),
     },
     {
       key: 'amount',
@@ -136,7 +142,6 @@ export function GamificationPage() {
           </StatusBadge>
         ),
     },
-    { key: 'c', header: 'Control', cell: (r) => r.control, hideOnMobile: true },
   ]
   const adjustments = (audit.data ?? []).filter((a) => a.action === 'Points adjustment')
   const adjCols: Column<(typeof adjustments)[number]>[] = [
@@ -153,92 +158,97 @@ export function GamificationPage() {
         description="Points rules, thresholds and adjustment records."
         actions={<DemoLabel>Proposed rules</DemoLabel>}
       />
-      <div className="grid gap-6">
-        <SectionCard
-          title="Thresholds and caps"
-          description="Changes apply immediately to new awards and bookings."
-        >
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {FIELDS.map((f) => (
-              <Field key={f.key} label={f.label} hint={invalid(f) ? undefined : f.hint}>
-                <Input
-                  type="number"
-                  min={f.min}
-                  max={f.max}
-                  value={vals[f.key]}
-                  aria-invalid={invalid(f)}
-                  onChange={(e) => setVals((v) => (v ? { ...v, [f.key]: e.target.value } : v))}
-                />
-                {invalid(f) ? (
-                  <span role="alert" className="text-danger text-xs">
-                    Enter a number from {f.min} to {f.max}.
-                  </span>
-                ) : null}
-              </Field>
-            ))}
-          </div>
-          <div className="mt-5 flex justify-end">
-            <Button
-              disabled={!dirty || hasErrors || update.isPending}
-              onClick={() =>
-                update.mutate(
-                  Object.fromEntries(
-                    FIELDS.map((f) => [f.key, Number(vals[f.key])]),
-                  ) as Partial<PlatformSettings>,
-                  { onSuccess: () => toast.success('Gamification settings saved') },
-                )
-              }
-            >
-              <Save aria-hidden /> {update.isPending ? 'Saving…' : 'Save changes'}
-            </Button>
-          </div>
-        </SectionCard>
+      <Tabs defaultValue="thresholds">
+        <TabsList>
+          <TabsTrigger value="thresholds">Thresholds and caps</TabsTrigger>
+          <TabsTrigger value="rules">Points rules</TabsTrigger>
+          <TabsTrigger value="adjustments">Adjustments</TabsTrigger>
+        </TabsList>
+        <TabsContent value="thresholds" className="pt-3">
+          <SectionCard description="Changes apply immediately to new awards and bookings.">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {FIELDS.map((f) => (
+                <Field key={f.key} label={f.label} hint={invalid(f) ? undefined : f.hint}>
+                  <Input
+                    type="number"
+                    min={f.min}
+                    max={f.max}
+                    value={vals[f.key]}
+                    aria-invalid={invalid(f)}
+                    onChange={(e) => setVals((v) => (v ? { ...v, [f.key]: e.target.value } : v))}
+                  />
+                  {invalid(f) ? (
+                    <span role="alert" className="text-danger text-xs">
+                      Enter a number from {f.min} to {f.max}.
+                    </span>
+                  ) : null}
+                </Field>
+              ))}
+            </div>
+            <div className="mt-5 flex justify-end">
+              <Button
+                disabled={!dirty || hasErrors || update.isPending}
+                onClick={() =>
+                  update.mutate(
+                    Object.fromEntries(
+                      FIELDS.map((f) => [f.key, Number(vals[f.key])]),
+                    ) as Partial<PlatformSettings>,
+                    { onSuccess: () => toast.success('Gamification settings saved') },
+                  )
+                }
+              >
+                <Save aria-hidden /> {update.isPending ? 'Saving…' : 'Save changes'}
+              </Button>
+            </div>
+          </SectionCard>
+        </TabsContent>
+        <TabsContent value="rules" className="pt-3">
+          <section aria-labelledby="rules">
+            <h2 id="rules" className="mb-1 font-heading font-semibold text-lg text-navy">
+              Points rules
+            </h2>
+            <p className="mb-3 text-muted-foreground text-sm">
+              Each award is idempotent: one award per unique source event. Starting values from the
+              proposal.
+            </p>
+            <DataTable
+              caption="Points rules"
+              columns={rulesCols}
+              rows={RULES}
+              getRowId={(r) => r.key}
+            />
+          </section>
+        </TabsContent>
+        <TabsContent value="adjustments" className="grid gap-6 pt-3">
+          <SectionCard
+            title="Adjustment reasons"
+            description="Every manual adjustment needs a written reason. Suggested categories:"
+          >
+            <div className="flex flex-wrap gap-2">
+              {REASONS.map((r) => (
+                <StatusBadge key={r} tone="neutral" icon={null}>
+                  {r}
+                </StatusBadge>
+              ))}
+            </div>
+          </SectionCard>
 
-        <section aria-labelledby="rules">
-          <h2 id="rules" className="mb-1 font-heading font-semibold text-lg text-navy">
-            Points rules
-          </h2>
-          <p className="mb-3 text-muted-foreground text-sm">
-            Each award is idempotent: one award per unique source event. Starting values from the
-            proposal.
-          </p>
-          <DataTable
-            caption="Points rules"
-            columns={rulesCols}
-            rows={RULES}
-            getRowId={(r) => r.key}
-            pageSize={12}
-          />
-        </section>
-
-        <SectionCard
-          title="Adjustment reasons"
-          description="Every manual adjustment needs a written reason. Suggested categories:"
-        >
-          <div className="flex flex-wrap gap-2">
-            {REASONS.map((r) => (
-              <StatusBadge key={r} tone="neutral" icon={null}>
-                {r}
-              </StatusBadge>
-            ))}
-          </div>
-        </SectionCard>
-
-        <section aria-labelledby="adj">
-          <h2 id="adj" className="mb-3 font-heading font-semibold text-lg text-navy">
-            Adjustment audit
-          </h2>
-          <DataTable
-            caption="Points adjustments"
-            columns={adjCols}
-            rows={adjustments}
-            getRowId={(a) => a.id}
-            isLoading={audit.isLoading}
-            empty="No manual adjustments yet. Adjust points from Users and Invitations."
-            initialSort={{ key: 'at', dir: 'desc' }}
-          />
-        </section>
-      </div>
+          <section aria-labelledby="adj">
+            <h2 id="adj" className="mb-3 font-heading font-semibold text-lg text-navy">
+              Adjustment audit
+            </h2>
+            <DataTable
+              caption="Points adjustments"
+              columns={adjCols}
+              rows={adjustments}
+              getRowId={(a) => a.id}
+              isLoading={audit.isLoading}
+              empty="No manual adjustments yet. Adjust points from Users and Invitations."
+              initialSort={{ key: 'at', dir: 'desc' }}
+            />
+          </section>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

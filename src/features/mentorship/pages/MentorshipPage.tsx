@@ -51,14 +51,16 @@ export function MentorshipPage() {
   )
 
   const recommended = filtered.filter((r) => r.reasons.length > 0).slice(0, 3)
-  const others = filtered.filter((r) => !recommended.includes(r))
+  const [extra, setExtra] = useState(0)
+  const allOthers = filtered.filter((r) => !recommended.includes(r))
+  const others = allOthers.slice(0, Math.max(0, 6 - recommended.length) + extra)
   const canBook = can('mentorship.book') && (ctx.data?.shortfall ?? 0) === 0
 
   return (
     <div>
       <PageHeader
         title="Mentorship"
-        description="Book a 30-minute one-to-one session with a vetted WEPs expert. Sessions are redeemed with the points you earn through learning."
+        description="Book a 30-minute session with a WEPs expert using your points."
         eyebrow={<DemoLabel>Proposed feature</DemoLabel>}
         actions={
           <Button asChild variant="outline">
@@ -110,13 +112,10 @@ export function MentorshipPage() {
                 <section aria-labelledby="rec-h">
                   <h2
                     id="rec-h"
-                    className="mb-1 flex items-center gap-2 font-heading font-semibold text-navy text-section"
+                    className="mb-4 flex items-center gap-2 font-heading font-semibold text-navy text-section"
                   >
                     <Sparkles className="size-5 text-gold" aria-hidden /> Recommended for you
                   </h2>
-                  <p className="mb-4 text-muted-foreground text-sm">
-                    Matched to your department and your company’s priority principles.
-                  </p>
                   <Stagger className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     {recommended.map((m) => (
                       <StaggerItem key={m.profile.userId}>
@@ -138,6 +137,13 @@ export function MentorshipPage() {
                       </StaggerItem>
                     ))}
                   </Stagger>
+                  {allOthers.length > others.length ? (
+                    <div className="mt-5 flex justify-center">
+                      <Button variant="outline" onClick={() => setExtra((n) => n + 6)}>
+                        Show more experts ({allOthers.length - others.length} more)
+                      </Button>
+                    </div>
+                  ) : null}
                 </section>
               ) : null}
             </div>

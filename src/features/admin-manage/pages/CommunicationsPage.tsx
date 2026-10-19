@@ -78,13 +78,18 @@ export function CommunicationsPage() {
         </div>
       ),
     },
-    { key: 'trigger', header: 'Trigger', cell: (t) => t.trigger, hideOnMobile: true },
-    { key: 'audience', header: 'Audience', sortValue: (t) => t.audience, cell: (t) => t.audience },
     {
-      key: 'channel',
-      header: 'Channel',
-      cell: (t) => CHANNEL_LABEL[t.channel],
-      hideOnMobile: true,
+      key: 'audience',
+      header: 'Audience and trigger',
+      sortValue: (t) => t.audience,
+      cell: (t) => (
+        <div className="min-w-0">
+          <p>{t.audience}</p>
+          <p className="text-muted-foreground text-xs">
+            {t.trigger} · {CHANNEL_LABEL[t.channel]}
+          </p>
+        </div>
+      ),
     },
     {
       key: 'sent',
@@ -347,9 +352,13 @@ function History() {
     {
       key: 'title',
       header: 'Notification',
-      cell: (r) => <span className="font-medium text-navy">{r.notification.title}</span>,
+      cell: (r) => (
+        <div className="min-w-0">
+          <p className="font-medium text-navy">{r.notification.title}</p>
+          <p className="text-muted-foreground text-xs">{r.notification.category}</p>
+        </div>
+      ),
     },
-    { key: 'cat', header: 'Category', hideOnMobile: true, cell: (r) => r.notification.category },
     {
       key: 'ch',
       header: 'Channel',

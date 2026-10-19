@@ -14,11 +14,11 @@ export function InsightPanel({
   return (
     <SectionCard
       title="Insights"
-      description="Observations drawn from the records in this view. Each links to its evidence."
+      description="Each links to its evidence."
       action={<DemoLabel>Scripted AI demo</DemoLabel>}
     >
       <ul className="grid gap-3">
-        {insights.map((i) => (
+        {insights.slice(0, 3).map((i) => (
           <li key={i.text} className="flex gap-3 text-sm">
             <Lightbulb className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden />
             <p className="min-w-0">
@@ -42,10 +42,6 @@ export function InsightPanel({
           <Sparkles aria-hidden /> Ask AI for an evidence-linked summary
         </Link>
       </Button>
-      <p className="mt-2 text-muted-foreground text-xs">
-        The concierge cites the records behind every statement. Generated text is a draft for staff
-        review.
-      </p>
     </SectionCard>
   )
 }

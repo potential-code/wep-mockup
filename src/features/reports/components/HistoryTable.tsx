@@ -32,19 +32,19 @@ export function HistoryTable({ rows, company }: { rows: AnnualReport[]; company:
     {
       key: 'version',
       header: 'Submitted version',
-      cell: (r) => (latest(r) ? `Version ${latest(r)?.version}` : '—'),
-    },
-    {
-      key: 'submitted',
-      header: 'Submission date',
-      cell: (r) => (latest(r) ? formatDate(latest(r)?.submittedAt) : '—'),
+      cell: (r) =>
+        latest(r) ? (
+          <span>
+            Version {latest(r)?.version}
+            <span className="block text-muted-foreground text-xs">
+              {formatDate(latest(r)?.submittedAt)}
+            </span>
+          </span>
+        ) : (
+          '—'
+        ),
     },
     { key: 'status', header: 'Status', cell: (r) => <WorkflowStatus status={r.status} /> },
-    {
-      key: 'reviewed',
-      header: 'Reviewed',
-      cell: (r) => (r.reviewedAt ? formatDate(r.reviewedAt) : '—'),
-    },
     {
       key: 'actions',
       header: 'Actions',

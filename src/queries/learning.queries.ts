@@ -23,6 +23,11 @@ export const useSubmitQuiz = () =>
     mutationFn: (v: { courseId: string; lessonId: string; answers: Record<string, number> }) =>
       svc.submitQuiz(v.courseId, v.lessonId, v.answers),
   })
+export const useSubmitPreTest = () =>
+  useMutation({
+    mutationFn: (v: { courseId: string; answers: Record<string, number> }) =>
+      svc.submitPreTest(v.courseId, v.answers),
+  })
 export const useTeamReadiness = (companyId?: string) =>
   useQuery({
     queryKey: qk('team-readiness', companyId),

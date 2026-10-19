@@ -1,6 +1,6 @@
 import { ROLE_SHORT } from '@shared/reference'
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, Building2, FileText, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Building2, FileText } from 'lucide-react'
 import { CompanyLogo } from '@/components/shared/UserAvatar'
 import { useCurrentUser } from '@/hooks/use-session'
 import type { ChatEntry } from '../hooks/useConciergeChat'
@@ -48,9 +48,7 @@ export function ContextPanel({
           )}
           <div className="min-w-0">
             <p className="truncate font-medium text-navy">{company?.name ?? 'UN Women'}</p>
-            <p className="text-muted-foreground text-xs">
-              {user ? ROLE_SHORT[user.role] : ''} · answers use only what you can see
-            </p>
+            <p className="text-muted-foreground text-xs">{user ? ROLE_SHORT[user.role] : ''}</p>
           </div>
         </div>
         {contextLabel ? (
@@ -93,10 +91,6 @@ export function ContextPanel({
           ))}
         </ul>
       </section>
-      <p className="flex items-start gap-2 text-muted-foreground text-xs">
-        <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
-        Drafts are suggestions. You review and submit everything yourself.
-      </p>
     </aside>
   )
 }

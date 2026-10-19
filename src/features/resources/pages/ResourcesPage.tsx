@@ -1,7 +1,18 @@
 import { DEPARTMENTS, PRINCIPLES } from '@shared/reference'
 import type { Resource } from '@shared/types'
 import { Link } from '@tanstack/react-router'
-import { BookMarked, History, LayoutGrid, List, Search, SearchX, Star, X } from 'lucide-react'
+import {
+  BookMarked,
+  ChevronDown,
+  History,
+  LayoutGrid,
+  List,
+  Search,
+  SearchX,
+  SlidersHorizontal,
+  Star,
+  X,
+} from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -77,7 +88,12 @@ export function ResourcesPage() {
   const toggle = useToggleSavedResource()
   const [f, setF] = useState<Filters>(EMPTY)
   const [layout, setLayout] = useState<'grid' | 'list'>('grid')
-  const set = (k: keyof Filters) => (v: string) => setF((p) => ({ ...p, [k]: v }))
+  const [more, setMore] = useState(false)
+  const [shown, setShown] = useState(6)
+  const set = (k: keyof Filters) => (v: string) => {
+    setShown(6)
+    setF((p) => ({ ...p, [k]: v }))
+  }
 
   const all = data?.resources ?? []
   const saved = useMemo(() => new Set(data?.saved ?? []), [data?.saved])
@@ -115,7 +131,7 @@ export function ResourcesPage() {
     <div>
       <PageHeader
         title="Resources"
-        description="Official WEPs guidance, toolkits and templates, plus practical portal material to help your team act."
+        description="Official WEPs guidance, toolkits and templates."
         actions={<DemoLabel>Portal materials are illustrative</DemoLabel>}
       />
 
@@ -148,34 +164,29 @@ export function ResourcesPage() {
           options={topics.map((t) => ({ value: t, label: t }))}
         />
         <FilterSelect
-          label="Department"
-          value={f.department}
-          onChange={set('department')}
-          options={DEPARTMENTS.map((d) => ({ value: d.id, label: d.short }))}
-        />
-        <FilterSelect
           label="File type"
           value={f.format}
           onChange={set('format')}
           options={formats.map((x) => ({ value: x, label: FORMAT_META[x].label }))}
         />
-        <FilterSelect
-          label="Language"
-          value={f.language}
-          onChange={set('language')}
-          options={languages.map((x) => ({ value: x, label: x }))}
-        />
-        <FilterSelect
-          label="Access levels"
-          value={f.access}
-          onChange={set('access')}
-          options={[
-            { value: 'public', label: 'Public' },
-            { value: 'member', label: 'Members only' },
-          ]}
-        />
+        <Button
+          variant="outline"
+          className="bg-card"
+          aria-expanded={more}
+          onClick={() => setMore((v) => !v)}
+        >
+          <SlidersHorizontal aria-hidden /> More filters
+          <ChevronDown aria-hidden className={more ? 'rotate-180' : ''} />
+        </Button>
         {filtering ? (
-          <Button variant="ghost" size="sm" onClick={() => setF(EMPTY)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setF(EMPTY)
+              setShown(6)
+            }}
+          >
             <X aria-hidden /> Clear filters
           </Button>
         ) : null}
@@ -195,6 +206,32 @@ export function ResourcesPage() {
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
+
+      {more ? (
+        <div className="mb-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+          <FilterSelect
+            label="Department"
+            value={f.department}
+            onChange={set('department')}
+            options={DEPARTMENTS.map((d) => ({ value: d.id, label: d.short }))}
+          />
+          <FilterSelect
+            label="Language"
+            value={f.language}
+            onChange={set('language')}
+            options={languages.map((x) => ({ value: x, label: x }))}
+          />
+          <FilterSelect
+            label="Access levels"
+            value={f.access}
+            onChange={set('access')}
+            options={[
+              { value: 'public', label: 'Public' },
+              { value: 'member', label: 'Members only' },
+            ]}
+          />
+        </div>
+      ) : null}
 
       {isLoading ? <CardGridSkeleton /> : null}
       {error ? <ErrorState message={error.message} onRetry={() => refetch()} /> : null}
@@ -274,7 +311,7 @@ export function ResourcesPage() {
                   layout === 'grid' ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-3'
                 }
               >
-                {filtered.map((r) => (
+                {filtered.slice(0, shown).map((r) => (
                   <ResourceCard
                     key={r.id}
                     resource={r}
@@ -285,6 +322,13 @@ export function ResourcesPage() {
                 ))}
               </div>
             )}
+            {filtered.length > shown ? (
+              <div className="mt-5 flex justify-center">
+                <Button variant="outline" onClick={() => setShown((n) => n + 6)}>
+                  Show more resources ({filtered.length - shown} more)
+                </Button>
+              </div>
+            ) : null}
           </section>
         </div>
       ) : null}
@@ -309,7 +353,7 @@ function MiniList({
         <p className="px-5 pb-5 text-muted-foreground text-sm">{empty}</p>
       ) : (
         <ul className="divide-y">
-          {items.slice(0, 4).map((r) => (
+          {items.slice(0, 3).map((r) => (
             <li key={r.id}>
               <Link
                 to="/portal/resources/$resourceId"

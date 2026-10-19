@@ -1,4 +1,7 @@
-import { Reveal } from '@/components/motion/Reveal'
+import { useLocation } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { scrollToTarget } from '@/components/motion/SmoothScroll'
+import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
 import { DemoLabel } from '@/components/shared/Cards'
 import { ExperiencePreview } from '../components/ExperiencePreview'
 import { HomeHero } from '../components/HomeHero'
@@ -14,11 +17,29 @@ import { SectionHeading } from '../components/SectionHeading'
 import { ValueOverview } from '../components/ValueOverview'
 
 export function HomePage() {
+  const { hash } = useLocation()
+  // Header links from other pages land here with a hash: scroll once the page has laid out.
+  useEffect(() => {
+    if (!hash) return
+    // A second pass corrects for images above the target that finish loading mid-scroll.
+    const timers = [150, 1100].map((ms) => window.setTimeout(() => scrollToTarget(`#${hash}`), ms))
+    return () => {
+      for (const t of timers) window.clearTimeout(t)
+    }
+  }, [hash])
+
   return (
     <>
       <HomeHero />
 
-      <section id="value" className="scroll-mt-20 py-16 sm:py-24">
+      <section id="about" className="relative isolate overflow-hidden py-20 sm:py-28">
+        <CornerArcs corner="tr" tone="light" size={340} className="-z-10" />
+        <DotGrid
+          tone="light"
+          className="-z-10 bottom-10 left-6 hidden md:block"
+          cols={7}
+          rows={4}
+        />
         <div className="container-public">
           <SectionHeading
             eyebrow="Why the portal"
@@ -29,25 +50,36 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-surface py-16 sm:py-24" aria-labelledby="principles-h">
+      <section
+        id="principles"
+        className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--surface),#eaf1f7)] py-20 sm:py-28"
+        aria-labelledby="principles-h"
+      >
+        <EdgeRule tone="light" className="top-0" />
+        <ForAllBars tone="light" className="-z-10 -left-16 top-10 hidden md:block" size={300} />
+        <CornerArcs corner="br" tone="light" size={300} className="-z-10" />
         <div className="container-public">
           <SectionHeading
+            id="principles-h"
             eyebrow="The Principles"
             title="Seven Principles for advancing equality in business"
-            description="Established by UN Women and the UN Global Compact. Each card links to the official explanation."
+            description="Established by UN Women and the UN Global Compact. Choose a Principle to see what it means for your company."
           />
-          <h3 id="principles-h" className="sr-only">
-            The seven Women’s Empowerment Principles
-          </h3>
           <PrincipleCards />
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-navy-900 py-20 text-white sm:py-28">
+      <section
+        id="journey"
+        className="relative isolate overflow-hidden bg-navy-900 py-20 text-white sm:py-28"
+      >
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(50%_60%_at_100%_0%,rgba(22,124,179,0.35),transparent_70%)]"
+          className="-z-10 absolute inset-0 bg-[radial-gradient(50%_60%_at_100%_0%,rgba(22,124,179,0.35),transparent_70%),radial-gradient(40%_50%_at_0%_100%,rgba(214,164,74,0.12),transparent_70%)]"
         />
+        <CornerArcs corner="tl" size={380} className="-z-10" />
+        <DotGrid className="-z-10 right-8 bottom-10" cols={8} rows={4} />
+        <EdgeRule className="bottom-0" />
         <div className="container-public relative">
           <SectionHeading
             tone="dark"
@@ -59,7 +91,8 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-surface py-16 sm:py-24">
+      <section id="portal" className="relative isolate overflow-x-clip bg-surface py-20 sm:py-28">
+        <CornerArcs corner="tr" tone="light" size={320} className="-z-10" />
         <div className="container-public">
           <SectionHeading
             eyebrow="Inside the portal"
@@ -77,9 +110,7 @@ export function HomePage() {
       <FeaturedResources />
       <ClinicsAndExperts />
       <CommunitySection />
-      <Reveal>
-        <CtaBand />
-      </Reveal>
+      <CtaBand />
     </>
   )
 }

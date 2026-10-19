@@ -86,9 +86,7 @@ export function ActionPlanPage() {
       <PageHeader
         title={data.canManage ? 'Action plan' : 'My contributions'}
         description={
-          data.canManage
-            ? 'Practical actions with owners, targets and evidence. Learning supports an action but never completes it.'
-            : 'Actions assigned to you. Upload evidence to show your contribution.'
+          data.canManage ? 'Actions with owners, targets and evidence.' : 'Actions assigned to you.'
         }
         actions={
           can('actions.manage') ? (

@@ -14,10 +14,10 @@ export function IndicatorList({ data }: { data: CompanyDashboardData }) {
           Company-reported indicators <DemoLabel />
         </span>
       }
-      description={`Self-reported for ${data.indicatorsYear}. Not verified by UN Women.`}
+      description={`Self-reported, ${data.indicatorsYear} · not verified`}
       action={
         <Link to="/portal/reports" className="text-blue text-sm hover:underline">
-          Annual reports
+          View all
         </Link>
       }
     >
@@ -25,7 +25,7 @@ export function IndicatorList({ data }: { data: CompanyDashboardData }) {
         <p className="text-muted-foreground text-sm">No indicators have been reported yet.</p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
-          {data.indicators.map((i) => (
+          {data.indicators.slice(0, 4).map((i) => (
             <li key={i.id} className="grid gap-1.5 rounded-xl border p-3.5">
               <PrincipleTag id={i.principle} linked={false} />
               <p className="text-muted-foreground text-xs">{i.label}</p>

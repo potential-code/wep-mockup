@@ -1,7 +1,10 @@
-import { FileText } from 'lucide-react'
+import { ChevronDown, FileText } from 'lucide-react'
+import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { SectionCard } from '@/components/shared/Cards'
 import { AccessNotice, EmptyState, ErrorState, PageSkeleton } from '@/components/shared/States'
+import { Button } from '@/components/ui/button'
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible'
 import { useCurrentUser } from '@/hooks/use-session'
 import { useCompanyReports } from '@/queries/reports.queries'
 import { CurrentReportCard } from '../components/CurrentReportCard'
@@ -13,6 +16,7 @@ const REPORTING_YEAR = 2026
 
 export function ReportsPage() {
   const { can, company } = useCurrentUser()
+  const [comparing, setComparing] = useState(false)
   const { data, isLoading, isError, error, refetch } = useCompanyReports()
 
   if (!can('reports.view'))
@@ -39,7 +43,7 @@ export function ReportsPage() {
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6">
       <PageHeader
         title="Annual reports"
-        description="Prepare your yearly progress report, respond to UN Women feedback and keep every submitted version."
+        description="Prepare your yearly report and keep every submitted version."
       />
       <CurrentReportCard
         year={year}
@@ -47,10 +51,7 @@ export function ReportsPage() {
         dueDate={data.dueDate}
         preparer={data.current?.preparerId ? data.people[data.current.preparerId] : undefined}
       />
-      <SectionCard
-        title="Report history"
-        description="Every submitted version is kept, including after the annual rollover."
-      >
+      <SectionCard title="Report history">
         {past.length ? (
           <HistoryTable rows={past} company={company?.name ?? 'Company'} />
         ) : (
@@ -61,8 +62,22 @@ export function ReportsPage() {
           />
         )}
       </SectionCard>
-      <YearComparison reports={submittedOnly} />
-      <ProgressOverTime reports={submittedOnly} />
+      {submittedOnly.length ? (
+        <Collapsible open={comparing} onOpenChange={setComparing} className="grid gap-6">
+          <Button
+            variant="outline"
+            className="w-fit"
+            aria-expanded={comparing}
+            onClick={() => setComparing((v) => !v)}
+          >
+            Compare years <ChevronDown className={comparing ? 'rotate-180' : ''} aria-hidden />
+          </Button>
+          <CollapsibleContent className="grid gap-6">
+            <YearComparison reports={submittedOnly} />
+            <ProgressOverTime reports={submittedOnly} />
+          </CollapsibleContent>
+        </Collapsible>
+      ) : null}
     </div>
   )
 }

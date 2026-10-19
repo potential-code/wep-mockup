@@ -132,7 +132,7 @@ the three paid certifications are PROPOSED — label them with `<DemoLabel>` (�
 
 - Sign in as a persona for QA with a deep link: `http://localhost:5173/<path>?demo-as=<userId>`.
   Personas: `u-admin` (UN Women admin), `u-leila` (CEO Asteria Group), `u-nora` (company admin /
-  focal point), `u-maya` (HR employee, 175 qualifying points, one lesson from unlocking the
+  focal point), `u-maya` (HR employee, the only employee on sign-in; 620 redeemable and 175 qualifying points, one lesson from unlocking the
   clinic), `u-omar` (Procurement, 620 points), `u-elena` (Marketing), `u-sofia` (mentor/trainer),
   `u-cedar-applicant` (pending applicant, info requested).
 - Demo date is 19 Oct 2026. Key numbers must reconcile (brief §26): Asteria 24 invited / 18

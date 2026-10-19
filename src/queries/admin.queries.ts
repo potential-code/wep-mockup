@@ -65,6 +65,8 @@ export const useReviewProfileRevision = () =>
       svc.reviewProfileRevision(v.companyId, v.approve),
   })
 export const useUpsertCourse = () => useMutation({ mutationFn: (c: Course) => svc.upsertCourse(c) })
+export const useDeleteCourse = () =>
+  useMutation({ mutationFn: (id: string) => svc.deleteCourse(id) })
 export const useOpenReportingYear = () =>
   useMutation({
     mutationFn: (v: { year: number; companyIds: string[]; dueDate: string }) =>

@@ -9,6 +9,9 @@ import type { MyLearning } from './shared'
 export function PathSummary({ data }: { data: MyLearning }) {
   const cur = data.current
   const next = cur?.nextLesson
+  const total = data.courses.reduce((n, c) => n + c.completion.total, 0)
+  const done = data.courses.reduce((n, c) => n + c.completion.done, 0)
+  const pct = Math.round((done / Math.max(1, total)) * 100)
   return (
     <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
       <section className="grid gap-4 rounded-2xl bg-navy p-6 text-white shadow-card sm:p-7">
@@ -50,11 +53,9 @@ export function PathSummary({ data }: { data: MyLearning }) {
         <div className="grid gap-2">
           <div className="flex items-baseline justify-between">
             <h2 className="font-medium text-navy text-sm">Pathway progress</h2>
-            <span className="font-heading font-semibold text-navy text-xl">
-              {data.pathPercent}%
-            </span>
+            <span className="font-heading font-semibold text-navy text-xl">{pct}%</span>
           </div>
-          <Progress value={data.pathPercent} aria-label="Pathway progress" className="h-2.5" />
+          <Progress value={pct} aria-label="Pathway progress" className="h-2.5" />
           <p className="text-muted-foreground text-xs">
             {data.courses.filter((c) => c.state === 'complete').length} of {data.courses.length}{' '}
             courses complete

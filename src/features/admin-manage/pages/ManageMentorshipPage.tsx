@@ -11,6 +11,7 @@ import { EmptyState, ErrorState, PageSkeleton } from '@/components/shared/States
 import { StatusBadge, WorkflowStatus } from '@/components/shared/StatusBadge'
 import { UserAvatar } from '@/components/shared/UserAvatar'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatDateTime } from '@/lib/format'
 import { useUsersTable } from '@/queries/admin.queries'
 import { useAllMentorData, useApproveExpertProfile } from '@/queries/mentorship.queries'
@@ -88,7 +89,10 @@ export function ManageMentorshipPage() {
           <UserAvatar name={r.mentor.name} src={r.mentor.avatar} />
           <div className="min-w-0">
             <p className="truncate font-medium text-navy">{r.mentor.name}</p>
-            <p className="truncate text-muted-foreground text-xs">{r.mentor.profile.headline}</p>
+            <p className="truncate text-muted-foreground text-xs">
+              {r.mentor.profile.headline}
+              {r.blocked ? ` · ${r.blocked} blocked` : ''}
+            </p>
           </div>
         </div>
       ),
@@ -106,14 +110,6 @@ export function ManageMentorshipPage() {
       align: 'end',
       sortValue: (r) => r.booked,
       cell: (r) => r.booked,
-    },
-    {
-      key: 'blocked',
-      header: 'Blocked',
-      align: 'end',
-      sortValue: (r) => r.blocked,
-      cell: (r) => r.blocked,
-      hideOnMobile: true,
     },
     {
       key: 'completed',
@@ -167,108 +163,114 @@ export function ManageMentorshipPage() {
       </div>
 
       <div className="grid grid-cols-[minmax(0,1fr)] gap-6 [&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
-        <SectionCard
-          title="Expert profiles awaiting approval"
-          description="Profiles are published to learners only after approval."
-        >
-          {view.pending.length === 0 ? (
-            <EmptyState
-              title="Nothing waiting"
-              description="New and edited expert profiles appear here for review."
-            />
-          ) : (
-            <ul className="grid gap-3 lg:grid-cols-2">
-              {view.pending.map((m) => (
-                <li key={m.profile.userId} className="grid gap-3 rounded-xl border bg-card p-4">
-                  <div className="flex items-center gap-3">
-                    <UserAvatar name={m.name} src={m.avatar} className="size-11" />
-                    <div className="min-w-0">
-                      <p className="font-medium text-navy">{m.name}</p>
-                      <p className="truncate text-muted-foreground text-xs">{m.title}</p>
-                    </div>
-                  </div>
-                  <p className="text-sm">{m.profile.headline}</p>
-                  <p className="line-clamp-3 text-muted-foreground text-sm">{m.profile.bio}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {m.profile.expertise.map((e) => (
-                      <StatusBadge key={e} tone="info" icon={null}>
-                        {e}
-                      </StatusBadge>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      disabled={approve.isPending}
-                      onClick={() => decide(m.profile.userId, true, m.name)}
-                    >
-                      <Check aria-hidden /> Approve and publish
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      disabled={approve.isPending}
-                      onClick={() => decide(m.profile.userId, false, m.name)}
-                    >
-                      <X aria-hidden /> Decline
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </SectionCard>
-
-        <SectionCard
-          title="Support topics"
-          description="Topics offered by published experts. Gaps help decide who to invite next."
-        >
-          <div className="flex flex-wrap gap-2">
-            {view.topics.map(([t, n]) => (
-              <StatusBadge key={t} tone="neutral" icon={null}>
-                {t} · {n}
-              </StatusBadge>
-            ))}
-          </div>
-          <p className="mt-4 text-muted-foreground text-xs">
-            Principle coverage:{' '}
-            {[1, 2, 3, 4, 5, 6, 7]
-              .map(
-                (id) =>
-                  `P${id} ${principleById(id as 1).short} (${data.profiles.filter((p) => p.profile.published && p.profile.principles.includes(id as 1)).length})`,
-              )
-              .join(' · ')}
-          </p>
-        </SectionCard>
-
-        <section aria-labelledby="av">
-          <h2 id="av" className="mb-3 font-heading font-semibold text-lg text-navy">
-            Availability and bookings
-          </h2>
-          <DataTable
-            caption="Availability"
-            columns={avCols}
-            rows={view.availability}
-            getRowId={(r) => r.mentor.profile.userId}
-          />
-        </section>
-
-        <section aria-labelledby="ex">
-          <h2 id="ex" className="mb-1 font-heading font-semibold text-lg text-navy">
-            Exceptions
-          </h2>
-          <p className="mb-3 text-muted-foreground text-sm">
-            Late cancellations inside the cancellation window are held for review; no-shows are
-            recorded for follow-up.
-          </p>
-          <DataTable
-            caption="Exceptions"
-            columns={exCols}
-            rows={view.exceptions}
-            getRowId={(b) => b.id}
-            empty="No exceptions to review."
-          />
-        </section>
+        <Tabs defaultValue="approvals">
+          <TabsList className="h-auto flex-wrap">
+            <TabsTrigger value="approvals">Profile approvals</TabsTrigger>
+            <TabsTrigger value="availability">Availability</TabsTrigger>
+            <TabsTrigger value="exceptions">Exceptions</TabsTrigger>
+            <TabsTrigger value="topics">Support topics</TabsTrigger>
+          </TabsList>
+          <TabsContent value="approvals" className="pt-3">
+            <SectionCard
+              title="Expert profiles awaiting approval"
+              description="Profiles are published to learners only after approval."
+            >
+              {view.pending.length === 0 ? (
+                <EmptyState
+                  title="Nothing waiting"
+                  description="New and edited expert profiles appear here for review."
+                />
+              ) : (
+                <ul className="grid gap-3 lg:grid-cols-2">
+                  {view.pending.map((m) => (
+                    <li key={m.profile.userId} className="grid gap-3 rounded-xl border bg-card p-4">
+                      <div className="flex items-center gap-3">
+                        <UserAvatar name={m.name} src={m.avatar} className="size-11" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-navy">{m.name}</p>
+                          <p className="truncate text-muted-foreground text-xs">{m.title}</p>
+                        </div>
+                      </div>
+                      <p className="text-sm">{m.profile.headline}</p>
+                      <p className="line-clamp-3 text-muted-foreground text-sm">{m.profile.bio}</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {m.profile.expertise.map((e) => (
+                          <StatusBadge key={e} tone="info" icon={null}>
+                            {e}
+                          </StatusBadge>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          disabled={approve.isPending}
+                          onClick={() => decide(m.profile.userId, true, m.name)}
+                        >
+                          <Check aria-hidden /> Approve and publish
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={approve.isPending}
+                          onClick={() => decide(m.profile.userId, false, m.name)}
+                        >
+                          <X aria-hidden /> Decline
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </SectionCard>
+          </TabsContent>
+          <TabsContent value="availability" className="pt-3">
+            <section aria-labelledby="av">
+              <DataTable
+                caption="Availability"
+                columns={avCols}
+                rows={view.availability}
+                getRowId={(r) => r.mentor.profile.userId}
+              />
+            </section>
+          </TabsContent>
+          <TabsContent value="exceptions" className="pt-3">
+            <section aria-labelledby="ex">
+              <p className="mb-3 text-muted-foreground text-sm">
+                Late cancellations and no-shows are held here for review.
+              </p>
+              <DataTable
+                caption="Exceptions"
+                columns={exCols}
+                rows={view.exceptions}
+                getRowId={(b) => b.id}
+                empty="No exceptions to review."
+              />
+            </section>
+          </TabsContent>
+          <TabsContent value="topics" className="pt-3">
+            <SectionCard
+              title="Support topics"
+              description="Topics offered by published experts. Gaps help decide who to invite next."
+            >
+              <div className="flex flex-wrap gap-2">
+                {view.topics.map(([t, n]) => (
+                  <StatusBadge key={t} tone="neutral" icon={null}>
+                    {t} · {n}
+                  </StatusBadge>
+                ))}
+              </div>
+              <p className="mt-4 text-muted-foreground text-xs">
+                Principle coverage:{' '}
+                {[1, 2, 3, 4, 5, 6, 7]
+                  .map(
+                    (id) =>
+                      `P${id} ${principleById(id as 1).short} (${data.profiles.filter((p) => p.profile.published && p.profile.principles.includes(id as 1)).length})`,
+                  )
+                  .join(' · ')}
+              </p>
+            </SectionCard>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

@@ -49,7 +49,7 @@ export function ProgressOverTime({ reports }: { reports: AnnualReport[] }) {
   return (
     <SectionCard
       title="Progress over time"
-      description="Company-reported values across reporting years."
+      description="Company-reported; no causal claim."
       action={<DemoLabel>Illustrative demo data</DemoLabel>}
     >
       <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
@@ -153,10 +153,6 @@ export function ProgressOverTime({ reports }: { reports: AnnualReport[] }) {
             </tbody>
           </table>
         </div>
-        <p className="text-muted-foreground text-xs">
-          These are values reported by the company. Participation in the programme is not shown to
-          have caused any change, and coverage may differ between years.
-        </p>
       </div>
     </SectionCard>
   )

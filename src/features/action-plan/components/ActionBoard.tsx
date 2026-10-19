@@ -1,6 +1,8 @@
 import type { ActionStatus } from '@shared/types'
 import { LayoutGroup } from 'motion/react'
+import { useState } from 'react'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
+import { Button } from '@/components/ui/button'
 import { ActionCard, type DecoratedAction } from './ActionCard'
 
 export const BOARD_COLUMNS: ActionStatus[] = [
@@ -14,11 +16,14 @@ export const BOARD_COLUMNS: ActionStatus[] = [
 
 /** Kanban board by status (desktop). Cards animate between columns when status changes. */
 export function ActionBoard({ items }: { items: DecoratedAction[] }) {
+  const [expanded, setExpanded] = useState<ActionStatus[]>([])
   return (
     <LayoutGroup>
       <div className="grid auto-cols-[minmax(250px,1fr)] grid-flow-col gap-4 overflow-x-auto pb-3">
         {BOARD_COLUMNS.map((status) => {
           const col = items.filter((i) => i.action.status === status)
+          const open = expanded.includes(status)
+          const shown = open ? col : col.slice(0, 3)
           return (
             <section
               key={status}
@@ -34,8 +39,20 @@ export function ActionBoard({ items }: { items: DecoratedAction[] }) {
                   Nothing here
                 </p>
               ) : (
-                col.map((i) => <ActionCard key={i.action.id} item={i} />)
+                shown.map((i) => <ActionCard key={i.action.id} item={i} />)
               )}
+              {col.length > 3 ? (
+                <Button
+                  variant="link"
+                  size="sm"
+                  aria-expanded={open}
+                  onClick={() =>
+                    setExpanded((e) => (open ? e.filter((x) => x !== status) : [...e, status]))
+                  }
+                >
+                  {open ? 'Show fewer' : `View all ${col.length}`}
+                </Button>
+              ) : null}
             </section>
           )
         })}

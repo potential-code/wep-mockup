@@ -376,11 +376,12 @@ function InvitationsTab({ rows, loading }: { rows: InviteRow[]; loading: boolean
           <p className="truncate font-medium text-navy">
             {r.invitation.firstName} {r.invitation.lastName}
           </p>
-          <p className="truncate text-muted-foreground text-xs">{r.invitation.email}</p>
+          <p className="truncate text-muted-foreground text-xs">
+            {ROLE_SHORT[r.invitation.role]} · {r.invitation.email}
+          </p>
         </div>
       ),
     },
-    { key: 'role', header: 'Role', cell: (r) => ROLE_SHORT[r.invitation.role] },
     {
       key: 'source',
       header: 'Managed by',
@@ -400,14 +401,14 @@ function InvitationsTab({ rows, loading }: { rows: InviteRow[]; loading: boolean
       key: 'status',
       header: 'Status',
       sortValue: (r) => r.invitation.status,
-      cell: (r) => <WorkflowStatus status={r.invitation.status} />,
-    },
-    {
-      key: 'expires',
-      header: 'Expires',
-      sortValue: (r) => r.invitation.expiresAt,
-      cell: (r) => formatDate(r.invitation.expiresAt),
-      hideOnMobile: true,
+      cell: (r) => (
+        <div className="grid gap-0.5">
+          <WorkflowStatus status={r.invitation.status} />
+          <span className="text-muted-foreground text-xs">
+            Expires {formatDate(r.invitation.expiresAt)}
+          </span>
+        </div>
+      ),
     },
     {
       key: 'actions',

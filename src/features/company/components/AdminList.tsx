@@ -21,10 +21,7 @@ export function AdminList({
   onRevoke: (m: TeamMember) => void
 }) {
   return (
-    <SectionCard
-      title="Who has which rights"
-      description="Everyone with company management access. Only you can change this list."
-    >
+    <SectionCard title="Who has which rights" description="Only you can change this list.">
       <ul className="grid gap-3">
         {ceo ? (
           <li className="flex flex-wrap items-center gap-3 rounded-xl border bg-gold-50/50 p-3.5">

@@ -34,7 +34,7 @@ export function DataTable<T>({
   columns,
   rows,
   getRowId,
-  pageSize = 10,
+  pageSize = 5,
   isLoading,
   empty,
   onRowClick,

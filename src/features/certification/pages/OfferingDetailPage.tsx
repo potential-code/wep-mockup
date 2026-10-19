@@ -87,8 +87,7 @@ export function OfferingDetailPage() {
     action = (
       <p className="flex items-start gap-2 rounded-xl border bg-surface p-3 text-sm">
         <ShieldAlert className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
-        Read-only view. Only the CEO or an admin with purchasing authority can pay for or sit this
-        company exam.
+        View only. Purchasing is limited to the CEO or authorised admins.
       </p>
     )
   }
@@ -102,12 +101,11 @@ export function OfferingDetailPage() {
         actions={<WorkflowStatus status={status} />}
       />
       <ProposedNotice />
-      <SectionCard title="How it works" description="Both payment and a passed exam are needed.">
+      <SectionCard
+        title="How it works"
+        description="The certificate is issued only after payment and a passed exam."
+      >
         <ProcessTimeline status={status} />
-        <p className="mt-5 rounded-xl bg-blue-50 p-3 text-navy text-sm">
-          Payment alone never issues a certificate, and a passed exam without confirmed payment
-          doesn’t either. The sample certificate is issued only when both are complete.
-        </p>
       </SectionCard>
       <div className="grid items-start gap-6 lg:grid-cols-3">
         <div className="grid gap-6 lg:col-span-2">
@@ -120,7 +118,7 @@ export function OfferingDetailPage() {
               />
             ) : null}
             <ul className="grid gap-2">
-              {o.scope.map((s) => (
+              {o.scope.slice(0, 4).map((s) => (
                 <li key={s} className="flex gap-2">
                   <Check className="mt-1 size-4 shrink-0 text-blue" aria-hidden />
                   {s}
@@ -128,8 +126,7 @@ export function OfferingDetailPage() {
               ))}
             </ul>
             <p className="mt-4 text-muted-foreground text-sm">
-              Exam: {o.examQuestions} questions, {o.passMark}% to pass. Retake limits and marking
-              methodology are configurable decisions still to be confirmed.
+              Exam: {o.examQuestions} questions, {o.passMark}% to pass.
             </p>
           </SectionCard>
           <SectionCard title="Purchase history">

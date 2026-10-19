@@ -1,6 +1,6 @@
 import { DEPARTMENTS, PRINCIPLES } from '@shared/reference'
 import type { DepartmentId, PrincipleId, Resource, ResourceFormat } from '@shared/types'
-import { Archive, Info, Plus, Search } from 'lucide-react'
+import { Archive, Plus, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -69,17 +69,20 @@ export function ManageResourcesPage() {
   const { data, isLoading, error, refetch } = useResources()
   const [q, setQ] = useState('')
   const [status, setStatus] = useState('all')
+  const [language, setLanguage] = useState('English')
   const [editing, setEditing] = useState<Resource | null>(null)
   const rows = data?.resources ?? []
 
+  const languages = useMemo(() => [...new Set(rows.map((r) => r.language))], [rows])
   const filtered = useMemo(
     () =>
       rows.filter(
         (r) =>
           (status === 'all' || r.status === status) &&
+          (language === 'all' || r.language === language) &&
           (!q.trim() || `${r.title} ${r.topic}`.toLowerCase().includes(q.toLowerCase())),
       ),
-    [rows, q, status],
+    [rows, q, status, language],
   )
 
   const columns: Column<Resource>[] = [
@@ -90,7 +93,9 @@ export function ManageResourcesPage() {
       cell: (r) => (
         <div className="min-w-0">
           <p className="truncate font-medium text-navy">{r.title}</p>
-          <p className="truncate text-muted-foreground text-xs">{r.publisher}</p>
+          <p className="truncate text-muted-foreground text-xs">
+            {r.publisher} · v{r.version}
+          </p>
         </div>
       ),
     },
@@ -116,7 +121,6 @@ export function ManageResourcesPage() {
         </StatusBadge>
       ),
     },
-    { key: 'version', header: 'Version', cell: (r) => r.version, hideOnMobile: true },
     {
       key: 'status',
       header: 'Status',
@@ -131,18 +135,13 @@ export function ManageResourcesPage() {
     <div className="[&_ul]:min-w-0 [&_ul>li]:min-w-0 [&_ul>li>div]:grid-cols-[minmax(0,1fr)]">
       <PageHeader
         title="Resources"
-        description="Upload, tag, version, schedule and archive library material."
+        description="Upload, tag, version and archive library material. Archived items are kept for report history."
         actions={
           <Button onClick={() => setEditing(blank())}>
             <Plus aria-hidden /> Upload resource
           </Button>
         }
       />
-      <p className="mb-5 flex items-start gap-2 rounded-xl border bg-blue-50/60 p-3 text-sm">
-        <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
-        Archiving or replacing a resource never deletes it. Submitted annual reports keep their
-        historical references to the version that was cited.
-      </p>
       <FilterBar count={filtered.length}>
         <div className="relative min-w-52 flex-1 sm:max-w-xs">
           <Search
@@ -166,6 +165,19 @@ export function ManageResourcesPage() {
             {['published', 'draft', 'scheduled', 'archived'].map((s) => (
               <SelectItem key={s} value={s}>
                 {s.charAt(0).toUpperCase() + s.slice(1)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={language} onValueChange={setLanguage}>
+          <SelectTrigger aria-label="Filter by language" className="w-full bg-card sm:w-44">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All languages</SelectItem>
+            {languages.map((l) => (
+              <SelectItem key={l} value={l}>
+                {l}
               </SelectItem>
             ))}
           </SelectContent>

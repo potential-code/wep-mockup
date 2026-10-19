@@ -100,13 +100,6 @@ export function ManageCompaniesPage() {
       align: 'end',
       cell: (r) => `${r.activated} / ${r.invited}`,
     },
-    {
-      key: 'activity',
-      header: 'Last activity',
-      sortValue: (r) => r.company.lastActivityAt ?? '',
-      cell: (r) => formatDate(r.company.lastActivityAt),
-      hideOnMobile: true,
-    },
   ]
 
   if (error) return <ErrorState message={error.message} onRetry={refetch} />

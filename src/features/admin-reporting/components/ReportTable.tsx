@@ -13,6 +13,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { useCsvExport } from './useExport'
 
+const MAX_DEFAULT_COLUMNS = 5
+
 /**
  * Reporting table: search, sortable columns, filter slot, column chooser, pagination and a CSV
  * export that carries the current scope, period and timestamp.
@@ -27,8 +29,8 @@ export function ReportTable<T>({
   filters,
   isLoading,
   onRowClick,
-  pageSize = 10,
-  defaultHidden = [],
+  pageSize = 5,
+  defaultHidden,
   query: controlled,
   onQueryChange,
   empty,
@@ -52,7 +54,13 @@ export function ReportTable<T>({
 }) {
   const exportCsv = useCsvExport()
   const [local, setLocal] = useState('')
-  const [hidden, setHidden] = useState<string[]>(defaultHidden)
+  // Keep tables scannable in a demo: first five columns (plus any actions column) by default;
+  // the rest stay one click away under Columns.
+  const [hidden, setHidden] = useState<string[]>(
+    () =>
+      defaultHidden ??
+      columns.filter((c, i) => i >= MAX_DEFAULT_COLUMNS && c.key !== 'actions').map((c) => c.key),
+  )
   const query = controlled ?? local
   const setQuery = onQueryChange ?? setLocal
 

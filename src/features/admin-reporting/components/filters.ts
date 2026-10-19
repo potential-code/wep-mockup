@@ -2,18 +2,11 @@ import { DEPARTMENTS } from '@shared/reference'
 import type { DepartmentId, PrincipleId } from '@shared/types'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { useCallback, useMemo } from 'react'
+import { REPORTING_FILTER_KEYS } from '@/config/nav'
 import type { ReportingFilters } from '@/queries/admin.queries'
 
 /** Filters live in the URL so they persist across reporting tabs and detail round-trips. */
-export const FILTER_KEYS = [
-  'year',
-  'country',
-  'sector',
-  'company',
-  'dept',
-  'principle',
-  'sup',
-] as const
+export const FILTER_KEYS = REPORTING_FILTER_KEYS
 export type FilterKey = (typeof FILTER_KEYS)[number]
 export type FilterSearch = Partial<Record<FilterKey, string | number>>
 

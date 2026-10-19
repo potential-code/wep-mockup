@@ -60,21 +60,6 @@ export function AllUsersPage() {
           ),
       },
       {
-        key: 'dept',
-        header: 'Department',
-        sortValue: (r) => r.user.department ?? '',
-        exportValue: (r) => departmentLabel(r.user.department),
-        cell: (r) => departmentLabel(r.user.department),
-        hideOnMobile: true,
-      },
-      {
-        key: 'role',
-        header: 'Role',
-        sortValue: (r) => r.user.role,
-        exportValue: (r) => ROLE_SHORT[r.user.role],
-        cell: (r) => ROLE_SHORT[r.user.role],
-      },
-      {
         key: 'inv',
         header: 'Invitation',
         sortValue: (r) => r.user.invitationStatus,
@@ -106,6 +91,21 @@ export function AllUsersPage() {
             : `${r.learningPct}%${r.completed ? ' · path complete' : ''}`,
       },
       {
+        key: 'dept',
+        header: 'Department',
+        sortValue: (r) => r.user.department ?? '',
+        exportValue: (r) => departmentLabel(r.user.department),
+        cell: (r) => departmentLabel(r.user.department),
+        hideOnMobile: true,
+      },
+      {
+        key: 'role',
+        header: 'Role',
+        sortValue: (r) => r.user.role,
+        exportValue: (r) => ROLE_SHORT[r.user.role],
+        cell: (r) => ROLE_SHORT[r.user.role],
+      },
+      {
         key: 'points',
         header: 'Points',
         sortValue: (r) => r.points,
@@ -130,7 +130,7 @@ export function AllUsersPage() {
   return (
     <ReportingShell
       title="All users"
-      description="Searchable list of every user by company, department, role, invitation state, learning and points."
+      description="Search by name, email or company. More fields under Columns."
     >
       <QueryState
         isLoading={q.isLoading}
@@ -143,7 +143,6 @@ export function AllUsersPage() {
           columns={columns}
           rows={rows}
           getRowId={(r) => r.user.id}
-          pageSize={12}
           query={query ?? ''}
           onQueryChange={(v) => setQuery(v || undefined)}
           searchLabel="Search name, email, company"

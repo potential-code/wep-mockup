@@ -8,6 +8,12 @@ import { DemoLabel, SectionCard } from '@/components/shared/Cards'
 import { StatCard } from '@/components/shared/StatCard'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -97,15 +103,10 @@ export function ManageAssessmentsPage() {
     <div>
       <PageHeader
         title="Assessments"
-        description="Configure the baseline self-assessment: question groups, evidence fields and assignment."
+        description="Configure the demo self-assessment: question groups, evidence fields and assignment. Not the official WEPs Gender Gap Analysis Tool."
         actions={<DemoLabel>Demo configuration</DemoLabel>}
       />
-      <p className="mb-5 rounded-xl border bg-blue-50/60 p-3 text-sm">
-        This is an illustrative builder. The assessment is a proposed demo form, not the official
-        WEPs Gender Gap Analysis Tool, and changes here are kept in this browser session only.
-      </p>
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
-        <StatCard label="Question groups" value={sections.length} />
+      <div className="mb-6 grid gap-4 sm:grid-cols-2">
         <StatCard label="Active questions" value={active} hint={`of ${total}`} />
         <StatCard
           label="Submitted by companies"
@@ -122,85 +123,110 @@ export function ManageAssessmentsPage() {
           <TabsTrigger value="rules">Assignment rules</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="groups" className="grid gap-4 pt-3">
-          {sections.map((s) => (
-            <SectionCard key={s.id}>
-              <div className="grid gap-3">
-                <Field label="Group title">
-                  <Input
-                    value={s.title}
-                    onChange={(e) => patchSection({ id: s.id, patch: { title: e.target.value } })}
-                  />
-                </Field>
-                <Field label="Description">
-                  <Textarea
-                    rows={2}
-                    value={s.description}
-                    onChange={(e) =>
-                      patchSection({ id: s.id, patch: { description: e.target.value } })
-                    }
-                  />
-                </Field>
-                <ul className="grid gap-2">
-                  {s.questions.map((x, i) => (
-                    <li key={x.id} className="grid gap-2 rounded-xl border bg-surface/50 p-3">
-                      <Textarea
-                        aria-label={`Question ${i + 1} text`}
-                        rows={2}
-                        value={x.text}
-                        onChange={(e) => patchText({ sid: s.id, qid: x.id, text: e.target.value })}
+        <TabsContent value="groups" className="pt-3">
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue={sections[0]?.id}
+            className="grid gap-3"
+          >
+            {sections.map((s) => (
+              <AccordionItem
+                key={s.id}
+                value={s.id}
+                className="rounded-2xl border bg-card px-5 shadow-card last:border-b"
+              >
+                <AccordionTrigger className="text-navy">
+                  <span>
+                    {s.title}
+                    <span className="ms-2 font-normal text-muted-foreground text-sm">
+                      {s.questions.length} questions
+                    </span>
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid gap-3">
+                    <Field label="Group title">
+                      <Input
+                        value={s.title}
+                        onChange={(e) =>
+                          patchSection({ id: s.id, patch: { title: e.target.value } })
+                        }
                       />
-                      <div className="flex flex-wrap items-center gap-2">
-                        <StatusBadge tone="info" icon={null}>
-                          P{x.principle}
-                        </StatusBadge>
-                        <StatusBadge tone="neutral" icon={null}>
-                          {x.type === 'scale'
-                            ? 'Maturity scale'
-                            : x.type === 'single'
-                              ? 'Single choice'
-                              : 'Free text'}
-                        </StatusBadge>
-                        <div className="ms-auto flex items-center gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            aria-label="Move question up"
-                            disabled={i === 0}
-                            onClick={() => moveQuestion({ sid: s.id, i, d: -1 })}
-                          >
-                            <ArrowUp />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            aria-label="Move question down"
-                            disabled={i === s.questions.length - 1}
-                            onClick={() => moveQuestion({ sid: s.id, i, d: 1 })}
-                          >
-                            <ArrowDown />
-                          </Button>
-                          <Switch
-                            aria-label={`Include question ${i + 1}`}
-                            checked={q[x.id]?.enabled ?? true}
-                            onCheckedChange={(v) => patchQ({ id: x.id, patch: { enabled: v } })}
+                    </Field>
+                    <Field label="Description">
+                      <Textarea
+                        rows={2}
+                        value={s.description}
+                        onChange={(e) =>
+                          patchSection({ id: s.id, patch: { description: e.target.value } })
+                        }
+                      />
+                    </Field>
+                    <ul className="grid gap-2">
+                      {s.questions.map((x, i) => (
+                        <li key={x.id} className="grid gap-2 rounded-xl border bg-surface/50 p-3">
+                          <Textarea
+                            aria-label={`Question ${i + 1} text`}
+                            rows={2}
+                            value={x.text}
+                            onChange={(e) =>
+                              patchText({ sid: s.id, qid: x.id, text: e.target.value })
+                            }
                           />
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="justify-self-start"
-                  onClick={() => toast.info('Adding questions is simulated in this demo.')}
-                >
-                  <Plus aria-hidden /> Add question
-                </Button>
-              </div>
-            </SectionCard>
-          ))}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <StatusBadge tone="info" icon={null}>
+                              P{x.principle}
+                            </StatusBadge>
+                            <StatusBadge tone="neutral" icon={null}>
+                              {x.type === 'scale'
+                                ? 'Maturity scale'
+                                : x.type === 'single'
+                                  ? 'Single choice'
+                                  : 'Free text'}
+                            </StatusBadge>
+                            <div className="ms-auto flex items-center gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon-sm"
+                                aria-label="Move question up"
+                                disabled={i === 0}
+                                onClick={() => moveQuestion({ sid: s.id, i, d: -1 })}
+                              >
+                                <ArrowUp />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon-sm"
+                                aria-label="Move question down"
+                                disabled={i === s.questions.length - 1}
+                                onClick={() => moveQuestion({ sid: s.id, i, d: 1 })}
+                              >
+                                <ArrowDown />
+                              </Button>
+                              <Switch
+                                aria-label={`Include question ${i + 1}`}
+                                checked={q[x.id]?.enabled ?? true}
+                                onCheckedChange={(v) => patchQ({ id: x.id, patch: { enabled: v } })}
+                              />
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-self-start"
+                      onClick={() => toast.info('Adding questions is simulated in this demo.')}
+                    >
+                      <Plus aria-hidden /> Add question
+                    </Button>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </TabsContent>
 
         <TabsContent value="evidence" className="pt-3">

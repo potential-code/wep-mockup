@@ -1,8 +1,8 @@
 import { fullName } from '@shared/permissions'
 import { DEFAULT_ADMIN_PERMISSIONS, departmentLabel, PERMISSIONS } from '@shared/reference'
 import type { CompanyPermission } from '@shared/types'
-import { Link, useSearch } from '@tanstack/react-router'
-import { Info, ShieldCheck, UserPlus } from 'lucide-react'
+import { useSearch } from '@tanstack/react-router'
+import { ShieldCheck, UserPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -84,7 +84,7 @@ export function PermissionsPage() {
       <TeamTabs active="permissions" />
       <PageHeader
         title="Permissions and delegation"
-        description="Appoint company administrators and choose exactly what each of them can do."
+        description="Choose what each company administrator can do."
         actions={
           <Button variant="outline" onClick={() => setInviting(true)}>
             <UserPlus aria-hidden /> Invite a new administrator
@@ -95,7 +95,7 @@ export function PermissionsPage() {
         <div className="grid content-start gap-6 lg:col-span-3">
           <SectionCard
             title="Delegate to a colleague"
-            description="New administrators start with operational rights only. Final report submission and certification purchases are explicit choices."
+            description="New administrators start with operational rights only."
           >
             <div className="grid gap-5">
               <FormField id="perm-user" label="Colleague">
@@ -133,17 +133,6 @@ export function PermissionsPage() {
               </div>
             </div>
           </SectionCard>
-          <div className="flex items-start gap-3 rounded-2xl border bg-secondary/60 p-4 text-sm">
-            <Info className="mt-0.5 size-4 shrink-0 text-navy" aria-hidden />
-            <p className="text-muted-foreground">
-              You keep one account. As CEO you already hold every right, so you can run the company
-              yourself from{' '}
-              <Link to="/portal" className="font-medium text-blue underline">
-                the dashboard’s Manage company panel
-              </Link>{' '}
-              without a second login. Appointing administrators never removes your own access.
-            </p>
-          </div>
         </div>
         <div className="lg:col-span-2">
           <AdminList

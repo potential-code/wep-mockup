@@ -29,7 +29,10 @@ export function ForgotPasswordPage() {
       text="We’ll send a reset link to the email on your account."
     >
       {sentTo ? (
-        <div className="grid gap-5" role="status">
+        <div
+          className="grid gap-5 rounded-2xl border border-white bg-white/80 p-6 shadow-lift backdrop-blur sm:p-8"
+          role="status"
+        >
           <CheckCircle2 className="size-12 text-success" aria-hidden />
           <h1 className="font-bold font-heading text-3xl text-navy">Check your inbox</h1>
           <p className="text-muted-foreground">
@@ -40,7 +43,7 @@ export function ForgotPasswordPage() {
             Demo: no email is sent. Return to sign in and use the demo options.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="gloss-blue">
               <Link to="/sign-in">Back to sign in</Link>
             </Button>
             <Button variant="outline" size="lg" onClick={() => setSentTo(null)}>
@@ -49,7 +52,11 @@ export function ForgotPasswordPage() {
           </div>
         </div>
       ) : (
-        <form onSubmit={submit} className="grid gap-5" noValidate>
+        <form
+          onSubmit={submit}
+          className="grid gap-5 rounded-2xl border border-white bg-white/80 p-6 shadow-lift backdrop-blur sm:p-8"
+          noValidate
+        >
           <header className="grid gap-2">
             <h1 className="font-bold font-heading text-3xl text-navy">Reset your password</h1>
             <p className="text-muted-foreground">
@@ -75,7 +82,7 @@ export function ForgotPasswordPage() {
               </p>
             ) : null}
           </div>
-          <Button type="submit" size="xl" disabled={reset.isPending}>
+          <Button type="submit" size="xl" variant="gloss-blue" disabled={reset.isPending}>
             {reset.isPending ? (
               <>
                 <Loader2 className="animate-spin" aria-hidden /> Sending…

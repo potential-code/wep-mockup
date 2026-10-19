@@ -70,6 +70,7 @@ export function NotificationsPage() {
   const [scope, setScope] = useState<'all' | 'unread'>('all')
   const [category, setCategory] = useState('all')
   const [email, setEmail] = useState<Notification | null>(null)
+  const [shown, setShown] = useState(5)
 
   const items = data ?? []
   const unread = items.filter((n) => !n.read).length
@@ -88,7 +89,6 @@ export function NotificationsPage() {
     <div>
       <PageHeader
         title="Notifications"
-        description="Updates that need your attention, with a direct link to the next step."
         actions={
           <Button
             variant="outline"
@@ -149,11 +149,18 @@ export function NotificationsPage() {
             />
           ) : (
             <ul className="grid gap-3">
-              {filtered.map((n) => (
+              {filtered.slice(0, shown).map((n) => (
                 <Item key={n.id} n={n} onEmail={() => setEmail(n)} />
               ))}
             </ul>
           )}
+          {filtered.length > shown ? (
+            <div className="mt-4 flex justify-center">
+              <Button variant="outline" onClick={() => setShown((n) => n + 5)}>
+                Show more ({filtered.length - shown} more)
+              </Button>
+            </div>
+          ) : null}
         </div>
         <Preferences />
       </div>
@@ -283,7 +290,7 @@ function Preferences() {
   const set = useSetPreference()
   return (
     <aside aria-label="Notification preferences" className="self-start">
-      <SectionCard title="Preferences" description="Choose which updates also reach you by email.">
+      <SectionCard title="Email preferences">
         <ul className="grid gap-3">
           {PREFERENCE_CATEGORIES.map((c) => {
             const on = c.critical ? true : (data?.[c.id] ?? true)

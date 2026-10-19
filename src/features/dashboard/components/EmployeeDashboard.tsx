@@ -11,14 +11,17 @@ import {
 import { PathwayList } from '@/features/dashboard/components/employee/PathwayList'
 import { PersonalCards } from '@/features/dashboard/components/employee/PersonalCards'
 import { UnlockClinicPanel } from '@/features/dashboard/components/employee/UnlockClinicPanel'
+import { AchievementsSummary } from '@/features/points/components/AchievementsSummary'
+import { deriveAchievements } from '@/features/points/components/achievements'
 import { useCurrentUser } from '@/hooks/use-session'
 import { useEmployeeDashboard } from '@/queries/company.queries'
-import { useMyLearning } from '@/queries/learning.queries'
+import { useMyLearning, useMyPoints } from '@/queries/learning.queries'
 
 export function EmployeeDashboard() {
   const { user, company } = useCurrentUser()
   const dash = useEmployeeDashboard()
   const learning = useMyLearning()
+  const points = useMyPoints()
 
   if (dash.isLoading || learning.isLoading || !user) return <PageSkeleton />
   if (dash.isError || learning.isError || !dash.data || !learning.data)
@@ -58,7 +61,6 @@ export function EmployeeDashboard() {
       <PageHeader
         eyebrow={`${company?.name ?? ''} · ${d.department}`}
         title={`Welcome back, ${user.firstName}`}
-        description="Your personalised pathway is built from your department and your company’s priorities."
       />
       <ContinueHero current={l.current} firstName={user.firstName} />
       <PersonalCards
@@ -71,6 +73,12 @@ export function EmployeeDashboard() {
         clinicRegistered={registration?.registration.status === 'registered'}
         next={next}
       />
+      {points.data ? (
+        <AchievementsSummary
+          achievements={deriveAchievements(points.data.ledger, points.data.balance)}
+          balance={points.data.balance}
+        />
+      ) : null}
       <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
         <PathwayList courses={l.courses} title={l.path.title} departmentLabel={l.departmentLabel} />
         <UnlockClinicPanel
@@ -84,8 +92,10 @@ export function EmployeeDashboard() {
         <RecommendedResources resources={d.recommendedResources} />
         <CommunityThreads threads={d.recentThreads} />
       </div>
-      <ConciergeChips />
-      <CredentialSummary items={d.credentials} />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <ConciergeChips />
+        <CredentialSummary items={d.credentials} />
+      </div>
     </div>
   )
 }

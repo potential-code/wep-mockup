@@ -60,6 +60,8 @@ const personaProgress: CourseProgress[] = [
     lastLessonId: 'crs-fair-progression-pay-l1',
     reflections: {},
   },
+  fullCourse('u-maya', 'crs-action-planning', 3, 90, '2026-05-15T12:00:00.000Z'),
+  fullCourse('u-maya', 'crs-evidence-reporting', 3, 85, '2026-06-15T12:00:00.000Z'),
   fullCourse('u-omar', 'crs-gender-responsive-procurement', 4, 90, '2026-06-18T12:00:00.000Z'),
   fullCourse('u-omar', 'crs-supplier-engagement', 3, 85, '2026-07-22T12:00:00.000Z'),
   fullCourse('u-omar', 'crs-action-planning', 3, 100, '2026-08-30T12:00:00.000Z'),
@@ -189,6 +191,52 @@ const mayaEvents: PointsEvent[] = [
     true,
     '/portal/learn/crs-inclusive-recruitment',
   ),
+  // Non-qualifying history (other courses, action work, community help): 620 redeemable points
+  // so Maya can also demo a mentoring booking, while clinic progress stays at 175 of 200.
+  ...lessonEvents(
+    'u-maya',
+    'crs-action-planning',
+    [...lessons('crs-action-planning', 3), 'crs-action-planning-quiz'],
+    false,
+    5,
+  ),
+  ...lessonEvents(
+    'u-maya',
+    'crs-evidence-reporting',
+    [...lessons('crs-evidence-reporting', 3), 'crs-evidence-reporting-quiz'],
+    false,
+    6,
+  ),
+  ...lessonEvents('u-maya', 'crs-fair-progression-pay', ['crs-fair-progression-pay-l1'], false, 10),
+  ...[
+    'shortlisting baseline',
+    'interview panel guidance',
+    'scoring sheet pilot',
+    'region one results',
+  ].map((what, k) =>
+    ev(
+      'u-maya',
+      'action_contribution',
+      25,
+      `action:act-1:${k + 1}`,
+      `Accepted contribution: ${what}`,
+      `2026-0${6 + k}-12T09:00:00.000Z`,
+      false,
+      '/portal/action-plan',
+    ),
+  ),
+  ...Array.from({ length: 20 }, (_, k) =>
+    ev(
+      'u-maya',
+      'community_contribution',
+      5,
+      `community:maya:${k}`,
+      'Helpful community answer',
+      `2026-${String(5 + Math.floor(k / 4)).padStart(2, '0')}-${String(3 + (k % 4) * 6).padStart(2, '0')}T13:00:00.000Z`,
+      false,
+      '/portal/community',
+    ),
+  ),
 ]
 
 const omarEvents: PointsEvent[] = [
@@ -311,7 +359,7 @@ const elenaEvents: PointsEvent[] = [
   ),
 ]
 
-const generatedEvents: PointsEvent[] = generatedProgress.flatMap((p) => {
+const generatedEvents: PointsEvent[] = generatedProgress.flatMap((p, i) => {
   const lessonIds = p.completedLessonIds.filter((id) => !id.endsWith('-quiz'))
   const out = [
     ev(
@@ -322,7 +370,7 @@ const generatedEvents: PointsEvent[] = generatedProgress.flatMap((p) => {
       'Personal profile completed',
       p.startedAt,
     ),
-    ...lessonEvents(p.userId, p.courseId, lessonIds, true, 8),
+    ...lessonEvents(p.userId, p.courseId, lessonIds, true, 4 + (i % 6)),
   ]
   if (p.completedAt) {
     out.push(

@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { CalendarClock, Coins, Gauge, Handshake, Trophy } from 'lucide-react'
+import { CalendarClock, Coins, Gauge, Handshake } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { StatCard } from '@/components/shared/StatCard'
 import { StatusBadge } from '@/components/shared/StatusBadge'
@@ -51,7 +51,7 @@ export function PersonalCards({
   next?: { title: string; at?: string; to: string }
 }) {
   return (
-    <section aria-label="Your progress" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+    <section aria-label="Your progress" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard
         label="Pathway complete"
         value={pathPercent}
@@ -61,19 +61,11 @@ export function PersonalCards({
         to="/portal/learn"
       />
       <StatCard
-        label="Lifetime points"
-        value={lifetime}
-        icon={Trophy}
-        tone="gold"
-        hint="Your record of achievement"
-        to="/portal/points"
-      />
-      <StatCard
         label="Redeemable points"
         value={redeemable}
         icon={Coins}
         tone="navy"
-        hint="Available to spend"
+        hint={`${lifetime} earned in total`}
         to="/portal/points"
       />
       <InfoTile
@@ -99,9 +91,7 @@ export function PersonalCards({
             <p className="text-muted-foreground text-sm">{formatDateTime(next.at)}</p>
           </>
         ) : (
-          <p className="text-muted-foreground text-sm">
-            Nothing booked. Find a mentor or register for a clinic.
-          </p>
+          <p className="text-muted-foreground text-sm">Nothing booked yet</p>
         )}
       </InfoTile>
     </section>

@@ -10,10 +10,7 @@ import { formatDate } from '@/lib/format'
 /** Assigned actions only. The confidential company assessment is never shown to employees. */
 export function ContributionsCard({ actions, userId }: { actions: ActionItem[]; userId: string }) {
   return (
-    <SectionCard
-      title="Your company contributions"
-      description="Actions in your company’s plan where you are an owner or contributor."
-    >
+    <SectionCard title="Your company contributions">
       {actions.length === 0 ? (
         <EmptyState
           icon={ClipboardList}
@@ -22,7 +19,7 @@ export function ContributionsCard({ actions, userId }: { actions: ActionItem[]; 
         />
       ) : (
         <ul className="grid gap-3">
-          {actions.map((a) => {
+          {actions.slice(0, 3).map((a) => {
             const open = a.status === 'in_progress' || a.status === 'needs_revision'
             return (
               <li

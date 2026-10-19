@@ -17,8 +17,8 @@ import { Button } from '@/components/ui/button'
 import { formatDate, sentenceCase } from '@/lib/format'
 import type { CompanyDashboardData } from '@/queries/company.queries'
 import { DepartmentChart, TrendChart } from './Charts'
+import { ExpandableList } from './ExpandableList'
 import { IndicatorList } from './IndicatorList'
-import { ManageCompanyPanel } from './ManageCompanyPanel'
 import { PrincipleSummary } from './PrincipleSummary'
 import { PriorityList } from './PriorityList'
 import { TaskRow } from './TaskRow'
@@ -39,7 +39,7 @@ export function CeoDashboard({
       <PageHeader
         eyebrow={company.name}
         title={`Welcome, ${firstName}`}
-        description="A concise view of participation, priorities and the decisions waiting for you."
+        description="Participation, priorities and decisions at a glance."
         actions={
           <>
             <Button asChild>
@@ -95,21 +95,16 @@ export function CeoDashboard({
             <PriorityList priorities={data.priorities} />
           </div>
           <div className="min-w-0 lg:col-span-2">
-            <SectionCard
-              title="Decisions required"
-              description="Waiting for you"
-              bodyClassName="grid gap-3"
-            >
+            <SectionCard title="Decisions required" bodyClassName="grid gap-3">
               {decisions.length === 0 ? (
                 <p className="flex items-center gap-2 text-muted-foreground text-sm">
                   <CheckCircle2 className="size-5 text-success" aria-hidden /> You’re all caught up.
                 </p>
               ) : (
-                <ul className="grid gap-3">
-                  {decisions.map((t) => (
-                    <TaskRow key={t.id} task={t} cta="Review" />
-                  ))}
-                </ul>
+                <ExpandableList
+                  items={decisions}
+                  render={(t) => <TaskRow key={t.id} task={t} cta="Review" />}
+                />
               )}
             </SectionCard>
           </div>
@@ -129,10 +124,9 @@ export function CeoDashboard({
             <UpcomingSupport data={data} />
           </div>
         </StaggerItem>
-        <StaggerItem className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
-          <ManageCompanyPanel />
-          <SectionCard title="Certification and community" description="When you are ready">
-            <div className="grid gap-3 sm:grid-cols-2">
+        <StaggerItem>
+          <SectionCard title="Certification and community">
+            <div className="grid gap-3 sm:grid-cols-3">
               <Link
                 to="/portal/certification"
                 className="flex items-center gap-3 rounded-xl border p-3 text-sm hover:border-blue"

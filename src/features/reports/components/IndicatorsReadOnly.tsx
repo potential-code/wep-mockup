@@ -73,7 +73,6 @@ export function IndicatorsReadOnly({
       columns={columns}
       rows={indicators}
       getRowId={(i) => i.id}
-      pageSize={20}
       empty={
         <p className="p-6 text-center text-muted-foreground text-sm">No indicators reported.</p>
       }

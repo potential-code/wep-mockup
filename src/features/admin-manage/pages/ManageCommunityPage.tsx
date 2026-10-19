@@ -302,16 +302,11 @@ function Listings() {
         <div className="min-w-0">
           <p className="truncate font-medium text-navy">{r.listing.title}</p>
           <p className="truncate text-muted-foreground text-xs">
-            {r.companyName} · {r.listing.category}
+            {r.companyName} · {r.listing.category} ·{' '}
+            {r.listing.type === 'product' ? 'Product' : 'Service'}
           </p>
         </div>
       ),
-    },
-    {
-      key: 'type',
-      header: 'Type',
-      cell: (r) => (r.listing.type === 'product' ? 'Product' : 'Service'),
-      hideOnMobile: true,
     },
     {
       key: 'status',
@@ -362,8 +357,7 @@ function Listings() {
           Review queue
         </h2>
         <p className="mb-3 text-muted-foreground text-sm">
-          Submitted, resubmitted and materially edited listings. Publishing creates an activity
-          record and notifies the company.
+          Submitted, resubmitted and materially edited listings.
         </p>
         <DataTable
           caption="Review queue"

@@ -13,13 +13,13 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
+import { Route as AuthJoinRouteImport } from './routes/_auth/join'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as PublicApplicationStatusRouteImport } from './routes/_public/application-status'
 import { Route as PublicClinicsRouteImport } from './routes/_public/clinics'
 import { Route as PublicDirectoryRouteImport } from './routes/_public/directory'
-import { Route as PublicJoinRouteImport } from './routes/_public/join'
 import { Route as PublicResourcesRouteImport } from './routes/_public/resources'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppExpertIndexRouteImport } from './routes/_app/expert/index'
@@ -122,6 +122,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthJoinRoute = AuthJoinRouteImport.update({
+  id: '/join',
+  path: '/join',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
@@ -150,11 +155,6 @@ const PublicClinicsRoute = PublicClinicsRouteImport.update({
 const PublicDirectoryRoute = PublicDirectoryRouteImport.update({
   id: '/directory',
   path: '/directory',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicJoinRoute = PublicJoinRouteImport.update({
-  id: '/join',
-  path: '/join',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicResourcesRoute = PublicResourcesRouteImport.update({
@@ -627,12 +627,12 @@ const AppPortalMentorshipBookMentorIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
+  '/join': typeof AuthJoinRoute
   '/sign-in': typeof AuthSignInRoute
   '/about': typeof PublicAboutRoute
   '/application-status': typeof PublicApplicationStatusRoute
   '/clinics': typeof PublicClinicsRoute
   '/directory': typeof PublicDirectoryRoute
-  '/join': typeof PublicJoinRoute
   '/resources': typeof PublicResourcesRoute
   '/portal/community': typeof AppPortalCommunityRouteRouteWithChildren
   '/portal/company': typeof AppPortalCompanyRouteRouteWithChildren
@@ -721,12 +721,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
+  '/join': typeof AuthJoinRoute
   '/sign-in': typeof AuthSignInRoute
   '/about': typeof PublicAboutRoute
   '/application-status': typeof PublicApplicationStatusRoute
   '/clinics': typeof PublicClinicsRoute
   '/directory': typeof PublicDirectoryRoute
-  '/join': typeof PublicJoinRoute
   '/resources': typeof PublicResourcesRoute
   '/expert/availability': typeof AppExpertAvailabilityRoute
   '/expert/calendar': typeof AppExpertCalendarRoute
@@ -816,12 +816,12 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/_auth/join': typeof AuthJoinRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_public/about': typeof PublicAboutRoute
   '/_public/application-status': typeof PublicApplicationStatusRoute
   '/_public/clinics': typeof PublicClinicsRoute
   '/_public/directory': typeof PublicDirectoryRoute
-  '/_public/join': typeof PublicJoinRoute
   '/_public/resources': typeof PublicResourcesRoute
   '/_public/': typeof PublicIndexRoute
   '/_app/portal/community': typeof AppPortalCommunityRouteRouteWithChildren
@@ -913,12 +913,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/forgot-password'
+    | '/join'
     | '/sign-in'
     | '/about'
     | '/application-status'
     | '/clinics'
     | '/directory'
-    | '/join'
     | '/resources'
     | '/portal/community'
     | '/portal/company'
@@ -1007,12 +1007,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/forgot-password'
+    | '/join'
     | '/sign-in'
     | '/about'
     | '/application-status'
     | '/clinics'
     | '/directory'
-    | '/join'
     | '/resources'
     | '/expert/availability'
     | '/expert/calendar'
@@ -1101,12 +1101,12 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_public'
     | '/_auth/forgot-password'
+    | '/_auth/join'
     | '/_auth/sign-in'
     | '/_public/about'
     | '/_public/application-status'
     | '/_public/clinics'
     | '/_public/directory'
-    | '/_public/join'
     | '/_public/resources'
     | '/_public/'
     | '/_app/portal/community'
@@ -1230,6 +1230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/join': {
+      id: '/_auth/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof AuthJoinRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/sign-in': {
       id: '/_auth/sign-in'
       path: '/sign-in'
@@ -1270,13 +1277,6 @@ declare module '@tanstack/react-router' {
       path: '/directory'
       fullPath: '/directory'
       preLoaderRoute: typeof PublicDirectoryRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/join': {
-      id: '/_public/join'
-      path: '/join'
-      fullPath: '/join'
-      preLoaderRoute: typeof PublicJoinRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/resources': {
@@ -2079,12 +2079,14 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthJoinRoute: typeof AuthJoinRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthInviteTokenRoute: typeof AuthInviteTokenRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthJoinRoute: AuthJoinRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthInviteTokenRoute: AuthInviteTokenRoute,
 }
@@ -2096,7 +2098,6 @@ interface PublicRouteChildren {
   PublicApplicationStatusRoute: typeof PublicApplicationStatusRoute
   PublicClinicsRoute: typeof PublicClinicsRoute
   PublicDirectoryRoute: typeof PublicDirectoryRoute
-  PublicJoinRoute: typeof PublicJoinRoute
   PublicResourcesRoute: typeof PublicResourcesRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
@@ -2106,7 +2107,6 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicApplicationStatusRoute: PublicApplicationStatusRoute,
   PublicClinicsRoute: PublicClinicsRoute,
   PublicDirectoryRoute: PublicDirectoryRoute,
-  PublicJoinRoute: PublicJoinRoute,
   PublicResourcesRoute: PublicResourcesRoute,
   PublicIndexRoute: PublicIndexRoute,
 }

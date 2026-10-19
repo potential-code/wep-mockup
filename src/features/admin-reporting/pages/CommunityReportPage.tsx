@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router'
-import { Info } from 'lucide-react'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import type { Column } from '@/components/shared/DataTable'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { relativeTime } from '@/lib/format'
 import { useCommunityReport } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
@@ -21,6 +21,7 @@ export function CommunityReportPage() {
   const { filters } = useReportingFilters()
   const q = useCommunityReport(filters)
   const d = q.data
+  const [view, setView] = useState('listings')
 
   const listingCols = useMemo<Column<ListingRow>[]>(
     () => [
@@ -89,7 +90,7 @@ export function CommunityReportPage() {
   return (
     <ReportingShell
       title="Community and marketplace"
-      description="Discussion participation, unanswered questions, flagged items, listing approvals, views and outbound purchase clicks."
+      description="Participation, unanswered questions, listing approvals and outbound clicks."
       actions={
         <Link
           to="/admin/manage/community"
@@ -102,12 +103,10 @@ export function CommunityReportPage() {
       <QueryState isLoading={q.isLoading} isError={q.isError} refetch={q.refetch} hasData={!!d}>
         {d ? (
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">
-              <Stat label="Threads" value={d.threads} />
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              <Stat label="Threads" value={d.threads} hint={`${d.participants} participants`} />
               <Stat label="Replies" value={d.replies} />
-              <Stat label="Participants" value={d.participants} />
-              <Stat label="Unanswered" value={d.unanswered} />
-              <Stat label="Flagged items" value={d.flagged} />
+              <Stat label="Unanswered" value={d.unanswered} hint={`${d.flagged} flagged`} />
               <Stat
                 label="Listings"
                 value={d.listings.length}
@@ -154,32 +153,35 @@ export function CommunityReportPage() {
                 />
               </ChartCard>
             </div>
-            <section className="grid gap-3">
-              <div className="flex items-center gap-1">
-                <h2 className="font-heading font-semibold text-lg text-navy">
-                  Listings: views and outbound clicks
-                </h2>
-                <MetricInfo metric="listing_engagement" />
-              </div>
-              <div className="flex gap-2 rounded-xl border border-blue/20 bg-blue-50 p-3 text-sm">
-                <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
-                <p>
-                  No sales or revenue are reported here. The portal only links to the provider's own
-                  purchase page, so it cannot see whether a click became an order, a price or a
-                  payment.
-                </p>
-              </div>
-              <ReportTable
-                title="Marketplace listings"
-                columns={listingCols}
-                rows={d.listings}
-                getRowId={(r) => r.listing.id}
-                searchText={(r) => `${r.listing.title} ${r.companyName}`}
-                searchLabel="Search listings"
-              />
-            </section>
-            <section className="grid gap-3">
-              <h2 className="font-heading font-semibold text-lg text-navy">Unanswered questions</h2>
+            <Tabs value={view} onValueChange={setView}>
+              <TabsList aria-label="Community records">
+                <TabsTrigger value="listings">Listings</TabsTrigger>
+                <TabsTrigger value="unanswered">Unanswered</TabsTrigger>
+                <TabsTrigger value="flagged">Flagged</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            {view === 'listings' ? (
+              <section className="grid gap-3">
+                <div className="flex items-center gap-1">
+                  <h2 className="font-heading font-semibold text-lg text-navy">
+                    Views and outbound clicks
+                  </h2>
+                  <MetricInfo metric="listing_engagement" />
+                  <span className="text-muted-foreground text-xs">
+                    Clicks only; no sales or revenue are visible.
+                  </span>
+                </div>
+                <ReportTable
+                  title="Marketplace listings"
+                  columns={listingCols}
+                  rows={d.listings}
+                  getRowId={(r) => r.listing.id}
+                  searchText={(r) => `${r.listing.title} ${r.companyName}`}
+                  searchLabel="Search listings"
+                />
+              </section>
+            ) : null}
+            {view === 'unanswered' ? (
               <ReportTable
                 title="Unanswered questions"
                 columns={threadCols}
@@ -189,11 +191,8 @@ export function CommunityReportPage() {
                 searchLabel="Search threads"
                 empty="Every question has a reply."
               />
-            </section>
-            <section className="grid gap-3">
-              <h2 className="font-heading font-semibold text-lg text-navy">
-                Flagged for moderation
-              </h2>
+            ) : null}
+            {view === 'flagged' ? (
               <ReportTable
                 title="Flagged items"
                 columns={threadCols}
@@ -201,7 +200,7 @@ export function CommunityReportPage() {
                 getRowId={(r) => r.thread.id}
                 empty="Nothing is flagged."
               />
-            </section>
+            ) : null}
           </div>
         ) : null}
       </QueryState>

@@ -9,13 +9,15 @@ import { formatDate } from '@/lib/format'
 import type { CompanyDashboardData } from '@/queries/company.queries'
 import { useMentors } from '@/queries/mentorship.queries'
 import { useResources } from '@/queries/resources.queries'
+import { ExpandableList } from './ExpandableList'
 
 /** Departments with enrolled users, completed prerequisites and clinic eligibility. */
 export function TeamReadiness({ rows }: { rows: CompanyDashboardData['departments'] }) {
   return (
-    <SectionCard title="Team readiness" description="Open a department to see its people">
-      <ul className="grid gap-3">
-        {rows.map((r) => (
+    <SectionCard title="Team readiness">
+      <ExpandableList
+        items={rows}
+        render={(r) => (
           <li key={r.department}>
             <Link
               to="/portal/company/team"
@@ -38,8 +40,8 @@ export function TeamReadiness({ rows }: { rows: CompanyDashboardData['department
               />
             </Link>
           </li>
-        ))}
-      </ul>
+        )}
+      />
     </SectionCard>
   )
 }
@@ -97,9 +99,16 @@ export function SupportPanel({ data }: { data: CompanyDashboardData }) {
   const mentors = useMentors()
   const templates = (resources.data?.resources ?? [])
     .filter((r) => /template|toolkit|guide/i.test(r.title))
-    .slice(0, 2)
+    .slice(0, 1)
   return (
-    <SectionCard title="Support and resources">
+    <SectionCard
+      title="Support and resources"
+      action={
+        <Link to="/portal/community" className="text-blue text-sm hover:underline">
+          View all
+        </Link>
+      }
+    >
       <ul className="grid grid-cols-[minmax(0,1fr)] gap-2.5 text-sm">
         {templates.map((r) => (
           <li key={r.id}>
@@ -113,7 +122,7 @@ export function SupportPanel({ data }: { data: CompanyDashboardData }) {
             </Link>
           </li>
         ))}
-        {(mentors.data ?? []).slice(0, 2).map((m) => (
+        {(mentors.data ?? []).slice(0, 1).map((m) => (
           <li key={m.profile.userId}>
             <Link
               to="/portal/mentorship/$mentorId"
@@ -138,7 +147,7 @@ export function SupportPanel({ data }: { data: CompanyDashboardData }) {
             </span>
           </Link>
         </li>
-        {data.recentThreads.slice(0, 2).map((t) => (
+        {data.recentThreads.slice(0, 1).map((t) => (
           <li key={t.id}>
             <Link
               to="/portal/community/thread/$threadId"

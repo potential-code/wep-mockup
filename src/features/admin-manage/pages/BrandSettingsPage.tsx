@@ -7,6 +7,7 @@ import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useSettings } from '@/queries/admin.queries'
 import { Field } from '../components/common'
 
@@ -45,135 +46,144 @@ export function BrandSettingsPage() {
         title="Brand and General Settings"
         description="Approved brand assets, theme, languages, support links and integrations."
       />
-      <div className="grid gap-6">
-        <SectionCard
-          title="Approved logos"
-          description="Official marks cannot be edited, recoloured or replaced in the portal."
-        >
-          <div className="grid gap-4 sm:grid-cols-3">
-            {LOGOS.map((l) => (
-              <figure key={l.src} className="grid gap-2">
-                <div
-                  className={`grid h-28 place-items-center rounded-xl border p-4 ${l.dark ? 'bg-navy' : 'bg-white'}`}
-                >
-                  <img
-                    src={l.src}
-                    alt={`${l.name} logo`}
-                    className="max-h-full max-w-full object-contain"
+      <Tabs defaultValue="brand">
+        <TabsList>
+          <TabsTrigger value="brand">Brand</TabsTrigger>
+          <TabsTrigger value="general">Languages and links</TabsTrigger>
+          <TabsTrigger value="integrations">Integrations</TabsTrigger>
+        </TabsList>
+        <TabsContent value="brand" className="grid gap-6 pt-3">
+          <SectionCard
+            title="Approved logos"
+            description="Official marks cannot be edited, recoloured or replaced in the portal."
+          >
+            <div className="grid gap-4 sm:grid-cols-3">
+              {LOGOS.map((l) => (
+                <figure key={l.src} className="grid gap-2">
+                  <div
+                    className={`grid h-28 place-items-center rounded-xl border p-4 ${l.dark ? 'bg-navy' : 'bg-white'}`}
+                  >
+                    <img
+                      src={l.src}
+                      alt={`${l.name} logo`}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                  <figcaption className="flex items-center justify-between gap-2 text-sm">
+                    <span className="font-medium text-navy">{l.name}</span>
+                    <StatusBadge tone="locked" icon={Lock}>
+                      Locked
+                    </StatusBadge>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </SectionCard>
+
+          <SectionCard
+            title="Theme tokens"
+            description="Read-only. Provisional, verify with UN Women before launch."
+          >
+            <DemoLabel className="mb-3">Provisional</DemoLabel>
+            <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {TOKENS.map((t) => (
+                <li key={t.name} className="overflow-hidden rounded-xl border">
+                  <div
+                    className="h-16"
+                    style={{ backgroundColor: t.hex }}
+                    role="img"
+                    aria-label={`${t.name} swatch ${t.hex}`}
                   />
-                </div>
-                <figcaption className="flex items-center justify-between gap-2 text-sm">
-                  <span className="font-medium text-navy">{l.name}</span>
-                  <StatusBadge tone="locked" icon={Lock}>
-                    Locked
-                  </StatusBadge>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </SectionCard>
+                  <div className="p-3 text-sm">
+                    <p className="font-medium text-navy">
+                      {t.name} <span className="font-normal text-muted-foreground">{t.hex}</span>
+                    </p>
+                    <p className="text-muted-foreground text-xs">{t.use}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </SectionCard>
+        </TabsContent>
+        <TabsContent value="general" className="pt-3">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <SectionCard title="Languages">
+              <ul className="grid gap-2">
+                {LANGUAGES.map((l) => (
+                  <li
+                    key={l.name}
+                    className="flex items-center justify-between rounded-lg border p-3 text-sm"
+                  >
+                    <span className="font-medium text-navy">{l.name}</span>
+                    {l.active ? (
+                      <StatusBadge tone="success">Active</StatusBadge>
+                    ) : (
+                      <StatusBadge tone="neutral">Planned</StatusBadge>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-muted-foreground text-xs">
+                Only English is live in this mockup.
+              </p>
+            </SectionCard>
 
-        <SectionCard
-          title="Theme tokens"
-          description="Read-only. Provisional, verify with UN Women before launch."
-        >
-          <DemoLabel className="mb-3">Provisional</DemoLabel>
-          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {TOKENS.map((t) => (
-              <li key={t.name} className="overflow-hidden rounded-xl border">
-                <div
-                  className="h-16"
-                  style={{ backgroundColor: t.hex }}
-                  role="img"
-                  aria-label={`${t.name} swatch ${t.hex}`}
-                />
-                <div className="p-3 text-sm">
-                  <p className="font-medium text-navy">
-                    {t.name} <span className="font-normal text-muted-foreground">{t.hex}</span>
-                  </p>
-                  <p className="text-muted-foreground text-xs">{t.use}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <SectionCard title="Languages">
-            <ul className="grid gap-2">
-              {LANGUAGES.map((l) => (
-                <li
-                  key={l.name}
-                  className="flex items-center justify-between rounded-lg border p-3 text-sm"
+            <SectionCard title="Support links">
+              <div className="grid gap-3">
+                <Field label="Help and support">
+                  <Input
+                    value={links.help}
+                    onChange={(e) => setLinks((l) => ({ ...l, help: e.target.value }))}
+                  />
+                </Field>
+                <Field label="Privacy notice">
+                  <Input
+                    value={links.privacy}
+                    onChange={(e) => setLinks((l) => ({ ...l, privacy: e.target.value }))}
+                  />
+                </Field>
+                <Field label="Terms of use">
+                  <Input
+                    value={links.terms}
+                    onChange={(e) => setLinks((l) => ({ ...l, terms: e.target.value }))}
+                  />
+                </Field>
+                <Button
+                  className="justify-self-start"
+                  onClick={() => toast.success('Support links saved (demo)')}
                 >
-                  <span className="font-medium text-navy">{l.name}</span>
-                  {l.active ? (
-                    <StatusBadge tone="success">Active</StatusBadge>
+                  Save links
+                </Button>
+              </div>
+            </SectionCard>
+          </div>
+        </TabsContent>
+        <TabsContent value="integrations" className="pt-3">
+          <SectionCard
+            title="Integrations"
+            description="Status and purpose only. No keys or credentials are stored in the portal mockup."
+          >
+            <ul className="grid gap-2">
+              {data.integrations.map((i) => (
+                <li
+                  key={i.name}
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3 text-sm"
+                >
+                  <div>
+                    <p className="font-medium text-navy">{i.name}</p>
+                    <p className="text-muted-foreground">{i.purpose}</p>
+                  </div>
+                  {i.status === 'simulated' ? (
+                    <StatusBadge tone="info">Simulated</StatusBadge>
                   ) : (
-                    <StatusBadge tone="neutral">Planned</StatusBadge>
+                    <StatusBadge tone="neutral">Not configured</StatusBadge>
                   )}
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-muted-foreground text-xs">
-              Only English is live in this mockup.
-            </p>
           </SectionCard>
-
-          <SectionCard title="Support links">
-            <div className="grid gap-3">
-              <Field label="Help and support">
-                <Input
-                  value={links.help}
-                  onChange={(e) => setLinks((l) => ({ ...l, help: e.target.value }))}
-                />
-              </Field>
-              <Field label="Privacy notice">
-                <Input
-                  value={links.privacy}
-                  onChange={(e) => setLinks((l) => ({ ...l, privacy: e.target.value }))}
-                />
-              </Field>
-              <Field label="Terms of use">
-                <Input
-                  value={links.terms}
-                  onChange={(e) => setLinks((l) => ({ ...l, terms: e.target.value }))}
-                />
-              </Field>
-              <Button
-                className="justify-self-start"
-                onClick={() => toast.success('Support links saved (demo)')}
-              >
-                Save links
-              </Button>
-            </div>
-          </SectionCard>
-        </div>
-
-        <SectionCard
-          title="Integrations"
-          description="Status and purpose only. No keys or credentials are stored in the portal mockup."
-        >
-          <ul className="grid gap-2">
-            {data.integrations.map((i) => (
-              <li
-                key={i.name}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3 text-sm"
-              >
-                <div>
-                  <p className="font-medium text-navy">{i.name}</p>
-                  <p className="text-muted-foreground">{i.purpose}</p>
-                </div>
-                {i.status === 'simulated' ? (
-                  <StatusBadge tone="info">Simulated</StatusBadge>
-                ) : (
-                  <StatusBadge tone="neutral">Not configured</StatusBadge>
-                )}
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
-      </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

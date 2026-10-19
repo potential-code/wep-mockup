@@ -7,6 +7,12 @@ import { PageHeader } from '@/components/layout/PageHeader'
 import { DemoLabel, SectionCard } from '@/components/shared/Cards'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { StatusBadge } from '@/components/shared/StatusBadge'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAiScripts, useSettings, useUpdateSettings } from '@/queries/admin.queries'
 import { SwitchRow } from '../components/common'
@@ -102,7 +108,7 @@ export function AiSettingsPage() {
         <TabsContent value="sources" className="pt-3">
           <SectionCard
             title="Approved knowledge sources"
-            description="The assistant cites only these sources. Disabling a source removes it from future answers."
+            description="The assistant cites only these sources."
           >
             <ul className="grid gap-3">
               {sources.map((s, i) => (
@@ -125,40 +131,55 @@ export function AiSettingsPage() {
         </TabsContent>
 
         <TabsContent value="prompts" className="pt-3">
-          <div className="grid gap-4 lg:grid-cols-2">
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue={[...byRole.keys()][0]}
+            className="grid gap-3"
+          >
             {[...byRole.entries()].map(([role, list]) => (
-              <SectionCard
+              <AccordionItem
                 key={role}
-                title={ROLE_LABELS[role]}
-                description={`${list.length} suggested prompts`}
+                value={role}
+                className="rounded-2xl border bg-card px-5 shadow-card last:border-b"
               >
-                <ul className="grid gap-2">
-                  {list.map((p) => (
-                    <li
-                      key={p.id}
-                      className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-2.5 text-sm"
-                    >
-                      <span className="flex items-center gap-2">
-                        <Sparkles className="size-3.5 text-blue" aria-hidden /> {p.prompt}
-                      </span>
-                      <span className="flex gap-1">
-                        {p.isDraft ? (
-                          <StatusBadge tone="gold" icon={null}>
-                            Draft output
-                          </StatusBadge>
-                        ) : null}
-                        {p.unavailable ? (
-                          <StatusBadge tone="warning" icon={null}>
-                            Unavailable-data demo
-                          </StatusBadge>
-                        ) : null}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </SectionCard>
+                <AccordionTrigger className="text-navy">
+                  <span>
+                    {ROLE_LABELS[role]}
+                    <span className="ms-2 font-normal text-muted-foreground text-sm">
+                      {list.length} suggested prompts
+                    </span>
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className="grid gap-2">
+                    {list.map((p) => (
+                      <li
+                        key={p.id}
+                        className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-2.5 text-sm"
+                      >
+                        <span className="flex items-center gap-2">
+                          <Sparkles className="size-3.5 text-blue" aria-hidden /> {p.prompt}
+                        </span>
+                        <span className="flex gap-1">
+                          {p.isDraft ? (
+                            <StatusBadge tone="gold" icon={null}>
+                              Draft output
+                            </StatusBadge>
+                          ) : null}
+                          {p.unavailable ? (
+                            <StatusBadge tone="warning" icon={null}>
+                              Unavailable-data demo
+                            </StatusBadge>
+                          ) : null}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </TabsContent>
 
         <TabsContent value="context" className="pt-3">

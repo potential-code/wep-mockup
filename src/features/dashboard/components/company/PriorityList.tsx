@@ -12,7 +12,6 @@ export function PriorityList({ priorities }: { priorities: CompanyDashboardData[
   return (
     <SectionCard
       title="Company priorities"
-      description="Approved priorities and who is accountable"
       action={
         <Link to="/portal/action-plan" className="text-blue text-sm hover:underline">
           Open action plan
@@ -20,7 +19,7 @@ export function PriorityList({ priorities }: { priorities: CompanyDashboardData[
       }
     >
       <ul className="grid gap-4">
-        {priorities.map((p) => (
+        {priorities.slice(0, 3).map((p) => (
           <li key={p.id} className="grid gap-2.5 rounded-xl border p-4">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <p className="font-medium text-navy leading-snug">{p.title}</p>

@@ -366,6 +366,26 @@ export interface Course {
   prerequisiteCourseId?: ID
   audience: 'employee' | 'leadership' | 'all'
   published: boolean
+  /** Groups the non-quiz lessons for the course builder. The course's quiz lesson is its post-test. */
+  modules?: CourseModule[]
+  /** Ungraded check shown before the modules; it records a starting point and awards no points. */
+  preTest?: CourseTest
+  difficulty?: CourseDifficulty
+  certificate?: boolean
+  updatedAt?: ISODate
+}
+
+export type CourseDifficulty = 'beginner' | 'intermediate' | 'advanced'
+
+export interface CourseModule {
+  id: ID
+  title: string
+  lessonIds: ID[]
+}
+
+export interface CourseTest {
+  title: string
+  questions: QuizQuestion[]
 }
 
 export interface LearningPath {
@@ -388,6 +408,10 @@ export interface CourseProgress {
   lastLessonId?: ID
   completedAt?: ISODate
   reflections: Record<ID, string>
+  /** Post-test attempts per quiz lesson. */
+  quizAttempts?: Record<ID, number>
+  /** Pre-test scores in attempt order. The pre-test is ungraded and awards no points. */
+  preTestScores?: number[]
 }
 
 /* ------------------------------------------------------------------ points -- */

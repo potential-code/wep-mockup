@@ -28,25 +28,12 @@ const COLUMNS: Column<Row>[] = [
     exportValue: (r) => r.company.name,
   },
   {
-    key: 'status',
-    header: 'Status',
-    sortValue: (r) => r.company.signatoryStatus,
-    cell: (r) => <WorkflowStatus status={r.company.signatoryStatus} />,
-  },
-  {
     key: 'since',
     header: 'Member since',
     sortValue: (r) => r.company.memberSince,
     exportValue: (r) => formatDate(r.company.memberSince),
     cell: (r) => formatDate(r.company.memberSince),
     hideOnMobile: true,
-  },
-  {
-    key: 'teams',
-    header: 'Active teams',
-    sortValue: (r) => r.activeTeams,
-    exportValue: (r) => r.activeTeams,
-    cell: (r) => `${r.activeTeams} of 6 departments`,
   },
   {
     key: 'last',
@@ -65,6 +52,19 @@ const COLUMNS: Column<Row>[] = [
     header: 'Current report',
     sortValue: (r) => r.reportStatus,
     cell: (r) => <WorkflowStatus status={r.reportStatus} />,
+  },
+  {
+    key: 'teams',
+    header: 'Active teams',
+    sortValue: (r) => r.activeTeams,
+    exportValue: (r) => r.activeTeams,
+    cell: (r) => `${r.activeTeams} of 6 departments`,
+  },
+  {
+    key: 'status',
+    header: 'Status',
+    sortValue: (r) => r.company.signatoryStatus,
+    cell: (r) => <WorkflowStatus status={r.company.signatoryStatus} />,
   },
   {
     key: 'progress',
