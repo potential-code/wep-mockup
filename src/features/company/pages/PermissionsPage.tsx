@@ -163,7 +163,7 @@ export function PermissionsPage() {
               ))}
             </ul>
             {sensitive.length ? (
-              <p className="rounded-lg bg-gold-50 p-3 text-gold-700">
+              <p className="rounded-lg bg-coral-50 p-3 text-coral-700">
                 Includes sensitive rights: {sensitive.map(permissionLabel).join(', ')}. These act on
                 the company’s behalf with UN Women or involve payment.
               </p>

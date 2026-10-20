@@ -130,7 +130,7 @@ export function SupportPanel({ data }: { data: CompanyDashboardData }) {
               params={{ mentorId: m.profile.userId }}
               className="flex min-w-0 items-center gap-2.5 rounded-xl border p-3 hover:border-blue"
             >
-              <UserRound className="size-4 shrink-0 text-gold-700" aria-hidden />
+              <UserRound className="size-4 shrink-0 text-coral-700" aria-hidden />
               <span className="min-w-0 truncate">
                 {m.name} · {m.profile.headline}
               </span>

@@ -54,12 +54,12 @@ export function FeedbackDialog({
                 aria-label={`${n} ${n === 1 ? 'star' : 'stars'}`}
                 aria-pressed={rating === n}
                 onClick={() => setRating(n)}
-                className="grid size-10 place-items-center rounded-lg hover:bg-gold-50 focus-visible:outline-2"
+                className="grid size-10 place-items-center rounded-lg hover:bg-coral-50 focus-visible:outline-2"
               >
                 <Star
                   className={cn(
                     'size-6',
-                    n <= rating ? 'fill-gold text-gold' : 'text-muted-foreground',
+                    n <= rating ? 'fill-coral text-coral' : 'text-muted-foreground',
                   )}
                   aria-hidden
                 />

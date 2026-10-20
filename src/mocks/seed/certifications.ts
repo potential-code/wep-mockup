@@ -10,6 +10,7 @@ export const certificationOfferings: CertificationOffering[] = [
     slug: 'leadership-accountability',
     title: 'Company Leadership and Accountability',
     price: 1200,
+    status: 'published',
     currency: 'USD',
     focus: 'Leadership responsibilities and implementation planning.',
     scope: [
@@ -26,6 +27,7 @@ export const certificationOfferings: CertificationOffering[] = [
     slug: 'inclusive-workplace-practices',
     title: 'Company Inclusive Workplace Practices',
     price: 1200,
+    status: 'published',
     currency: 'USD',
     focus: 'Workplace policies, people practices and application.',
     scope: [
@@ -42,6 +44,7 @@ export const certificationOfferings: CertificationOffering[] = [
     slug: 'gender-responsive-business-practices',
     title: 'Company Gender Responsive Business Practices',
     price: 1200,
+    status: 'published',
     currency: 'USD',
     focus: 'Procurement, communications and community practice.',
     scope: ['Gender-responsive procurement', 'Responsible marketing', 'Community initiatives'],

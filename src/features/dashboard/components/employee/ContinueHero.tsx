@@ -11,11 +11,11 @@ export function ContinueHero({ current, firstName }: { current?: Current; firstN
   if (!current)
     return (
       <section className="grid gap-3 rounded-2xl bg-navy p-6 text-white sm:p-8">
-        <h2 className="font-heading font-semibold text-2xl">You have finished your pathway</h2>
-        <p className="max-w-xl text-white/80">
+        <h2 className="font-heading font-medium text-2xl">You have finished your pathway</h2>
+        <p className="max-w-xl text-white/90">
           Well done, {firstName}. Browse the catalogue to keep building skills and earning points.
         </p>
-        <Button asChild variant="gold" className="w-fit">
+        <Button asChild variant="coral" className="w-fit">
           <Link to="/portal/learn/catalogue">
             Browse courses <ArrowRight aria-hidden />
           </Link>
@@ -43,17 +43,17 @@ export function ContinueHero({ current, firstName }: { current?: Current; firstN
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/90 to-navy/60" />
       <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
         <div className="grid gap-3">
-          <p className="flex items-center gap-2 font-medium text-gold text-sm">
+          <p className="flex items-center gap-2 font-medium text-coral-300 text-sm">
             Continue your learning
           </p>
-          <h2 id="continue-heading" className="font-heading font-bold text-2xl sm:text-3xl">
+          <h2 id="continue-heading" className="font-heading font-medium text-2xl sm:text-3xl">
             {course.title}
           </h2>
-          <p className="max-w-xl text-white/80">
+          <p className="max-w-xl text-white/90">
             {nextLesson ? `Up next: ${nextLesson.title}` : course.objective}
           </p>
           <div className="grid max-w-md gap-1.5">
-            <div className="flex justify-between text-sm text-white/80">
+            <div className="flex justify-between text-sm text-white/90">
               <span>
                 {completion.done} of {completion.total} steps complete
               </span>
@@ -62,7 +62,7 @@ export function ContinueHero({ current, firstName }: { current?: Current; firstN
             <Progress
               value={completion.percent}
               aria-label="Course progress"
-              className="h-2 bg-white/20 [&>div]:bg-gold"
+              className="h-2 bg-white/20 [&>div]:bg-coral"
             />
           </div>
           <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-white/85">
@@ -71,13 +71,13 @@ export function ContinueHero({ current, firstName }: { current?: Current; firstN
               About {remainingMinutes} min remaining
             </li>
             <li className="flex items-center gap-1.5">
-              <Sparkles className="size-4 text-gold" aria-hidden />
+              <Sparkles className="size-4 text-coral-300" aria-hidden />
               {pointsAvailable} points available
             </li>
           </ul>
         </div>
         {nextLesson ? (
-          <Button asChild size="xl" variant="gold">
+          <Button asChild size="xl" variant="coral">
             <Link
               to="/portal/learn/$courseId/$lessonId"
               params={{ courseId: course.id, lessonId: nextLesson.id }}

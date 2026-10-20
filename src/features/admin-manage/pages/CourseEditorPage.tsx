@@ -379,7 +379,7 @@ function Builder({
               {DIFFICULTY_LABEL[c.difficulty ?? 'beginner']}
             </StatusBadge>
             {c.designated ? (
-              <StatusBadge tone="gold" icon={null}>
+              <StatusBadge tone="coral" icon={null}>
                 Designated
               </StatusBadge>
             ) : null}
@@ -456,13 +456,10 @@ function Builder({
           <section aria-labelledby="curriculum-heading" className="grid gap-4">
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
-                <p className="font-semibold text-[0.7rem] text-gold-700 uppercase tracking-[0.16em]">
+                <p className="font-semibold text-[0.7rem] text-coral-700 uppercase tracking-[0.16em]">
                   Curriculum
                 </p>
-                <h2
-                  id="curriculum-heading"
-                  className="font-heading font-semibold text-navy text-xl"
-                >
+                <h2 id="curriculum-heading" className="font-heading font-medium text-navy text-xl">
                   Modules and content
                 </h2>
               </div>
@@ -594,7 +591,7 @@ function Builder({
                 <Settings className="size-5" aria-hidden />
               </span>
               <div className="grid">
-                <h2 id="settings-heading" className="font-heading font-semibold text-navy">
+                <h2 id="settings-heading" className="font-heading font-medium text-navy">
                   Course settings
                 </h2>
                 <SaveStatus status={status} />
@@ -661,7 +658,7 @@ function Builder({
             />
 
             <div className="grid grid-cols-[minmax(0,1fr)] gap-4 border-t pt-4">
-              <h3 className="font-semibold text-[0.7rem] text-muted-foreground uppercase tracking-[0.16em]">
+              <h3 className="font-medium text-[0.7rem] text-muted-foreground uppercase tracking-[0.16em]">
                 Assignment
               </h3>
               <fieldset className="grid gap-2">
@@ -771,7 +768,7 @@ function Builder({
           >
             <h2
               id="stats-heading"
-              className="font-semibold text-[0.7rem] text-muted-foreground uppercase tracking-[0.16em]"
+              className="font-medium text-[0.7rem] text-muted-foreground uppercase tracking-[0.16em]"
             >
               Statistics
             </h2>
@@ -887,7 +884,7 @@ function Stat({ icon, label, value }: { icon: ReactNode; label: string; value: n
   return (
     <div className="grid justify-items-center gap-1 rounded-xl bg-surface/60 px-2 py-3 text-center [&_svg]:size-4 [&_svg]:text-blue">
       {icon}
-      <dd className="font-bold font-heading text-navy text-xl tabular-nums">{value}</dd>
+      <dd className="font-semibold font-heading text-navy text-xl tabular-nums">{value}</dd>
       <dt className="font-semibold text-[0.65rem] text-muted-foreground uppercase tracking-wider">
         {label}
       </dt>

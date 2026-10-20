@@ -22,7 +22,7 @@ export function Stepper({
       {/* compact: phones and narrow split layouts */}
       <div className="md:hidden">
         <div className="mb-3 flex items-baseline justify-between gap-3">
-          <p className="font-heading font-semibold text-navy">
+          <p className="font-heading font-medium text-navy">
             Step {step} <span className="font-normal text-muted-foreground">of {total}</span>
           </p>
           <p className="truncate font-medium text-blue text-sm">{current?.label}</p>
@@ -49,12 +49,12 @@ export function Stepper({
           style={{ left: `${50 / total}%`, right: `${50 / total}%` }}
         >
           <motion.div
-            className="relative h-full rounded-full bg-[linear-gradient(90deg,var(--gold),var(--blue)_35%,var(--navy))]"
+            className="relative h-full rounded-full bg-[linear-gradient(90deg,var(--coral),var(--blue)_35%,var(--navy))]"
             initial={false}
             animate={{ width: `${pct}%` }}
             transition={{ duration: 0.7, ease }}
           >
-            <span className="-right-1 -translate-y-1/2 absolute top-1/2 size-2 rounded-full bg-gold shadow-[0_0_10px_2px_rgb(214_164_74/0.7)]" />
+            <span className="-right-1 -translate-y-1/2 absolute top-1/2 size-2 rounded-full bg-coral shadow-[0_0_10px_2px_rgb(240_73_62/0.7)]" />
           </motion.div>
         </div>
         <ol className="relative flex items-start">
@@ -84,9 +84,9 @@ export function Stepper({
                       className={cn(
                         'relative grid size-10 place-items-center rounded-full border-2 font-heading font-semibold text-sm transition-all duration-300',
                         done &&
-                          'border-transparent bg-[linear-gradient(140deg,var(--blue),var(--navy))] text-white shadow-[0_6px_14px_-6px_rgb(22_124_179/0.8)] group-hover:scale-110',
+                          'border-transparent bg-[linear-gradient(140deg,var(--blue),var(--navy))] text-white shadow-[0_6px_14px_-6px_rgb(0_119_182/0.8)] group-hover:scale-110',
                         active &&
-                          'border-white bg-navy text-white shadow-[0_8px_20px_-6px_rgb(21_59_85/0.7)]',
+                          'border-white bg-navy text-white shadow-[0_8px_20px_-6px_rgb(38_57_85/0.7)]',
                         !done &&
                           !active &&
                           'border-blue-100 bg-white text-muted-foreground shadow-[var(--shadow-field)]',

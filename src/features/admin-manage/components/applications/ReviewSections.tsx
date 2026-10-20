@@ -130,7 +130,7 @@ export function ReviewSections({ data }: { data: ApplicationData }) {
     <Accordion type="multiple" defaultValue={['company']}>
       {JOIN_STEPS.filter((s) => sections[s.key]).map((s) => (
         <AccordionItem key={s.key} value={s.key}>
-          <AccordionTrigger className="font-heading font-semibold text-navy">
+          <AccordionTrigger className="font-heading font-medium text-navy">
             {s.n}. {s.label}
           </AccordionTrigger>
           <AccordionContent>{sections[s.key]}</AccordionContent>

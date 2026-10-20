@@ -55,12 +55,12 @@ export function PathwayList({
               </span>
               <div className="grid min-w-0 flex-1 gap-1.5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="font-heading font-semibold text-navy">{row.course.title}</p>
+                  <p className="font-heading font-medium text-navy">{row.course.title}</p>
                   <StatusBadge tone={s.tone} icon={s.icon}>
                     {s.label}
                   </StatusBadge>
                   {row.course.designated ? (
-                    <StatusBadge tone="gold" icon={null}>
+                    <StatusBadge tone="coral" icon={null}>
                       Unlocks clinic
                     </StatusBadge>
                   ) : null}

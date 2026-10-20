@@ -27,7 +27,7 @@ export function DuplicatePanel({
     >
       <h2
         id="dup-title"
-        className="mb-1 flex items-center gap-2 font-heading font-semibold text-navy"
+        className="mb-1 flex items-center gap-2 font-heading font-medium text-navy"
       >
         <AlertTriangle className="size-4 text-warning" aria-hidden /> Possible duplicate company
       </h2>

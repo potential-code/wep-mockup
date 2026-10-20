@@ -231,7 +231,7 @@ function CourseView({ courseId, itemId }: { courseId: string; itemId?: string })
           ) : lesson?.type === 'quiz' ? (
             <ContentPanel
               chip="Post-test"
-              chipTone="gold"
+              chipTone="coral"
               title={lesson.title}
               summary={lesson.summary}
             >

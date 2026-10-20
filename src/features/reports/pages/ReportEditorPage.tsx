@@ -103,9 +103,7 @@ export function ReportEditorPage() {
         >
           <CheckCircle2 className="mt-0.5 size-6 shrink-0 text-success" aria-hidden />
           <div>
-            <p className="font-heading font-semibold text-navy">
-              Version {justSubmitted} submitted
-            </p>
+            <p className="font-heading font-medium text-navy">Version {justSubmitted} submitted</p>
             <p className="text-muted-foreground text-sm">
               UN Women has been notified. The report is locked for review.
             </p>
@@ -115,7 +113,7 @@ export function ReportEditorPage() {
 
       {report.status === 'changes_requested' && unresolved.length > 0 ? (
         <div role="alert" className="rounded-2xl border border-danger/30 bg-danger-soft/60 p-5">
-          <p className="font-heading font-semibold text-navy">
+          <p className="font-heading font-medium text-navy">
             UN Women requested changes to {unresolved.length} section
             {unresolved.length === 1 ? '' : 's'}
           </p>

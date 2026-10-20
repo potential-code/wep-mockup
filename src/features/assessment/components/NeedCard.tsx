@@ -27,7 +27,7 @@ export function NeedCard({ need }: { need: Need }) {
         </StatusBadge>
       </div>
       <div>
-        <h3 className="font-heading font-semibold text-navy">{need.title}</h3>
+        <h3 className="font-heading font-medium text-navy">{need.title}</h3>
         <p className="mt-1 text-muted-foreground text-sm">{need.description}</p>
       </div>
       <ul className="flex flex-wrap gap-2" aria-label="Suggested support">

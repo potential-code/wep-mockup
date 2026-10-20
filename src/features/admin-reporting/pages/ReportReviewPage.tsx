@@ -54,7 +54,7 @@ export function ReportReviewPage() {
       <div className="flex flex-wrap items-center gap-4 rounded-2xl border bg-card p-5 shadow-card">
         <CompanyLogo name={company.name} src={company.logo} className="size-14" />
         <div className="min-w-0 flex-1">
-          <p className="font-heading font-semibold text-lg text-navy">{company.name}</p>
+          <p className="font-heading font-medium text-lg text-navy">{company.name}</p>
           <p className="text-muted-foreground text-sm">
             {company.country} · {company.sector} · {company.employeeCount.toLocaleString()}{' '}
             employees

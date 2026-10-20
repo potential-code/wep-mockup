@@ -40,7 +40,7 @@ export function CompletionDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="text-center sm:max-w-md">
         <DialogHeader className="items-center sm:text-center">
-          <span className="mb-2 grid size-14 place-items-center rounded-2xl bg-gold-50 text-gold-700">
+          <span className="mb-2 grid size-14 place-items-center rounded-2xl bg-coral-50 text-coral-700">
             <PartyPopper className="size-7" aria-hidden />
           </span>
           <DialogTitle className="font-heading text-xl text-navy">Course complete</DialogTitle>

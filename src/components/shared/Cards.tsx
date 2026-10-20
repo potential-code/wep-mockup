@@ -24,9 +24,7 @@ export function SectionCard({
       {title || action ? (
         <CardHeaderBand className="px-5 sm:px-6">
           <div className="grid gap-0.5">
-            {title ? (
-              <h2 className="font-heading font-semibold text-lg text-navy">{title}</h2>
-            ) : null}
+            {title ? <h2 className="font-heading font-medium text-lg text-navy">{title}</h2> : null}
             {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}
           </div>
           {action}
@@ -37,7 +35,7 @@ export function SectionCard({
   )
 }
 
-/** Header strip for cards: a thin brand rule over a soft blue-to-gold wash. */
+/** Header strip for cards: a thin brand rule over a soft blue-to-coral wash. */
 export function CardHeaderBand({
   children,
   className,
@@ -48,13 +46,13 @@ export function CardHeaderBand({
   return (
     <div
       className={cn(
-        'relative flex flex-wrap items-start justify-between gap-3 overflow-hidden rounded-t-2xl border-b bg-[linear-gradient(100deg,var(--blue-50),#fff_55%,var(--gold-50))] py-4',
+        'relative flex flex-wrap items-start justify-between gap-3 overflow-hidden rounded-t-2xl border-b bg-[linear-gradient(100deg,var(--blue-50),#fff_55%,var(--coral-50))] py-4',
         className,
       )}
     >
       <span
         aria-hidden
-        className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--navy),var(--blue)_60%,var(--gold))]"
+        className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--navy),var(--blue)_60%,var(--coral))]"
       />
       {children}
     </div>

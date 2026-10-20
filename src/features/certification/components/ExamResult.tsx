@@ -37,10 +37,10 @@ export function ExamResult({
       ) : (
         <XCircle className="size-14 text-danger" aria-hidden />
       )}
-      <h2 className="font-heading font-bold text-2xl text-navy">
+      <h2 className="font-heading font-medium text-2xl text-navy">
         {outcome.passed ? 'You passed' : 'Not passed yet'}
       </h2>
-      <p className="font-heading font-bold text-5xl text-navy">{outcome.score}%</p>
+      <p className="font-heading font-semibold text-5xl text-navy">{outcome.score}%</p>
       <p className="text-muted-foreground text-sm">
         {outcome.correct} of {outcome.total} correct. Pass mark: {outcome.passMark}%.
       </p>

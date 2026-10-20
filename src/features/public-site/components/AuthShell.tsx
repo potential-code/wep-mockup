@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { motion, type Variants } from 'motion/react'
 import type { ReactNode } from 'react'
-import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
+import { BrushRing, EdgeRule, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { WepsLogo } from '@/components/shared/Logo'
 import { images } from '@/config/images'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
@@ -84,15 +84,14 @@ export function AuthShell({
                 }
           }
         />
-        <div className="-z-10 absolute inset-0 bg-[linear-gradient(160deg,rgba(8,26,40,0.94)_0%,rgba(21,59,85,0.82)_50%,rgba(12,37,55,0.7)_100%)]" />
-        <div className="-z-10 absolute inset-0 bg-[radial-gradient(60%_50%_at_0%_100%,rgba(214,164,74,0.22),transparent_70%)]" />
-        <CornerArcs corner="tr" tone="dark" size={300} className="-z-10 opacity-90" />
+        <div className="-z-10 absolute inset-0 bg-[linear-gradient(160deg,rgba(0,84,135,0.96)_0%,rgba(0,111,168,0.88)_55%,rgba(0,140,200,0.72)_100%)]" />
+        <div className="-z-10 absolute inset-0 bg-[radial-gradient(60%_50%_at_0%_100%,rgba(240,73,62,0.18),transparent_70%)]" />
+        <GearCluster size={300} className="-z-10 opacity-90 -top-20 -right-20" />
         <ForAllBars
           tone="dark"
           size={260}
           className="-z-10 -right-16 bottom-24 hidden opacity-80 lg:block"
         />
-        <DotGrid tone="dark" cols={6} rows={4} className="-z-10 top-24 right-10 hidden lg:block" />
         <EdgeRule tone="dark" className="bottom-0" />
 
         <motion.div
@@ -113,18 +112,18 @@ export function AuthShell({
         >
           <motion.p
             variants={rise}
-            className="flex items-center gap-3 font-medium text-gold text-xs uppercase tracking-[0.2em]"
+            className="flex items-center gap-3 font-medium text-white/90 text-xs uppercase tracking-[0.2em]"
           >
-            <span aria-hidden className="h-px w-8 bg-gold" />
+            <span aria-hidden className="h-px w-8 bg-coral" />
             {eyebrow}
           </motion.p>
           <motion.h2
             variants={rise}
-            className="text-balance font-bold font-heading text-2xl leading-tight sm:text-3xl lg:text-4xl"
+            className="text-balance font-medium font-heading text-2xl leading-tight sm:text-3xl lg:text-4xl"
           >
             {headline}
           </motion.h2>
-          <motion.p variants={rise} className="hidden text-white/80 sm:block lg:text-lg">
+          <motion.p variants={rise} className="hidden text-white/90 sm:block lg:text-lg">
             {text}
           </motion.p>
           {bullets.length ? (
@@ -136,7 +135,7 @@ export function AuthShell({
                   whileHover={{ x: 4 }}
                   className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-sm text-white/90 shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] backdrop-blur-md"
                 >
-                  <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-gold/15 text-gold ring-1 ring-gold/30">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-coral/15 text-coral-300 ring-1 ring-coral/30">
                     <b.icon className="size-4" aria-hidden />
                   </span>
                   {b.text}
@@ -153,10 +152,9 @@ export function AuthShell({
       >
         <div
           aria-hidden
-          className="-z-10 absolute inset-0 bg-[radial-gradient(50%_40%_at_100%_0%,rgba(22,124,179,0.10),transparent_70%),radial-gradient(45%_35%_at_0%_100%,rgba(214,164,74,0.12),transparent_70%)]"
+          className="-z-10 absolute inset-0 bg-[radial-gradient(50%_40%_at_100%_0%,rgba(0,119,182,0.10),transparent_70%),radial-gradient(45%_35%_at_0%_100%,rgba(240,73,62,0.12),transparent_70%)]"
         />
-        <CornerArcs corner="tr" tone="light" size={240} className="-z-10" />
-        <DotGrid tone="light" cols={7} rows={4} className="-z-10 bottom-8 left-6 hidden sm:block" />
+        <BrushRing tone="light" size={240} className="-z-10 -top-20 -right-20" />
         <div className="px-6 pt-6 sm:px-10 lg:px-14 lg:pt-8">
           <Link
             to="/"

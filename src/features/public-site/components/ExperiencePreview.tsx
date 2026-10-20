@@ -11,7 +11,7 @@ import {
 import { AnimatePresence, motion, useInView } from 'motion/react'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { CountUp } from '@/components/motion/CountUp'
-import { CornerArcs } from '@/components/shared/BrandMotif'
+import { BrushRing, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { images } from '@/config/images'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
 import { cn } from '@/lib/utils'
@@ -127,7 +127,7 @@ function ChapterBlock({
         transition={{ duration: 0.7, ease: EASE }}
         className={cn(
           'relative grid gap-4 border-s-2 ps-6 transition-all duration-500',
-          active ? 'border-gold lg:opacity-100' : 'border-navy/10 lg:opacity-45',
+          active ? 'border-coral lg:opacity-100' : 'border-navy/10 lg:opacity-45',
         )}
       >
         <span
@@ -138,7 +138,7 @@ function ChapterBlock({
         >
           <c.icon className="size-3.5" aria-hidden /> 0{index + 1} · {c.label}
         </span>
-        <h3 className="text-balance font-bold font-heading text-2xl text-navy leading-tight sm:text-3xl">
+        <h3 className="text-balance font-medium font-heading text-2xl text-navy leading-tight sm:text-3xl">
           {c.title}
         </h3>
         <p className="text-lg text-muted-foreground leading-relaxed">{c.text}</p>
@@ -152,7 +152,7 @@ function ChapterBlock({
               transition={{ delay: 0.2 + i * 0.08, ease: EASE }}
               className="flex items-center gap-2.5"
             >
-              <span className="grid size-5 place-items-center rounded-full bg-gold/20 text-gold-700">
+              <span className="grid size-5 place-items-center rounded-full bg-coral/20 text-coral-700">
                 <Check className="size-3" strokeWidth={3} aria-hidden />
               </span>
               {p}
@@ -182,10 +182,14 @@ function AppWindow({
 }) {
   return (
     <div className="relative">
+      {/* Brand stage behind the window: cyan panel with the double bars and a brush ring. */}
       <div
         aria-hidden
-        className="-inset-6 -z-10 absolute rounded-[2.5rem] bg-[radial-gradient(60%_60%_at_70%_30%,rgba(22,124,179,0.18),transparent_70%),radial-gradient(50%_50%_at_20%_90%,rgba(214,164,74,0.16),transparent_70%)]"
-      />
+        className="-z-10 absolute -inset-x-4 -top-8 bottom-10 overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,var(--cyan),var(--blue)_60%,var(--blue-600))] shadow-lift sm:-inset-x-8 lg:translate-x-6"
+      >
+        <ForAllBars size={260} className="-right-10 -bottom-16" />
+        <BrushRing size={300} className="-top-24 -left-20" />
+      </div>
       <div className="overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-lift">
         <div className="flex items-center gap-2 border-b bg-surface px-4 py-3">
           <span className="size-2.5 rounded-full bg-[#ff6159]" />
@@ -197,13 +201,13 @@ function AppWindow({
         </div>
         <div className="flex min-h-[380px]">
           <div className="relative isolate hidden w-14 shrink-0 flex-col items-center gap-3 overflow-hidden bg-navy py-4 sm:flex">
-            <CornerArcs corner="bl" size={120} className="-z-10" />
+            <GearCluster size={120} className="-z-10 -bottom-20 -left-20" />
             {CHAPTERS.map((c, i) => (
               <span
                 key={c.key}
                 className={cn(
-                  'relative grid size-9 place-items-center rounded-xl text-white/60 transition-colors duration-300',
-                  i === active && 'text-gold',
+                  'relative grid size-9 place-items-center rounded-xl text-white/75 transition-colors duration-300',
+                  i === active && 'text-coral-300',
                 )}
               >
                 {i === active ? (
@@ -275,7 +279,7 @@ function Ring({ value }: { value: number }) {
         cy="50"
         r="42"
         fill="none"
-        stroke="var(--gold)"
+        stroke="var(--coral)"
         strokeWidth="10"
         strokeLinecap="round"
         strokeDasharray={c}
@@ -296,11 +300,11 @@ function ProgressScreen() {
   ] as const
   return (
     <div className="grid gap-5">
-      <p className="font-heading font-semibold text-navy">Company progress</p>
+      <p className="font-heading font-medium text-navy">Company progress</p>
       <div className="flex items-center gap-5">
         <div className="relative">
           <Ring value={75} />
-          <p className="absolute inset-0 grid place-items-center font-bold font-heading text-2xl text-navy">
+          <p className="absolute inset-0 grid place-items-center font-medium font-heading text-2xl text-navy">
             <CountUp value={75} suffix="%" />
           </p>
         </div>
@@ -342,7 +346,7 @@ function LearningScreen() {
         </span>
       </div>
       <div>
-        <p className="font-heading font-semibold text-lg text-navy">Fair progression and pay</p>
+        <p className="font-heading font-medium text-lg text-navy">Fair progression and pay</p>
         <div className="mt-2 flex justify-between text-sm">
           <span className="text-muted-foreground">Module 3 of 5</span>
           <span className="font-semibold text-navy">
@@ -369,7 +373,7 @@ function LearningScreen() {
               {i < 2 ? <Check className="size-3.5" aria-hidden /> : i + 1}
             </span>
             <span className="flex-1 text-navy">{m}</span>
-            <span className="font-medium text-gold-700 text-xs">+25 pts</span>
+            <span className="font-medium text-coral-700 text-xs">+25 pts</span>
           </motion.li>
         ))}
       </ol>
@@ -380,7 +384,7 @@ function LearningScreen() {
 function ClinicsScreen() {
   return (
     <div className="grid gap-4">
-      <p className="font-heading font-semibold text-navy">Clinic access</p>
+      <p className="font-heading font-medium text-navy">Clinic access</p>
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -422,7 +426,7 @@ function ClinicsScreen() {
           <p className="font-semibold text-navy">Sofia Bennett</p>
           <p className="text-muted-foreground">Procurement mentor · 1:1 sessions</p>
         </div>
-        <span className="rounded-full bg-gold-50 px-2.5 py-1 font-medium text-gold-700 text-xs">
+        <span className="rounded-full bg-coral-50 px-2.5 py-1 font-medium text-coral-700 text-xs">
           60 pts
         </span>
       </div>
@@ -445,10 +449,10 @@ function ReportScreen() {
     <div className="grid gap-4">
       <div className="flex items-end justify-between">
         <div>
-          <p className="font-heading font-semibold text-navy">Annual report 2026</p>
+          <p className="font-heading font-medium text-navy">Annual report 2026</p>
           <p className="text-muted-foreground text-sm">Due 1 Dec 2026</p>
         </div>
-        <p className="font-bold font-heading text-4xl text-navy">
+        <p className="font-semibold font-heading text-4xl text-navy">
           <CountUp value={5} />
           <span className="text-muted-foreground text-xl"> / 8</span>
         </p>
@@ -466,7 +470,7 @@ function ReportScreen() {
             )}
           >
             {i < 5 ? (
-              <Check className="mx-auto size-3.5 text-gold" aria-hidden />
+              <Check className="mx-auto size-3.5 text-coral" aria-hidden />
             ) : (
               <span className="mx-auto size-3.5 rounded-full border" />
             )}

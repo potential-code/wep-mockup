@@ -39,28 +39,28 @@ export function PublicSummarySheet({
             <p className="text-muted-foreground text-xs uppercase tracking-wide">
               {report.year} progress summary
             </p>
-            <h3 className="font-heading font-semibold text-navy text-xl">{companyName}</h3>
+            <h3 className="font-heading font-medium text-navy text-xl">{companyName}</h3>
           </div>
           <section>
-            <h4 className="mb-1 font-semibold text-navy text-sm">About the company</h4>
+            <h4 className="mb-1 font-medium text-navy text-sm">About the company</h4>
             <p className="text-navy text-sm leading-relaxed">
               {report.sections.snapshot || 'Not provided.'}
             </p>
           </section>
           <section>
-            <h4 className="mb-1 font-semibold text-navy text-sm">Leadership message</h4>
+            <h4 className="mb-1 font-medium text-navy text-sm">Leadership message</h4>
             <p className="text-navy text-sm leading-relaxed">
               {report.sections.narrative || 'Not provided.'}
             </p>
           </section>
           <section>
-            <h4 className="mb-2 font-semibold text-navy text-sm">Reported indicators</h4>
+            <h4 className="mb-2 font-medium text-navy text-sm">Reported indicators</h4>
             {shown.length ? (
               <ul className="grid gap-2">
                 {shown.map((i) => (
                   <li key={i.id} className="rounded-lg border p-3 text-sm">
                     <p className="font-medium text-navy">{i.label}</p>
-                    <p className="font-heading font-semibold text-lg text-navy">
+                    <p className="font-heading font-medium text-lg text-navy">
                       {formatValue(i.value, i.unit)}
                     </p>
                     <p className="text-muted-foreground text-xs">

@@ -100,7 +100,7 @@ export function MarketplacePage() {
         ) : null}
       </div>
       <p className="flex items-center gap-2 text-muted-foreground text-sm">
-        <Info className="size-4 shrink-0 text-gold-700" aria-hidden />
+        <Info className="size-4 shrink-0 text-coral-700" aria-hidden />
         <span>
           <strong className="text-navy">Approval is not endorsement.</strong> No sales are processed
           here.

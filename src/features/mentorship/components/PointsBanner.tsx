@@ -46,12 +46,12 @@ export function PointsBanner({ points }: { points: PointsSummary }) {
       className="grid gap-4 rounded-2xl border bg-card p-5 shadow-card sm:p-6 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-8"
     >
       <div className="flex items-center gap-4">
-        <span className="grid size-12 place-items-center rounded-2xl bg-gold-50 text-gold-700">
+        <span className="grid size-12 place-items-center rounded-2xl bg-coral-50 text-coral-700">
           <Coins className="size-6" aria-hidden />
         </span>
         <div>
           <p className="font-medium text-muted-foreground text-sm">Redeemable points</p>
-          <p className="font-bold font-heading text-3xl text-navy tabular-nums">
+          <p className="font-semibold font-heading text-3xl text-navy tabular-nums">
             {formatNumber(points.redeemable)}
           </p>
           <p className="text-muted-foreground text-xs">

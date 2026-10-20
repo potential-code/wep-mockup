@@ -153,7 +153,7 @@ export function LessonEditor({
             ) : null}
             {draft.type === 'quiz' ? (
               <section className="grid gap-3">
-                <h3 className="font-heading font-semibold text-navy text-sm">
+                <h3 className="font-heading font-medium text-navy text-sm">
                   Quiz questions ({questions.length})
                 </h3>
                 {questions.map((q, i) => (

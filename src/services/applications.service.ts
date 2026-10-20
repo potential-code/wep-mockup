@@ -191,7 +191,6 @@ export async function submitApplication() {
     duplicateOfCompanyId: duplicate?.id,
   }
   db.applications.unshift(app)
-  db.myApplicationId = app.id
   db.joinDraft = null
   notify({
     userId: 'u-admin',
@@ -207,16 +206,14 @@ export async function submitApplication() {
 }
 
 /** The application the visitor submitted (this browser), or the signed-in applicant's. */
+/** The signed-in applicant's own pending application. Visitors look theirs up by reference. */
 export async function getMyApplication(): Promise<Application | null> {
   await delay()
   const user = currentUser()
   const byUser = user?.companyId
     ? db.applications.find((a) => a.companyId === user.companyId && a.status !== 'approved')
     : undefined
-  const mine = db.myApplicationId
-    ? db.applications.find((a) => a.id === db.myApplicationId)
-    : undefined
-  return out(mine ?? byUser ?? null)
+  return out(byUser ?? null)
 }
 
 export async function findApplicationByReference(reference: string) {
@@ -225,8 +222,6 @@ export async function findApplicationByReference(reference: string) {
     (a) => a.reference.toLowerCase() === reference.trim().toLowerCase(),
   )
   if (!app) throw new ApiError('No application found with that reference.', 'not_found')
-  db.myApplicationId = app.id
-  commit()
   return out(app)
 }
 
@@ -362,7 +357,7 @@ export async function requestInformation(
       category: 'application',
       title: 'Information requested',
       body: input.item,
-      link: '/application-status',
+      link: `/application-status?ref=${app.reference}`,
       critical: true,
     })
   }

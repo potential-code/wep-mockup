@@ -84,12 +84,12 @@ export function ResourcePreview({ resource: r }: { resource: Resource }) {
         </ol>
         <div className="grid place-items-center bg-surface p-4 sm:p-6">
           <div className="grid aspect-[4/5] w-full max-w-sm gap-3 rounded-md border bg-white p-6 shadow-card sm:p-8">
-            <p className="font-heading font-semibold text-navy text-xs uppercase tracking-wide">
+            <p className="font-heading font-medium text-navy text-xs uppercase tracking-wide">
               {r.publisher}
             </p>
             {page === 1 ? (
               <>
-                <h4 className="font-heading font-bold text-lg text-navy leading-tight">
+                <h4 className="font-heading font-medium text-lg text-navy leading-tight">
                   {r.title}
                 </h4>
                 <p className="text-muted-foreground text-xs">{r.version}</p>

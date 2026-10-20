@@ -51,7 +51,7 @@ export function EvidencePanel({
 
   return (
     <div className="grid gap-3">
-      <h3 className="font-heading font-semibold text-navy">Evidence files</h3>
+      <h3 className="font-heading font-medium text-navy">Evidence files</h3>
       <EvidenceList report={report} people={people} />
       {readOnly ? null : (
         <FileDrop

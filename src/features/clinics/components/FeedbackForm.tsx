@@ -59,7 +59,7 @@ export function FeedbackForm({
               <Star
                 className={cn(
                   'size-7',
-                  n <= rating ? 'fill-gold text-gold' : 'text-muted-foreground',
+                  n <= rating ? 'fill-coral text-coral' : 'text-muted-foreground',
                 )}
                 aria-hidden
               />

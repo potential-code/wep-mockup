@@ -32,7 +32,7 @@ export function CurrentReportCard({
     >
       <div className="grid gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 id="current-report" className="font-heading font-semibold text-navy text-xl">
+          <h2 id="current-report" className="font-heading font-medium text-navy text-xl">
             {year} annual report
           </h2>
           <WorkflowStatus status={report?.status ?? 'not_started'} />

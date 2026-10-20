@@ -12,7 +12,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { indicatorKey } from '../lib'
 
-const COLORS = ['#167CB3', '#153B55', '#D6A44A', '#2E8B6A']
+const COLORS = ['#006fa8', '#263955', '#F0493E', '#2E8B6A']
 
 /** Selected reported indicators across years. Company-reported; no causality claimed. */
 export function ProgressOverTime({ reports }: { reports: AnnualReport[] }) {

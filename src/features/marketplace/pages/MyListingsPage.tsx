@@ -82,7 +82,7 @@ export function MyListingsPage() {
               ) : null}
               <div className="grid min-w-0 gap-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-heading font-semibold text-lg text-navy">{l.title}</h2>
+                  <h2 className="font-heading font-medium text-lg text-navy">{l.title}</h2>
                   <WorkflowStatus status={l.status} />
                   {l.pendingRevision ? (
                     <StatusBadge tone="warning">Revision pending</StatusBadge>

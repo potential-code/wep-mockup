@@ -10,7 +10,7 @@ type Row = NonNullable<ReturnType<typeof useLeaderboard>['data']>[number]
 // Podium order left to right: 2nd, 1st, 3rd.
 const PODIUM = [
   { rank: 2, height: 'h-16', step: 'from-[#e9eff5] to-[#cdd9e4]', ring: 'ring-[#cdd9e4]' },
-  { rank: 1, height: 'h-24', step: 'from-gold to-gold-700', ring: 'ring-gold' },
+  { rank: 1, height: 'h-24', step: 'from-coral to-coral-700', ring: 'ring-coral' },
   { rank: 3, height: 'h-12', step: 'from-blue-100 to-blue', ring: 'ring-blue' },
 ] as const
 
@@ -30,7 +30,7 @@ export function LeaderboardPanel({ companyId, meId }: { companyId?: string; meId
         <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-[0.65rem] text-blue-600 uppercase tracking-[0.2em] ring-1 ring-blue/20">
           Leaderboard
         </span>
-        <h2 id="leaderboard-heading" className="mt-2 font-heading font-semibold text-navy text-xl">
+        <h2 id="leaderboard-heading" className="mt-2 font-heading font-medium text-navy text-xl">
           Top learners at your company
         </h2>
         <p className="text-muted-foreground text-sm">By lifetime points.</p>
@@ -59,7 +59,7 @@ export function LeaderboardPanel({ companyId, meId }: { companyId?: string; meId
                     <span className="relative">
                       {p.rank === 1 ? (
                         <Crown
-                          className="-top-5 -translate-x-1/2 absolute left-1/2 size-5 fill-gold text-gold-700"
+                          className="-top-5 -translate-x-1/2 absolute left-1/2 size-5 fill-coral text-coral-700"
                           aria-hidden
                         />
                       ) : null}

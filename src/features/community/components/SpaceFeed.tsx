@@ -94,7 +94,7 @@ export function SpaceFeed({
       )}
     >
       <span>{c === 'all' ? 'All channels' : c}</span>
-      <span className={cn('text-xs', channel === c ? 'text-white/80' : 'text-muted-foreground')}>
+      <span className={cn('text-xs', channel === c ? 'text-white/90' : 'text-muted-foreground')}>
         {countFor(c)}
       </span>
     </button>

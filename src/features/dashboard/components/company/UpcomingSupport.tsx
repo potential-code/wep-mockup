@@ -39,7 +39,7 @@ export function UpcomingSupport({ data }: { data: CompanyDashboardData }) {
               to="/portal/mentorship/bookings"
               className="flex items-start gap-3 rounded-xl border p-3 hover:border-blue"
             >
-              <UserRound className="mt-0.5 size-5 shrink-0 text-gold-700" aria-hidden />
+              <UserRound className="mt-0.5 size-5 shrink-0 text-coral-700" aria-hidden />
               <span>
                 <span className="block font-medium text-navy">
                   Mentoring{b.mentor ? ` with ${fullName(b.mentor)}` : ''}

@@ -75,7 +75,7 @@ export function QuizRunner({
                 : 'border-warning/40 bg-warning-soft/40',
           )}
         >
-          <p className="font-heading font-semibold text-navy text-xl">
+          <p className="font-heading font-medium text-navy text-xl">
             {pre ? 'Starting point recorded' : result.passed ? 'Passed' : 'Not quite yet'}:{' '}
             {result.score}%
           </p>
@@ -150,7 +150,7 @@ export function QuizRunner({
         />
       </div>
       <fieldset className="grid gap-3">
-        <legend className="mb-1 font-heading font-semibold text-lg text-navy">{q.text}</legend>
+        <legend className="mb-1 font-heading font-medium text-lg text-navy">{q.text}</legend>
         {q.options.map((opt, i) => {
           const chosen = answers[q.id] === i
           return (

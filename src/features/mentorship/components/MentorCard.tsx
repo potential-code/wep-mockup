@@ -20,7 +20,7 @@ export function MentorCard({ mentor, canBook }: { mentor: MentorRow; canBook: bo
       <div className="flex items-start gap-4">
         <UserAvatar name={mentor.name} src={mentor.avatar} className="size-16 rounded-2xl" />
         <div className="min-w-0 flex-1">
-          <h3 className="font-heading font-semibold text-lg text-navy leading-tight">
+          <h3 className="font-heading font-medium text-lg text-navy leading-tight">
             <Link
               to="/portal/mentorship/$mentorId"
               params={{ mentorId: p.userId }}
@@ -31,7 +31,7 @@ export function MentorCard({ mentor, canBook }: { mentor: MentorRow; canBook: bo
           </h3>
           <p className="mt-0.5 text-muted-foreground text-sm">{p.headline}</p>
           <p className="mt-1 flex items-center gap-1 text-sm">
-            <Star className="size-4 fill-gold text-gold" aria-hidden />
+            <Star className="size-4 fill-coral text-coral" aria-hidden />
             <span className="font-semibold text-navy">{p.rating.toFixed(1)}</span>
             <span className="text-muted-foreground">· {p.sessionsDelivered} sessions</span>
           </p>
@@ -42,7 +42,7 @@ export function MentorCard({ mentor, canBook }: { mentor: MentorRow; canBook: bo
         <div className="mt-4 flex flex-wrap gap-1.5">
           <span className="sr-only">Recommended because:</span>
           {mentor.reasons.map((r) => (
-            <StatusBadge key={r} tone="gold" icon={Sparkles}>
+            <StatusBadge key={r} tone="coral" icon={Sparkles}>
               {r}
             </StatusBadge>
           ))}

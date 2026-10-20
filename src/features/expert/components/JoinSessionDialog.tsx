@@ -70,7 +70,7 @@ export function JoinSessionDialog({
 
         {stage === 'prejoin' ? (
           <div className="grid gap-4">
-            <div className="grid aspect-video place-items-center rounded-xl bg-navy text-white/80">
+            <div className="grid aspect-video place-items-center rounded-xl bg-navy text-white/90">
               {cam ? (
                 <Video className="size-10" aria-hidden />
               ) : (
@@ -143,7 +143,7 @@ export function JoinSessionDialog({
         {stage === 'post' ? (
           <div className="grid justify-items-center gap-3 py-8 text-center">
             <CheckCircle2 className="size-10 text-success" aria-hidden />
-            <p className="font-heading font-semibold text-lg text-navy">Session ended</p>
+            <p className="font-heading font-medium text-lg text-navy">Session ended</p>
             <p className="max-w-md text-muted-foreground text-sm">
               Now record attendance, agreed follow-up and your notes. Only the shared note reaches
               the participant. Your private note stays with you.

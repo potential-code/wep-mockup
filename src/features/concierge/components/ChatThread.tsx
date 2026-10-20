@@ -161,7 +161,7 @@ export function ConciergeWelcome({
       <div className="flex items-center gap-3">
         <ConciergeAvatar size={compact ? 'lg' : 'xl'} />
         <div className="rounded-2xl rounded-tl-md bg-[linear-gradient(120deg,var(--blue-50),#fff)] px-4 py-3 ring-1 ring-blue/15">
-          <p className={cn('font-heading font-semibold text-navy', !compact && 'text-lg')}>
+          <p className={cn('font-heading font-medium text-navy', !compact && 'text-lg')}>
             Hi{name ? ` ${name}` : ''}, how can I help today?
           </p>
           <p className="text-muted-foreground text-sm">

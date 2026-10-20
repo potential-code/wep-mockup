@@ -16,7 +16,7 @@ export function InsightPanel({
       <ul className="grid gap-3">
         {insights.slice(0, 3).map((i) => (
           <li key={i.text} className="flex gap-3 text-sm">
-            <Lightbulb className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden />
+            <Lightbulb className="mt-0.5 size-4 shrink-0 text-coral-700" aria-hidden />
             <p className="min-w-0">
               {i.text}{' '}
               <Link

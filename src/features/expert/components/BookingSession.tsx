@@ -119,11 +119,11 @@ export function BookingSession({ id }: { id: string }) {
               {b.followUp ? (
                 <>
                   <div>
-                    <h3 className="font-semibold text-navy">Shared note</h3>
+                    <h3 className="font-medium text-navy">Shared note</h3>
                     <p>{b.followUp.sharedNote || 'None'}</p>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-navy">Agreed follow-up</h3>
+                    <h3 className="font-medium text-navy">Agreed follow-up</h3>
                     <ul className="list-disc ps-5">
                       {b.followUp.nextActions.map((a) => (
                         <li key={a}>{a}</li>
@@ -136,7 +136,7 @@ export function BookingSession({ id }: { id: string }) {
               )}
               {b.privateNote ? (
                 <div className="rounded-lg bg-muted p-3">
-                  <h3 className="flex items-center gap-1.5 font-semibold text-navy">
+                  <h3 className="flex items-center gap-1.5 font-medium text-navy">
                     <Lock className="size-4" aria-hidden /> Private note (only you)
                   </h3>
                   <p>{b.privateNote}</p>

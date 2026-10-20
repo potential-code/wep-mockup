@@ -59,7 +59,7 @@ export function AchievementStats({
           <dt className="font-semibold text-[0.65rem] text-muted-foreground uppercase tracking-[0.16em]">
             {s.label}
           </dt>
-          <dd className="mt-2 font-bold font-heading text-3xl text-navy tabular-nums">
+          <dd className="mt-2 font-semibold font-heading text-3xl text-navy tabular-nums">
             <CountUp value={s.value} />
             {s.of ? (
               <span className="font-medium text-base text-muted-foreground"> / {s.of}</span>
@@ -80,10 +80,10 @@ export function RecentAwards({ ledger }: { ledger: LedgerRow[] }) {
       className="rounded-[1.75rem] bg-navy/[0.04] p-1.5 ring-1 ring-navy/[0.06]"
     >
       <div className="h-full rounded-[calc(1.75rem-0.375rem)] bg-card p-5 shadow-card sm:p-6">
-        <span className="rounded-full bg-gold-50 px-3 py-1 font-semibold text-[0.65rem] text-gold-700 uppercase tracking-[0.2em] ring-1 ring-gold/30">
+        <span className="rounded-full bg-coral-50 px-3 py-1 font-semibold text-[0.65rem] text-coral-700 uppercase tracking-[0.2em] ring-1 ring-coral/30">
           Recent awards
         </span>
-        <h2 id="recent-heading" className="mt-2 font-heading font-semibold text-navy text-xl">
+        <h2 id="recent-heading" className="mt-2 font-heading font-medium text-navy text-xl">
           Points you earned lately
         </h2>
         {rows.length === 0 ? (
@@ -130,26 +130,26 @@ export function AchievementsSummary({
       <div className="relative isolate grid gap-6 overflow-hidden rounded-[calc(1.75rem-0.375rem)] bg-[linear-gradient(135deg,var(--navy-900),var(--navy)_60%,var(--navy-700))] p-5 text-white sm:p-6 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,18rem)] lg:items-center">
         <span
           aria-hidden
-          className="-top-20 -left-10 -z-10 absolute size-72 rounded-full bg-[radial-gradient(circle,rgba(214,164,74,0.25),transparent_65%)]"
+          className="-top-20 -left-10 -z-10 absolute size-72 rounded-full bg-[radial-gradient(circle,rgba(240,73,62,0.25),transparent_65%)]"
         />
         <div className="flex items-center gap-4">
           <LevelRing lifetime={balance.lifetime} size="md" />
           <div className="grid gap-0.5">
             <h2
               id="achievements-heading"
-              className="font-semibold text-[0.65rem] text-gold-50 uppercase tracking-[0.2em]"
+              className="font-medium text-[0.65rem] text-coral-50 uppercase tracking-[0.2em]"
             >
               Your achievements
             </h2>
-            <p className="font-heading font-semibold text-2xl">{level.name}</p>
-            <p className="text-sm text-white/70">
+            <p className="font-heading font-medium text-2xl">{level.name}</p>
+            <p className="text-sm text-white/90">
               {balance.lifetime.toLocaleString('en-GB')} lifetime points
               {next ? ` · ${toNext} to ${next.name}` : ''}
             </p>
           </div>
         </div>
         <div className="grid gap-2">
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white/90">
             {earned.length} of {achievements.length} badges earned
           </p>
           <ul className="flex flex-wrap gap-1">

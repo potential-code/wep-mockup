@@ -43,7 +43,7 @@ export function DemoControls({ variant = 'topbar' }: { variant?: 'topbar' | 'sid
             size="sm"
             className={cn(
               variant === 'sidebar' &&
-                'w-full justify-start border border-dashed border-gold/50 text-gold hover:bg-white/10 hover:text-gold',
+                'w-full justify-start border border-dashed border-coral/50 text-coral hover:bg-white/10 hover:text-coral',
             )}
           >
             <FlaskConical aria-hidden /> Demo mode

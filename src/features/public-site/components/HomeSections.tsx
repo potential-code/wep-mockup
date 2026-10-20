@@ -3,7 +3,7 @@ import { ArrowRight, CalendarDays, ChevronDown, Clock, GraduationCap, Lock } fro
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
-import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
+import { BrushRing, EdgeRule, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
 import { CardGridSkeleton, ErrorState } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
@@ -41,7 +41,6 @@ export function FeaturedResources() {
     >
       <EdgeRule tone="light" className="top-0" />
       <ForAllBars tone="light" className="-z-10 -right-12 top-16 hidden md:block" size={260} />
-      <DotGrid tone="light" className="-z-10 bottom-12 left-6 hidden md:block" cols={6} rows={3} />
       <div className="container-public">
         <SectionHeading
           id="resources-h"
@@ -147,7 +146,7 @@ function FeaturedEvent({ e }: { e: PublicEvent }) {
         className="-z-20 absolute inset-0 size-full object-cover"
       />
       <div className="-z-10 absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/70 to-navy-900/10" />
-      <span className="absolute start-6 top-6 inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 font-semibold text-navy-900 text-xs sm:start-8 sm:top-8">
+      <span className="absolute start-6 top-6 inline-flex items-center gap-2 rounded-full bg-coral-600 px-3 py-1 font-semibold text-white text-xs sm:start-8 sm:top-8">
         <span className="relative flex size-2">
           <span className="absolute inline-flex size-full animate-ping rounded-full bg-navy-900/60" />
           <span className="relative inline-flex size-2 rounded-full bg-navy-900" />
@@ -156,11 +155,11 @@ function FeaturedEvent({ e }: { e: PublicEvent }) {
       </span>
       <DateBlock iso={ev.startsAt} className="absolute end-6 top-6 sm:end-8 sm:top-8" dark />
       <PrincipleTag id={ev.principle} linked={false} className="w-fit" />
-      <h3 className="mt-3 max-w-md text-balance font-bold font-heading text-2xl leading-tight sm:text-3xl">
+      <h3 className="mt-3 max-w-md text-balance font-medium font-heading text-2xl leading-tight sm:text-3xl">
         {ev.title}
       </h3>
       <p className="mt-2 max-w-md text-white/75">{ev.topic}</p>
-      <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/80">
+      <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/90">
         <span className="inline-flex items-center gap-2">
           {e.facilitatorAvatar ? (
             <img
@@ -179,7 +178,7 @@ function FeaturedEvent({ e }: { e: PublicEvent }) {
         </span>
       </div>
       <p className="mt-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs backdrop-blur">
-        <Lock className="size-3.5 text-gold" aria-hidden />
+        <Lock className="size-3.5 text-coral" aria-hidden />
         {locked ? 'Unlocks when your department pathway is complete' : 'Open to signed-in members'}
       </p>
     </motion.article>
@@ -198,7 +197,7 @@ function DateBlock({ iso, className, dark }: { iso: string; className?: string; 
       <span className="bg-blue py-0.5 font-semibold text-[10px] text-white uppercase tracking-wider">
         {formatDate(iso, { month: 'short' })}
       </span>
-      <span className="py-1 font-bold font-heading text-xl leading-tight">
+      <span className="py-1 font-medium font-heading text-xl leading-tight">
         {formatDate(iso, { day: 'numeric' })}
       </span>
     </span>
@@ -220,14 +219,14 @@ function EventRow({ e, index }: { e: PublicEvent; index: number }) {
     >
       <span
         aria-hidden
-        className="absolute inset-y-4 start-0 w-1 origin-center scale-y-0 rounded-full bg-gold transition-transform duration-300 group-hover:scale-y-100"
+        className="absolute inset-y-4 start-0 w-1 origin-center scale-y-0 rounded-full bg-coral transition-transform duration-300 group-hover:scale-y-100"
       />
       <DateBlock iso={ev.startsAt} />
       <div className="min-w-0 flex-1">
         <p className="font-medium text-blue text-xs uppercase tracking-wider">
           {ev.type} · {ev.format.replace('_', ' ')}
         </p>
-        <h4 className="truncate font-heading font-semibold text-navy">{ev.title}</h4>
+        <h4 className="truncate font-heading font-medium text-navy">{ev.title}</h4>
         <p className="flex items-center gap-1.5 text-muted-foreground text-xs">
           <Clock className="size-3.5" aria-hidden /> {formatTime(ev.startsAt)} · {ev.durationMin}{' '}
           min · {e.facilitatorName}
@@ -250,10 +249,9 @@ export function ClinicsAndExperts() {
   return (
     <section
       id="clinics"
-      className="relative isolate overflow-hidden bg-[linear-gradient(180deg,#eaf1f7,var(--surface))] py-20 sm:py-28"
+      className="relative isolate overflow-hidden bg-[linear-gradient(180deg,#e6f6fd,var(--surface))] py-20 sm:py-28"
     >
-      <CornerArcs corner="tl" tone="light" size={320} className="-z-10" />
-      <DotGrid tone="light" className="-z-10 right-8 bottom-16 hidden md:block" cols={6} rows={3} />
+      <BrushRing tone="light" size={320} className="-z-10 -top-20 -left-20" />
       <div className="container-public">
         <SectionHeading
           eyebrow="Clinics and experts"
@@ -275,7 +273,7 @@ export function ClinicsAndExperts() {
               <FeaturedEvent e={first} />
             </motion.div>
             <div className="grid content-start gap-3">
-              <p className="flex items-center gap-2 font-heading font-semibold text-navy">
+              <p className="flex items-center gap-2 font-heading font-medium text-navy">
                 <CalendarDays className="size-4 text-blue" aria-hidden /> Coming up
               </p>
               <ul className="grid gap-3">
@@ -288,7 +286,7 @@ export function ClinicsAndExperts() {
         ) : null}
 
         <Reveal className="relative isolate mt-8 grid items-center gap-6 overflow-hidden rounded-3xl bg-navy p-6 text-white shadow-lift sm:p-10 lg:grid-cols-[auto_1fr]">
-          <CornerArcs corner="br" size={240} className="-z-10" />
+          <GearCluster size={240} className="-z-10 -bottom-20 -right-20" />
           <ul className="flex -space-x-3">
             {MENTORS.map((m, i) => (
               <motion.li
@@ -317,8 +315,8 @@ export function ClinicsAndExperts() {
             ))}
           </ul>
           <div>
-            <p className="flex items-center gap-2 font-heading font-semibold text-lg">
-              <GraduationCap className="size-5 text-gold" aria-hidden /> Expert support
+            <p className="flex items-center gap-2 font-heading font-medium text-lg">
+              <GraduationCap className="size-5 text-coral-300" aria-hidden /> Expert support
             </p>
             <p className="mt-1 max-w-2xl text-white/75">
               Mentors and trainers offer one-to-one sessions and group clinics. Members redeem
@@ -333,7 +331,7 @@ export function ClinicsAndExperts() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 + i * 0.06 }}
-                    className="cursor-default rounded-full border border-white/20 bg-white/5 px-3 py-1 text-sm text-white/85 transition-colors hover:border-gold hover:bg-gold/15 hover:text-white"
+                    className="cursor-default rounded-full border border-white/20 bg-white/5 px-3 py-1 text-sm text-white/85 transition-colors hover:border-coral hover:bg-coral/15 hover:text-white"
                   >
                     {t}
                   </motion.span>
@@ -352,8 +350,7 @@ export function CommunitySection() {
   const reduced = usePrefersReducedMotion()
   return (
     <section id="community" className="relative isolate overflow-hidden py-20 sm:py-28">
-      <CornerArcs corner="br" tone="light" size={320} className="-z-10" />
-      <DotGrid tone="light" className="-z-10 top-16 right-8 hidden md:block" cols={6} rows={3} />
+      <BrushRing tone="light" size={320} className="-z-10 -bottom-20 -right-20" />
       <div className="container-public">
         <SectionHeading
           eyebrow="Company community"
@@ -369,7 +366,7 @@ export function CommunitySection() {
               viewport={{ once: true }}
               className="flex flex-wrap items-center gap-2"
             >
-              <h3 className="font-heading font-semibold text-lg text-navy">
+              <h3 className="font-heading font-medium text-lg text-navy">
                 Approved products and services
               </h3>
             </motion.div>
@@ -402,9 +399,9 @@ export function CommunitySection() {
               transition={{ delay: 0.3, ease: EASE }}
               className="relative isolate flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-2xl bg-[linear-gradient(120deg,var(--navy-900),var(--navy)_55%,var(--blue))] p-6 text-white shadow-lift"
             >
-              <CornerArcs corner="tr" size={180} className="-z-10" />
+              <GearCluster size={180} className="-z-10 -top-20 -right-20" />
               <div>
-                <p className="font-heading font-semibold text-lg">Join the conversation</p>
+                <p className="font-heading font-medium text-lg">Join the conversation</p>
                 <p className="text-sm text-white/75">
                   Posting and listings are open to members of approved companies.
                 </p>
@@ -413,7 +410,7 @@ export function CommunitySection() {
                 <Button asChild variant="outline-light" className="rounded-full">
                   <Link to="/sign-in">Sign in</Link>
                 </Button>
-                <Button asChild variant="gold" className="group rounded-full">
+                <Button asChild variant="coral" className="group rounded-full">
                   <Link to="/join">
                     Join WEPs{' '}
                     <ArrowRight
@@ -440,24 +437,23 @@ export function CtaBand() {
         loading="lazy"
         className="-z-20 absolute inset-0 size-full object-cover"
       />
-      <div className="-z-10 absolute inset-0 bg-[linear-gradient(90deg,rgba(8,26,40,0.95),rgba(21,59,85,0.75))]" />
-      <CornerArcs corner="tr" size={420} className="-z-10" />
+      <div className="-z-10 absolute inset-0 bg-[linear-gradient(90deg,rgba(15,24,40,0.95),rgba(38,57,85,0.75))]" />
+      <GearCluster size={420} className="-z-10 -top-20 -right-20" />
       <ForAllBars className="-z-10 right-[8%] bottom-[-40px] hidden md:block" size={320} />
-      <DotGrid className="-z-10 bottom-10 left-6" cols={6} rows={3} />
       <EdgeRule className="top-0" />
       <Reveal className="container-public grid max-w-3xl gap-6 ps-4 sm:ps-6 lg:ms-[max(0px,calc((100vw-1200px)/2))]">
-        <p className="font-medium text-gold text-xs uppercase tracking-[0.2em]">
+        <p className="font-medium text-coral-300 text-xs uppercase tracking-[0.2em]">
           Eligible companies
         </p>
-        <h2 className="text-balance font-bold font-heading text-4xl leading-tight sm:text-5xl">
+        <h2 className="text-balance font-medium font-heading text-4xl leading-tight sm:text-5xl">
           Ready to make your commitment count?
         </h2>
-        <p className="max-w-xl text-lg text-white/80">
+        <p className="max-w-xl text-lg text-white/90">
           Companies apply to become WEPs signatories. UN Women reviews every application before the
           portal is activated.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="gold" size="xl" className="group rounded-full">
+          <Button asChild variant="coral" size="xl" className="group rounded-full">
             <Link to="/join">
               Apply to join WEPs{' '}
               <ArrowRight

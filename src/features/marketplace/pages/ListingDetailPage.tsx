@@ -68,11 +68,11 @@ export function ListingDetailPage() {
           ) : null}
           <SectionCard title="About this offer">
             <p className="whitespace-pre-line">{l.description}</p>
-            <h3 className="mt-5 font-heading font-semibold text-navy">Proposed value</h3>
+            <h3 className="mt-5 font-heading font-medium text-navy">Proposed value</h3>
             <p className="mt-1 text-muted-foreground">{l.value}</p>
             {l.documents.length > 0 ? (
               <>
-                <h3 className="mt-5 font-heading font-semibold text-navy">Supporting documents</h3>
+                <h3 className="mt-5 font-heading font-medium text-navy">Supporting documents</h3>
                 <ul className="mt-2 grid gap-1.5 text-sm">
                   {l.documents.map((d) => (
                     <li key={d} className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export function ListingDetailPage() {
               contracts and payment happen there, not on this portal.
             </p>
           </SectionCard>
-          <p className="rounded-xl border border-gold/40 bg-gold-50 p-3 text-xs">
+          <p className="rounded-xl border border-coral/40 bg-coral-50 p-3 text-xs">
             Published with UN Women’s permission. This is not an endorsement of the product or
             service.
           </p>

@@ -41,7 +41,7 @@ export function ClinicCalendar({ rows }: { rows: ClinicRowData[] }) {
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-heading font-semibold text-lg text-navy" aria-live="polite">
+        <h2 className="font-heading font-medium text-lg text-navy" aria-live="polite">
           {month.toLocaleString('en-GB', { month: 'long', year: 'numeric' })}
         </h2>
         <div className="flex gap-1">

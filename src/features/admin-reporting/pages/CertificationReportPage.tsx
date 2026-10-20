@@ -138,7 +138,7 @@ export function CertificationReportPage() {
             </ChartCard>
             <section className="grid gap-3">
               <div className="flex items-center gap-1">
-                <h2 className="font-heading font-semibold text-lg text-navy">By offering</h2>
+                <h2 className="font-heading font-medium text-lg text-navy">By offering</h2>
                 <MetricInfo metric="confirmed_revenue" />
               </div>
               <ReportTable
@@ -149,7 +149,7 @@ export function CertificationReportPage() {
               />
             </section>
             <section className="grid gap-3">
-              <h2 className="font-heading font-semibold text-lg text-navy">Purchase records</h2>
+              <h2 className="font-heading font-medium text-lg text-navy">Purchase records</h2>
               <ReportTable
                 title="Certification purchases"
                 columns={rowCols}

@@ -240,14 +240,14 @@ export function Panel({
 }: {
   children: ReactNode
   className?: string
-  tone?: 'blue' | 'gold'
+  tone?: 'blue' | 'coral'
 }) {
   return (
     <div
       className={cn(
         'relative grid min-w-0 gap-4 rounded-2xl border p-4 shadow-[inset_0_1px_0_rgb(255_255_255/0.9)] sm:p-6',
-        tone === 'gold'
-          ? 'border-gold/35 bg-[linear-gradient(160deg,var(--gold-50),rgb(251_244_230/0.35))]'
+        tone === 'coral'
+          ? 'border-coral/35 bg-[linear-gradient(160deg,var(--coral-50),rgb(254_240_239/0.35))]'
           : 'border-blue-100/80 bg-[linear-gradient(160deg,rgb(232_243_250/0.75),rgb(244_247_250/0.6))]',
         className,
       )}
@@ -270,9 +270,9 @@ export function FieldGroup({
     <Panel>
       {title ? (
         <div className="flex gap-3">
-          <span aria-hidden className="mt-1 h-5 w-1 shrink-0 rounded-full bg-gold" />
+          <span aria-hidden className="mt-1 h-5 w-1 shrink-0 rounded-full bg-coral" />
           <div>
-            <h3 className="font-heading font-semibold text-navy">{title}</h3>
+            <h3 className="font-heading font-medium text-navy">{title}</h3>
             {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}
           </div>
         </div>

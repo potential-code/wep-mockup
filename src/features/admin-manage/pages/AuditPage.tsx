@@ -71,7 +71,7 @@ export function AuditPage() {
         <span className="flex flex-wrap items-center gap-1.5">
           <span className="font-medium text-navy">{a.action}</span>
           {categoriesOf(a).includes('points') ? (
-            <StatusBadge tone="gold" icon={null}>
+            <StatusBadge tone="coral" icon={null}>
               Points
             </StatusBadge>
           ) : null}

@@ -33,7 +33,7 @@ export const ACTION_META: Record<PointsAction, { label: string; icon: LucideIcon
   adjustment: { label: 'Adjustment', icon: SlidersHorizontal },
 }
 
-/** Round icon chip: gold for qualifying awards, blue for other awards, muted for spends. */
+/** Round icon chip: coral for qualifying awards, blue for other awards, muted for spends. */
 export function ActionIcon({
   action,
   amount,
@@ -50,7 +50,7 @@ export function ActionIcon({
         amount < 0
           ? 'bg-secondary text-muted-foreground'
           : qualifying
-            ? 'bg-gold-50 text-gold-700 ring-1 ring-gold/30'
+            ? 'bg-coral-50 text-coral-700 ring-1 ring-coral/30'
             : 'bg-blue-50 text-blue ring-1 ring-blue/15'
       }`}
     >

@@ -37,7 +37,7 @@ export function ContextPanel({
   return (
     <aside aria-label="Conversation context" className="grid content-start gap-5 text-sm">
       <section className="grid gap-2">
-        <h2 className="font-heading font-semibold text-navy">Context</h2>
+        <h2 className="font-heading font-medium text-navy">Context</h2>
         <div className="flex items-center gap-3 rounded-xl border bg-card p-3">
           {company ? (
             <CompanyLogo name={company.name} src={company.logo} className="size-10" />
@@ -61,7 +61,7 @@ export function ContextPanel({
         ) : null}
       </section>
       <section className="grid gap-2">
-        <h2 className="font-heading font-semibold text-navy">Relevant sources</h2>
+        <h2 className="font-heading font-medium text-navy">Relevant sources</h2>
         {sources.length === 0 ? (
           <p className="text-muted-foreground">Sources for each answer appear here.</p>
         ) : (
@@ -77,7 +77,7 @@ export function ContextPanel({
         )}
       </section>
       <section className="grid gap-2">
-        <h2 className="font-heading font-semibold text-navy">Suggested next actions</h2>
+        <h2 className="font-heading font-medium text-navy">Suggested next actions</h2>
         <ul className="grid gap-1.5">
           {actions.map((a) => (
             <li key={a.to}>

@@ -111,9 +111,9 @@ export function MentorshipPage() {
                 <section aria-labelledby="rec-h">
                   <h2
                     id="rec-h"
-                    className="mb-4 flex items-center gap-2 font-heading font-semibold text-navy text-section"
+                    className="mb-4 flex items-center gap-2 font-heading font-medium text-navy text-section"
                   >
-                    <Sparkles className="size-5 text-gold" aria-hidden /> Recommended for you
+                    <Sparkles className="size-5 text-coral" aria-hidden /> Recommended for you
                   </h2>
                   <Stagger className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     {recommended.map((m) => (
@@ -126,7 +126,7 @@ export function MentorshipPage() {
               ) : null}
               {others.length > 0 ? (
                 <section aria-labelledby="all-h">
-                  <h2 id="all-h" className="mb-4 font-heading font-semibold text-navy text-section">
+                  <h2 id="all-h" className="mb-4 font-heading font-medium text-navy text-section">
                     {recommended.length > 0 ? 'All experts' : 'Experts'}
                   </h2>
                   <Stagger className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

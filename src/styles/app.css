@@ -1,23 +1,31 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Light theme only (agreed with client). Brand colours are the brief's provisional tokens:
-   #153B55 navy, #167CB3 blue, #F4F7FA surface, #D6A44A gold. */
+/* Light theme only (agreed with client). Brand colours follow weps.org: cyan #00A3E0,
+   coral #F0493E and navy #263955. The bright cyan and coral fail text contrast on white, so
+   they are for large type, fills and line-work; small text and buttons use the -600/-700
+   shades. On navy, use the -300 shades. */
 
 :root {
   --radius: 0.875rem;
 
-  --navy: #153b55;
-  --navy-900: #0c2537;
-  --navy-700: #1d4a69;
-  --blue: #167cb3;
-  --blue-600: #12699a;
-  --blue-50: #e8f3fa;
-  --blue-100: #cfe6f3;
-  --gold: #d6a44a;
-  --gold-50: #fbf4e6;
-  --gold-700: #9b7225;
-  --surface: #f4f7fa;
+  --navy: #263955;
+  --navy-900: #17243a;
+  --navy-700: #34507a;
+  --cyan: #00a3e0;
+  --cyan-300: #5cc8f0;
+  --cyan-600: #008cc8;
+  --blue: #006fa8;
+  --blue-600: #00639a;
+  --blue-50: #e6f6fd;
+  --blue-100: #c6ebfa;
+  --coral: #f0493e;
+  --coral-300: #ff8f85;
+  --coral-600: #d63a30;
+  --coral-700: #b3302a;
+  --coral-50: #fef0ef;
+  --coral-100: #fcd9d6;
+  --surface: #f5f7fa;
 
   --background: var(--surface);
   --foreground: var(--navy);
@@ -30,45 +38,49 @@
   --secondary: #e9eff5;
   --secondary-foreground: var(--navy);
   --muted: #edf2f7;
-  --muted-foreground: #5b7287;
+  --muted-foreground: #46586e;
   --accent: var(--blue-50);
   --accent-foreground: var(--navy);
-  --destructive: #c2410c;
+  --destructive: #b42318;
   --border: #dde6ee;
   --input: #cdd9e4;
   --ring: var(--blue);
 
   /* status — always paired with an icon and label, never colour alone */
-  --success: #1f8a5b;
+  --success: #17734b;
   --success-soft: #e3f4ec;
-  --warning: #b7791f;
+  --warning: #8a5a12;
   --warning-soft: #fdf3e1;
-  --danger: #c2410c;
+  --danger: #b42318;
   --danger-soft: #fdeae2;
   --info: var(--blue);
   --info-soft: var(--blue-50);
 
-  --chart-1: #167cb3;
-  --chart-2: #153b55;
-  --chart-3: #d6a44a;
-  --chart-4: #5fb3dc;
-  --chart-5: #8aa4b8;
+  --chart-1: #006fa8;
+  --chart-2: #263955;
+  --chart-3: #f0493e;
+  --chart-4: #5cc8f0;
+  --chart-5: #9aacbf;
 
   --sidebar: var(--navy);
   --sidebar-foreground: #dbe7f0;
-  --sidebar-primary: var(--gold);
+  --sidebar-primary: var(--cyan-300);
   --sidebar-primary-foreground: var(--navy-900);
   --sidebar-accent: rgb(255 255 255 / 0.08);
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgb(255 255 255 / 0.1);
-  --sidebar-ring: var(--gold);
+  --sidebar-ring: var(--cyan-300);
 
-  --font-sans-family: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-heading-family: "Gotham Narrow", "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  /* weps.org uses Gotham Narrow (licensed). Figtree is the closest free match in width and
+     letter shape; a licensed Gotham Narrow install takes over automatically. */
+  --font-sans-family:
+    "Gotham Narrow", "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading-family: var(--font-sans-family);
 }
 
 @theme inline {
   --font-sans: var(--font-sans-family);
+  --leading-relaxed: 1.5;
   --font-heading: var(--font-heading-family);
 
   --radius-sm: calc(var(--radius) - 6px);
@@ -84,9 +96,15 @@
   --color-blue-600: var(--blue-600);
   --color-blue-50: var(--blue-50);
   --color-blue-100: var(--blue-100);
-  --color-gold: var(--gold);
-  --color-gold-50: var(--gold-50);
-  --color-gold-700: var(--gold-700);
+  --color-cyan: var(--cyan);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-600: var(--cyan-600);
+  --color-coral: var(--coral);
+  --color-coral-300: var(--coral-300);
+  --color-coral-600: var(--coral-600);
+  --color-coral-700: var(--coral-700);
+  --color-coral-50: var(--coral-50);
+  --color-coral-100: var(--coral-100);
   --color-surface: var(--surface);
 
   --color-success: var(--success);
@@ -131,12 +149,12 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --shadow-card:
-    0 1px 2px rgb(12 37 55 / 0.06), 0 4px 10px -2px rgb(12 37 55 / 0.07),
-    0 14px 32px -12px rgb(12 37 55 / 0.16);
+    0 1px 2px rgb(23 36 58 / 0.06), 0 4px 10px -2px rgb(23 36 58 / 0.07),
+    0 14px 32px -12px rgb(23 36 58 / 0.16);
   --shadow-lift:
-    0 2px 4px rgb(12 37 55 / 0.07), 0 10px 22px -6px rgb(12 37 55 / 0.14),
-    0 28px 56px -18px rgb(12 37 55 / 0.3);
-  --shadow-field: 0 1px 2px rgb(12 37 55 / 0.06), 0 2px 6px -2px rgb(12 37 55 / 0.08);
+    0 2px 4px rgb(23 36 58 / 0.07), 0 10px 22px -6px rgb(23 36 58 / 0.14),
+    0 28px 56px -18px rgb(23 36 58 / 0.3);
+  --shadow-field: 0 1px 2px rgb(23 36 58 / 0.06), 0 2px 6px -2px rgb(23 36 58 / 0.08);
 
   --animate-shimmer: shimmer 2.2s linear infinite;
   @keyframes marquee {
@@ -167,7 +185,8 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-size: 16px;
-    line-height: 1.55;
+    /* weps.org body copy sits at ~1.43 */
+    line-height: 1.45;
   }
   h1,
   h2,
@@ -177,6 +196,8 @@
   h6,
   .font-heading {
     font-family: var(--font-heading);
+    /* Gotham Narrow Medium on weps.org; Figtree runs ~3% wider, so tighten slightly. */
+    font-weight: 500;
     letter-spacing: -0.015em;
   }
   :focus-visible {
@@ -193,17 +214,17 @@
 @utility text-hero {
   font-size: clamp(2.5rem, 1.6rem + 3.6vw, 3.75rem);
   line-height: 1.05;
-  font-weight: 700;
+  font-weight: 500;
 }
 @utility text-page-title {
   font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 500;
 }
 @utility text-section {
   font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: 500;
 }
 @utility container-public {
   width: 100%;
@@ -247,7 +268,7 @@ html.lenis body {
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.45),
     inset 0 -1px 0 rgb(0 0 0 / 0.12),
-    0 6px 18px -6px rgb(12 37 55 / 0.45);
+    0 6px 18px -6px rgb(23 36 58 / 0.45);
   &::after {
     content: "";
     position: absolute;
@@ -267,14 +288,14 @@ html.lenis body {
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.5),
       inset 0 -1px 0 rgb(0 0 0 / 0.12),
-      0 12px 28px -8px rgb(12 37 55 / 0.55);
+      0 12px 28px -8px rgb(23 36 58 / 0.55);
   }
   &:active {
     transform: translateY(0);
   }
 }
 
-/* Public header link: gold underline grows from the centre, soft glow pill on hover. */
+/* Public header link: coral underline grows from the centre, soft glow pill on hover. */
 @utility nav-link {
   position: relative;
   &::before {
@@ -296,8 +317,7 @@ html.lenis body {
     bottom: 0;
     height: 2px;
     border-radius: 9999px;
-    background: var(--gold);
-    box-shadow: 0 0 10px rgb(214 164 74 / 0.8);
+    background: var(--coral);
     transition:
       left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
       right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -343,8 +363,8 @@ html.lenis body {
   ) {
     background-color: var(--card);
     box-shadow:
-      0 1px 2px rgb(12 37 55 / 0.05),
-      0 6px 14px -8px rgb(12 37 55 / 0.14);
+      0 1px 2px rgb(23 36 58 / 0.05),
+      0 6px 14px -8px rgb(23 36 58 / 0.14);
   }
   :where(a, button):where(.rounded-lg.border, .rounded-xl.border, .rounded-2xl.border):not(
     :where([class*="shadow-"], [class*="ring-"], [class*="border-white"], [data-slot])

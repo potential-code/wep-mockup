@@ -36,11 +36,11 @@ export function MessageBubble({
         className={cn(
           'grid min-w-0 flex-1 gap-3 rounded-2xl rounded-tl-md border bg-card p-4 text-sm shadow-card',
           message.unavailable && 'border-dashed border-warning/50 bg-warning-soft/30',
-          message.isDraft && 'border-gold/50 bg-gold-50/40',
+          message.isDraft && 'border-coral/50 bg-coral-50/40',
         )}
       >
         {message.isDraft ? (
-          <p className="flex items-center gap-1.5 font-semibold text-gold-700 text-xs uppercase tracking-wide">
+          <p className="flex items-center gap-1.5 font-semibold text-coral-700 text-xs uppercase tracking-wide">
             <PencilLine className="size-3.5" aria-hidden /> Draft for your review
           </p>
         ) : null}

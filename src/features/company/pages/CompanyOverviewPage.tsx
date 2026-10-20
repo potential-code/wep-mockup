@@ -32,7 +32,7 @@ export function CompanyOverviewPage() {
         {company.ceoCommitment ? (
           <SectionCard title="Executive commitment">
             <figure className="flex gap-4">
-              <Quote className="size-8 shrink-0 text-gold" aria-hidden />
+              <Quote className="size-8 shrink-0 text-coral" aria-hidden />
               <div className="grid gap-3">
                 <blockquote className="font-heading text-lg text-navy leading-snug">
                   {company.ceoCommitment}
@@ -90,7 +90,7 @@ export function CompanyOverviewPage() {
                 <AnimatedBar
                   value={stats.completionRate}
                   label="Learning completion"
-                  barClassName="bg-gold"
+                  barClassName="bg-coral"
                 />
               </div>
             </dl>

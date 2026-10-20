@@ -228,7 +228,7 @@ function MonthView({ rows, onPick }: { rows: Row[]; onPick: (e: ClinicEvent) => 
   return (
     <div className="rounded-2xl border bg-card p-4 shadow-card">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="font-heading font-semibold text-navy">{label}</h2>
+        <h2 className="font-heading font-medium text-navy">{label}</h2>
         <div className="flex gap-1">
           <Button
             variant="outline"

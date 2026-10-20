@@ -55,10 +55,10 @@ export function BadgesPanel({ achievements }: { achievements: Achievement[] }) {
       <div className="rounded-[calc(1.75rem-0.375rem)] bg-card p-5 shadow-card sm:p-7">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div className="grid gap-1">
-            <span className="w-fit rounded-full bg-gold-50 px-3 py-1 font-semibold text-[0.65rem] text-gold-700 uppercase tracking-[0.2em] ring-1 ring-gold/30">
+            <span className="w-fit rounded-full bg-coral-50 px-3 py-1 font-semibold text-[0.65rem] text-coral-700 uppercase tracking-[0.2em] ring-1 ring-coral/30">
               Achievements
             </span>
-            <h2 id="badges-heading" className="font-heading font-semibold text-2xl text-navy">
+            <h2 id="badges-heading" className="font-heading font-medium text-2xl text-navy">
               Your badge collection
             </h2>
             <p className="text-muted-foreground text-sm">
@@ -74,7 +74,7 @@ export function BadgesPanel({ achievements }: { achievements: Achievement[] }) {
             </p>
             <div className="h-2 overflow-hidden rounded-full bg-secondary">
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-gold to-gold-700"
+                className="h-full rounded-full bg-gradient-to-r from-coral to-coral-700"
                 initial={reduce ? false : { scaleX: 0 }}
                 whileInView={{ scaleX: earned / achievements.length }}
                 viewport={{ once: true }}
@@ -105,21 +105,21 @@ export function BadgesPanel({ achievements }: { achievements: Achievement[] }) {
                 className={cn(
                   'group relative grid h-full w-full justify-items-center gap-2 overflow-hidden rounded-2xl border px-3 pt-5 pb-4 text-center outline-none transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-lift focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]',
                   a.earned
-                    ? 'border-gold/25 bg-[radial-gradient(120%_70%_at_50%_0%,var(--gold-50),#fff_70%)]'
+                    ? 'border-coral/25 bg-[radial-gradient(120%_70%_at_50%_0%,var(--coral-50),#fff_70%)]'
                     : 'border-dashed bg-surface/60',
                 )}
               >
                 <BadgeMedal icon={a.icon} tier={a.tier} earned={a.earned} size="md" />
                 <span
                   className={cn(
-                    'font-heading font-semibold text-sm leading-tight',
+                    'font-heading font-medium text-sm leading-tight',
                     a.earned ? 'text-navy' : 'text-muted-foreground',
                   )}
                 >
                   {a.label}
                 </span>
                 {a.earned ? (
-                  <span className="rounded-full bg-gold/15 px-2 py-0.5 font-medium text-[0.7rem] text-gold-700">
+                  <span className="rounded-full bg-coral/15 px-2 py-0.5 font-medium text-[0.7rem] text-coral-700">
                     {a.earnedAt
                       ? `Earned ${formatDate(a.earnedAt, { day: 'numeric', month: 'short' })}`
                       : 'Earned'}
@@ -141,7 +141,7 @@ export function BadgesPanel({ achievements }: { achievements: Achievement[] }) {
                 className={cn(
                   'relative grid place-items-center px-6 pt-10 pb-8',
                   open.earned
-                    ? 'bg-[radial-gradient(70%_80%_at_50%_30%,rgba(214,164,74,0.35),transparent_70%),linear-gradient(160deg,var(--navy-900),var(--navy))]'
+                    ? 'bg-[radial-gradient(70%_80%_at_50%_30%,rgba(240,73,62,0.35),transparent_70%),linear-gradient(160deg,var(--navy-900),var(--navy))]'
                     : 'bg-[linear-gradient(160deg,var(--surface),#e9eff5)]',
                 )}
               >
@@ -173,7 +173,7 @@ export function BadgesPanel({ achievements }: { achievements: Achievement[] }) {
                   {open.earned ? (
                     <p className="flex items-start gap-2">
                       <CalendarCheck2
-                        className="mt-0.5 size-4 shrink-0 text-gold-700"
+                        className="mt-0.5 size-4 shrink-0 text-coral-700"
                         aria-hidden
                       />
                       <span>

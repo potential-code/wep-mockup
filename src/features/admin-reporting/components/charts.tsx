@@ -215,7 +215,9 @@ export function DonutChart({
         </ChartContainer>
         <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
           <div>
-            <p className="font-bold font-heading text-2xl text-navy leading-none">{centerValue}</p>
+            <p className="font-medium font-heading text-2xl text-navy leading-none">
+              {centerValue}
+            </p>
             <p className="mt-1 text-muted-foreground text-xs">{centerLabel}</p>
           </div>
         </div>

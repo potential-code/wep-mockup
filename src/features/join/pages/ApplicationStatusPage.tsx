@@ -1,6 +1,6 @@
 import type { Application } from '@shared/types'
-import { Link } from '@tanstack/react-router'
-import { AlertTriangle, ArrowRight, CalendarClock, Lock, Search } from 'lucide-react'
+import { getRouteApi, Link, useNavigate } from '@tanstack/react-router'
+import { AlertTriangle, ArrowRight, CalendarClock, Lock, RotateCcw, Search } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { celebrate } from '@/components/motion/Celebrate'
@@ -14,13 +14,15 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { formatDate } from '@/lib/format'
 import {
-  useFindApplication,
+  useApplicationByRef,
   useMyApplication,
   useResubmitApplication,
   validateUpload,
 } from '@/queries/applications.queries'
 import { DocumentList } from '../components/DocumentList'
 import { ApplicationTimeline } from '../components/Timeline'
+
+const route = getRouteApi('/_public/application-status')
 
 const HEADLINE: Record<string, string> = {
   submitted: 'We have received your application',
@@ -33,17 +35,23 @@ const HEADLINE: Record<string, string> = {
 }
 
 export function ApplicationStatusPage() {
-  const { data: app, isLoading, isError, refetch } = useMyApplication()
+  const { ref } = route.useSearch()
+  // A visitor sees an application only after entering its reference. A signed-in applicant
+  // sees their own.
+  const mine = useMyApplication()
+  const found = useApplicationByRef(ref)
+  const notFound = !!ref && found.isError
+  const { data: app, isLoading, isError, refetch } = ref && !notFound ? found : mine
   return (
     <div>
       <section className="bg-navy pt-28 pb-12 text-white">
         <div className="container-public grid gap-3">
-          <p className="font-medium text-gold text-sm">Application status</p>
+          <p className="font-medium text-coral-300 text-sm">Application status</p>
           <h1 className="text-page-title max-w-3xl">
             {app ? (HEADLINE[app.status] ?? 'Your application') : 'Track your WEPs application'}
           </h1>
           {app ? (
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white/80">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-white/90">
               <span>{app.data.company.name}</span>
               <span aria-hidden>·</span>
               <span>Ref. {app.reference}</span>
@@ -64,10 +72,10 @@ export function ApplicationStatusPage() {
           ) : isError ? (
             <ErrorState message="We could not load your application." onRetry={() => refetch()} />
           ) : app ? (
-            <Details app={app} />
+            <Details app={app} viaRef={!!ref && !notFound} />
           ) : (
             <div className="grid gap-6 lg:grid-cols-2">
-              <FindForm />
+              <FindForm initial={ref} error={notFound ? found.error.message : undefined} />
               <SectionCard title="No application yet?">
                 <p className="mb-4 text-muted-foreground text-sm">
                   Applying takes about 15 minutes and costs nothing. Your progress is saved as you
@@ -87,9 +95,9 @@ export function ApplicationStatusPage() {
   )
 }
 
-function FindForm() {
-  const [ref, setRef] = useState('')
-  const find = useFindApplication()
+function FindForm({ initial, error }: { initial?: string; error?: string }) {
+  const [ref, setRef] = useState(initial ?? '')
+  const navigate = useNavigate()
   return (
     <SectionCard
       title="Find my application"
@@ -99,7 +107,7 @@ function FindForm() {
         className="grid gap-3"
         onSubmit={(e) => {
           e.preventDefault()
-          find.mutate(ref)
+          navigate({ to: '/application-status', search: { ref: ref.trim().toUpperCase() } })
         }}
       >
         <label htmlFor="app-ref" className="font-medium text-navy text-sm">
@@ -112,11 +120,11 @@ function FindForm() {
             onChange={(e) => setRef(e.target.value)}
             placeholder="WEPS-2026-0000"
             className="h-10"
-            aria-invalid={find.isError}
+            aria-invalid={!!error}
             aria-describedby="app-ref-hint"
           />
-          <Button type="submit" disabled={!ref.trim() || find.isPending}>
-            <Search aria-hidden /> {find.isPending ? 'Searching…' : 'Find'}
+          <Button type="submit" disabled={!ref.trim()}>
+            <Search aria-hidden /> Find
           </Button>
         </div>
         <p id="app-ref-hint" className="text-muted-foreground text-xs">
@@ -130,9 +138,9 @@ function FindForm() {
           </button>{' '}
           (Cedar Works).
         </p>
-        {find.isError ? (
+        {error ? (
           <p role="alert" className="text-danger text-sm">
-            {find.error.message}
+            {error}
           </p>
         ) : null}
       </form>
@@ -140,7 +148,7 @@ function FindForm() {
   )
 }
 
-function Details({ app }: { app: Application }) {
+function Details({ app, viaRef }: { app: Application; viaRef: boolean }) {
   const open = app.infoRequests.find((r) => !r.resolvedAt)
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
@@ -150,7 +158,7 @@ function Details({ app }: { app: Application }) {
         ) : null}
         {app.status === 'approved' ? (
           <SectionCard className="border-success/30 bg-success-soft/40">
-            <p className="mb-1 font-heading font-semibold text-navy text-lg">
+            <p className="mb-1 font-heading font-medium text-navy text-lg">
               Your workspace is active
             </p>
             <p className="mb-4 text-sm">
@@ -182,21 +190,33 @@ function Details({ app }: { app: Application }) {
           <ApplicationTimeline events={app.timeline} />
         </SectionCard>
         <SectionCard title="Your documents">
-          <DocumentList documents={app.documents} />
+          <DocumentList documents={app.documents} application={app} />
         </SectionCard>
       </div>
       <aside className="grid content-start gap-4">
         {app.status !== 'approved' ? (
           <div className="rounded-2xl border bg-card p-5 shadow-card">
             <Lock className="mb-2 size-5 text-navy" aria-hidden />
-            <p className="font-heading font-semibold text-navy">Portal locked until approval</p>
+            <p className="font-heading font-medium text-navy">Portal locked until approval</p>
             <p className="mt-1 text-muted-foreground text-sm">
               Learning, clinics, assessments and the company workspace open as soon as UN Women
               approves your application. Public resources stay available meanwhile.
             </p>
           </div>
         ) : null}
-        <FindForm />
+        {viaRef ? (
+          <div className="rounded-2xl border bg-card p-5 shadow-card">
+            <p className="font-heading font-medium text-navy">Not your application?</p>
+            <p className="mt-1 mb-3 text-muted-foreground text-sm">
+              Look up another one with its reference.
+            </p>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/application-status" search={{}}>
+                <RotateCcw aria-hidden /> Find another
+              </Link>
+            </Button>
+          </div>
+        ) : null}
       </aside>
     </div>
   )
@@ -247,7 +267,7 @@ function RequestPanel({
       <div className="mb-3 flex items-start gap-3">
         <AlertTriangle className="mt-0.5 size-5 shrink-0 text-warning" aria-hidden />
         <div>
-          <h2 id="req-title" className="font-heading font-semibold text-lg text-navy">
+          <h2 id="req-title" className="font-heading font-medium text-lg text-navy">
             Action needed: {item}
           </h2>
           {dueDate ? (

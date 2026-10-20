@@ -39,14 +39,14 @@ export function JoinSessionDialog({
         </DialogHeader>
         <div className="grid aspect-video place-items-center rounded-xl bg-navy text-white">
           <div className="grid gap-1 text-center">
-            <span className="mx-auto grid size-14 place-items-center rounded-full bg-white/15 font-heading font-semibold text-xl">
+            <span className="mx-auto grid size-14 place-items-center rounded-full bg-white/15 font-heading font-medium text-xl">
               {facilitator
                 .split(' ')
                 .map((w) => w[0])
                 .join('')}
             </span>
             <p className="text-sm">{joined ? `${facilitator} is presenting` : 'Waiting room'}</p>
-            {joined ? <p className="text-white/70 text-xs">Simulated live view</p> : null}
+            {joined ? <p className="text-white/90 text-xs">Simulated live view</p> : null}
           </div>
         </div>
         <div className="flex items-center justify-between gap-2">

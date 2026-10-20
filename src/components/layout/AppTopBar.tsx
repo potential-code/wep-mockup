@@ -47,7 +47,7 @@ export function AppTopBar() {
     <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b bg-white/85 px-3 backdrop-blur-md sm:gap-3 sm:px-6">
       <SidebarTrigger className="-ms-1 text-navy" aria-label="Toggle navigation" />
       <div className="min-w-0 flex-1">
-        <p className="truncate font-heading font-semibold text-navy">{title}</p>
+        <p className="truncate font-heading font-medium text-navy">{title}</p>
         <p className="hidden truncate text-muted-foreground text-xs sm:block">
           {company?.name ??
             (user?.role === 'global_admin' ? 'UN Women · WEPs Secretariat' : 'WEPs expert network')}
@@ -70,7 +70,7 @@ function PointsChip() {
   return (
     <Link
       to="/portal/points"
-      className="hidden items-center gap-1.5 rounded-full bg-gold-50 px-3 py-1.5 font-semibold text-gold-700 text-sm ring-1 ring-gold/30 transition-colors hover:bg-gold/20 sm:inline-flex"
+      className="hidden items-center gap-1.5 rounded-full bg-coral-50 px-3 py-1.5 font-semibold text-coral-700 text-sm ring-1 ring-coral/30 transition-colors hover:bg-coral/20 sm:inline-flex"
       aria-label={`${data?.balance.redeemable ?? 0} redeemable points. Open points and rewards`}
     >
       <Trophy className="size-4" aria-hidden />
@@ -189,7 +189,7 @@ function NotificationsMenu() {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[min(92vw,380px)] p-0">
         <div className="flex items-center justify-between border-b px-4 py-3">
-          <p className="font-heading font-semibold text-navy">Notifications</p>
+          <p className="font-heading font-medium text-navy">Notifications</p>
           <Button
             variant="link"
             size="sm"
@@ -260,7 +260,7 @@ function HelpMenu() {
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-80">
-        <p className="font-heading font-semibold text-navy">Need a hand?</p>
+        <p className="font-heading font-medium text-navy">Need a hand?</p>
         <p className="mt-1 text-muted-foreground text-sm">
           Ask the AI Concierge about anything on this page, or contact the WEPs team.
         </p>

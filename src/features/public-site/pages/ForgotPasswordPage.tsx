@@ -34,7 +34,7 @@ export function ForgotPasswordPage() {
           role="status"
         >
           <CheckCircle2 className="size-12 text-success" aria-hidden />
-          <h1 className="font-bold font-heading text-3xl text-navy">Check your inbox</h1>
+          <h1 className="font-medium font-heading text-3xl text-navy">Check your inbox</h1>
           <p className="text-muted-foreground">
             If an account exists for <strong className="text-navy">{sentTo}</strong>, a reset link
             is on its way. It expires in 60 minutes.
@@ -43,7 +43,7 @@ export function ForgotPasswordPage() {
             Demo: no email is sent. Return to sign in and use the demo options.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg" variant="gloss-blue">
+            <Button asChild size="lg" variant="coral">
               <Link to="/sign-in">Back to sign in</Link>
             </Button>
             <Button variant="outline" size="lg" onClick={() => setSentTo(null)}>
@@ -58,7 +58,7 @@ export function ForgotPasswordPage() {
           noValidate
         >
           <header className="grid gap-2">
-            <h1 className="font-bold font-heading text-3xl text-navy">Reset your password</h1>
+            <h1 className="font-medium font-heading text-3xl text-navy">Reset your password</h1>
             <p className="text-muted-foreground">
               Enter your work email and we’ll send a reset link.
             </p>
@@ -82,7 +82,7 @@ export function ForgotPasswordPage() {
               </p>
             ) : null}
           </div>
-          <Button type="submit" size="xl" variant="gloss-blue" disabled={reset.isPending}>
+          <Button type="submit" size="xl" variant="coral" disabled={reset.isPending}>
             {reset.isPending ? (
               <>
                 <Loader2 className="animate-spin" aria-hidden /> Sending…

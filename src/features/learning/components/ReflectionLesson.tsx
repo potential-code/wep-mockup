@@ -27,7 +27,7 @@ export function ReflectionLesson({
   const dirty = value !== savedText
   return (
     <div className="grid gap-3 rounded-2xl border bg-card p-5 shadow-card">
-      <Label htmlFor="reflection" className="font-heading font-semibold text-base text-navy">
+      <Label htmlFor="reflection" className="font-heading font-medium text-base text-navy">
         {prompt}
       </Label>
       <Textarea

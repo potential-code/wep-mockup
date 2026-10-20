@@ -27,14 +27,14 @@ export function PublicResourceCard({ resource: r }: { resource: Resource }) {
           {r.pages ? ` · ${r.pages} pp` : ''}
         </span>
         {r.official ? (
-          <span className="absolute end-3 top-3 rounded-full bg-gold px-2.5 py-1 font-semibold text-navy-900 text-xs">
+          <span className="absolute end-3 top-3 rounded-full bg-coral-600 px-2.5 py-1 font-semibold text-white text-xs">
             Official WEPs
           </span>
         ) : null}
       </div>
       <div className="grid flex-1 content-start gap-3 p-5">
         <PrincipleTag id={r.principle} linked={false} className="w-fit" />
-        <h3 className="font-heading font-semibold text-lg text-navy leading-snug">{r.title}</h3>
+        <h3 className="font-heading font-medium text-lg text-navy leading-snug">{r.title}</h3>
         <p className="line-clamp-3 text-muted-foreground text-sm">{r.description}</p>
         <p className="mt-auto flex items-center justify-between pt-2 text-muted-foreground text-xs">
           <span>{r.publisher}</span>

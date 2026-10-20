@@ -28,15 +28,15 @@ export function ConciergeHeader({
       />
       <span
         aria-hidden
-        className="-top-6 -right-4 -z-10 absolute size-20 rounded-full border border-gold/30"
+        className="-top-6 -right-4 -z-10 absolute size-20 rounded-full border border-coral/30"
       />
       <ConciergeAvatar size="lg" online thinking={thinking} />
       <div className="min-w-0 flex-1">
-        <p className="font-heading font-semibold leading-tight">AI Concierge</p>
-        <p className="flex items-center gap-1.5 text-white/80 text-xs" aria-live="polite">
+        <p className="font-heading font-medium leading-tight">AI Concierge</p>
+        <p className="flex items-center gap-1.5 text-white/90 text-xs" aria-live="polite">
           <span className="size-1.5 rounded-full bg-success" aria-hidden />
           {thinking ? 'Typing…' : 'Online'}
-          <span className={cn('text-white/60', compact ? 'hidden' : 'hidden sm:inline')}>
+          <span className={cn('text-white/75', compact ? 'hidden' : 'hidden sm:inline')}>
             · Answers from approved WEPs sources
           </span>
         </p>

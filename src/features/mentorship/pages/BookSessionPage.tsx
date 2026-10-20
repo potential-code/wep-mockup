@@ -96,7 +96,7 @@ export function BookSessionPage() {
             <Coins className="size-6" aria-hidden />
           </span>
           <div className="grid gap-2">
-            <h2 className="font-heading font-semibold text-navy text-section">
+            <h2 className="font-heading font-medium text-navy text-section">
               You need {formatNumber(shortfall)} more points
             </h2>
             <p className="text-muted-foreground">
@@ -189,7 +189,7 @@ export function BookSessionPage() {
             <motion.div key={step} {...motionProps} className="min-h-72">
               {step === 0 ? (
                 <div className="grid gap-5">
-                  <h2 className="font-heading font-semibold text-lg text-navy">
+                  <h2 className="font-heading font-medium text-lg text-navy">
                     Choose a timezone and time
                   </h2>
                   <div className="grid max-w-sm gap-1.5">
@@ -223,7 +223,7 @@ export function BookSessionPage() {
 
               {step === 1 ? (
                 <div className="grid gap-5">
-                  <h2 className="font-heading font-semibold text-lg text-navy">
+                  <h2 className="font-heading font-medium text-lg text-navy">
                     What would you like help with?
                   </h2>
                   <div className="grid gap-1.5">
@@ -262,7 +262,7 @@ export function BookSessionPage() {
               {step === 2 ? (
                 <div className="grid gap-4">
                   <div>
-                    <h2 className="font-heading font-semibold text-lg text-navy">
+                    <h2 className="font-heading font-medium text-lg text-navy">
                       Review what your expert can see
                     </h2>
                     <p className="text-muted-foreground text-sm">
@@ -276,7 +276,7 @@ export function BookSessionPage() {
 
               {step === 3 && slot ? (
                 <div className="grid gap-5">
-                  <h2 className="font-heading font-semibold text-lg text-navy">
+                  <h2 className="font-heading font-medium text-lg text-navy">
                     Review points and confirm
                   </h2>
                   <dl className="grid gap-3 rounded-xl bg-surface p-5 text-sm">
@@ -337,7 +337,7 @@ export function BookSessionPage() {
           <div className="flex items-center gap-3">
             <UserAvatar name={m.name} src={m.avatar} className="size-12 rounded-xl" />
             <div>
-              <p className="font-heading font-semibold text-navy">{m.name}</p>
+              <p className="font-heading font-medium text-navy">{m.name}</p>
               <p className="text-muted-foreground text-xs">{m.profile.location}</p>
             </div>
           </div>

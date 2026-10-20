@@ -48,7 +48,7 @@ export function ResourceCard({
         <div className="flex flex-wrap items-center gap-1.5">
           <PrincipleTag id={r.principle} />
           {r.official ? (
-            <StatusBadge tone="gold" icon={null}>
+            <StatusBadge tone="coral" icon={null}>
               Official WEPs
             </StatusBadge>
           ) : null}
@@ -58,7 +58,7 @@ export function ResourceCard({
             </StatusBadge>
           ) : null}
         </div>
-        <h3 className="font-heading font-semibold text-navy leading-snug">
+        <h3 className="font-heading font-medium text-navy leading-snug">
           <Link
             to="/portal/resources/$resourceId"
             params={{ resourceId: r.id }}

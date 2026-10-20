@@ -1,8 +1,9 @@
 import { useLocation } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { scrollToTarget } from '@/components/motion/SmoothScroll'
-import { CornerArcs, DotGrid, EdgeRule, ForAllBars } from '@/components/shared/BrandMotif'
+import { BrushRing, EdgeRule, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { ExperiencePreview } from '../components/ExperiencePreview'
+import { GlobalNetwork } from '../components/GlobalNetwork'
 import { HomeHero } from '../components/HomeHero'
 import {
   ClinicsAndExperts,
@@ -32,13 +33,7 @@ export function HomePage() {
       <HomeHero />
 
       <section id="about" className="relative isolate overflow-hidden py-20 sm:py-28">
-        <CornerArcs corner="tr" tone="light" size={340} className="-z-10" />
-        <DotGrid
-          tone="light"
-          className="-z-10 bottom-10 left-6 hidden md:block"
-          cols={7}
-          rows={4}
-        />
+        <BrushRing tone="light" size={420} className="-z-10 -top-24 -right-24" />
         <div className="container-public">
           <SectionHeading
             eyebrow="Why the portal"
@@ -49,14 +44,16 @@ export function HomePage() {
         </div>
       </section>
 
+      <GlobalNetwork />
+
       <section
         id="principles"
-        className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--surface),#eaf1f7)] py-20 sm:py-28"
+        className="relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--surface),var(--blue-50))] py-20 sm:py-28"
         aria-labelledby="principles-h"
       >
         <EdgeRule tone="light" className="top-0" />
         <ForAllBars tone="light" className="-z-10 -left-16 top-10 hidden md:block" size={300} />
-        <CornerArcs corner="br" tone="light" size={300} className="-z-10" />
+        <GearCluster tone="light" size={300} className="-z-10 -right-16 -bottom-16" />
         <div className="container-public">
           <SectionHeading
             id="principles-h"
@@ -70,14 +67,14 @@ export function HomePage() {
 
       <section
         id="journey"
-        className="relative isolate overflow-hidden bg-navy-900 py-20 text-white sm:py-28"
+        className="relative isolate overflow-hidden bg-[linear-gradient(120deg,#005487,var(--blue)_70%,#0080bd)] py-20 text-white sm:py-28"
       >
-        <div
-          aria-hidden
-          className="-z-10 absolute inset-0 bg-[radial-gradient(50%_60%_at_100%_0%,rgba(22,124,179,0.35),transparent_70%),radial-gradient(40%_50%_at_0%_100%,rgba(214,164,74,0.12),transparent_70%)]"
+        <GearCluster size={400} className="-z-10 -top-16 -right-24 hidden md:block" />
+        <ForAllBars
+          variant="outline"
+          size={260}
+          className="-z-10 -bottom-10 -left-16 hidden md:block"
         />
-        <CornerArcs corner="tl" size={380} className="-z-10" />
-        <DotGrid className="-z-10 right-8 bottom-10" cols={8} rows={4} />
         <EdgeRule className="bottom-0" />
         <div className="container-public relative">
           <SectionHeading
@@ -90,8 +87,13 @@ export function HomePage() {
         </div>
       </section>
 
-      <section id="portal" className="relative isolate overflow-x-clip bg-surface py-20 sm:py-28">
-        <CornerArcs corner="tr" tone="light" size={320} className="-z-10" />
+      <section
+        id="portal"
+        className="relative isolate overflow-x-clip bg-[linear-gradient(180deg,#fff,var(--blue-50)_55%,#fff)] py-20 sm:py-28"
+      >
+        <BrushRing tone="light" size={380} className="-z-10 -top-20 -right-20" />
+        <GearCluster tone="light" size={320} className="-z-10 bottom-10 -left-24 hidden lg:block" />
+        <ForAllBars tone="light" size={240} className="-z-10 top-1/3 -left-20 hidden xl:block" />
         <div className="container-public">
           <SectionHeading
             eyebrow="Inside the portal"

@@ -37,7 +37,7 @@ export function ReportActions({
           <Button
             type="button"
             variant="outline"
-            className="hover:border-gold/60"
+            className="hover:border-coral/60"
             disabled={fill.isPending}
             onClick={() =>
               fill.mutate(report.year, {

@@ -16,8 +16,8 @@ export function PathSummary({ data }: { data: MyLearning }) {
     <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
       <section className="grid gap-4 rounded-2xl bg-navy p-6 text-white shadow-card sm:p-7">
         <div className="grid gap-1">
-          <p className="font-medium text-gold text-sm">Next recommended action</p>
-          <h2 className="font-heading font-semibold text-xl leading-snug sm:text-2xl">
+          <p className="font-medium text-coral-300 text-sm">Next recommended action</p>
+          <h2 className="font-heading font-medium text-xl leading-snug sm:text-2xl">
             {cur && next ? `${cur.course.title}: ${next.title}` : 'You have finished your pathway'}
           </h2>
           {cur && next ? (
@@ -33,7 +33,7 @@ export function PathSummary({ data }: { data: MyLearning }) {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {cur && next ? (
-            <Button asChild variant="gold" size="lg">
+            <Button asChild variant="coral" size="lg">
               <Link
                 to="/portal/learn/$courseId/$lessonId"
                 params={{ courseId: cur.course.id, lessonId: next.id }}
@@ -43,7 +43,7 @@ export function PathSummary({ data }: { data: MyLearning }) {
               </Link>
             </Button>
           ) : (
-            <Button asChild variant="gold" size="lg">
+            <Button asChild variant="coral" size="lg">
               <Link to="/portal/learn/catalogue">Browse courses</Link>
             </Button>
           )}
@@ -53,7 +53,7 @@ export function PathSummary({ data }: { data: MyLearning }) {
         <div className="grid gap-2">
           <div className="flex items-baseline justify-between">
             <h2 className="font-medium text-navy text-sm">Pathway progress</h2>
-            <span className="font-heading font-semibold text-navy text-xl">{pct}%</span>
+            <span className="font-heading font-medium text-navy text-xl">{pct}%</span>
           </div>
           <Progress value={pct} aria-label="Pathway progress" className="h-2.5" />
           <p className="text-muted-foreground text-xs">
@@ -66,7 +66,7 @@ export function PathSummary({ data }: { data: MyLearning }) {
             <dt className="flex items-center gap-1 text-muted-foreground text-xs">
               <Trophy className="size-3.5" aria-hidden /> Points earned
             </dt>
-            <dd className="font-heading font-semibold text-navy text-lg">
+            <dd className="font-heading font-medium text-navy text-lg">
               {formatNumber(data.balance.lifetime)}
             </dd>
           </div>
@@ -74,7 +74,7 @@ export function PathSummary({ data }: { data: MyLearning }) {
             <dt className="flex items-center gap-1 text-muted-foreground text-xs">
               <Sparkles className="size-3.5" aria-hidden /> Clinic qualifying
             </dt>
-            <dd className="font-heading font-semibold text-navy text-lg">
+            <dd className="font-heading font-medium text-navy text-lg">
               {data.clinic.qualifying}/{data.clinic.required}
             </dd>
           </div>

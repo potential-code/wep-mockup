@@ -92,10 +92,10 @@ export function CourseMenu({
       className="overflow-hidden rounded-2xl border bg-card shadow-card"
     >
       <div className="border-b px-4 py-3.5">
-        <p className="font-semibold text-[0.7rem] text-gold-700 uppercase tracking-[0.16em]">
+        <p className="font-semibold text-[0.7rem] text-coral-700 uppercase tracking-[0.16em]">
           Course menu
         </p>
-        <p className="font-heading font-semibold text-navy leading-snug">{course.title}</p>
+        <p className="font-heading font-medium text-navy leading-snug">{course.title}</p>
       </div>
       <ul className="divide-y">
         <li>
@@ -194,7 +194,7 @@ export function CourseMenu({
               active={currentId === post.id}
               onNavigate={onNavigate}
             >
-              <span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold-50 text-gold-700">
+              <span className="grid size-7 shrink-0 place-items-center rounded-full bg-coral-50 text-coral-700">
                 <ClipboardCheck className="size-3.5" aria-hidden />
               </span>
               <span className="grid min-w-0 flex-1">
@@ -247,7 +247,7 @@ function ModuleGroup({
           {index + 1}
         </span>
         <span className="grid min-w-0 flex-1">
-          <span className="font-heading font-semibold text-navy text-sm leading-snug">{title}</span>
+          <span className="font-heading font-medium text-navy text-sm leading-snug">{title}</span>
           <span className="text-muted-foreground text-xs">{summary}</span>
         </span>
         <ChevronDown

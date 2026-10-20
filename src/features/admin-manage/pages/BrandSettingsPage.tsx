@@ -17,10 +17,11 @@ const LOGOS = [
   { src: '/brand/weps-logo-white.png', name: 'WEPs lockup (white)', dark: true },
 ]
 const TOKENS = [
-  { name: 'Navy', hex: '#153B55', use: 'Text and dark sections' },
-  { name: 'Blue', hex: '#167CB3', use: 'Primary actions' },
-  { name: 'Surface', hex: '#F4F7FA', use: 'Page background' },
-  { name: 'Gold', hex: '#D6A44A', use: 'Small warm accents' },
+  { name: 'Cyan', hex: '#00A3E0', use: 'Brand surfaces and large headings' },
+  { name: 'Coral', hex: '#F0493E', use: 'Calls to action and accents' },
+  { name: 'Navy', hex: '#263955', use: 'Text and dark sections' },
+  { name: 'Blue', hex: '#006FA8', use: 'Links and small text on white' },
+  { name: 'Surface', hex: '#F5F7FA', use: 'Page background' },
 ]
 const LANGUAGES = [
   { name: 'English', active: true },

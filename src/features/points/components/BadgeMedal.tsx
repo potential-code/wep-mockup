@@ -8,10 +8,10 @@ const FINISH: Record<
   MedalTier | 'locked',
   { light: string; mid: string; deep: string; ribbon: string; icon: string }
 > = {
-  gold: { light: '#f3dfb2', mid: '#d6a44a', deep: '#9b7225', ribbon: '#153b55', icon: '#0c2537' },
-  blue: { light: '#cfe6f3', mid: '#167cb3', deep: '#12699a', ribbon: '#d6a44a', icon: '#ffffff' },
-  navy: { light: '#1d4a69', mid: '#153b55', deep: '#0c2537', ribbon: '#d6a44a', icon: '#f3dfb2' },
-  locked: { light: '#f4f7fa', mid: '#dde6ee', deep: '#cdd9e4', ribbon: '#cdd9e4', icon: '#5b7287' },
+  coral: { light: '#fcd9d6', mid: '#F0493E', deep: '#b3302a', ribbon: '#263955', icon: '#17243a' },
+  blue: { light: '#c6ebfa', mid: '#006fa8', deep: '#00639a', ribbon: '#F0493E', icon: '#ffffff' },
+  navy: { light: '#34507a', mid: '#263955', deep: '#17243a', ribbon: '#F0493E', icon: '#fcd9d6' },
+  locked: { light: '#f5f7fa', mid: '#dde6ee', deep: '#cdd9e4', ribbon: '#cdd9e4', icon: '#46586e' },
 }
 
 // Font size drives the icon (size-[1em]) so it scales with the medal.

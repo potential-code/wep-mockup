@@ -13,6 +13,7 @@ import { useExecutiveDashboard } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
 import { BarsChart, DonutChart, FunnelBars } from '../components/charts'
 import { AttentionQueue } from '../components/dashboard/AttentionQueue'
+import { GlobalNetworkCard } from '../components/dashboard/GlobalNetworkCard'
 import { InsightPanel } from '../components/dashboard/InsightPanel'
 import { KpiTile } from '../components/dashboard/KpiTile'
 import { searchProp, useReportingFilters } from '../components/filters'
@@ -119,7 +120,7 @@ export function ExecutiveDashboardPage() {
                 to="/admin/reporting/learning"
                 search={search}
                 progress={d.cards.learningCompletion}
-                tone="gold"
+                tone="coral"
               />
               <KpiTile
                 metric="clinic_attendance"
@@ -154,6 +155,8 @@ export function ExecutiveDashboardPage() {
               <LayerBadge layer="outcomes" />
             </p>
           </section>
+
+          <GlobalNetworkCard />
 
           <div className="grid min-w-0 *:min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-3">
             <ChartCard

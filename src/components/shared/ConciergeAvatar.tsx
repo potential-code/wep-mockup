@@ -28,7 +28,7 @@ export function ConciergeAvatar({
   const s = SIZES[size]
   return (
     <span className={cn('relative inline-grid shrink-0', s.box, className)} aria-hidden>
-      <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_180deg,var(--gold),var(--blue),var(--navy),var(--gold))] p-[2px]">
+      <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_180deg,var(--coral),var(--blue),var(--navy),var(--coral))] p-[2px]">
         <span className="grid size-full place-items-center rounded-full bg-[radial-gradient(circle_at_30%_25%,var(--blue)_0%,var(--navy)_60%,var(--navy-900)_100%)] text-white shadow-[inset_0_1px_6px_rgb(255_255_255/0.25)]">
           <motion.span
             className="grid place-items-center"
@@ -39,7 +39,7 @@ export function ConciergeAvatar({
               ease: 'easeInOut',
             }}
           >
-            <Sparkles className={cn(s.icon, 'drop-shadow-[0_0_6px_rgb(214_164_74/0.6)]')} />
+            <Sparkles className={cn(s.icon, 'drop-shadow-[0_0_6px_rgb(240_73_62/0.6)]')} />
           </motion.span>
         </span>
       </span>

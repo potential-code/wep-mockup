@@ -54,7 +54,7 @@ export function DiscussionSnippets() {
         viewport={{ once: true }}
         className="flex flex-wrap items-center gap-2"
       >
-        <h3 className="font-heading font-semibold text-lg text-navy">Moderated discussions</h3>
+        <h3 className="font-heading font-medium text-lg text-navy">Moderated discussions</h3>
       </motion.div>
       <ol className="relative grid gap-4">
         <motion.span
@@ -63,7 +63,7 @@ export function DiscussionSnippets() {
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute start-5 top-6 bottom-6 w-px origin-top bg-gradient-to-b from-gold via-blue/40 to-transparent"
+          className="absolute start-5 top-6 bottom-6 w-px origin-top bg-gradient-to-b from-coral via-blue/40 to-transparent"
         />
         {DISCUSSION_SNIPPETS.map((d, i) => (
           <motion.li
@@ -74,7 +74,7 @@ export function DiscussionSnippets() {
             transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="group relative flex gap-4"
           >
-            <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full bg-white font-heading font-semibold text-blue text-sm shadow-card ring-4 ring-surface transition-colors duration-300 group-hover:bg-navy group-hover:text-gold">
+            <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full bg-white font-heading font-medium text-blue text-sm shadow-card ring-4 ring-surface transition-colors duration-300 group-hover:bg-navy group-hover:text-coral">
               <d.icon className="size-4" aria-hidden />
             </span>
             <article className="flex-1 rounded-2xl border bg-white p-5 shadow-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-blue/30 group-hover:shadow-lift">
@@ -84,7 +84,7 @@ export function DiscussionSnippets() {
                 </span>
                 <span className="text-muted-foreground text-xs">{AUTHORS[i]}</span>
               </div>
-              <h4 className="mt-2 font-heading font-semibold text-navy leading-snug">{d.title}</h4>
+              <h4 className="mt-2 font-heading font-medium text-navy leading-snug">{d.title}</h4>
               <p className="mt-1 line-clamp-2 text-muted-foreground text-sm">{d.excerpt}</p>
               <p className="mt-3 flex items-center gap-4 text-muted-foreground text-xs">
                 <span className="inline-flex items-center gap-1 transition-colors group-hover:text-blue">
@@ -132,7 +132,7 @@ export function ListingCard({
         <p className="font-medium text-blue text-xs uppercase tracking-wider">
           {listing.type} · {listing.category}
         </p>
-        <h4 className="font-heading font-semibold text-navy leading-snug">{listing.title}</h4>
+        <h4 className="font-heading font-medium text-navy leading-snug">{listing.title}</h4>
         <p className="line-clamp-2 text-muted-foreground text-sm">{listing.value}</p>
         <p className="mt-auto flex items-center gap-2 border-t pt-3 text-sm">
           <CompanyLogo name={companyName} src={companyLogo} className="size-6 rounded" />

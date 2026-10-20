@@ -61,10 +61,10 @@ export function SignInPage() {
     <AuthShell>
       <div className="grid grid-cols-1 gap-8">
         <header className="grid gap-2">
-          <span className="mb-1 grid size-12 place-items-center rounded-2xl bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_10px_24px_-10px_rgb(22_124_179/0.7)] ring-4 ring-white">
+          <span className="mb-1 grid size-12 place-items-center rounded-2xl bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_10px_24px_-10px_rgb(0_119_182/0.7)] ring-4 ring-white">
             <LogIn className="size-5" aria-hidden />
           </span>
-          <h1 className="font-bold font-heading text-3xl text-navy sm:text-4xl">Welcome back</h1>
+          <h1 className="font-medium font-heading text-3xl text-navy sm:text-4xl">Welcome back</h1>
           <p className="text-muted-foreground">Sign in to access your company’s WEPs portal.</p>
         </header>
 
@@ -75,7 +75,7 @@ export function SignInPage() {
         >
           <span
             aria-hidden
-            className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--gold),var(--blue)_60%,var(--navy))]"
+            className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--coral),var(--blue)_60%,var(--navy))]"
           />
           <div className="grid gap-1.5">
             <Label htmlFor="email">Work email</Label>
@@ -123,7 +123,7 @@ export function SignInPage() {
               {error}
             </p>
           ) : null}
-          <Button type="submit" size="xl" variant="gloss-blue" disabled={busy}>
+          <Button type="submit" size="xl" variant="coral" disabled={busy}>
             {signInEmail.isPending ? (
               <>
                 <Loader2 className="animate-spin" aria-hidden /> Signing in…
@@ -146,22 +146,19 @@ export function SignInPage() {
 
         <section
           aria-labelledby="demo-h"
-          className="relative grid grid-cols-1 gap-4 overflow-hidden rounded-2xl border border-gold/40 bg-[linear-gradient(160deg,var(--gold-50),#fff_70%)] p-5 shadow-card"
+          className="relative grid grid-cols-1 gap-4 overflow-hidden rounded-2xl border border-coral/40 bg-[linear-gradient(160deg,var(--coral-50),#fff_70%)] p-5 shadow-card"
         >
           <span
             aria-hidden
-            className="-top-10 -right-10 pointer-events-none absolute size-32 rounded-full border border-gold/30"
+            className="-top-10 -right-10 pointer-events-none absolute size-32 rounded-full border border-coral/30"
           />
           <span
             aria-hidden
-            className="-top-4 -right-4 pointer-events-none absolute size-20 rounded-full border border-gold/40"
+            className="-top-4 -right-4 pointer-events-none absolute size-20 rounded-full border border-coral/40"
           />
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2
-              id="demo-h"
-              className="flex items-center gap-2 font-heading font-semibold text-navy"
-            >
-              <Sparkles className="size-4 text-gold-700" aria-hidden /> Explore the demo
+            <h2 id="demo-h" className="flex items-center gap-2 font-heading font-medium text-navy">
+              <Sparkles className="size-4 text-coral-700" aria-hidden /> Explore the demo
             </h2>
           </div>
           <p className="text-muted-foreground text-sm">

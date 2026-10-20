@@ -26,9 +26,9 @@ function PointsCounter({ amount, title }: { amount: number; title: string }) {
   return (
     <div
       role="status"
-      className="flex w-80 max-w-[calc(100vw-2rem)] items-center gap-3 rounded-xl border border-gold/40 bg-card p-4 shadow-lift"
+      className="flex w-80 max-w-[calc(100vw-2rem)] items-center gap-3 rounded-xl border border-coral/40 bg-card p-4 shadow-lift"
     >
-      <span className="grid size-10 place-items-center rounded-full bg-gold-50 text-gold-700">
+      <span className="grid size-10 place-items-center rounded-full bg-coral-50 text-coral-700">
         <Sparkles className="size-5" aria-hidden />
       </span>
       <div className="grid">

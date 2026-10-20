@@ -29,7 +29,7 @@ export function EmptyState({
         <Icon className="size-6" aria-hidden />
       </span>
       <div className="grid gap-1">
-        <p className="font-heading font-semibold text-navy">{title}</p>
+        <p className="font-heading font-medium text-navy">{title}</p>
         {description ? (
           <p className="max-w-md text-muted-foreground text-sm">{description}</p>
         ) : null}
@@ -81,7 +81,7 @@ export function AccessNotice({
       <span className="grid size-12 place-items-center rounded-2xl bg-secondary text-navy">
         <Lock className="size-6" aria-hidden />
       </span>
-      <p className="font-heading font-semibold text-lg text-navy">{title}</p>
+      <p className="font-heading font-medium text-lg text-navy">{title}</p>
       <p className="max-w-md text-muted-foreground">{message}</p>
       {action}
     </div>

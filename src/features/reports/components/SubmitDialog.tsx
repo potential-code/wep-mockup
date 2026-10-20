@@ -52,7 +52,7 @@ export function SubmitDialog({
             [String(evidenceCount), 'evidence files'],
           ].map(([n, l]) => (
             <li key={l} className="rounded-lg bg-surface p-3">
-              <p className="font-heading font-semibold text-lg text-navy">{n}</p>
+              <p className="font-heading font-medium text-lg text-navy">{n}</p>
               <p className="text-muted-foreground">{l}</p>
             </li>
           ))}

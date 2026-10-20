@@ -63,7 +63,7 @@ export function ApplicationReviewPage() {
               aria-live="polite"
             >
               <PartyPopper className="mb-2 size-7 text-success" aria-hidden />
-              <h2 className="font-heading font-semibold text-navy text-xl">
+              <h2 className="font-heading font-medium text-navy text-xl">
                 {app.data.company.name} is now a WEPs signatory
               </h2>
               <p className="mt-1 mb-4 text-sm">
@@ -106,7 +106,7 @@ export function ApplicationReviewPage() {
             <ReviewSections data={app.data} />
           </SectionCard>
           <SectionCard title="Documents">
-            <DocumentList documents={app.documents} />
+            <DocumentList documents={app.documents} application={app} />
           </SectionCard>
         </div>
         <aside className="grid content-start gap-6 lg:sticky lg:top-20 lg:self-start">

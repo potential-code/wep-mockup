@@ -34,7 +34,7 @@ export function BookingCard({
         <UserAvatar name={row.mentorName} src={row.mentorAvatar} className="size-12 rounded-xl" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-heading font-semibold text-navy">{row.mentorName}</h3>
+            <h3 className="font-heading font-medium text-navy">{row.mentorName}</h3>
             <WorkflowStatus status={b.status} />
           </div>
           <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
@@ -76,7 +76,7 @@ export function BookingCard({
       {b.status === 'completed' && b.followUp ? (
         <div className="grid gap-4 rounded-xl bg-surface p-4 md:grid-cols-2">
           <div className="grid content-start gap-2">
-            <h4 className="flex items-center gap-2 font-semibold text-navy text-sm">
+            <h4 className="flex items-center gap-2 font-medium text-navy text-sm">
               <MessageSquareQuote className="size-4 text-blue" aria-hidden /> Note from{' '}
               {row.mentorName}
             </h4>
@@ -84,7 +84,7 @@ export function BookingCard({
           </div>
           <div className="grid content-start gap-3">
             <div>
-              <h4 className="mb-1 font-semibold text-navy text-sm">Agreed next actions</h4>
+              <h4 className="mb-1 font-medium text-navy text-sm">Agreed next actions</h4>
               <ul className="grid list-disc gap-1 ps-5 text-sm">
                 {b.followUp.nextActions.map((a) => (
                   <li key={a}>{a}</li>
@@ -93,7 +93,7 @@ export function BookingCard({
             </div>
             {b.followUp.resourceIds.length > 0 ? (
               <div>
-                <h4 className="mb-1 font-semibold text-navy text-sm">Shared resources</h4>
+                <h4 className="mb-1 font-medium text-navy text-sm">Shared resources</h4>
                 <ul className="grid gap-1 text-sm">
                   {b.followUp.resourceIds.map((id) => (
                     <li key={id}>
@@ -117,7 +117,7 @@ export function BookingCard({
       {b.status === 'completed' ? (
         b.feedback ? (
           <p className="flex items-center gap-1.5 text-muted-foreground text-sm">
-            <Star className="size-4 fill-gold text-gold" aria-hidden /> You rated this session{' '}
+            <Star className="size-4 fill-coral text-coral" aria-hidden /> You rated this session{' '}
             {b.feedback.rating}/5{b.feedback.comment ? `: “${b.feedback.comment}”` : ''}
           </p>
         ) : (

@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti'
 /** Short brand-coloured celebration for milestones. Skipped when reduced motion is preferred. */
 export function celebrate(origin: { x?: number; y?: number } = {}) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  const colors = ['#167CB3', '#153B55', '#D6A44A', '#ffffff']
+  const colors = ['#006fa8', '#263955', '#F0493E', '#ffffff']
   confetti({
     particleCount: 90,
     spread: 70,

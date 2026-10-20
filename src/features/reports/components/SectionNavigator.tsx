@@ -31,7 +31,7 @@ export function SectionNavigator({
             <span className="text-muted-foreground text-xs">
               Section {activeIndex + 1} of {SECTION_META.length} · {doneCount} complete
             </span>
-            <span className="font-heading font-semibold text-navy text-sm">
+            <span className="font-heading font-medium text-navy text-sm">
               {SECTION_META[activeIndex]?.title}
             </span>
           </span>
@@ -41,7 +41,7 @@ export function SectionNavigator({
           />
         </button>
         <div className="hidden px-4 pt-4 pb-2 lg:block">
-          <p className="font-heading font-semibold text-navy text-sm">Report sections</p>
+          <p className="font-heading font-medium text-navy text-sm">Report sections</p>
           <p className="text-muted-foreground text-xs">
             {doneCount} of {SECTION_META.length} complete
           </p>

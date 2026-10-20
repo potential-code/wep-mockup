@@ -23,14 +23,14 @@ export function PrincipleSummary({ priorities }: { priorities: PrincipleId[] }) 
               search={{ principle: String(p.id) }}
               className={cn(
                 'grid h-full gap-1.5 rounded-xl border p-3 text-center transition-colors hover:border-blue hover:bg-blue-50/50',
-                priorities.includes(p.id) && 'border-gold/50 bg-gold-50/40',
+                priorities.includes(p.id) && 'border-coral/50 bg-coral-50/40',
               )}
             >
               <img src={p.icon} alt="" className="mx-auto size-10" />
               <span className="font-medium text-navy text-xs leading-tight">{p.short}</span>
               <span className="text-muted-foreground text-xs">{plural(count(p.id), 'action')}</span>
               {priorities.includes(p.id) ? (
-                <span className="font-semibold text-[11px] text-gold-700 uppercase tracking-wide">
+                <span className="font-semibold text-[11px] text-coral-700 uppercase tracking-wide">
                   Priority
                 </span>
               ) : null}

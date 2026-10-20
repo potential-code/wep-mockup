@@ -34,7 +34,7 @@ export function PublicProfileSheet({ company }: { company: Company }) {
           <div className="flex items-center gap-4 rounded-2xl border bg-card p-4">
             <CompanyLogo name={company.name} src={company.logo} className="size-16" />
             <div className="min-w-0">
-              <p className="font-heading font-semibold text-lg text-navy">{company.name}</p>
+              <p className="font-heading font-medium text-lg text-navy">{company.name}</p>
               <p className="flex items-center gap-1 text-muted-foreground text-sm">
                 <MapPin className="size-3.5" aria-hidden /> {company.country} · {company.sector}
               </p>
@@ -50,18 +50,18 @@ export function PublicProfileSheet({ company }: { company: Company }) {
             <StatusBadge tone="warning">Not yet published in the directory</StatusBadge>
           )}
           <section aria-labelledby="pp-about">
-            <h3 id="pp-about" className="mb-1 font-semibold text-navy text-sm">
+            <h3 id="pp-about" className="mb-1 font-medium text-navy text-sm">
               About
             </h3>
             <p className="text-sm leading-relaxed">{company.summary}</p>
           </section>
           {company.ceoCommitment ? (
-            <blockquote className="rounded-xl border-gold border-l-4 bg-gold-50/60 p-4 text-sm italic">
+            <blockquote className="rounded-xl border-coral border-l-4 bg-coral-50/60 p-4 text-sm italic">
               “{company.ceoCommitment}”
             </blockquote>
           ) : null}
           <section aria-labelledby="pp-pr">
-            <h3 id="pp-pr" className="mb-2 font-semibold text-navy text-sm">
+            <h3 id="pp-pr" className="mb-2 font-medium text-navy text-sm">
               Priority principles
             </h3>
             <div className="flex flex-wrap gap-2">

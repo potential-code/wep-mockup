@@ -174,7 +174,7 @@ export function ExamPage() {
       ) : q ? (
         <section className="grid gap-4 rounded-2xl border bg-card p-5 shadow-card sm:p-6">
           <fieldset className="grid gap-3">
-            <legend className="mb-2 font-heading font-semibold text-lg text-navy">{q.text}</legend>
+            <legend className="mb-2 font-heading font-medium text-lg text-navy">{q.text}</legend>
             {q.options.map((opt, i) => (
               <label
                 key={opt}
@@ -186,7 +186,7 @@ export function ExamPage() {
                 <input
                   type="radio"
                   name={q.id}
-                  className="size-4 accent-[#167CB3]"
+                  className="size-4 accent-[#006fa8]"
                   checked={answers[q.id] === i}
                   onChange={() => pick(q.id, i)}
                 />

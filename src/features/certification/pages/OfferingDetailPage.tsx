@@ -160,7 +160,7 @@ export function OfferingDetailPage() {
               <dt>Other charges</dt>
               <dd>None</dd>
             </div>
-            <div className="flex justify-between border-t pt-2 font-heading font-semibold text-base text-navy">
+            <div className="flex justify-between border-t pt-2 font-heading font-medium text-base text-navy">
               <dt>Total</dt>
               <dd>{formatCurrency(o.price, o.currency)}</dd>
             </div>

@@ -124,12 +124,12 @@ export function OfferingCard({ row, index }: { row: OfferingRow; index: number }
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <WorkflowStatus status={status} />
-          <span className="font-heading font-semibold text-navy">
+          <span className="font-heading font-medium text-navy">
             {formatCurrency(o.price, o.currency)}
           </span>
         </div>
         <div className="grid gap-1.5">
-          <h2 className="font-heading font-semibold text-lg text-navy leading-snug">{o.title}</h2>
+          <h2 className="font-heading font-medium text-lg text-navy leading-snug">{o.title}</h2>
           <p className="text-muted-foreground text-sm">{o.focus}</p>
         </div>
         <ul className="grid gap-1.5 text-sm">

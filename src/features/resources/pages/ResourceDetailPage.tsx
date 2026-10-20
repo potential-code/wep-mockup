@@ -214,7 +214,7 @@ export function ResourceDetailPage() {
             <div className="mt-3 flex flex-wrap gap-2">
               <PrincipleTag id={r.principle} />
               {r.official ? (
-                <StatusBadge tone="gold" icon={null}>
+                <StatusBadge tone="coral" icon={null}>
                   Official WEPs content
                 </StatusBadge>
               ) : (

@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'motion/react'
 import { type MouseEvent, useEffect, useState } from 'react'
 import { SmoothScroll, scrollToTarget } from '@/components/motion/SmoothScroll'
-import { CornerArcs, DotGrid, ForAllBars } from '@/components/shared/BrandMotif'
+import { BrushRing, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { PartnerLogos, WepsLogo } from '@/components/shared/Logo'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 /** Header links scroll to sections of the home page rather than opening separate pages. */
 const NAV = [
   { label: 'About', hash: 'about' },
+  { label: 'Signatories', hash: 'signatories' },
   { label: 'Principles', hash: 'principles' },
   { label: 'Journey', hash: 'journey' },
   { label: 'Portal', hash: 'portal' },
@@ -83,36 +84,31 @@ function PublicHeader() {
   const active = useActiveSection(pathname === '/')
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu on navigation
   useEffect(() => setOpen(false), [pathname])
-  // Home has a dark hero: header starts transparent there.
-  const overHero = pathname === '/' && !compact
-
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        overHero
-          ? 'bg-transparent py-4'
-          : 'bg-navy/90 py-2.5 shadow-lg shadow-navy-900/25 backdrop-blur-xl',
+        'fixed inset-x-0 top-0 z-50 bg-black transition-all duration-300',
+        compact ? 'py-2.5 shadow-lg shadow-black/30' : 'py-4',
       )}
     >
       {pathname === '/' ? (
         <motion.div
           aria-hidden
           style={{ scaleX: progress }}
-          className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-gold via-[#f0cf8a] to-gold"
+          className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-coral via-cyan to-coral"
         />
       ) : null}
-      <div className="container-public flex items-center gap-6">
+      <div className="container-public flex max-w-[1360px] items-center gap-6">
         <Link
           to="/"
           className="shrink-0 rounded focus-visible:outline-white"
           aria-label="WEPs portal home"
         >
           <WepsLogo
-            className={cn('transition-all duration-300', compact ? 'h-6 sm:h-7' : 'h-7 sm:h-9')}
+            className={cn('transition-all duration-300', compact ? 'h-6 sm:h-7' : 'h-7 sm:h-8')}
           />
         </Link>
-        <nav aria-label="Main" className="isolate ms-auto hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="isolate ms-auto hidden items-center gap-0.5 xl:flex">
           {NAV.map((n) => (
             <a
               key={n.label}
@@ -120,7 +116,7 @@ function PublicHeader() {
               onClick={sectionLink(n.hash)}
               data-active={active === n.hash}
               aria-current={active === n.hash ? 'location' : undefined}
-              className="nav-link group px-2.5 py-2 font-medium xl:px-3.5 text-sm text-white/80 transition-colors duration-300 hover:text-white data-[active=true]:text-white"
+              className="nav-link group px-1.5 py-2 font-semibold text-[12.5px] uppercase tracking-[0.03em] text-white/90 transition-colors duration-300 hover:text-white data-[active=true]:text-white"
             >
               <span className="relative inline-block transition-transform duration-300 group-hover:-translate-y-px">
                 {n.label}
@@ -128,7 +124,7 @@ function PublicHeader() {
             </a>
           ))}
         </nav>
-        <div className="ms-auto flex items-center gap-2 lg:ms-2">
+        <div className="ms-auto flex items-center gap-2 xl:ms-2">
           <Button
             asChild
             variant="ghost"
@@ -136,7 +132,7 @@ function PublicHeader() {
           >
             <Link to="/sign-in">Sign in</Link>
           </Button>
-          <Button asChild variant="gold" className="group hidden rounded-full px-5 sm:inline-flex">
+          <Button asChild variant="coral" className="group hidden rounded-full px-5 sm:inline-flex">
             <Link to="/join">
               Join WEPs{' '}
               <ArrowRight
@@ -148,7 +144,7 @@ function PublicHeader() {
           <Button
             variant="ghost"
             size="icon"
-            className="text-white hover:bg-white/10 hover:text-white lg:hidden"
+            className="text-white hover:bg-white/10 hover:text-white xl:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -164,7 +160,7 @@ function PublicHeader() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-white/10 border-t bg-navy lg:hidden"
+            className="overflow-hidden border-white/10 border-t bg-black xl:hidden"
           >
             <div className="container-public grid gap-1 py-4">
               {NAV.map((n, i) => (
@@ -181,14 +177,14 @@ function PublicHeader() {
                   className="flex items-center justify-between rounded-lg px-3 py-3 font-medium text-white/90 hover:bg-white/10"
                 >
                   {n.label}
-                  <ArrowRight className="size-4 text-gold" aria-hidden />
+                  <ArrowRight className="size-4 text-coral-300" aria-hidden />
                 </motion.a>
               ))}
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <Button asChild variant="outline-light">
                   <Link to="/sign-in">Sign in</Link>
                 </Button>
-                <Button asChild variant="gold">
+                <Button asChild variant="coral">
                   <Link to="/join">Join WEPs</Link>
                 </Button>
               </div>
@@ -203,13 +199,13 @@ function PublicHeader() {
 function PublicFooter() {
   const sectionLink = useSectionLink()
   return (
-    <footer className="relative isolate overflow-hidden bg-navy-900 text-white/80">
-      <CornerArcs corner="tr" size={360} className="-z-10 opacity-70" />
+    <footer className="relative isolate overflow-hidden bg-black text-white/90">
+      <GearCluster size={300} className="-z-10 -top-10 -right-16 opacity-60" />
       <ForAllBars className="-bottom-16 -left-10 -z-10" size={260} />
-      <DotGrid className="-z-10 right-10 bottom-24 hidden md:block" cols={10} rows={4} />
+      <BrushRing size={220} className="-z-10 right-[30%] bottom-[-90px] hidden md:block" />
       <div
         aria-hidden
-        className="-z-10 absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent"
+        className="-z-10 absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-coral/60 to-transparent"
       />
       <div className="container-public grid gap-10 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="grid content-start gap-5">
@@ -221,13 +217,13 @@ function PublicFooter() {
           <PartnerLogos />
         </div>
         <div className="grid content-start gap-3 text-sm">
-          <p className="font-heading font-semibold text-white">Explore</p>
+          <p className="font-heading font-medium text-white">Explore</p>
           {NAV.map((n) => (
             <a
               key={n.hash}
               href={`/#${n.hash}`}
               onClick={sectionLink(n.hash)}
-              className="w-fit transition-all hover:translate-x-1 hover:text-gold"
+              className="w-fit transition-all hover:translate-x-1 hover:text-coral-300"
             >
               {n.label}
             </a>
@@ -242,22 +238,22 @@ function PublicFooter() {
           ]}
         />
         <div className="grid content-start gap-3 text-sm">
-          <p className="font-heading font-semibold text-white">Contact</p>
-          <a href={OFFICIAL_LINKS.contact} className="w-fit transition-colors hover:text-gold">
+          <p className="font-heading font-medium text-white">Contact</p>
+          <a href={OFFICIAL_LINKS.contact} className="w-fit transition-colors hover:text-coral-300">
             weps@unwomen.org
           </a>
           <a
             href={OFFICIAL_LINKS.about}
             target="_blank"
             rel="noreferrer"
-            className="w-fit transition-colors hover:text-gold"
+            className="w-fit transition-colors hover:text-coral-300"
           >
             Official site: weps.org
           </a>
         </div>
       </div>
       <div className="border-white/10 border-t">
-        <div className="container-public flex flex-wrap items-center justify-between gap-3 py-5 text-white/60 text-xs">
+        <div className="container-public flex flex-wrap items-center justify-between gap-3 py-5 text-white/75 text-xs">
           <p>
             Portal mockup · Proposed features and illustrative demo data for review. Not a live WEPs
             service.
@@ -266,10 +262,12 @@ function PublicFooter() {
             href="https://www.potential.com"
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex items-center gap-1 text-white/70 transition-colors hover:text-white"
+            className="group inline-flex items-center gap-1 text-white/90 transition-colors hover:text-white"
           >
             Powered by{' '}
-            <span className="font-semibold text-gold group-hover:underline">Potential.com</span>
+            <span className="font-semibold text-coral-300 group-hover:underline">
+              Potential.com
+            </span>
             <ArrowUpRight
               className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               aria-hidden
@@ -284,12 +282,12 @@ function PublicFooter() {
 function FooterCol({ title, links }: { title: string; links: { label: string; to: string }[] }) {
   return (
     <div className="grid content-start gap-3 text-sm">
-      <p className="font-heading font-semibold text-white">{title}</p>
+      <p className="font-heading font-medium text-white">{title}</p>
       {links.map((l) => (
         <Link
           key={l.label}
           to={l.to}
-          className="w-fit transition-all hover:translate-x-1 hover:text-gold"
+          className="w-fit transition-all hover:translate-x-1 hover:text-coral-300"
         >
           {l.label}
         </Link>

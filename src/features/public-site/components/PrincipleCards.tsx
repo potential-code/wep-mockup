@@ -2,7 +2,7 @@ import { OFFICIAL_LINKS, PRINCIPLES } from '@shared/reference'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { AnimatePresence, motion, useInView } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
-import { CornerArcs, DotGrid } from '@/components/shared/BrandMotif'
+import { GearCluster } from '@/components/shared/BrandMotif'
 import { Button } from '@/components/ui/button'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
 import { cn } from '@/lib/utils'
@@ -100,8 +100,8 @@ export function PrincipleCards() {
                 ) : null}
                 <span
                   className={cn(
-                    'relative font-bold font-heading text-sm tabular-nums transition-colors',
-                    active ? 'text-gold' : 'text-navy/35 group-hover:text-blue',
+                    'relative font-semibold font-heading text-sm tabular-nums transition-colors',
+                    active ? 'text-coral-300' : 'text-navy/35 group-hover:text-blue',
                   )}
                 >
                   0{item.id}
@@ -114,7 +114,7 @@ export function PrincipleCards() {
                     active ? 'scale-110' : 'group-hover:scale-105',
                   )}
                 />
-                <span className="relative whitespace-nowrap font-heading font-semibold lg:whitespace-normal">
+                <span className="relative whitespace-nowrap font-heading font-medium lg:whitespace-normal">
                   {item.short}
                 </span>
                 {active && running ? (
@@ -124,7 +124,7 @@ export function PrincipleCards() {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: DURATION / 1000, ease: 'linear' }}
-                    className="absolute inset-x-4 bottom-1.5 h-0.5 origin-left rounded-full bg-gold"
+                    className="absolute inset-x-4 bottom-1.5 h-0.5 origin-left rounded-full bg-coral"
                   />
                 ) : null}
               </button>
@@ -147,8 +147,7 @@ export function PrincipleCards() {
           transition={{ duration: 0.8 }}
           className="-z-10 -top-24 -right-24 absolute size-80 rounded-full opacity-30 blur-3xl"
         />
-        <CornerArcs corner="br" size={300} className="-z-10" />
-        <DotGrid className="-z-10 top-10 right-10" cols={6} rows={3} />
+        <GearCluster size={300} className="-z-10 -bottom-20 -right-20" />
         <AnimatePresence mode="wait" custom={dir} initial={false}>
           <motion.div
             key={p.id}
@@ -167,7 +166,7 @@ export function PrincipleCards() {
           >
             <span
               aria-hidden
-              className="-right-2 absolute bottom-0 font-bold font-heading text-[10rem] text-transparent leading-none [-webkit-text-stroke:1.5px_rgba(255,255,255,0.12)] sm:text-[14rem]"
+              className="-right-2 absolute bottom-0 font-medium font-heading text-[10rem] text-transparent leading-none [-webkit-text-stroke:1.5px_rgba(255,255,255,0.12)] sm:text-[14rem]"
             >
               {p.id}
             </span>
@@ -179,10 +178,10 @@ export function PrincipleCards() {
               transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}
               className="size-20 rounded-full shadow-[0_0_0_8px_rgba(255,255,255,0.06),0_12px_40px_-8px_rgba(0,0,0,0.6)] sm:size-24"
             />
-            <p className="mt-8 flex items-center gap-3 font-semibold text-gold text-xs uppercase tracking-[0.2em]">
-              <span aria-hidden className="h-px w-8 bg-gold" /> Principle {p.id} of 7
+            <p className="mt-8 flex items-center gap-3 font-semibold text-coral-300 text-xs uppercase tracking-[0.2em]">
+              <span aria-hidden className="h-px w-8 bg-coral" /> Principle {p.id} of 7
             </p>
-            <h3 className="mt-3 max-w-lg text-balance font-bold font-heading text-2xl leading-tight sm:text-3xl">
+            <h3 className="mt-3 max-w-lg text-balance font-medium font-heading text-2xl leading-tight sm:text-3xl">
               {p.title}
             </h3>
             <p className="mt-4 max-w-lg text-lg text-white/75 leading-relaxed">{p.description}</p>
@@ -190,9 +189,9 @@ export function PrincipleCards() {
               href={p.url}
               target="_blank"
               rel="noreferrer"
-              className="group mt-6 inline-flex w-fit items-center gap-1.5 font-medium text-gold"
+              className="group mt-6 inline-flex w-fit items-center gap-1.5 font-medium text-coral-300"
             >
-              <span className="bg-[length:0%_1px] bg-gradient-to-r bg-left-bottom bg-no-repeat from-gold to-gold pb-0.5 transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+              <span className="bg-[length:0%_1px] bg-gradient-to-r bg-left-bottom bg-no-repeat from-coral to-coral pb-0.5 transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
                 Official principle page
               </span>
               <ArrowUpRight
@@ -211,7 +210,7 @@ export function PrincipleCards() {
                 key={item.id}
                 className={cn(
                   'h-1.5 rounded-full transition-all duration-500',
-                  i === index ? 'w-8 bg-gold' : 'w-1.5 bg-white/25',
+                  i === index ? 'w-8 bg-coral' : 'w-1.5 bg-white/25',
                 )}
               />
             ))}
@@ -222,7 +221,7 @@ export function PrincipleCards() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setPaused((v) => !v)}
-                className="rounded-full text-white/70 hover:bg-white/10 hover:text-white"
+                className="rounded-full text-white/90 hover:bg-white/10 hover:text-white"
                 aria-label={paused ? 'Resume auto-play' : 'Pause auto-play'}
               >
                 {paused ? <Play aria-hidden /> : <Pause aria-hidden />}
@@ -238,7 +237,7 @@ export function PrincipleCards() {
               <ChevronLeft aria-hidden />
             </Button>
             <Button
-              variant="gold"
+              variant="coral"
               size="icon"
               onClick={() => go(index + 1)}
               className="rounded-full"

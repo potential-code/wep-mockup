@@ -109,7 +109,7 @@ export function MentorProfilePage() {
                   <p className="text-muted-foreground">{m.title}</p>
                   <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                     <span className="flex items-center gap-1">
-                      <Star className="size-4 fill-gold text-gold" aria-hidden />
+                      <Star className="size-4 fill-coral text-coral" aria-hidden />
                       <strong className="text-navy">{p.rating.toFixed(1)}</strong>
                       <span className="text-muted-foreground">
                         ({p.sessionsDelivered} sessions)

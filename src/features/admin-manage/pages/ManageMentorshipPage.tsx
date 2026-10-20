@@ -150,7 +150,7 @@ export function ManageMentorshipPage() {
         <StatCard
           label="Profiles awaiting approval"
           value={view.pending.length}
-          tone="gold"
+          tone="coral"
           icon={UsersRound}
         />
         <StatCard label="Open slots" value={data.slots.filter((s) => s.status === 'open').length} />

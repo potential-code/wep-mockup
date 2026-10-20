@@ -44,7 +44,7 @@ export function RulesTable() {
               </TableCell>
               <TableCell className="text-end">
                 <span
-                  className={`inline-flex rounded-full px-2.5 py-0.5 font-semibold tabular-nums ${r.amount < 0 ? 'bg-danger-soft text-danger' : 'bg-gold-50 text-gold-700'}`}
+                  className={`inline-flex rounded-full px-2.5 py-0.5 font-semibold tabular-nums ${r.amount < 0 ? 'bg-danger-soft text-danger' : 'bg-coral-50 text-coral-700'}`}
                 >
                   {r.amount > 0 ? '+' : '−'}
                   {Math.abs(r.amount)}

@@ -35,12 +35,12 @@ function Group({
     >
       <span
         aria-hidden
-        className="absolute inset-y-0 left-0 w-1 bg-[linear-gradient(180deg,var(--gold),var(--blue))]"
+        className="absolute inset-y-0 left-0 w-1 bg-[linear-gradient(180deg,var(--coral),var(--blue))]"
       />
       <div className="flex items-center justify-between gap-3 border-b bg-[linear-gradient(100deg,var(--blue-50),#fff_65%)] py-3 ps-5 pe-3 sm:ps-6">
         <h3
           id={`rv-${step}`}
-          className="flex items-center gap-3 font-heading font-semibold text-navy"
+          className="flex items-center gap-3 font-heading font-medium text-navy"
         >
           <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-white text-blue shadow-[var(--shadow-field)] ring-1 ring-blue-100">
             <Icon className="size-4" aria-hidden />
@@ -137,7 +137,7 @@ export function ReviewStep({
             <CheckCircle2 className="size-5" aria-hidden />
           </span>
           <div>
-            <p className="font-heading font-semibold text-navy">
+            <p className="font-heading font-medium text-navy">
               Everything required is complete. Review and submit.
             </p>
             <p className="text-muted-foreground text-xs">

@@ -45,7 +45,7 @@ export function ManageCommunityPage() {
           <TabsTrigger value="listings">
             Listings review
             {queue.data?.length ? (
-              <span className="ms-1.5 rounded-full bg-gold px-1.5 text-[11px] text-navy">
+              <span className="ms-1.5 rounded-full bg-coral-600 px-1.5 text-[11px] text-white">
                 {queue.data.length}
               </span>
             ) : null}
@@ -353,7 +353,7 @@ function Listings() {
   return (
     <div className="grid gap-8">
       <section aria-labelledby="queue">
-        <h2 id="queue" className="mb-1 font-heading font-semibold text-lg text-navy">
+        <h2 id="queue" className="mb-1 font-heading font-medium text-lg text-navy">
           Review queue
         </h2>
         <p className="mb-3 text-muted-foreground text-sm">
@@ -370,7 +370,7 @@ function Listings() {
         />
       </section>
       <section aria-labelledby="all">
-        <h2 id="all" className="mb-3 font-heading font-semibold text-lg text-navy">
+        <h2 id="all" className="mb-3 font-heading font-medium text-lg text-navy">
           All listings
         </h2>
         <DataTable

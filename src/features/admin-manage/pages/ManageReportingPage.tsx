@@ -92,7 +92,11 @@ export function ManageReportingPage() {
       />
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard label="Reporting year" value={String(year)} icon={CalendarClock} />
-        <StatCard label="Deadline" value={formatDate(data.settings.reportingDueDate)} tone="gold" />
+        <StatCard
+          label="Deadline"
+          value={formatDate(data.settings.reportingDueDate)}
+          tone="coral"
+        />
         <StatCard
           label="Submitted or accepted"
           value={`${stats.submitted} / ${stats.total}`}

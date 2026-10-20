@@ -43,19 +43,19 @@ export function CourseTopCard({
           className="aspect-video w-full rounded-xl object-cover shadow-lift ring-1 ring-white/15"
         />
         <div className="grid min-w-0 gap-2.5">
-          <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-gold/50 bg-white/5 px-3 py-1 font-semibold text-[0.7rem] text-gold uppercase tracking-[0.16em]">
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-coral/50 bg-white/5 px-3 py-1 font-semibold text-[0.7rem] text-coral-300 uppercase tracking-[0.16em]">
             <Sparkles className="size-3" aria-hidden />
             {DIFFICULTY_LABEL[course.difficulty ?? 'beginner']}
           </span>
-          <h1 className="text-balance font-bold font-heading text-2xl leading-tight sm:text-4xl">
+          <h1 className="text-balance font-medium font-heading text-2xl leading-tight sm:text-4xl">
             {course.title}
           </h1>
-          <p className="truncate text-sm text-white/70">
+          <p className="truncate text-sm text-white/90">
             Now: <span className="font-medium text-white">{now}</span>
           </p>
           <div className="mt-1 grid gap-1.5">
             <div className="flex items-center justify-between font-semibold text-[0.7rem] uppercase tracking-[0.16em]">
-              <span className="text-white/70">Progress</span>
+              <span className="text-white/90">Progress</span>
               <span className="text-sm tabular-nums">{percent}%</span>
             </div>
             <div
@@ -67,7 +67,7 @@ export function CourseTopCard({
               className="h-2 overflow-hidden rounded-full bg-white/15"
             >
               <div
-                className="h-full rounded-full bg-gradient-to-r from-gold to-[#e6bd6c] transition-[width] duration-700"
+                className="h-full rounded-full bg-gradient-to-r from-coral to-[#ff8f85] transition-[width] duration-700"
                 style={{ width: `${percent}%` }}
               />
             </div>
@@ -87,7 +87,7 @@ export function ContentPanel({
   children,
 }: {
   chip: string
-  chipTone?: 'blue' | 'gold' | 'navy'
+  chipTone?: 'blue' | 'coral' | 'navy'
   title: string
   summary?: string
   children: ReactNode
@@ -101,14 +101,14 @@ export function ContentPanel({
         <span
           className={cn(
             'w-fit rounded-full px-2.5 py-1 font-semibold text-[0.65rem] uppercase tracking-[0.16em]',
-            chipTone === 'gold' && 'bg-gold-50 text-gold-700',
+            chipTone === 'coral' && 'bg-coral-50 text-coral-700',
             chipTone === 'blue' && 'bg-blue-50 text-blue-600',
             chipTone === 'navy' && 'bg-navy/5 text-navy',
           )}
         >
           {chip}
         </span>
-        <h2 id="item-title" className="font-heading font-semibold text-navy text-xl sm:text-2xl">
+        <h2 id="item-title" className="font-heading font-medium text-navy text-xl sm:text-2xl">
           {title}
         </h2>
         {summary ? <p className="text-muted-foreground">{summary}</p> : null}
@@ -121,7 +121,7 @@ export function ContentPanel({
 function TestStat({ value, label }: { value: ReactNode; label: string }) {
   return (
     <div className="grid justify-items-center gap-0.5 rounded-xl border bg-surface/50 px-2 py-3 text-center">
-      <span className="font-bold font-heading text-lg text-navy tabular-nums">{value}</span>
+      <span className="font-semibold font-heading text-lg text-navy tabular-nums">{value}</span>
       <span className="text-muted-foreground text-xs">{label}</span>
     </div>
   )
@@ -267,7 +267,7 @@ export function OverviewBody({
       <p className="max-w-prose text-pretty leading-relaxed">{course.description}</p>
       {course.outcomes.length ? (
         <div className="grid gap-2">
-          <h3 className="font-heading font-semibold text-navy">What you will be able to do</h3>
+          <h3 className="font-heading font-medium text-navy">What you will be able to do</h3>
           <ul className="grid gap-1.5 text-sm">
             {course.outcomes.map((o) => (
               <li key={o} className="flex items-start gap-2">
@@ -284,7 +284,7 @@ export function OverviewBody({
         <li className="flex items-center gap-2 rounded-xl border bg-surface/50 px-3 py-2.5 text-sm">
           <Layers className="size-4 text-blue" aria-hidden /> {unitsOf(course).length} units
         </li>
-        <li className="flex items-center gap-2 rounded-xl border border-gold/30 bg-gold-50/60 px-3 py-2.5 font-medium text-gold-700 text-sm">
+        <li className="flex items-center gap-2 rounded-xl border border-coral/30 bg-coral-50/60 px-3 py-2.5 font-medium text-coral-700 text-sm">
           <Sparkles className="size-4" aria-hidden /> {coursePoints(course, designated)} points
         </li>
       </ul>

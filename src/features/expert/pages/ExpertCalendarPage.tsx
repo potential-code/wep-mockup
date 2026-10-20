@@ -92,7 +92,7 @@ export function ExpertCalendarPage() {
           >
             Today
           </Button>
-          <h2 className="ms-2 font-heading font-semibold text-lg text-navy" aria-live="polite">
+          <h2 className="ms-2 font-heading font-medium text-lg text-navy" aria-live="polite">
             {title}
           </h2>
         </div>
@@ -120,7 +120,7 @@ export function ExpertCalendarPage() {
                   d === TODAY && 'border-blue ring-1 ring-blue/30',
                 )}
               >
-                <h3 className="font-semibold text-navy text-sm">
+                <h3 className="font-medium text-navy text-sm">
                   {dayLabel(d, { weekday: 'short', day: 'numeric', month: 'short' })}
                   {d === TODAY ? <span className="ms-1 text-blue text-xs">Today</span> : null}
                 </h3>
@@ -173,7 +173,7 @@ export function ExpertCalendarPage() {
 
       {view === 'month' ? (
         <section className="mt-6" aria-label="Selected day">
-          <h2 className="mb-3 font-heading font-semibold text-lg text-navy">
+          <h2 className="mb-3 font-heading font-medium text-lg text-navy">
             {dayLabel(selected, { weekday: 'long', day: 'numeric', month: 'long' })}
           </h2>
           {selectedItems.length === 0 ? (
@@ -188,7 +188,7 @@ export function ExpertCalendarPage() {
         </section>
       ) : selectedItems.length > 0 ? (
         <section className="mt-6" aria-label="Selected day">
-          <h2 className="mb-3 font-heading font-semibold text-lg text-navy">
+          <h2 className="mb-3 font-heading font-medium text-lg text-navy">
             {dayLabel(selected, { weekday: 'long', day: 'numeric', month: 'long' })}
           </h2>
           <div className="grid gap-3 md:grid-cols-2">

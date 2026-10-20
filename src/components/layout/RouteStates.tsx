@@ -30,7 +30,7 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
   return (
     <main id="main" className="grid min-h-[60vh] place-items-center px-4 text-center">
       <div className="grid max-w-md justify-items-center gap-3">
-        <h1 className="font-heading font-semibold text-2xl text-navy">Something went wrong</h1>
+        <h1 className="font-heading font-medium text-2xl text-navy">Something went wrong</h1>
         <p className="text-muted-foreground">
           {error instanceof Error ? error.message : 'Unexpected error'}
         </p>

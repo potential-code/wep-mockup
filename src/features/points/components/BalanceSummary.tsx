@@ -51,8 +51,8 @@ export function LevelRing({ lifetime, size = 'lg' }: { lifetime: number; size?: 
         />
         <defs>
           <linearGradient id={gradient} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#f3dfb2" />
-            <stop offset="1" stopColor="#d6a44a" />
+            <stop offset="0" stopColor="#fcd9d6" />
+            <stop offset="1" stopColor="#F0493E" />
           </linearGradient>
         </defs>
       </svg>
@@ -84,7 +84,7 @@ function Tile({
         className,
       )}
     >
-      <dt className="flex items-center gap-2 font-medium text-sm text-white/80">
+      <dt className="flex items-center gap-2 font-medium text-sm text-white/90">
         {icon}
         {label}
       </dt>
@@ -109,7 +109,7 @@ export function BalanceSummary({ balance }: { balance: PointsBalance }) {
         {/* Decorative glow and concentric rings. */}
         <span
           aria-hidden
-          className="-top-24 -left-16 -z-10 absolute size-96 rounded-full bg-[radial-gradient(circle,rgba(214,164,74,0.28),transparent_65%)]"
+          className="-top-24 -left-16 -z-10 absolute size-96 rounded-full bg-[radial-gradient(circle,rgba(240,73,62,0.28),transparent_65%)]"
         />
         <svg
           aria-hidden
@@ -140,11 +140,11 @@ export function BalanceSummary({ balance }: { balance: PointsBalance }) {
               <LevelRing lifetime={balance.lifetime} />
             </motion.div>
             <div className="grid min-w-0 gap-2">
-              <span className="mx-auto w-fit rounded-full bg-gold/20 px-3 py-1 font-semibold text-[0.65rem] text-gold-50 uppercase tracking-[0.2em] ring-1 ring-gold/40 sm:mx-0">
+              <span className="mx-auto w-fit rounded-full bg-coral/20 px-3 py-1 font-semibold text-[0.65rem] text-coral-50 uppercase tracking-[0.2em] ring-1 ring-coral/40 sm:mx-0">
                 Level {index + 1} of {LEVELS.length} · {level.name}
               </span>
               <p className="text-sm text-white/75">Lifetime points</p>
-              <p className="font-bold font-heading text-6xl leading-none tabular-nums sm:text-7xl">
+              <p className="font-semibold font-heading text-6xl leading-none tabular-nums sm:text-7xl">
                 <CountUp value={balance.lifetime} />
               </p>
               <p className="max-w-sm text-sm text-white/75">
@@ -161,23 +161,23 @@ export function BalanceSummary({ balance }: { balance: PointsBalance }) {
 
           <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <Tile
-              icon={<Wallet className="size-4 text-[#cfe6f3]" aria-hidden />}
+              icon={<Wallet className="size-4 text-[#c6ebfa]" aria-hidden />}
               label="Redeemable points"
             >
-              <dd className="font-bold font-heading text-3xl tabular-nums">
+              <dd className="font-semibold font-heading text-3xl tabular-nums">
                 <CountUp value={balance.redeemable} />
               </dd>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white/90">
                 Spend on rewards, such as mentoring ({DEMO_RULES.mentorSessionCost} points).
               </p>
             </Tile>
             <Tile
-              icon={<GraduationCap className="size-4 text-gold" aria-hidden />}
+              icon={<GraduationCap className="size-4 text-coral" aria-hidden />}
               label="Qualifying learning points"
             >
-              <dd className="font-bold font-heading text-3xl tabular-nums">
+              <dd className="font-semibold font-heading text-3xl tabular-nums">
                 {balance.qualifying}
-                <span className="font-medium text-base text-white/60"> / {target}</span>
+                <span className="font-medium text-base text-white/75"> / {target}</span>
               </dd>
               <div
                 className="h-2 overflow-hidden rounded-full bg-white/15"
@@ -188,7 +188,7 @@ export function BalanceSummary({ balance }: { balance: PointsBalance }) {
                 aria-valuenow={balance.qualifying}
               >
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-[#f3dfb2] to-gold"
+                  className="h-full rounded-full bg-gradient-to-r from-[#fcd9d6] to-coral"
                   initial={reduce ? false : { scaleX: 0 }}
                   whileInView={{ scaleX: qPct / 100 }}
                   viewport={{ once: true }}
@@ -196,7 +196,7 @@ export function BalanceSummary({ balance }: { balance: PointsBalance }) {
                   style={{ originX: 0, scaleX: reduce ? qPct / 100 : undefined }}
                 />
               </div>
-              <p className="text-sm text-white/70">Spending never reduces clinic access.</p>
+              <p className="text-sm text-white/90">Spending never reduces clinic access.</p>
             </Tile>
           </dl>
         </div>

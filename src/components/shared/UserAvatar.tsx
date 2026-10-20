@@ -44,7 +44,7 @@ export function CompanyLogo({
   ) : (
     <span
       className={cn(
-        'grid size-12 place-items-center rounded-xl bg-secondary font-heading font-bold text-navy',
+        'grid size-12 place-items-center rounded-xl bg-secondary font-heading font-medium text-navy',
         className,
       )}
       aria-hidden

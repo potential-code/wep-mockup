@@ -7,7 +7,7 @@ import { motion } from 'motion/react'
 import { AppTopBar } from '@/components/layout/AppTopBar'
 import { DemoControls } from '@/components/layout/DemoControls'
 import { PageTransition } from '@/components/motion/PageTransition'
-import { CornerArcs, DotGrid, ForAllBars } from '@/components/shared/BrandMotif'
+import { ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { WepsLogo } from '@/components/shared/Logo'
 import { AccessNotice, PageSkeleton } from '@/components/shared/States'
 import { CompanyLogo } from '@/components/shared/UserAvatar'
@@ -138,12 +138,12 @@ function AppSidebar() {
       <SidebarHeader className="relative px-5 pt-6 pb-4">
         <Link
           to={homeFor(user)}
-          className="block rounded-md focus-visible:outline-gold"
+          className="block rounded-md focus-visible:outline-cyan-300"
           onClick={() => setOpenMobile(false)}
         >
           <WepsLogo className="h-auto w-[172px] max-w-full sm:h-auto" />
         </Link>
-        <p className="mt-3 truncate font-medium text-[10px] text-white/50 uppercase tracking-[0.16em]">
+        <p className="mt-3 truncate font-medium text-[10px] text-white/75 uppercase tracking-[0.16em]">
           {user.role === 'global_admin'
             ? 'UN Women workspace'
             : user.role === 'mentor'
@@ -170,15 +170,15 @@ function AppSidebar() {
                       transition={
                         reduced ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 36 }
                       }
-                      className="pointer-events-none absolute inset-0 rounded-md bg-[linear-gradient(90deg,rgb(214_164_74/0.22),rgb(255_255_255/0.08)_45%,rgb(255_255_255/0.04))] shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_6px_16px_-8px_rgb(0_0_0/0.5)] ring-1 ring-white/10"
+                      className="pointer-events-none absolute inset-0 rounded-md bg-[linear-gradient(90deg,rgb(240_73_62/0.22),rgb(255_255_255/0.08)_45%,rgb(255_255_255/0.04))] shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_6px_16px_-8px_rgb(0_0_0/0.5)] ring-1 ring-white/10"
                     >
-                      <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-gold shadow-[0_0_10px_var(--gold)]" />
+                      <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-coral shadow-[0_0_10px_var(--coral)]" />
                     </motion.span>
                   ) : null}
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item)}
-                    className="group/nav relative h-9 text-white/75 transition-[background-color,color,width,height,padding] duration-200 hover:bg-white/[0.07] hover:text-white data-[active=true]:bg-transparent data-[active=true]:font-semibold data-[active=true]:text-white [&>span]:transition-transform [&>span]:duration-300 [&>svg]:transition-[transform,color] [&>svg]:duration-300 hover:[&>span]:translate-x-0.5 hover:[&>svg]:translate-x-0.5 hover:[&>svg]:scale-110 hover:[&>svg]:text-gold data-[active=true]:[&>svg]:text-gold motion-reduce:hover:[&>span]:translate-x-0 motion-reduce:hover:[&>svg]:transform-none"
+                    className="group/nav relative h-9 text-white/75 transition-[background-color,color,width,height,padding] duration-200 hover:bg-white/[0.07] hover:text-white data-[active=true]:bg-transparent data-[active=true]:font-semibold data-[active=true]:text-white [&>span]:transition-transform [&>span]:duration-300 [&>svg]:transition-[transform,color] [&>svg]:duration-300 hover:[&>span]:translate-x-0.5 hover:[&>svg]:translate-x-0.5 hover:[&>svg]:scale-110 hover:[&>svg]:text-coral-300 data-[active=true]:[&>svg]:text-coral-300 motion-reduce:hover:[&>span]:translate-x-0 motion-reduce:hover:[&>svg]:transform-none"
                   >
                     <Link
                       to={item.to}
@@ -196,7 +196,7 @@ function AppSidebar() {
           return (
             <SidebarGroup key={g.section ?? g.label ?? i} className={g.section ? '' : 'py-1'}>
               {g.section ? (
-                <SidebarGroupLabel className="text-[11px] text-gold uppercase tracking-[0.12em]">
+                <SidebarGroupLabel className="text-[11px] text-cyan-300 uppercase tracking-[0.12em]">
                   {g.section}
                 </SidebarGroupLabel>
               ) : null}
@@ -205,9 +205,9 @@ function AppSidebar() {
                   defaultOpen={g.defaultOpen || g.items.some(isActive)}
                   className="group/collapsible"
                 >
-                  <CollapsibleTrigger className="flex h-8 w-full items-center gap-2 rounded-md px-2 font-medium text-white/60 text-xs uppercase tracking-[0.08em] hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-gold">
+                  <CollapsibleTrigger className="flex h-8 w-full items-center gap-2 rounded-md px-2 font-medium text-white/75 text-xs uppercase tracking-[0.08em] hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-cyan-300">
                     <span className="flex-1 text-left">{g.label}</span>
-                    <span className="rounded-full bg-white/10 px-1.5 text-[10px] text-white/70 tabular-nums">
+                    <span className="rounded-full bg-white/10 px-1.5 text-[10px] text-white/90 tabular-nums">
                       {g.items.length}
                     </span>
                     <ChevronDown
@@ -222,7 +222,7 @@ function AppSidebar() {
               ) : (
                 <>
                   {g.label ? (
-                    <SidebarGroupLabel className="text-[11px] text-gold uppercase tracking-[0.12em]">
+                    <SidebarGroupLabel className="text-[11px] text-cyan-300 uppercase tracking-[0.12em]">
                       {g.label}
                     </SidebarGroupLabel>
                   ) : null}
@@ -243,7 +243,7 @@ function AppSidebar() {
             <CompanyLogo name={company.name} src={company.logo} className="size-9 rounded-lg" />
             <div className="min-w-0">
               <p className="truncate font-semibold text-sm text-white">{company.name}</p>
-              <p className="truncate text-white/60 text-xs">
+              <p className="truncate text-white/75 text-xs">
                 {company.signatoryStatus === 'approved'
                   ? 'WEPs signatory'
                   : 'Application in progress'}
@@ -261,10 +261,9 @@ function AppSidebar() {
 function SidebarMotifs() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(120%_40%_at_100%_0%,rgb(22_124_179/0.28),transparent_60%),radial-gradient(90%_35%_at_0%_100%,rgb(214_164_74/0.12),transparent_70%),linear-gradient(180deg,var(--navy)_0%,var(--navy-900)_100%)]" />
-      <ForAllBars size={170} className="-right-20 bottom-[22%] opacity-50" />
-      <DotGrid cols={5} rows={3} className="top-3 right-2 opacity-30" />
-      <CornerArcs corner="bl" size={240} className="opacity-60" />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_40%_at_100%_0%,rgb(0_163_224/0.3),transparent_60%),radial-gradient(90%_35%_at_0%_100%,rgb(240_73_62/0.1),transparent_70%),linear-gradient(180deg,var(--navy)_0%,var(--navy-900)_100%)]" />
+      <ForAllBars size={150} className="-right-20 bottom-[9%] opacity-40" />
+      <GearCluster size={220} className="-bottom-12 -left-16 opacity-40" />
     </div>
   )
 }

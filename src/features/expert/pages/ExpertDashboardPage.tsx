@@ -44,7 +44,7 @@ export function ExpertDashboardPage() {
     <div>
       <PageHeader title={`Welcome back, ${user?.firstName ?? ''}`} />
       {pending ? (
-        <p role="status" className="mb-6 rounded-xl border border-gold/40 bg-gold-50 p-4 text-sm">
+        <p role="status" className="mb-6 rounded-xl border border-coral/40 bg-coral-50 p-4 text-sm">
           Your profile changes are awaiting UN Women approval.{' '}
           <Link to="/expert/profile" className="font-medium underline">
             View profile
@@ -78,7 +78,7 @@ export function ExpertDashboardPage() {
             label="Follow-up tasks"
             value={d.followUps}
             icon={ClipboardCheck}
-            tone="gold"
+            tone="coral"
             hint="Completed sessions to close out"
           />
         </StaggerItem>

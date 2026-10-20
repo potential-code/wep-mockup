@@ -30,7 +30,7 @@ export function ScheduleItemCard({
             )}
             {item.format}
           </p>
-          <h3 className="line-clamp-2 font-semibold text-navy">{item.title}</h3>
+          <h3 className="line-clamp-2 font-medium text-navy">{item.title}</h3>
           <p className="text-muted-foreground text-sm">{item.who}</p>
         </div>
         <WorkflowStatus status={item.status} />

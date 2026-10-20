@@ -26,7 +26,7 @@ export function KpiTile({
   to: string
   search: Record<string, unknown>
   progress?: number
-  tone?: 'blue' | 'navy' | 'gold' | 'success' | 'danger'
+  tone?: 'blue' | 'navy' | 'coral' | 'success' | 'danger'
 }) {
   return (
     <StatCard

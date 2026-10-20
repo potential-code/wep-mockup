@@ -26,7 +26,7 @@ export function ThreadCard({ view, isAdmin }: { view: ThreadView; isAdmin: boole
       >
         <div className="mb-2 flex flex-wrap items-center gap-2 text-xs">
           {t.isAnnouncement ? (
-            <StatusBadge tone="gold" icon={Pin}>
+            <StatusBadge tone="coral" icon={Pin}>
               UN Women announcement
             </StatusBadge>
           ) : t.pinned ? (
@@ -41,7 +41,7 @@ export function ThreadCard({ view, isAdmin }: { view: ThreadView; isAdmin: boole
             <StatusBadge tone="danger">Hidden (admin view)</StatusBadge>
           ) : null}
         </div>
-        <h3 className="font-heading font-semibold text-base text-navy leading-snug">{t.title}</h3>
+        <h3 className="font-heading font-medium text-base text-navy leading-snug">{t.title}</h3>
         <p className="mt-1 line-clamp-2 text-muted-foreground text-sm">{t.body}</p>
         {t.status === 'flagged' && isAdmin ? (
           <p className="mt-2 flex items-center gap-1.5 text-warning text-xs">

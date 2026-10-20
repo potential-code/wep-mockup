@@ -239,9 +239,9 @@ export function ResourcesPage() {
               <section aria-labelledby="featured-h">
                 <h2
                   id="featured-h"
-                  className="mb-3 flex items-center gap-2 font-heading font-semibold text-lg text-navy"
+                  className="mb-3 flex items-center gap-2 font-heading font-medium text-lg text-navy"
                 >
-                  <Star className="size-5 text-gold" aria-hidden /> Featured
+                  <Star className="size-5 text-coral" aria-hidden /> Featured
                 </h2>
                 <div className="grid gap-4 md:grid-cols-3">
                   {featured.map((r) => (
@@ -257,10 +257,10 @@ export function ResourcesPage() {
                         className="-z-20 absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <span className="-z-10 absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/70 to-navy-900/10" />
-                      <span className="text-gold text-xs uppercase tracking-wide">
+                      <span className="text-coral-300 text-xs uppercase tracking-wide">
                         {r.official ? 'Official WEPs' : r.topic} · {FORMAT_META[r.format].label}
                       </span>
-                      <span className="font-heading font-semibold text-lg leading-snug">
+                      <span className="font-heading font-medium text-lg leading-snug">
                         {r.title}
                       </span>
                     </Link>
@@ -288,7 +288,7 @@ export function ResourcesPage() {
           ) : null}
 
           <section aria-labelledby="all-h">
-            <h2 id="all-h" className="mb-3 font-heading font-semibold text-lg text-navy">
+            <h2 id="all-h" className="mb-3 font-heading font-medium text-lg text-navy">
               {filtering ? 'Results' : 'All resources'}{' '}
               <span className="font-normal text-muted-foreground text-sm" aria-live="polite">
                 ({filtered.length})

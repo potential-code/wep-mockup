@@ -33,7 +33,7 @@ export function SuccessScreen({ application }: { application: Application }) {
     >
       <span
         aria-hidden
-        className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--gold),var(--blue)_45%,var(--navy))]"
+        className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--coral),var(--blue)_45%,var(--navy))]"
       />
       <div
         aria-hidden
@@ -57,7 +57,7 @@ export function SuccessScreen({ application }: { application: Application }) {
             <CheckCircle2 className="size-10" aria-hidden />
           </motion.span>
         </span>
-        <h2 className="font-bold font-heading text-3xl text-navy">Application submitted</h2>
+        <h2 className="font-medium font-heading text-3xl text-navy">Application submitted</h2>
         <p className="max-w-lg text-muted-foreground">
           Thank you, {application.data.company.name}. Your commitment to the Women’s Empowerment
           Principles is now with UN Women for review.
@@ -66,7 +66,7 @@ export function SuccessScreen({ application }: { application: Application }) {
       <dl className="relative mx-auto mt-8 grid max-w-2xl gap-4 rounded-2xl border border-blue-100/80 bg-[linear-gradient(160deg,var(--blue-50),var(--surface))] p-5 sm:grid-cols-3">
         <div>
           <dt className="text-muted-foreground text-xs">Application reference</dt>
-          <dd className="font-heading font-semibold text-navy">{application.reference}</dd>
+          <dd className="font-heading font-medium text-navy">{application.reference}</dd>
         </div>
         <div>
           <dt className="text-muted-foreground text-xs">Submitted</dt>
@@ -79,7 +79,7 @@ export function SuccessScreen({ application }: { application: Application }) {
           </dd>
         </div>
       </dl>
-      <h3 className="mt-8 mb-3 text-center font-heading font-semibold text-navy">
+      <h3 className="mt-8 mb-3 text-center font-heading font-medium text-navy">
         What happens next
       </h3>
       <ol className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
@@ -96,7 +96,7 @@ export function SuccessScreen({ application }: { application: Application }) {
               <span className="grid size-9 place-items-center rounded-lg bg-blue-50 text-blue ring-1 ring-blue/15">
                 <n.icon className="size-4" aria-hidden />
               </span>
-              <span className="font-bold font-heading text-2xl text-navy/10">0{i + 1}</span>
+              <span className="font-medium font-heading text-2xl text-navy/10">0{i + 1}</span>
             </span>
             <p className="font-semibold text-navy">{n.title}</p>
             <p className="text-muted-foreground">{n.text}</p>
@@ -104,8 +104,8 @@ export function SuccessScreen({ application }: { application: Application }) {
         ))}
       </ol>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Button asChild size="lg" variant="gloss-blue">
-          <Link to="/application-status">
+        <Button asChild size="lg" variant="coral">
+          <Link to="/application-status" search={{ ref: application.reference }}>
             Track my application <ArrowRight aria-hidden />
           </Link>
         </Button>

@@ -76,7 +76,7 @@ export function VideoLesson({ lesson, poster }: { lesson: Lesson; poster: string
             aria-valuemax={100}
             className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/30"
           >
-            <div className="h-full rounded-full bg-gold" style={{ width: `${pct}%` }} />
+            <div className="h-full rounded-full bg-coral" style={{ width: `${pct}%` }} />
           </div>
           <span className="tabular-nums">{clock(total)}</span>
         </div>

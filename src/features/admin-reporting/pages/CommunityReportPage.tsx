@@ -163,7 +163,7 @@ export function CommunityReportPage() {
             {view === 'listings' ? (
               <section className="grid gap-3">
                 <div className="flex items-center gap-1">
-                  <h2 className="font-heading font-semibold text-lg text-navy">
+                  <h2 className="font-heading font-medium text-lg text-navy">
                     Views and outbound clicks
                   </h2>
                   <MetricInfo metric="listing_engagement" />

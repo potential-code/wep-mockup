@@ -77,10 +77,10 @@ export function SectionHeading({
             variants={eyebrowV}
             className={cn(
               'flex items-center gap-3 font-semibold text-xs uppercase tracking-[0.2em]',
-              dark ? 'text-gold' : 'text-blue',
+              dark ? 'text-white/90' : 'text-blue',
             )}
           >
-            <motion.span aria-hidden variants={lineV} className="h-px w-8 origin-left bg-gold" />
+            <motion.span aria-hidden variants={lineV} className="h-px w-8 origin-left bg-coral" />
             {eyebrow}
           </motion.p>
         ) : null}
@@ -88,8 +88,8 @@ export function SectionHeading({
           id={id}
           variants={words}
           className={cn(
-            'text-balance font-bold font-heading text-3xl leading-[1.12] sm:text-[2.6rem]',
-            dark ? 'text-white' : 'text-navy',
+            'text-balance font-heading font-medium text-3xl leading-[1.15] sm:text-[2.6rem]',
+            dark ? 'text-white' : 'text-cyan-600',
           )}
           aria-label={title}
         >
@@ -107,10 +107,7 @@ export function SectionHeading({
         {description ? (
           <motion.p
             variants={fadeUp}
-            className={cn(
-              'text-lg leading-relaxed',
-              dark ? 'text-white/70' : 'text-muted-foreground',
-            )}
+            className={cn('text-lg leading-relaxed', dark ? 'text-white/85' : 'text-navy/85')}
           >
             {description}
           </motion.p>

@@ -176,8 +176,8 @@ export function SubmitListingPage() {
         description="UN Women reviews every listing before it is published. Approval is publication permission, not endorsement."
       />
       {live ? (
-        <p className="flex items-start gap-2 rounded-xl border border-gold/40 bg-gold-50 p-3 text-sm">
-          <Info className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden />
+        <p className="flex items-start gap-2 rounded-xl border border-coral/40 bg-coral-50 p-3 text-sm">
+          <Info className="mt-0.5 size-4 shrink-0 text-coral-700" aria-hidden />
           This listing is published. Your changes create a revision for review: the current version
           stays live until approved.
         </p>
@@ -439,7 +439,7 @@ export function SubmitListingPage() {
           </div>
         </form>
         <aside className="grid gap-3 lg:sticky lg:top-4 lg:col-span-2" aria-label="Preview">
-          <h2 className="font-heading font-semibold text-navy">Preview</h2>
+          <h2 className="font-heading font-medium text-navy">Preview</h2>
           <ListingCard
             to={false}
             data={{

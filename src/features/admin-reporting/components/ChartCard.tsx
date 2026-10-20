@@ -41,7 +41,7 @@ export function ChartCard({
       <CardHeaderBand className="gap-2 px-5">
         <div className="grid min-w-0 gap-1">
           <div className="flex items-center gap-1">
-            <h3 className="font-heading font-semibold text-navy">{title}</h3>
+            <h3 className="font-heading font-medium text-navy">{title}</h3>
             {metric ? <MetricInfo metric={metric} /> : null}
           </div>
           {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}

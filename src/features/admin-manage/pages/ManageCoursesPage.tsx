@@ -307,7 +307,7 @@ function CourseTile({
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <h2 className="font-heading font-semibold text-navy leading-snug">
+        <h2 className="font-heading font-medium text-navy leading-snug">
           <Link
             to="/admin/manage/courses/$courseId"
             params={{ courseId: c.id }}
@@ -328,7 +328,7 @@ function CourseTile({
           <StatusBadge tone="info" icon={null}>
             {DIFFICULTY_LABEL[c.difficulty ?? 'beginner']}
           </StatusBadge>
-          <StatusBadge tone="gold" icon={null}>
+          <StatusBadge tone="coral" icon={null}>
             P{c.principle}
           </StatusBadge>
           <div className="relative z-10 ms-auto flex items-center">

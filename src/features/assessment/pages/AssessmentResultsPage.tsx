@@ -55,11 +55,11 @@ export function AssessmentResultsPage() {
               ['In the action plan', inPlan],
               ['Evidence files', evidenceFiles],
             ].map(([l, v], i) => {
-              const t = STAT_TONES[(['navy', 'blue', 'gold', 'success'] as const)[i % 4] ?? 'navy']
+              const t = STAT_TONES[(['navy', 'blue', 'coral', 'success'] as const)[i % 4] ?? 'navy']
               return (
                 <div key={l} className={cn('rounded-2xl p-4 shadow-card', t.surface, t.text)}>
                   <dt className={cn('text-xs', t.muted)}>{l}</dt>
-                  <dd className="font-bold font-heading text-2xl tabular-nums">{v}</dd>
+                  <dd className="font-semibold font-heading text-2xl tabular-nums">{v}</dd>
                 </div>
               )
             })}
@@ -78,7 +78,7 @@ export function AssessmentResultsPage() {
           </SectionCard>
         </StaggerItem>
         <StaggerItem>
-          <h2 className="mb-4 font-heading font-semibold text-lg text-navy">
+          <h2 className="mb-4 font-heading font-medium text-lg text-navy">
             Gaps and recommended next actions
           </h2>
           <ul className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-2">

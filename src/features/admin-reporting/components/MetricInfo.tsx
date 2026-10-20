@@ -23,7 +23,7 @@ export function MetricInfo({ metric, label }: { metric: MetricKey; label?: strin
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-80 text-sm" align="start">
-        <p className="font-heading font-semibold text-navy">{m.name}</p>
+        <p className="font-heading font-medium text-navy">{m.name}</p>
         <dl className="mt-2 grid gap-2">
           <div>
             <dt className="text-muted-foreground text-xs uppercase tracking-wide">Definition</dt>

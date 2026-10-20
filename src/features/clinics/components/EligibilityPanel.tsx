@@ -66,7 +66,7 @@ export function EligibilityPanel({
             <Icon className="size-5" aria-hidden />
           </motion.span>
           <div className="grid gap-0.5">
-            <h3 className="font-heading font-semibold text-navy">
+            <h3 className="font-heading font-medium text-navy">
               {registered
                 ? 'You are registered'
                 : e.eligible

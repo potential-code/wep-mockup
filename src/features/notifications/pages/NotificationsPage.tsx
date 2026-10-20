@@ -192,7 +192,7 @@ function Item({ n, onEmail }: { n: Notification; onEmail: () => void }) {
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <h2 className={cn('text-base text-navy', !n.read ? 'font-semibold' : 'font-medium')}>
+            <h2 className={cn('text-base text-navy', !n.read ? 'font-medium' : 'font-medium')}>
               {!n.read ? (
                 <span
                   className="me-2 inline-block size-2 rounded-full bg-blue align-middle"

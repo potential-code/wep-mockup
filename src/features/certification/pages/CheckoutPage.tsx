@@ -60,9 +60,9 @@ export function CheckoutPage() {
         title="Checkout"
         description="Simulated Stripe-style payment for a proposed demo certification."
       />
-      <div className="flex items-center justify-center gap-3 rounded-2xl border-2 border-gold bg-gold-50 px-4 py-4 text-center">
-        <Lock className="size-5 text-gold-700" aria-hidden />
-        <p className="font-heading font-bold text-gold-700 text-lg uppercase tracking-wide">
+      <div className="flex items-center justify-center gap-3 rounded-2xl border-2 border-coral bg-coral-50 px-4 py-4 text-center">
+        <Lock className="size-5 text-coral-700" aria-hidden />
+        <p className="font-heading font-medium text-coral-700 text-lg uppercase tracking-wide">
           Demo payment — no real charge
         </p>
       </div>
@@ -95,7 +95,7 @@ export function CheckoutPage() {
               <dt>Separately identified charges</dt>
               <dd>None</dd>
             </div>
-            <div className="flex justify-between border-t pt-2 font-heading font-semibold text-base text-navy">
+            <div className="flex justify-between border-t pt-2 font-heading font-medium text-base text-navy">
               <dt>Total due</dt>
               <dd>{amount}</dd>
             </div>
@@ -118,7 +118,7 @@ export function CheckoutPage() {
                     run('success')
                   }}
                 >
-                  <h2 className="flex items-center gap-2 font-heading font-semibold text-lg text-navy">
+                  <h2 className="flex items-center gap-2 font-heading font-medium text-lg text-navy">
                     <CreditCard className="size-5 text-blue" aria-hidden /> Payment details
                   </h2>
                   <div className="grid gap-1.5">
@@ -188,13 +188,13 @@ export function CheckoutPage() {
                   aria-live="polite"
                 >
                   <Loader2 className="size-10 animate-spin text-blue" aria-hidden />
-                  <p className="font-heading font-semibold text-navy">Processing demo payment…</p>
+                  <p className="font-heading font-medium text-navy">Processing demo payment…</p>
                   <p className="text-muted-foreground text-sm">Please don’t close this page.</p>
                 </div>
               ) : effective === 'success' ? (
                 <div className="grid place-items-center gap-3 py-6 text-center">
                   <CheckCircle2 className="size-12 text-success" aria-hidden />
-                  <h2 className="font-heading font-semibold text-navy text-xl">
+                  <h2 className="font-heading font-medium text-navy text-xl">
                     Payment confirmed (demo)
                   </h2>
                   <p className="text-muted-foreground text-sm">
@@ -228,7 +228,7 @@ export function CheckoutPage() {
                     }
                     aria-hidden
                   />
-                  <h2 className="font-heading font-semibold text-navy text-xl">
+                  <h2 className="font-heading font-medium text-navy text-xl">
                     {effective === 'failed' ? 'Payment declined (demo)' : 'Checkout cancelled'}
                   </h2>
                   <p className="max-w-sm text-muted-foreground text-sm">

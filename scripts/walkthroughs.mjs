@@ -206,7 +206,7 @@ await walkthrough(1, 'Application and clarification', async () => {
   })
   await step('Visitor (signed out) sees the request on /application-status', async () => {
     await signOutViaMenu()
-    await go('/application-status')
+    await go(`/application-status?ref=${appRef}`)
     await expectVisible(page.getByText('Current legal registration document').first(), 'request')
     await expectVisible(btn('Replace document and resubmit'), 'resubmit button')
     await shot('visitor-status-info-requested')

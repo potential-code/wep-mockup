@@ -53,7 +53,7 @@ export function VersionsPanel({
                     </StatusBadge>
                   ) : null}
                   {viewing === v.version ? (
-                    <StatusBadge tone="gold" icon={null}>
+                    <StatusBadge tone="coral" icon={null}>
                       Viewing
                     </StatusBadge>
                   ) : null}

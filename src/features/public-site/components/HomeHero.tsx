@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { gsap } from 'gsap'
 import { ArrowRight } from 'lucide-react'
 import { useRef } from 'react'
-import { CornerArcs, DotGrid, ForAllBars } from '@/components/shared/BrandMotif'
+import { BrushRing, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { Button } from '@/components/ui/button'
 import { images } from '@/config/images'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
@@ -44,7 +44,7 @@ export function HomeHero() {
   return (
     <section
       ref={root}
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-navy-900 pt-28 text-white sm:pt-36"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-blue-600 pt-28 text-white sm:pt-36"
     >
       <div data-hero="bg" aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
         <img
@@ -56,15 +56,18 @@ export function HomeHero() {
       </div>
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(8,26,40,0.96)_8%,rgba(21,59,85,0.86)_52%,rgba(21,59,85,0.55)_100%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(0,58,96,0.9)_0%,rgba(0,84,135,0.68)_38%,rgba(0,111,168,0.22)_72%,rgba(0,140,200,0.08)_100%)]"
       />
       <div
         aria-hidden
-        className="-z-10 absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy-900 to-transparent"
+        className="-z-10 absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(0,58,96,0.45)] to-transparent"
       />
-      <CornerArcs corner="bl" size={420} className="-z-10" />
-      <ForAllBars className="-z-10 top-24 right-[-40px] hidden opacity-60 md:block" size={280} />
-      <DotGrid className="-z-10 top-32 left-[46%] hidden lg:block" cols={6} rows={4} />
+      <GearCluster size={380} className="-z-10 -bottom-24 -left-24 opacity-70" />
+      <ForAllBars className="-z-10 top-24 right-[-40px] hidden md:block" size={280} />
+      <BrushRing
+        size={620}
+        className="-z-10 top-1/2 right-[max(-6rem,calc((100vw-1200px)/2-6rem))] hidden -translate-y-1/2 lg:block"
+      />
       <div
         aria-hidden
         className="-z-10 absolute top-0 bottom-0 left-[max(1rem,calc((100vw-1200px)/2))] w-px bg-gradient-to-b from-transparent via-white/10 to-transparent"
@@ -73,28 +76,28 @@ export function HomeHero() {
         <div className="grid gap-7">
           <p
             data-hero="eyebrow"
-            className="font-medium text-gold text-xs uppercase tracking-[0.2em] sm:text-sm"
+            className="font-semibold text-white/90 text-xs uppercase tracking-[0.2em] sm:text-sm"
           >
             Women’s Empowerment Principles
           </p>
-          <h1 className="font-bold font-heading text-[2.5rem] leading-[1.06] sm:text-5xl xl:text-[3.6rem]">
+          <h1 className="font-heading font-medium text-[2.5rem] leading-[1.06] sm:text-5xl xl:text-[3.6rem]">
             <span className="block overflow-hidden pb-1">
               <span data-hero="line" className="block">
                 Turn commitment into
               </span>
             </span>
             <span className="block overflow-hidden pb-2">
-              <span data-hero="line" className="block text-gold">
+              <span data-hero="line" className="block">
                 measurable progress.
               </span>
             </span>
           </h1>
-          <p data-hero="copy" className="max-w-xl text-lg text-white/80 leading-relaxed sm:text-xl">
+          <p data-hero="copy" className="max-w-xl text-lg text-white/90 leading-relaxed sm:text-xl">
             Connect your company with learning, practical tools, expert support and a community
             advancing gender equality.
           </p>
           <div data-hero="cta" className="flex flex-wrap gap-3">
-            <Button asChild variant="gold" size="xl" className="group rounded-full">
+            <Button asChild variant="coral" size="xl" className="group rounded-full">
               <Link to="/join">
                 Join WEPs{' '}
                 <ArrowRight

@@ -14,8 +14,13 @@ export const useDiscardJoinDraft = () => useMutation({ mutationFn: svc.discardJo
 export const useSubmitApplication = () => useMutation({ mutationFn: svc.submitApplication })
 export const useMyApplication = () =>
   useQuery({ queryKey: qk('my-application'), queryFn: svc.getMyApplication })
-export const useFindApplication = () =>
-  useMutation({ mutationFn: svc.findApplicationByReference, onError: () => {} })
+export const useApplicationByRef = (ref: string | undefined) =>
+  useQuery({
+    queryKey: qk('application-by-ref', ref ?? ''),
+    queryFn: () => svc.findApplicationByReference(ref ?? ''),
+    enabled: !!ref,
+    retry: false,
+  })
 export const useResubmitApplication = () =>
   useMutation({
     mutationFn: (v: {

@@ -41,7 +41,7 @@ export function CourseCard({
       </div>
       <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
         <PrincipleTag id={course.principle} />
-        <h3 className="font-heading font-semibold text-lg text-navy leading-snug">
+        <h3 className="font-heading font-medium text-lg text-navy leading-snug">
           <Link
             to="/portal/learn/$courseId"
             params={{ courseId: course.id }}
@@ -58,7 +58,7 @@ export function CourseCard({
           <li className="flex items-center gap-1">
             <Layers className="size-3.5" aria-hidden /> {course.lessons.length} lessons
           </li>
-          <li className="font-medium text-gold-700">+{coursePoints(course, designated)} points</li>
+          <li className="font-medium text-coral-700">+{coursePoints(course, designated)} points</li>
         </ul>
         {locked && prerequisiteTitle ? (
           <p className="flex items-center gap-1.5 text-muted-foreground text-xs">

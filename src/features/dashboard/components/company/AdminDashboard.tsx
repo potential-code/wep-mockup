@@ -85,17 +85,17 @@ export function AdminDashboard({
         <StaggerItem>
           <div className="grid gap-4 rounded-2xl bg-navy p-5 text-white shadow-lift sm:p-6 lg:grid-cols-3 lg:items-center">
             <div className="min-w-0 lg:col-span-2">
-              <p className="font-medium text-gold text-sm">
+              <p className="font-medium text-coral-300 text-sm">
                 {next ? 'Your next action' : 'All clear'}
               </p>
-              <h2 className="mt-1 font-heading font-semibold text-xl leading-snug sm:text-2xl">
+              <h2 className="mt-1 font-heading font-medium text-xl leading-snug sm:text-2xl">
                 {next ? next.title : 'Nothing needs your attention right now'}
               </h2>
               <p className="mt-1 text-sm text-white/75">
                 {next ? next.detail : 'New tasks appear here as they arise.'}
               </p>
               {next ? (
-                <Button asChild variant="gold" size="lg" className="mt-4">
+                <Button asChild variant="coral" size="lg" className="mt-4">
                   <Link to={next.to}>
                     Do this now <ArrowRight aria-hidden />
                   </Link>
@@ -116,11 +116,11 @@ export function AdminDashboard({
                           aria-hidden
                         />
                       ) : (
-                        <Circle className="mt-0.5 size-4 shrink-0 text-white/50" aria-hidden />
+                        <Circle className="mt-0.5 size-4 shrink-0 text-white/75" aria-hidden />
                       )}
                       <span>
                         {s.label}
-                        <span className="block text-white/60 text-xs">{s.detail}</span>
+                        <span className="block text-white/75 text-xs">{s.detail}</span>
                       </span>
                     </Link>
                   </li>
@@ -142,7 +142,7 @@ export function AdminDashboard({
             label="Completed learning"
             value={stats.completed}
             icon={GraduationCap}
-            tone="gold"
+            tone="coral"
             to="/portal/company/team"
             hint={`of ${stats.activated} activated users`}
           />

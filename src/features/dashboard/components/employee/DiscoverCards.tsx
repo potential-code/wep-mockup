@@ -103,7 +103,7 @@ export function ConciergeChips() {
             search={{ prompt: p }}
             className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-navy text-sm transition-colors hover:border-blue hover:bg-blue-50"
           >
-            <Sparkles className="size-4 text-gold-700" aria-hidden />
+            <Sparkles className="size-4 text-coral-700" aria-hidden />
             {p}
           </Link>
         ))}
@@ -123,7 +123,7 @@ export function CredentialSummary({
       <ul className="grid gap-2">
         {items.map((c) => (
           <li key={c.purchase.id} className="flex items-center gap-3 text-sm">
-            <Award className="size-5 text-gold-700" aria-hidden />
+            <Award className="size-5 text-coral-700" aria-hidden />
             <span className="font-medium text-navy">{c.offering?.title}</span>
             {c.purchase.credentialRef ? (
               <span className="text-muted-foreground">Ref {c.purchase.credentialRef}</span>

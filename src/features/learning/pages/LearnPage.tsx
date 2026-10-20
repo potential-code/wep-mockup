@@ -44,7 +44,7 @@ export function LearnPage() {
         <div className="grid gap-6">
           <PathSummary data={data} />
           <div>
-            <h2 className="mb-3 font-heading font-semibold text-navy text-section">Your courses</h2>
+            <h2 className="mb-3 font-heading font-medium text-navy text-section">Your courses</h2>
             <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {rows.map((row) => {
                 const pc = data.courses.find((c) => c.course.id === row.course.id)

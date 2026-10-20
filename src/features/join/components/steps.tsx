@@ -163,7 +163,7 @@ export function PresenceStep({ data, set, err, documents, setDoc, showMissing }:
                   className={cn(
                     'min-h-9 rounded-full border px-3.5 text-sm shadow-[var(--shadow-field)] transition-all',
                     on
-                      ? 'border-blue bg-blue font-medium text-white shadow-[0_6px_14px_-6px_rgb(22_124_179/0.7)]'
+                      ? 'border-blue bg-blue font-medium text-white shadow-[0_6px_14px_-6px_rgb(0_119_182/0.7)]'
                       : 'bg-white hover:-translate-y-px hover:border-blue/50',
                   )}
                 >
@@ -287,7 +287,7 @@ export function ExecutiveStep(p: StepProps) {
           onChange={(v) => set('executive.quote', v)}
         />
       </Panel>
-      <Panel tone="gold" className="gap-5">
+      <Panel tone="coral" className="gap-5">
         <div className="flex gap-3 text-sm">
           <Info className="mt-0.5 size-4 shrink-0 text-blue" aria-hidden />
           <p>
@@ -366,7 +366,7 @@ function Bar({ label, value }: { label: string; value: string }) {
         <span>{label}</span>
         <span className="font-medium text-navy">{value ? `${n}%` : '—'}</span>
       </div>
-      <div className="h-2.5 overflow-hidden rounded-full bg-white shadow-[inset_0_1px_2px_rgb(12_37_55/0.12)]">
+      <div className="h-2.5 overflow-hidden rounded-full bg-white shadow-[inset_0_1px_2px_rgb(23_36_58/0.12)]">
         <div
           className="h-full rounded-full bg-[linear-gradient(90deg,var(--blue),var(--navy))] transition-all duration-500"
           style={{ width: `${n}%` }}
@@ -427,7 +427,7 @@ export function GenderStep({ data, set, err }: StepProps) {
           />
         ) : null}
       </FieldGroup>
-      <Panel tone="gold" className="gap-3">
+      <Panel tone="coral" className="gap-3">
         <p className="font-semibold text-navy text-sm">Live preview</p>
         <Bar label="Employees" value={g.employees} />
         <Bar label="Management" value={g.management} />
@@ -486,11 +486,9 @@ export function ReferralStep({ data, set, err }: StepProps) {
           help="For example the name of the event or colleague."
         />
       </FieldGroup>
-      <Panel tone="gold" className="gap-3">
+      <Panel tone="coral" className="gap-3">
         <div>
-          <h3 className="font-heading font-semibold text-navy">
-            Financial contribution (optional)
-          </h3>
+          <h3 className="font-heading font-medium text-navy">Financial contribution (optional)</h3>
           <p className="text-muted-foreground text-sm">
             Some signatories choose to support the WEPs financially. This is voluntary,{' '}
             <strong>never a condition of joining</strong>, and has no effect on your application.

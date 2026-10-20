@@ -38,7 +38,7 @@ export function ListingCard({ data, to = true }: { data: ListingCardData; to?: b
           <div className="aspect-[16/10] bg-secondary" />
         )}
         <StatusBadge
-          tone={l.type === 'product' ? 'gold' : 'info'}
+          tone={l.type === 'product' ? 'coral' : 'info'}
           icon={null}
           className="absolute start-3 top-3 bg-card/95"
         >
@@ -47,7 +47,7 @@ export function ListingCard({ data, to = true }: { data: ListingCardData; to?: b
       </div>
       <div className="grid flex-1 content-start gap-2 p-4">
         <p className="text-muted-foreground text-xs">{l.category}</p>
-        <h3 className="font-heading font-semibold text-base text-navy leading-snug">
+        <h3 className="font-heading font-medium text-base text-navy leading-snug">
           {l.title || 'Untitled listing'}
         </h3>
         <p className="line-clamp-2 text-muted-foreground text-sm">

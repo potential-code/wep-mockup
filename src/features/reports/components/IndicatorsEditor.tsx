@@ -84,7 +84,7 @@ export function IndicatorsEditor({
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="font-heading font-semibold text-navy">Indicators</h3>
+        <h3 className="font-heading font-medium text-navy">Indicators</h3>
         {readOnly ? null : <SaveIndicator state={anyError ? 'idle' : auto.state} />}
       </div>
       <p className="text-muted-foreground text-sm">

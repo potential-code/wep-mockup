@@ -203,7 +203,7 @@ export function GamificationPage() {
         </TabsContent>
         <TabsContent value="rules" className="pt-3">
           <section aria-labelledby="rules">
-            <h2 id="rules" className="mb-1 font-heading font-semibold text-lg text-navy">
+            <h2 id="rules" className="mb-1 font-heading font-medium text-lg text-navy">
               Points rules
             </h2>
             <p className="mb-3 text-muted-foreground text-sm">
@@ -233,7 +233,7 @@ export function GamificationPage() {
           </SectionCard>
 
           <section aria-labelledby="adj">
-            <h2 id="adj" className="mb-3 font-heading font-semibold text-lg text-navy">
+            <h2 id="adj" className="mb-3 font-heading font-medium text-lg text-navy">
               Adjustment audit
             </h2>
             <DataTable

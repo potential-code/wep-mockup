@@ -105,7 +105,7 @@ export function InvitationPage() {
           noValidate
         >
           <header className="grid gap-2">
-            <h1 className="font-bold font-heading text-3xl text-navy">Accept your invitation</h1>
+            <h1 className="font-medium font-heading text-3xl text-navy">Accept your invitation</h1>
             <p className="text-muted-foreground">
               {data.inviterName} invited you to join
               {data.company ? ` ${data.company.name}` : ' the WEPs portal'} as{' '}
@@ -171,7 +171,7 @@ export function InvitationPage() {
               <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden /> {formError}
             </p>
           ) : null}
-          <Button type="submit" size="xl" variant="gloss-blue" disabled={accept.isPending}>
+          <Button type="submit" size="xl" variant="coral" disabled={accept.isPending}>
             {accept.isPending ? (
               <>
                 <Loader2 className="animate-spin" aria-hidden /> Setting up your account…
@@ -235,7 +235,7 @@ function Recovery({
       <span className="grid size-14 place-items-center rounded-2xl bg-warning-soft text-warning">
         <Icon className="size-7" aria-hidden />
       </span>
-      <h1 className="font-bold font-heading text-3xl text-navy">{title}</h1>
+      <h1 className="font-medium font-heading text-3xl text-navy">{title}</h1>
       <p className="text-muted-foreground">{text}</p>
       <p className="rounded-lg bg-secondary px-4 py-3 text-navy text-sm">{hint}</p>
       <div className="flex flex-wrap gap-3">

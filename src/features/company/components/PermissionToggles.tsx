@@ -29,7 +29,7 @@ export function PermissionToggles({
             </label>
             <p className="text-muted-foreground text-xs">{p.description}</p>
             {p.sensitive ? (
-              <StatusBadge tone="gold" icon={ShieldAlert} className="mt-1.5">
+              <StatusBadge tone="coral" icon={ShieldAlert} className="mt-1.5">
                 Sensitive · explicit grant
               </StatusBadge>
             ) : null}

@@ -104,7 +104,7 @@ export function ListingReview({
               <img src={l.image} alt="" className="aspect-[16/7] w-full rounded-xl object-cover" />
               <p className="text-sm">{l.description}</p>
               {l.pendingRevision ? (
-                <div className="rounded-xl border border-gold/40 bg-gold-50/60 p-3 text-sm">
+                <div className="rounded-xl border border-coral/40 bg-coral-50/60 p-3 text-sm">
                   <p className="mb-1 font-medium text-navy">Proposed changes</p>
                   <ul className="list-disc ps-5">
                     {Object.entries(l.pendingRevision).map(([k, v]) => (
@@ -168,7 +168,7 @@ export function ListingReview({
 
               {!decided || l.status === 'published' || l.status === 'changes_requested' ? (
                 <section className="grid gap-3 border-t pt-4">
-                  <h3 className="font-heading font-semibold text-navy">Decision</h3>
+                  <h3 className="font-heading font-medium text-navy">Decision</h3>
                   {l.status !== 'published' || l.pendingRevision ? (
                     <>
                       <SwitchRow

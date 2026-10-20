@@ -167,19 +167,19 @@ export const images = {
   resources: {
     transparencyRoadmap: {
       src: '/images/resources/transparency-roadmap.webp',
-      alt: 'Abstract geometric cover art in navy, blue and gold',
+      alt: 'Abstract geometric cover art in navy, blue and coral',
     },
     genderActionPlan: {
       src: '/images/resources/gender-action-plan.webp',
-      alt: 'Abstract geometric cover art in navy, blue and gold',
+      alt: 'Abstract geometric cover art in navy, blue and coral',
     },
     procurementToolbox: {
       src: '/images/resources/procurement-toolbox.webp',
-      alt: 'Abstract geometric cover art in navy, blue and gold',
+      alt: 'Abstract geometric cover art in navy, blue and coral',
     },
     genericGuide: {
       src: '/images/resources/generic-guide.webp',
-      alt: 'Abstract geometric cover art in navy, blue and gold',
+      alt: 'Abstract geometric cover art in navy, blue and coral',
     },
   },
 } as const satisfies Record<string, Record<string, ImageAsset>>

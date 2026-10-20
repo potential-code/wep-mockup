@@ -265,10 +265,10 @@ export function JoinPage() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="grid gap-3"
         >
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 bg-gold-50 px-3 py-1 font-medium text-gold-700 text-xs uppercase tracking-[0.14em]">
+          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-coral/40 bg-coral-50 px-3 py-1 font-medium text-coral-700 text-xs uppercase tracking-[0.14em]">
             <Sparkles className="size-3.5" aria-hidden /> Join the WEPs
           </p>
-          <h1 className="text-balance font-bold font-heading text-3xl text-navy leading-tight sm:text-4xl">
+          <h1 className="text-balance font-medium font-heading text-3xl text-navy leading-tight sm:text-4xl">
             Commit your company to the Women’s Empowerment Principles
           </h1>
           <p className="max-w-2xl text-muted-foreground">
@@ -326,12 +326,12 @@ export function JoinPage() {
             >
               <span
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--gold),var(--blue)_45%,var(--navy))]"
+                className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--coral),var(--blue)_45%,var(--navy))]"
               />
-              <div className="relative flex flex-wrap items-center justify-between gap-4 overflow-hidden border-b bg-[linear-gradient(100deg,var(--blue-50),#fff_55%,var(--gold-50))] px-5 pt-6 pb-5 sm:px-8">
+              <div className="relative flex flex-wrap items-center justify-between gap-4 overflow-hidden border-b bg-[linear-gradient(100deg,var(--blue-50),#fff_55%,var(--coral-50))] px-5 pt-6 pb-5 sm:px-8">
                 <span
                   aria-hidden
-                  className="-right-10 -bottom-16 pointer-events-none absolute size-40 rounded-full border border-gold/25"
+                  className="-right-10 -bottom-16 pointer-events-none absolute size-40 rounded-full border border-coral/25"
                 />
                 <span
                   aria-hidden
@@ -346,9 +346,9 @@ export function JoinPage() {
                     transition={{ duration: 0.2 }}
                     className="flex min-w-0 items-center gap-4"
                   >
-                    <span className="relative grid size-12 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_10px_22px_-10px_rgb(22_124_179/0.9)] ring-4 ring-white">
+                    <span className="relative grid size-12 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_10px_22px_-10px_rgb(0_119_182/0.9)] ring-4 ring-white">
                       <StepIcon className="size-5" aria-hidden />
-                      <span className="-top-1.5 -right-1.5 absolute grid size-5 place-items-center rounded-full bg-gold font-bold text-[10px] text-navy-900 ring-2 ring-white">
+                      <span className="-top-1.5 -right-1.5 absolute grid size-5 place-items-center rounded-full bg-coral-600 font-bold text-[10px] text-white ring-2 ring-white">
                         {step}
                       </span>
                     </span>
@@ -356,7 +356,7 @@ export function JoinPage() {
                       <p className="font-medium text-blue text-xs uppercase tracking-[0.14em]">
                         Step {step} of {JOIN_STEPS.length} · {meta?.label}
                       </p>
-                      <h2 className="text-balance font-bold font-heading text-navy text-xl sm:text-2xl">
+                      <h2 className="text-balance font-medium font-heading text-navy text-xl sm:text-2xl">
                         {meta?.blurb}
                       </h2>
                     </div>
@@ -365,7 +365,7 @@ export function JoinPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="relative rounded-full bg-white shadow-[var(--shadow-field)] hover:border-gold/60"
+                  className="relative rounded-full bg-white shadow-[var(--shadow-field)] hover:border-coral/60"
                   onClick={fillSample}
                 >
                   <FlaskConical aria-hidden /> Fill with sample company
@@ -395,7 +395,7 @@ export function JoinPage() {
               </div>
             </motion.div>
 
-            <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-2 border-t bg-white/95 p-3 shadow-[0_-8px_24px_-12px_rgb(12_37_55/0.25)] backdrop-blur md:static md:rounded-2xl md:border md:p-3 md:shadow-card">
+            <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-2 border-t bg-white/95 p-3 shadow-[0_-8px_24px_-12px_rgb(23_36_58/0.25)] backdrop-blur md:static md:rounded-2xl md:border md:p-3 md:shadow-card">
               <Button
                 variant="outline"
                 disabled={step === 1}
@@ -415,7 +415,7 @@ export function JoinPage() {
                   <span className="sm:hidden">Save</span>
                 </Button>
                 {step < 8 ? (
-                  <Button variant="gloss-blue" onClick={next} className="group">
+                  <Button variant="coral" onClick={next} className="group">
                     Continue{' '}
                     <ArrowRight
                       className="transition-transform group-hover:translate-x-0.5"
@@ -423,7 +423,7 @@ export function JoinPage() {
                     />
                   </Button>
                 ) : (
-                  <Button variant="gloss-blue" onClick={doSubmit} disabled={submit.isPending}>
+                  <Button variant="coral" onClick={doSubmit} disabled={submit.isPending}>
                     <Send aria-hidden /> {submit.isPending ? 'Submitting…' : 'Submit application'}
                   </Button>
                 )}
@@ -437,7 +437,7 @@ export function JoinPage() {
                 aria-hidden
                 className={
                   save.isPending
-                    ? 'size-1.5 animate-pulse rounded-full bg-gold'
+                    ? 'size-1.5 animate-pulse rounded-full bg-coral'
                     : 'size-1.5 rounded-full bg-success'
                 }
               />
@@ -514,10 +514,10 @@ function Intro({
         />
         <span
           aria-hidden
-          className="-right-4 -top-4 pointer-events-none absolute size-24 rounded-full border border-gold/40"
+          className="-right-4 -top-4 pointer-events-none absolute size-24 rounded-full border border-coral/40"
         />
         <div className="relative flex items-center gap-4">
-          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-gold ring-1 ring-white/20">
+          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-coral-300 ring-1 ring-white/20">
             {hasDraft ? (
               <History className="size-5" aria-hidden />
             ) : (
@@ -525,10 +525,10 @@ function Intro({
             )}
           </span>
           <div>
-            <p className="font-heading font-semibold">
+            <p className="font-heading font-medium">
               {hasDraft ? 'Welcome back' : 'Ready when you are'}
             </p>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white/90">
               {hasDraft
                 ? `Your draft${company ? ` for ${company}` : ''} was saved ${formatDateTime(savedAt)}. Resume at step ${resumeStep}.`
                 : 'Eight short steps. Your progress saves as you go, so you can finish later.'}
@@ -537,7 +537,7 @@ function Intro({
         </div>
         <div className="relative mt-5 flex flex-wrap items-center gap-3">
           {hasDraft ? (
-            <Button variant="gold" size="lg" className="group rounded-full" onClick={onResume}>
+            <Button variant="coral" size="lg" className="group rounded-full" onClick={onResume}>
               Resume application{' '}
               <ArrowRight
                 className="transition-transform group-hover:translate-x-0.5"
@@ -546,7 +546,7 @@ function Intro({
             </Button>
           ) : null}
           <Button
-            variant={hasDraft ? 'outline-light' : 'gold'}
+            variant={hasDraft ? 'outline-light' : 'coral'}
             size="lg"
             className="group rounded-full"
             onClick={onStart}
@@ -582,7 +582,7 @@ function Intro({
             <span className="grid size-10 place-items-center rounded-xl bg-success-soft text-success ring-1 ring-success/20">
               <ShieldCheck className="size-5" aria-hidden />
             </span>
-            <h2 className="font-bold font-heading text-navy text-xl">Who can join</h2>
+            <h2 className="font-medium font-heading text-navy text-xl">Who can join</h2>
           </div>
           <ul className="grid gap-3 text-sm">
             {WHO_CAN_JOIN.map((t) => (
@@ -606,7 +606,7 @@ function Intro({
             <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue ring-1 ring-blue/20">
               <FileText className="size-5" aria-hidden />
             </span>
-            <h2 className="font-bold font-heading text-navy text-xl">Have ready</h2>
+            <h2 className="font-medium font-heading text-navy text-xl">Have ready</h2>
           </div>
           <ul className="grid gap-2.5 text-sm">
             {HAVE_READY.map(([t, d]) => (
@@ -638,17 +638,17 @@ function Intro({
         {...fadeUp(3)}
         className="relative overflow-hidden rounded-2xl border bg-white p-6 shadow-card"
       >
-        <h2 className="mb-4 font-heading font-semibold text-navy">What happens after you apply</h2>
+        <h2 className="mb-4 font-heading font-medium text-navy">What happens after you apply</h2>
         <ol className="grid gap-3 sm:grid-cols-3">
           {AFTER.map((a, i) => (
             <li key={a.title} className="relative flex items-center gap-3 sm:block">
               {i < AFTER.length - 1 ? (
                 <span
                   aria-hidden
-                  className="absolute top-5 left-12 hidden h-px w-[calc(100%-3.5rem)] bg-[repeating-linear-gradient(90deg,var(--gold)_0_6px,transparent_6px_12px)] sm:block"
+                  className="absolute top-5 left-12 hidden h-px w-[calc(100%-3.5rem)] bg-[repeating-linear-gradient(90deg,var(--coral)_0_6px,transparent_6px_12px)] sm:block"
                 />
               ) : null}
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_8px_18px_-8px_rgb(22_124_179/0.9)]">
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[linear-gradient(140deg,var(--navy),var(--blue))] text-white shadow-[0_8px_18px_-8px_rgb(0_119_182/0.9)]">
                 <a.icon className="size-4" aria-hidden />
               </span>
               <span className="sm:mt-3 sm:block">

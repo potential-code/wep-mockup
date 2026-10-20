@@ -96,7 +96,7 @@ export function CredentialPage() {
         ) : null}
       </AnimatePresence>
       <article
-        className="relative overflow-hidden rounded-2xl border-4 border-double border-gold/60 bg-card p-8 text-center shadow-lift sm:p-14"
+        className="relative overflow-hidden rounded-2xl border-4 border-double border-coral/60 bg-card p-8 text-center shadow-lift sm:p-14"
         aria-label="Sample certificate"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 grid place-items-center">
@@ -106,15 +106,17 @@ export function CredentialPage() {
         </div>
         <div className="relative grid justify-items-center gap-4">
           <CompanyLogo name={company?.name ?? ''} src={company?.logo} className="size-16" />
-          <p className="font-medium text-gold-700 text-xs uppercase tracking-[0.3em]">
+          <p className="font-medium text-coral-700 text-xs uppercase tracking-[0.3em]">
             Certificate of completion
           </p>
           <p className="text-muted-foreground">This sample certificate is awarded to</p>
-          <h2 className="font-heading font-bold text-3xl text-navy sm:text-4xl">{company?.name}</h2>
+          <h2 className="font-heading font-medium text-3xl text-navy sm:text-4xl">
+            {company?.name}
+          </h2>
           <p className="text-muted-foreground">
             for successfully completing the proposed demo certification
           </p>
-          <p className="max-w-xl font-heading font-semibold text-navy text-xl sm:text-2xl">
+          <p className="max-w-xl font-heading font-medium text-navy text-xl sm:text-2xl">
             {offering.title}
           </p>
           <div className="mt-4 grid gap-6 border-t pt-6 text-sm sm:grid-cols-2 sm:gap-16">

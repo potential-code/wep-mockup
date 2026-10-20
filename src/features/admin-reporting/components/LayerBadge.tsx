@@ -4,7 +4,7 @@ import { LAYERS, type Layer } from './metric-definitions'
 
 const STYLE: Record<Layer, { icon: LucideIcon; cls: string }> = {
   activity: { icon: Activity, cls: 'bg-blue-50 text-blue-600 ring-blue/25' },
-  evidence: { icon: FileCheck2, cls: 'bg-gold-50 text-gold-700 ring-gold/35' },
+  evidence: { icon: FileCheck2, cls: 'bg-coral-50 text-coral-700 ring-coral/35' },
   outcomes: { icon: ClipboardList, cls: 'bg-secondary text-navy ring-navy/20' },
 }
 
@@ -34,7 +34,7 @@ export function LayerHeading({ layer }: { layer: Layer }) {
       <span className={cn('grid size-7 place-items-center rounded-lg ring-1 ring-inset', cls)}>
         <Icon className="size-4" aria-hidden />
       </span>
-      <h2 className="font-heading font-semibold text-navy">{LAYERS[layer].label}</h2>
+      <h2 className="font-heading font-medium text-navy">{LAYERS[layer].label}</h2>
       <p className="text-muted-foreground text-sm">{LAYERS[layer].description}</p>
     </div>
   )

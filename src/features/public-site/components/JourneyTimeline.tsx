@@ -41,7 +41,7 @@ function wavePath() {
 const PATH = wavePath()
 
 /**
- * The six official WEPs journey stages. Desktop: a gold wave draws across as you scroll,
+ * The six official WEPs journey stages. Desktop: a coral wave draws across as you scroll,
  * lighting each stage node, with stage cards alternating above and below. Mobile: a vertical
  * rail with the same scroll-driven fill.
  */
@@ -119,43 +119,40 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
         className={cn(
           'group/card relative h-full rounded-2xl border p-5 transition-all duration-500',
           dark
-            ? 'border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-gold/40 hover:bg-white/[0.08]'
+            ? 'border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-coral/40 hover:bg-white/[0.08]'
             : 'border-border bg-card shadow-card hover:shadow-lift',
-          'hover:-translate-y-1 group-data-[active=true]:border-gold/30',
+          'hover:-translate-y-1 group-data-[active=true]:border-coral/30',
         )}
       >
         <div className="flex items-center justify-between">
           <span
             className={cn(
               'grid size-10 place-items-center rounded-xl transition-colors duration-500',
-              dark ? 'bg-white/10 text-white/70' : 'bg-blue-50 text-blue',
-              'group-data-[active=true]:bg-gold group-data-[active=true]:text-navy-900',
+              dark ? 'bg-white/10 text-white/90' : 'bg-blue-50 text-blue',
+              'group-data-[active=true]:bg-coral-600 group-data-[active=true]:text-white',
             )}
           >
             <Icon className="size-5" aria-hidden />
           </span>
           <span
             className={cn(
-              'font-bold font-heading text-3xl tabular-nums transition-colors duration-500',
+              'font-semibold font-heading text-3xl tabular-nums transition-colors duration-500',
               dark ? 'text-white/10' : 'text-navy/10',
-              'group-data-[active=true]:text-gold/60',
+              'group-data-[active=true]:text-coral/60',
             )}
           >
             0{i + 1}
           </span>
         </div>
         <h3
-          className={cn(
-            'mt-4 font-heading font-semibold text-xl',
-            dark ? 'text-white' : 'text-navy',
-          )}
+          className={cn('mt-4 font-heading font-medium text-xl', dark ? 'text-white' : 'text-navy')}
         >
           {s.title}
         </h3>
         <p
           className={cn(
             'mt-1.5 text-sm leading-relaxed',
-            dark ? 'text-white/65' : 'text-muted-foreground',
+            dark ? 'text-white/75' : 'text-muted-foreground',
           )}
         >
           {s.description}
@@ -192,13 +189,13 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
             data-wave-fill
             viewBox={`0 0 ${W} ${BAND}`}
             preserveAspectRatio="none"
-            className="absolute inset-0 size-full overflow-visible drop-shadow-[0_0_8px_rgba(214,164,74,0.7)]"
+            className="absolute inset-0 size-full overflow-visible drop-shadow-[0_0_8px_rgba(240,73,62,0.7)]"
             fill="none"
             style={{ clipPath: 'inset(0 100% 0 0)' }}
           >
             <path
               d={PATH}
-              stroke="var(--gold)"
+              stroke="var(--coral)"
               strokeWidth="3"
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
@@ -223,7 +220,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
                 className={cn(
                   '-translate-x-1/2 absolute left-1/2 w-px transition-colors duration-500',
                   dark ? 'bg-white/15' : 'bg-border',
-                  'group-data-[active=true]:bg-gold/60',
+                  'group-data-[active=true]:bg-coral/60',
                 )}
                 style={top ? { top: '100%', height: reach } : { bottom: '100%', height: reach }}
               />
@@ -233,7 +230,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
                   dark
                     ? 'border-white/30 bg-navy-900 text-white'
                     : 'border-border bg-white text-navy',
-                  'group-data-[active=true]:scale-110 group-data-[active=true]:border-gold group-data-[active=true]:bg-gold group-data-[active=true]:text-navy-900 group-data-[active=true]:shadow-[0_0_0_6px_rgba(214,164,74,0.18),0_0_24px_rgba(214,164,74,0.6)]',
+                  'group-data-[active=true]:scale-110 group-data-[active=true]:border-coral group-data-[active=true]:bg-coral-600 group-data-[active=true]:text-white group-data-[active=true]:shadow-[0_0_0_6px_rgba(240,73,62,0.18),0_0_24px_rgba(240,73,62,0.6)]',
                 )}
                 style={
                   top
@@ -260,7 +257,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
         >
           <div
             data-rail-fill
-            className="h-full origin-top bg-gold shadow-[0_0_10px_rgba(214,164,74,0.8)]"
+            className="h-full origin-top bg-coral shadow-[0_0_10px_rgba(240,73,62,0.8)]"
           />
         </div>
         <ol className="grid gap-5">
@@ -274,11 +271,11 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
             >
               <span
                 className={cn(
-                  'absolute start-0 top-5 grid size-10 place-items-center rounded-full border-2 font-bold font-heading text-sm transition-all duration-500',
+                  'absolute start-0 top-5 grid size-10 place-items-center rounded-full border-2 font-medium font-heading text-sm transition-all duration-500',
                   dark
                     ? 'border-white/30 bg-navy-900 text-white'
                     : 'border-border bg-white text-navy',
-                  'group-data-[active=true]:border-gold group-data-[active=true]:bg-gold group-data-[active=true]:text-navy-900',
+                  'group-data-[active=true]:border-coral group-data-[active=true]:bg-coral-600 group-data-[active=true]:text-white',
                 )}
               >
                 {i + 1}

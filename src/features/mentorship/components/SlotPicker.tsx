@@ -117,7 +117,7 @@ export function SlotPicker({
               <span className="text-[11px] uppercase tracking-wide">
                 {dayLabel(d, { weekday: 'short' })}
               </span>
-              <span className="font-heading font-semibold text-lg leading-none">
+              <span className="font-heading font-medium text-lg leading-none">
                 {dayLabel(d, { day: 'numeric' })}
               </span>
               <span className="text-[10px] leading-none">{count > 0 ? `${count} free` : '—'}</span>

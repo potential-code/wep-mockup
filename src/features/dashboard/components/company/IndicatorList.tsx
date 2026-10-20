@@ -25,7 +25,7 @@ export function IndicatorList({ data }: { data: CompanyDashboardData }) {
             <li key={i.id} className="grid gap-1.5 rounded-xl border p-3.5">
               <PrincipleTag id={i.principle} linked={false} />
               <p className="text-muted-foreground text-xs">{i.label}</p>
-              <p className="font-bold font-heading text-2xl text-navy tabular-nums">
+              <p className="font-semibold font-heading text-2xl text-navy tabular-nums">
                 {i.value === null
                   ? 'Not reported'
                   : `${i.value}${i.unit === '%' ? '%' : ` ${i.unit}`}`}

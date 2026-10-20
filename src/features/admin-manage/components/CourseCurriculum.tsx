@@ -110,19 +110,19 @@ export function TestCard({
       <header
         className={cn(
           'flex items-center gap-3 border-b px-5 py-3.5',
-          pre ? 'bg-blue-50/70' : 'bg-gold-50/70',
+          pre ? 'bg-blue-50/70' : 'bg-coral-50/70',
         )}
       >
         <span
           className={cn(
             'grid size-9 shrink-0 place-items-center rounded-xl',
-            pre ? 'bg-blue/10 text-blue' : 'bg-gold/15 text-gold-700',
+            pre ? 'bg-blue/10 text-blue' : 'bg-coral/15 text-coral-700',
           )}
         >
           <Icon className="size-5" aria-hidden />
         </span>
         <div className="grid">
-          <h3 className="font-heading font-semibold text-navy">{pre ? 'Pre-test' : 'Post-test'}</h3>
+          <h3 className="font-heading font-medium text-navy">{pre ? 'Pre-test' : 'Post-test'}</h3>
           <p className="text-muted-foreground text-xs">
             {pre
               ? 'Shown before learners enter the course modules'
@@ -172,7 +172,7 @@ export function TestCard({
                   <span
                     className={cn(
                       'rounded px-1.5 py-0.5 font-semibold text-[0.65rem]',
-                      isTrueFalse(q) ? 'bg-gold-50 text-gold-700' : 'bg-blue-50 text-blue-600',
+                      isTrueFalse(q) ? 'bg-coral-50 text-coral-700' : 'bg-blue-50 text-blue-600',
                     )}
                   >
                     <span aria-hidden>{isTrueFalse(q) ? 'T/F' : 'MC'}</span>
@@ -212,7 +212,7 @@ export function AddTestCard({ kind, onAdd }: { kind: 'pre' | 'post'; onAdd: () =
       className="flex flex-wrap items-center gap-3 rounded-2xl border border-dashed bg-card/60 p-5"
     >
       <div className="me-auto grid">
-        <h3 className="font-heading font-semibold text-navy">{pre ? 'Pre-test' : 'Post-test'}</h3>
+        <h3 className="font-heading font-medium text-navy">{pre ? 'Pre-test' : 'Post-test'}</h3>
         <p className="text-muted-foreground text-sm">
           {pre
             ? 'Optional. Records what learners know before they start; it is not graded.'
@@ -365,7 +365,7 @@ function ModuleBody({
             aria-hidden
           />
           <span className="grid min-w-0">
-            <span className="truncate font-heading font-semibold text-navy">{module.title}</span>
+            <span className="truncate font-heading font-medium text-navy">{module.title}</span>
             <span className="text-muted-foreground text-xs">
               {ids.length} {ids.length === 1 ? 'unit' : 'units'}
             </span>

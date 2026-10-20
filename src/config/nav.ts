@@ -58,7 +58,7 @@ export const REPORTING_FILTER_KEYS = [
 ] as const
 
 export interface NavGroup {
-  /** Gold section heading shown above the group. */
+  /** Accent section heading shown above the group. */
   section?: string
   label?: string
   /** Folds the items under the label; opens automatically when it holds the current page. */

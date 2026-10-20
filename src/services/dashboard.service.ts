@@ -3,7 +3,6 @@
 
 import { DEPARTMENTS, departmentLabel } from '@shared/reference'
 import type { DepartmentId } from '@shared/types'
-import { certificationOfferings } from '@/mocks/seed/certifications'
 import { companyOf, db, delay, now, out, requireUser, userById } from './api'
 import { evaluateClinicEligibility } from './clinics.service'
 import { pathForDepartment } from './learning.service'
@@ -74,7 +73,7 @@ export function tasksFor(userId: string): Task[] {
     }
     const unpaid = db.purchases.find((p) => p.companyId === cid && p.status === 'unpaid')
     if (unpaid) {
-      const o = certificationOfferings.find((x) => x.id === unpaid.offeringId)
+      const o = db.offerings.find((x) => x.id === unpaid.offeringId)
       tasks.push({
         id: 't-ceo-cert',
         title: 'Certification purchase awaiting decision',
@@ -305,7 +304,7 @@ export async function getCompanyDashboard() {
       .filter((p) => p.companyId === cid)
       .map((p) => ({
         purchase: p,
-        offering: certificationOfferings.find((o) => o.id === p.offeringId),
+        offering: db.offerings.find((o) => o.id === p.offeringId),
       })),
   })
 }
@@ -345,7 +344,7 @@ export async function getEmployeeDashboard() {
     tasks: tasksFor(user.id),
     credentials: certs.map((p) => ({
       purchase: p,
-      offering: certificationOfferings.find((o) => o.id === p.offeringId),
+      offering: db.offerings.find((o) => o.id === p.offeringId),
     })),
     recommendedResources: db.resources
       .filter(

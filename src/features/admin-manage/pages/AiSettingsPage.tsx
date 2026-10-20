@@ -162,7 +162,7 @@ export function AiSettingsPage() {
                         </span>
                         <span className="flex gap-1">
                           {p.isDraft ? (
-                            <StatusBadge tone="gold" icon={null}>
+                            <StatusBadge tone="coral" icon={null}>
                               Draft output
                             </StatusBadge>
                           ) : null}

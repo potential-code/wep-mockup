@@ -128,7 +128,7 @@ export function ApplicationsPage() {
                 )}
               >
                 {t.label}{' '}
-                <span className={tab === t.id ? 'text-white/70' : 'text-muted-foreground'}>
+                <span className={tab === t.id ? 'text-white/90' : 'text-muted-foreground'}>
                   {counts[t.id] ?? 0}
                 </span>
               </button>

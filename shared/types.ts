@@ -621,17 +621,23 @@ export interface Conversation {
 
 /* ------------------------------------------------------------------ certification -- */
 
+/** Draft offerings are hidden from companies; archived ones stop new purchases. */
+export type OfferingStatus = 'draft' | 'published' | 'archived'
+
 export interface CertificationOffering {
   id: ID
   slug: string
   title: string
+  status: OfferingStatus
   price: number
   currency: 'USD'
   focus: string
   scope: string[]
+  /** Kept equal to the number of exam questions. */
   examQuestions: number
   passMark: number
   image?: string
+  updatedAt?: ISODate
 }
 
 export type PurchaseStatus =

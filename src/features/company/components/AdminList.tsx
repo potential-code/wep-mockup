@@ -24,7 +24,7 @@ export function AdminList({
     <SectionCard title="Who has which rights" description="Only you can change this list.">
       <ul className="grid gap-3">
         {ceo ? (
-          <li className="flex flex-wrap items-center gap-3 rounded-xl border bg-gold-50/50 p-3.5">
+          <li className="flex flex-wrap items-center gap-3 rounded-xl border bg-coral-50/50 p-3.5">
             <UserAvatar name={fullName(ceo)} src={ceo.avatar} className="size-10" />
             <div className="min-w-0 flex-1">
               <p className="font-medium text-navy text-sm">
@@ -34,7 +34,7 @@ export function AdminList({
                 CEO · all {ALL_PERMISSIONS.length} rights on a single account
               </p>
             </div>
-            <StatusBadge tone="gold" icon={ShieldCheck}>
+            <StatusBadge tone="coral" icon={ShieldCheck}>
               Full access
             </StatusBadge>
           </li>
@@ -68,7 +68,9 @@ export function AdminList({
                 <li key={p}>
                   <StatusBadge
                     tone={
-                      p === 'submit_reports' || p === 'purchase_certifications' ? 'gold' : 'neutral'
+                      p === 'submit_reports' || p === 'purchase_certifications'
+                        ? 'coral'
+                        : 'neutral'
                     }
                     icon={null}
                   >

@@ -4,7 +4,6 @@
 import { fullName } from '@shared/permissions'
 import { DEPARTMENTS } from '@shared/reference'
 import type { DepartmentId, PrincipleId, ReportStatus, User } from '@shared/types'
-import { certificationOfferings } from '@/mocks/seed/certifications'
 import { DESIGNATED_COURSE_BY_DEPT } from '@/mocks/seed/progress'
 import { db, delay, findOr404, now, out, requireCapability } from './api'
 import { evaluateClinicEligibility } from './clinics.service'
@@ -317,7 +316,7 @@ export async function getCompanyDetail(companyId: string) {
       .filter((p) => p.companyId === c.id)
       .map((p) => ({
         purchase: p,
-        offering: certificationOfferings.find((o) => o.id === p.offeringId),
+        offering: db.offerings.find((o) => o.id === p.offeringId),
       })),
     listings: db.listings.filter((l) => l.companyId === c.id),
     bookings: db.bookings.filter((b) => b.companyId === c.id).length,
@@ -728,21 +727,23 @@ export async function getCertificationReport(f: ReportingFilters = {}) {
   const passed = confirmed.filter((p) => p.status === 'passed' || p.status === 'certificate_issued')
   const issued = all.filter((p) => p.status === 'certificate_issued')
   return out({
-    offerings: certificationOfferings.map((o) => {
-      const list = all.filter((p) => p.offeringId === o.id)
-      const conf = list.filter((p) => p.paidAt && p.status !== 'refunded')
-      return {
-        offering: o,
-        initiated: list.filter((p) => p.status !== 'unpaid').length,
-        confirmed: conf.length,
-        confirmedRevenue: conf.reduce((n, p) => n + p.amount, 0),
-        attempts: list.reduce((n, p) => n + p.attempts.length, 0),
-        passed: conf.filter((p) => p.status === 'passed' || p.status === 'certificate_issued')
-          .length,
-        issued: list.filter((p) => p.status === 'certificate_issued').length,
-        refunds: list.filter((p) => p.status === 'refunded').length,
-      }
-    }),
+    offerings: db.offerings
+      .filter((o) => o.status !== 'draft')
+      .map((o) => {
+        const list = all.filter((p) => p.offeringId === o.id)
+        const conf = list.filter((p) => p.paidAt && p.status !== 'refunded')
+        return {
+          offering: o,
+          initiated: list.filter((p) => p.status !== 'unpaid').length,
+          confirmed: conf.length,
+          confirmedRevenue: conf.reduce((n, p) => n + p.amount, 0),
+          attempts: list.reduce((n, p) => n + p.attempts.length, 0),
+          passed: conf.filter((p) => p.status === 'passed' || p.status === 'certificate_issued')
+            .length,
+          issued: list.filter((p) => p.status === 'certificate_issued').length,
+          refunds: list.filter((p) => p.status === 'refunded').length,
+        }
+      }),
     funnel: [
       { stage: 'Checkouts started', value: initiated.length },
       { stage: 'Confirmed payments', value: confirmed.length },
@@ -761,7 +762,7 @@ export async function getCertificationReport(f: ReportingFilters = {}) {
     },
     rows: all.map((p) => ({
       purchase: p,
-      offering: certificationOfferings.find((o) => o.id === p.offeringId),
+      offering: db.offerings.find((o) => o.id === p.offeringId),
       companyName: db.companies.find((c) => c.id === p.companyId)?.name ?? '',
     })),
   })

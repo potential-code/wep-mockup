@@ -9,6 +9,7 @@ import type {
   ApplicationData,
   Assessment,
   AuditEntry,
+  CertificationOffering,
   CertificationPurchase,
   ClinicEvent,
   CommsTemplate,
@@ -24,6 +25,7 @@ import type {
   Notification,
   PlatformSettings,
   PointsEvent,
+  QuizQuestion,
   Registration,
   Resource,
   Session,
@@ -33,7 +35,11 @@ import type {
 import { actions } from './seed/actions'
 import { applications } from './seed/applications'
 import { asteriaAssessment, asteriaAssessmentArchive } from './seed/assessment'
-import { certificationPurchases } from './seed/certifications'
+import {
+  certificationExams,
+  certificationOfferings,
+  certificationPurchases,
+} from './seed/certifications'
 import { threads } from './seed/community'
 import { companies } from './seed/companies'
 import { courses } from './seed/courses'
@@ -57,8 +63,6 @@ export interface DemoDb {
     documents: Application['documents']
     savedAt: string
   } | null
-  /** Reference of the application the visitor submitted in this browser. */
-  myApplicationId: string | null
   users: User[]
   companies: Company[]
   invitations: Invitation[]
@@ -77,6 +81,9 @@ export interface DemoDb {
   savedResources: { userId: string; resourceId: string; at: string }[]
   recentResources: { userId: string; resourceId: string; at: string }[]
   conversations: Conversation[]
+  offerings: CertificationOffering[]
+  /** Exam questions by offering id, kept apart so answers never reach company pages. */
+  certExams: Record<string, QuizQuestion[]>
   purchases: CertificationPurchase[]
   threads: Thread[]
   listings: Listing[]
@@ -89,7 +96,7 @@ export interface DemoDb {
 }
 
 const STORAGE_KEY = 'weps-demo-db'
-const VERSION = 6
+const VERSION = 7
 
 const clone = <T>(value: T): T => structuredClone(value)
 
@@ -98,7 +105,6 @@ function seed(): DemoDb {
     version: VERSION,
     session: null,
     joinDraft: null,
-    myApplicationId: null,
     users,
     companies,
     invitations,
@@ -120,6 +126,8 @@ function seed(): DemoDb {
     ],
     recentResources: [],
     conversations: [],
+    offerings: certificationOfferings,
+    certExams: certificationExams,
     purchases: certificationPurchases,
     threads,
     listings,

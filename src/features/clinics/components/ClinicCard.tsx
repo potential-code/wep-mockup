@@ -38,7 +38,7 @@ export function ClinicCard({ row }: { row: ClinicRowData }) {
               P{e.principle} · {principleById(e.principle).short}
             </span>
           </div>
-          <h3 className="font-heading font-semibold text-navy leading-snug">{e.title}</h3>
+          <h3 className="font-heading font-medium text-navy leading-snug">{e.title}</h3>
           <div className="flex items-center gap-2 text-sm">
             <UserAvatar name={row.facilitatorName} src={row.facilitatorAvatar} className="size-7" />
             <span className="text-muted-foreground">{row.facilitatorName}</span>

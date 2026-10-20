@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 import { CountUp } from '@/components/motion/CountUp'
 import { cn } from '@/lib/utils'
 
-export type StatTone = 'blue' | 'navy' | 'gold' | 'success' | 'danger'
+export type StatTone = 'blue' | 'navy' | 'coral' | 'success' | 'danger'
 
 /** Brand-coloured surfaces for KPI tiles. Text colours are picked per surface for contrast. */
 export const STAT_TONES: Record<
@@ -15,41 +15,41 @@ export const STAT_TONES: Record<
   navy: {
     surface: 'bg-[linear-gradient(135deg,var(--navy-900),var(--navy)_55%,var(--navy-700))]',
     text: 'text-white',
-    muted: 'text-white/80',
+    muted: 'text-white/90',
     track: 'bg-white/20',
-    fill: 'bg-gold',
+    fill: 'bg-coral',
     icon: 'text-white/85',
   },
   blue: {
-    surface: 'bg-[linear-gradient(135deg,#0e5a85,var(--blue-600)_45%,var(--blue))]',
+    surface: 'bg-[linear-gradient(135deg,#00639a,var(--blue-600)_45%,var(--blue))]',
     text: 'text-white',
     muted: 'text-white/90',
     track: 'bg-white/25',
     fill: 'bg-white',
     icon: 'text-white/85',
   },
-  gold: {
-    surface: 'bg-[linear-gradient(135deg,#e6bd6c,var(--gold)_50%,#c8933a)]',
-    text: 'text-navy-900',
-    muted: 'text-navy-900/80',
-    track: 'bg-navy/15',
-    fill: 'bg-navy',
-    icon: 'text-navy/75',
+  coral: {
+    surface: 'bg-[linear-gradient(135deg,var(--coral-600),#c4352c_55%,var(--coral-700))]',
+    text: 'text-white',
+    muted: 'text-white',
+    track: 'bg-white/25',
+    fill: 'bg-white',
+    icon: 'text-white/85',
   },
   success: {
     surface: 'bg-[linear-gradient(135deg,var(--navy),var(--blue-600)_60%,var(--blue))]',
     text: 'text-white',
     muted: 'text-white/90',
     track: 'bg-white/25',
-    fill: 'bg-gold',
+    fill: 'bg-coral',
     icon: 'text-white/85',
   },
   danger: {
-    surface: 'bg-[linear-gradient(135deg,var(--navy-900),var(--navy-700)_60%,#7a5a2a)]',
+    surface: 'bg-[linear-gradient(135deg,var(--navy-900),var(--navy-700)_60%,#7a2a26)]',
     text: 'text-white',
-    muted: 'text-white/80',
+    muted: 'text-white/90',
     track: 'bg-white/20',
-    fill: 'bg-gold',
+    fill: 'bg-coral',
     icon: 'text-white/85',
   },
 }
@@ -105,7 +105,7 @@ export function StatCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className={cn('font-medium text-sm', t.muted)}>{label}</p>
-          <p className="mt-2 font-bold font-heading text-3xl tabular-nums sm:text-4xl">
+          <p className="mt-2 font-semibold font-heading text-3xl tabular-nums sm:text-4xl">
             {typeof value === 'number' ? (
               <CountUp value={value} decimals={decimals} suffix={suffix} />
             ) : (

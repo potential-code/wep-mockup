@@ -103,7 +103,7 @@ function RewardCard({
           className={cn(
             'relative flex items-center gap-4 px-5 py-5',
             unlocked
-              ? 'bg-[radial-gradient(90%_120%_at_0%_0%,rgba(214,164,74,0.35),transparent_60%),linear-gradient(135deg,var(--navy-900),var(--navy))] text-white'
+              ? 'bg-[radial-gradient(90%_120%_at_0%_0%,rgba(240,73,62,0.35),transparent_60%),linear-gradient(135deg,var(--navy-900),var(--navy))] text-white'
               : 'bg-[linear-gradient(135deg,var(--surface),#e9eff5)] text-navy',
           )}
         >
@@ -111,14 +111,14 @@ function RewardCard({
             className={cn(
               'grid size-14 shrink-0 place-items-center rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.35)]',
               unlocked
-                ? 'bg-gradient-to-br from-gold to-gold-700 text-navy-900'
+                ? 'bg-gradient-to-br from-coral to-coral-700 text-navy-900'
                 : 'bg-white text-blue ring-1 ring-border',
             )}
           >
             <Icon className="size-7" strokeWidth={1.75} aria-hidden />
           </span>
           <div className="grid min-w-0 flex-1 gap-1">
-            <h3 className="font-heading font-semibold text-lg leading-tight">{title}</h3>
+            <h3 className="font-heading font-medium text-lg leading-tight">{title}</h3>
             <span className={cn('text-sm', unlocked ? 'text-white/75' : 'text-muted-foreground')}>
               {price}
             </span>
@@ -126,7 +126,7 @@ function RewardCard({
           <span
             className={cn(
               'inline-flex shrink-0 items-center gap-1 self-start rounded-full px-2.5 py-1 font-semibold text-xs',
-              unlocked ? 'bg-gold text-navy-900' : 'bg-white text-navy ring-1 ring-border',
+              unlocked ? 'bg-coral-600 text-white' : 'bg-white text-navy ring-1 ring-border',
             )}
           >
             {unlocked ? (
@@ -157,7 +157,7 @@ function RewardCard({
                   className={cn(
                     'h-full rounded-full',
                     unlocked
-                      ? 'bg-gradient-to-r from-gold to-gold-700'
+                      ? 'bg-gradient-to-r from-coral to-coral-700'
                       : 'bg-gradient-to-r from-blue to-blue-600',
                   )}
                   initial={reduce ? false : { scaleX: 0 }}

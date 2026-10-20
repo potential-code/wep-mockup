@@ -15,8 +15,8 @@ import {
 } from 'lucide-react'
 import type { LedgerRow } from '@/queries/learning.queries'
 
-/** Medal finish. Blue for first steps, gold for milestones, navy for the rarest awards. */
-export type MedalTier = 'blue' | 'gold' | 'navy'
+/** Medal finish. Blue for first steps, coral for milestones, navy for the rarest awards. */
+export type MedalTier = 'blue' | 'coral' | 'navy'
 
 export interface Achievement {
   id: string
@@ -45,8 +45,8 @@ export interface Level {
 export const LEVELS: Level[] = [
   { name: 'Starter', min: 0, tier: 'blue' },
   { name: 'Contributor', min: 150, tier: 'blue' },
-  { name: 'Advocate', min: 400, tier: 'gold' },
-  { name: 'Champion', min: 800, tier: 'gold' },
+  { name: 'Advocate', min: 400, tier: 'coral' },
+  { name: 'Champion', min: 800, tier: 'coral' },
   { name: 'Trailblazer', min: 1500, tier: 'navy' },
 ]
 
@@ -130,7 +130,7 @@ export function deriveAchievements(ledger: LedgerRow[], balance: PointsBalance):
       description: 'Passed a pathway quiz.',
       criteria: 'Pass the quiz in your designated pathway course.',
       icon: Medal,
-      tier: 'gold',
+      tier: 'coral',
       target: 1,
       unit: 'quiz',
       ...count('quiz_pass', 1),
@@ -141,7 +141,7 @@ export function deriveAchievements(ledger: LedgerRow[], balance: PointsBalance):
       description: 'Reached the qualifying milestone for your clinic.',
       criteria: `Earn ${clinicTarget} qualifying points from your pathway course.`,
       icon: ShieldCheck,
-      tier: 'gold',
+      tier: 'coral',
       target: clinicTarget,
       unit: 'qualifying points',
       current: balance.qualifying,
@@ -186,7 +186,7 @@ export function deriveAchievements(ledger: LedgerRow[], balance: PointsBalance):
       description: 'Earned 250 lifetime points.',
       criteria: 'Earn 250 lifetime points.',
       icon: Flame,
-      tier: 'gold',
+      tier: 'coral',
       target: 250,
       unit: 'points',
       current: balance.lifetime,
@@ -198,7 +198,7 @@ export function deriveAchievements(ledger: LedgerRow[], balance: PointsBalance):
       description: 'Earned 500 lifetime points.',
       criteria: 'Earn 500 lifetime points.',
       icon: Sparkles,
-      tier: 'gold',
+      tier: 'coral',
       target: 500,
       unit: 'points',
       current: balance.lifetime,

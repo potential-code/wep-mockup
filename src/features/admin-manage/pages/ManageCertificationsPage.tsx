@@ -1,32 +1,23 @@
-import { Award, CreditCard, RotateCcw } from 'lucide-react'
-import { useState } from 'react'
-import { toast } from 'sonner'
+import type { CertificationOffering } from '@shared/types'
+import { Link } from '@tanstack/react-router'
+import { Award, CreditCard, ListChecks, Pencil, Plus, RotateCcw } from 'lucide-react'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { SectionCard } from '@/components/shared/Cards'
 import { type Column, columnsToCsvRows, DataTable } from '@/components/shared/DataTable'
 import { StatCard } from '@/components/shared/StatCard'
-import { ErrorState } from '@/components/shared/States'
-import { WorkflowStatus } from '@/components/shared/StatusBadge'
+import { CardGridSkeleton, ErrorState } from '@/components/shared/States'
+import { StatusBadge, WorkflowStatus } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { downloadText, formatCurrency, formatDate } from '@/lib/format'
-import { useSettings, useUpdateSettings } from '@/queries/admin.queries'
-import { OFFERINGS, useAllPurchases } from '@/queries/certification.queries'
-import { Field, toCsvText } from '../components/common'
+import { useAdminOfferings, useAllPurchases } from '@/queries/certification.queries'
+import { toCsvText } from '../components/common'
+import { OFFERING_STATUS } from './CertificationEditorPage'
 
 type Row = NonNullable<ReturnType<typeof useAllPurchases>['data']>[number]
 
 export function ManageCertificationsPage() {
   const { data, isLoading, error, refetch } = useAllPurchases()
-  const settings = useSettings()
-  const update = useUpdateSettings()
-  const [config, setConfig] = useState<Record<string, { price: string; questions: string }>>(
-    Object.fromEntries(
-      OFFERINGS.map((o) => [o.id, { price: String(o.price), questions: String(o.examQuestions) }]),
-    ),
-  )
-  const [passMark, setPassMark] = useState<string>()
+  const offerings = useAdminOfferings()
   const rows = data ?? []
   const paid = rows.filter(
     (r) =>
@@ -104,7 +95,14 @@ export function ManageCertificationsPage() {
     <div>
       <PageHeader
         title="Certifications and Payments"
-        description="Proposed prices and pass rules for discussion. Certificates are issued only after a confirmed demo payment and a passed exam."
+        description="Proposed certifications, prices and exams for discussion. Certificates are issued only after a confirmed demo payment and a passed exam."
+        actions={
+          <Button asChild>
+            <Link to="/admin/manage/certifications/$offeringId" params={{ offeringId: 'new' }}>
+              <Plus aria-hidden /> New certification
+            </Link>
+          </Button>
+        }
       />
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard label="Demo revenue" value={formatCurrency(revenue)} icon={CreditCard} />
@@ -114,7 +112,7 @@ export function ManageCertificationsPage() {
           tone="success"
           icon={Award}
         />
-        <StatCard label="Refunded" value={refunds.length} tone="gold" icon={RotateCcw} />
+        <StatCard label="Refunded" value={refunds.length} tone="coral" icon={RotateCcw} />
       </div>
       <Tabs defaultValue="offerings">
         <TabsList>
@@ -123,90 +121,18 @@ export function ManageCertificationsPage() {
           <TabsTrigger value="credentials">Credentials</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="offerings" className="grid gap-4 pt-3">
-          <div className="grid gap-4 lg:grid-cols-3">
-            {OFFERINGS.map((o) => (
-              <SectionCard key={o.id} title={o.title} description={o.focus}>
-                <div className="grid gap-3">
-                  <Field label="Price (USD)">
-                    <Input
-                      type="number"
-                      min={0}
-                      value={config[o.id]?.price}
-                      onChange={(e) =>
-                        setConfig((c) => ({
-                          ...c,
-                          [o.id]: {
-                            ...(c[o.id] as { price: string; questions: string }),
-                            price: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  </Field>
-                  <Field label="Exam questions">
-                    <Input
-                      type="number"
-                      min={1}
-                      value={config[o.id]?.questions}
-                      onChange={(e) =>
-                        setConfig((c) => ({
-                          ...c,
-                          [o.id]: {
-                            ...(c[o.id] as { price: string; questions: string }),
-                            questions: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  </Field>
-                  <ul className="list-disc ps-5 text-muted-foreground text-xs">
-                    {o.scope.map((s) => (
-                      <li key={s}>{s}</li>
-                    ))}
-                  </ul>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => toast.success(`${o.title} saved (demo)`)}
-                  >
-                    Save offering
-                  </Button>
-                </div>
-              </SectionCard>
-            ))}
-          </div>
-          <SectionCard title="Pass rules" description="Applies to all three exams.">
-            <div className="flex flex-wrap items-end gap-3">
-              <Field label="Pass mark (%)" className="w-40">
-                <Input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={passMark ?? settings.data?.certificationPassMark ?? ''}
-                  onChange={(e) => setPassMark(e.target.value)}
-                />
-              </Field>
-              <Button
-                disabled={
-                  update.isPending ||
-                  passMark === undefined ||
-                  !(Number(passMark) > 0 && Number(passMark) <= 100)
-                }
-                onClick={() =>
-                  update.mutate(
-                    { certificationPassMark: Number(passMark) },
-                    { onSuccess: () => toast.success('Pass mark updated') },
-                  )
-                }
-              >
-                {update.isPending ? 'Saving…' : 'Save pass mark'}
-              </Button>
-              <p className="text-muted-foreground text-sm">
-                Retries are allowed; each attempt is recorded.
-              </p>
-            </div>
-          </SectionCard>
+        <TabsContent value="offerings" className="pt-3">
+          {offerings.isLoading ? (
+            <CardGridSkeleton count={3} />
+          ) : (
+            <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {(offerings.data ?? []).map((r) => (
+                <li key={r.offering.id} className="min-w-0">
+                  <OfferingTile {...r} />
+                </li>
+              ))}
+            </ul>
+          )}
         </TabsContent>
 
         <TabsContent value="transactions" className="pt-3">
@@ -239,5 +165,70 @@ export function ManageCertificationsPage() {
         </TabsContent>
       </Tabs>
     </div>
+  )
+}
+
+function OfferingTile({
+  offering: o,
+  purchases,
+  issued,
+}: {
+  offering: CertificationOffering
+  purchases: number
+  issued: number
+}) {
+  const status = OFFERING_STATUS[o.status]
+  return (
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-lift">
+      <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+        {o.image ? (
+          <img
+            src={o.image}
+            alt=""
+            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : null}
+        <span className="absolute end-3 top-3">
+          <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col gap-2 p-4">
+        <h2 className="font-heading font-medium text-navy leading-snug">
+          <Link
+            to="/admin/manage/certifications/$offeringId"
+            params={{ offeringId: o.id }}
+            className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
+          >
+            {o.title}
+          </Link>
+        </h2>
+        <p className="line-clamp-2 text-muted-foreground text-sm">{o.focus}</p>
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground text-xs">
+          <span className="inline-flex items-center gap-1">
+            <ListChecks className="size-3.5" aria-hidden /> {o.examQuestions} questions ·{' '}
+            {o.passMark}% to pass
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <CreditCard className="size-3.5" aria-hidden /> {purchases} paid · {issued} issued
+          </span>
+        </p>
+        <div className="mt-auto flex items-center gap-2 pt-2">
+          <span className="font-heading font-medium text-navy">
+            {formatCurrency(o.price, o.currency)}
+          </span>
+          <Button
+            asChild
+            variant="ghost"
+            size="icon-sm"
+            className="relative z-10 ms-auto"
+            aria-label={`Edit ${o.title}`}
+          >
+            <Link to="/admin/manage/certifications/$offeringId" params={{ offeringId: o.id }}>
+              <Pencil />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </article>
   )
 }

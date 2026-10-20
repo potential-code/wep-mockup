@@ -197,9 +197,7 @@ function Wizard({
               {section ? (
                 <>
                   <div>
-                    <h2 className="font-heading font-semibold text-navy text-xl">
-                      {section.title}
-                    </h2>
+                    <h2 className="font-heading font-medium text-navy text-xl">{section.title}</h2>
                     <p className="text-muted-foreground text-sm">{section.description}</p>
                   </div>
                   {section.questions.map((q, i) => (

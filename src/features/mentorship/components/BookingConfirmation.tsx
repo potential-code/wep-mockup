@@ -46,7 +46,7 @@ export function BookingConfirmation({ booking }: { booking: ConfirmedBooking }) 
         <span className="grid size-14 place-items-center rounded-full bg-success-soft text-success">
           <CalendarCheck className="size-7" aria-hidden />
         </span>
-        <h2 id="confirmed-h" className="font-heading font-semibold text-navy text-section">
+        <h2 id="confirmed-h" className="font-heading font-medium text-navy text-section">
           Your session is booked
         </h2>
         <p className="text-muted-foreground">
@@ -69,7 +69,7 @@ export function BookingConfirmation({ booking }: { booking: ConfirmedBooking }) 
           </dd>
         </div>
         <div className="flex items-start gap-2 sm:col-span-2">
-          <Coins className="mt-0.5 size-4 text-gold-700" aria-hidden />
+          <Coins className="mt-0.5 size-4 text-coral-700" aria-hidden />
           <div>
             <dt className="sr-only">Points</dt>
             <dd>

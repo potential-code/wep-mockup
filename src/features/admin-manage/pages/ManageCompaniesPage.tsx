@@ -124,7 +124,7 @@ export function ManageCompaniesPage() {
           value={rows.filter((r) => r.company.signatoryStatus === 'approved').length}
           icon={Building2}
         />
-        <StatCard label="Profile changes to review" value={pendingRev} tone="gold" icon={Check} />
+        <StatCard label="Profile changes to review" value={pendingRev} tone="coral" icon={Check} />
         <StatCard
           label="Access suspended"
           value={rows.filter((r) => r.company.signatoryStatus === 'suspended').length}
@@ -215,10 +215,8 @@ function CompanyPanel({ row }: { row: Row }) {
         </dl>
 
         {rev ? (
-          <section className="grid gap-3 rounded-xl border border-gold/40 bg-gold-50/60 p-4">
-            <h3 className="font-heading font-semibold text-navy text-sm">
-              Pending profile revision
-            </h3>
+          <section className="grid gap-3 rounded-xl border border-coral/40 bg-coral-50/60 p-4">
+            <h3 className="font-heading font-medium text-navy text-sm">Pending profile revision</h3>
             <p className="text-sm">
               <span className="font-medium">{REVISION_LABEL[rev.field] ?? rev.field}</span> changed
               on {formatDate(rev.requestedAt)}:
@@ -259,7 +257,7 @@ function CompanyPanel({ row }: { row: Row }) {
         )}
 
         <section className="grid gap-3">
-          <h3 className="font-heading font-semibold text-navy text-sm">Access control</h3>
+          <h3 className="font-heading font-medium text-navy text-sm">Access control</h3>
           <p className="text-muted-foreground text-sm">
             {suspended
               ? 'Users of this company cannot sign in to company workspaces until access is restored.'

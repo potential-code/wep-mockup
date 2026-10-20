@@ -38,7 +38,6 @@ import { Route as AppAdminManageIndexRouteImport } from './routes/_app/admin/man
 import { Route as AppAdminManageAiRouteImport } from './routes/_app/admin/manage/ai'
 import { Route as AppAdminManageAssessmentsRouteImport } from './routes/_app/admin/manage/assessments'
 import { Route as AppAdminManageAuditRouteImport } from './routes/_app/admin/manage/audit'
-import { Route as AppAdminManageCertificationsRouteImport } from './routes/_app/admin/manage/certifications'
 import { Route as AppAdminManageCommunicationsRouteImport } from './routes/_app/admin/manage/communications'
 import { Route as AppAdminManageCommunityRouteImport } from './routes/_app/admin/manage/community'
 import { Route as AppAdminManageCompaniesRouteImport } from './routes/_app/admin/manage/companies'
@@ -87,6 +86,8 @@ import { Route as AppPortalResourcesIndexRouteImport } from './routes/_app/porta
 import { Route as AppPortalResourcesResourceIdRouteImport } from './routes/_app/portal/resources/$resourceId'
 import { Route as AppAdminManageApplicationsIndexRouteImport } from './routes/_app/admin/manage/applications/index'
 import { Route as AppAdminManageApplicationsApplicationIdRouteImport } from './routes/_app/admin/manage/applications/$applicationId'
+import { Route as AppAdminManageCertificationsIndexRouteImport } from './routes/_app/admin/manage/certifications/index'
+import { Route as AppAdminManageCertificationsOfferingIdRouteImport } from './routes/_app/admin/manage/certifications/$offeringId'
 import { Route as AppAdminManageCoursesIndexRouteImport } from './routes/_app/admin/manage/courses/index'
 import { Route as AppAdminManageCoursesCourseIdRouteImport } from './routes/_app/admin/manage/courses/$courseId'
 import { Route as AppAdminReportingAnnualReportsIndexRouteImport } from './routes/_app/admin/reporting/annual-reports/index'
@@ -248,12 +249,6 @@ const AppAdminManageAuditRoute = AppAdminManageAuditRouteImport.update({
   path: '/admin/manage/audit',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminManageCertificationsRoute =
-  AppAdminManageCertificationsRouteImport.update({
-    id: '/admin/manage/certifications',
-    path: '/admin/manage/certifications',
-    getParentRoute: () => AppRoute,
-  } as any)
 const AppAdminManageCommunicationsRoute =
   AppAdminManageCommunicationsRouteImport.update({
     id: '/admin/manage/communications',
@@ -521,6 +516,18 @@ const AppAdminManageApplicationsApplicationIdRoute =
     path: '/admin/manage/applications/$applicationId',
     getParentRoute: () => AppRoute,
   } as any)
+const AppAdminManageCertificationsIndexRoute =
+  AppAdminManageCertificationsIndexRouteImport.update({
+    id: '/admin/manage/certifications/',
+    path: '/admin/manage/certifications/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppAdminManageCertificationsOfferingIdRoute =
+  AppAdminManageCertificationsOfferingIdRouteImport.update({
+    id: '/admin/manage/certifications/$offeringId',
+    path: '/admin/manage/certifications/$offeringId',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppAdminManageCoursesIndexRoute =
   AppAdminManageCoursesIndexRouteImport.update({
     id: '/admin/manage/courses/',
@@ -650,7 +657,6 @@ export interface FileRoutesByFullPath {
   '/admin/manage/ai': typeof AppAdminManageAiRoute
   '/admin/manage/assessments': typeof AppAdminManageAssessmentsRoute
   '/admin/manage/audit': typeof AppAdminManageAuditRoute
-  '/admin/manage/certifications': typeof AppAdminManageCertificationsRoute
   '/admin/manage/communications': typeof AppAdminManageCommunicationsRoute
   '/admin/manage/community': typeof AppAdminManageCommunityRoute
   '/admin/manage/companies': typeof AppAdminManageCompaniesRoute
@@ -699,6 +705,7 @@ export interface FileRoutesByFullPath {
   '/portal/reports/': typeof AppPortalReportsIndexRoute
   '/portal/resources/': typeof AppPortalResourcesIndexRoute
   '/admin/manage/applications/$applicationId': typeof AppAdminManageApplicationsApplicationIdRoute
+  '/admin/manage/certifications/$offeringId': typeof AppAdminManageCertificationsOfferingIdRoute
   '/admin/manage/courses/$courseId': typeof AppAdminManageCoursesCourseIdRoute
   '/admin/reporting/annual-reports/$reportId': typeof AppAdminReportingAnnualReportsReportIdRoute
   '/admin/reporting/companies/$companyId': typeof AppAdminReportingCompaniesCompanyIdRoute
@@ -712,6 +719,7 @@ export interface FileRoutesByFullPath {
   '/portal/learn/$courseId/$lessonId': typeof AppPortalLearnCourseIdLessonIdRoute
   '/portal/mentorship/book/$mentorId': typeof AppPortalMentorshipBookMentorIdRoute
   '/admin/manage/applications/': typeof AppAdminManageApplicationsIndexRoute
+  '/admin/manage/certifications/': typeof AppAdminManageCertificationsIndexRoute
   '/admin/manage/courses/': typeof AppAdminManageCoursesIndexRoute
   '/admin/reporting/annual-reports/': typeof AppAdminReportingAnnualReportsIndexRoute
   '/admin/reporting/companies/': typeof AppAdminReportingCompaniesIndexRoute
@@ -742,7 +750,6 @@ export interface FileRoutesByTo {
   '/admin/manage/ai': typeof AppAdminManageAiRoute
   '/admin/manage/assessments': typeof AppAdminManageAssessmentsRoute
   '/admin/manage/audit': typeof AppAdminManageAuditRoute
-  '/admin/manage/certifications': typeof AppAdminManageCertificationsRoute
   '/admin/manage/communications': typeof AppAdminManageCommunicationsRoute
   '/admin/manage/community': typeof AppAdminManageCommunityRoute
   '/admin/manage/companies': typeof AppAdminManageCompaniesRoute
@@ -791,6 +798,7 @@ export interface FileRoutesByTo {
   '/portal/reports': typeof AppPortalReportsIndexRoute
   '/portal/resources': typeof AppPortalResourcesIndexRoute
   '/admin/manage/applications/$applicationId': typeof AppAdminManageApplicationsApplicationIdRoute
+  '/admin/manage/certifications/$offeringId': typeof AppAdminManageCertificationsOfferingIdRoute
   '/admin/manage/courses/$courseId': typeof AppAdminManageCoursesCourseIdRoute
   '/admin/reporting/annual-reports/$reportId': typeof AppAdminReportingAnnualReportsReportIdRoute
   '/admin/reporting/companies/$companyId': typeof AppAdminReportingCompaniesCompanyIdRoute
@@ -804,6 +812,7 @@ export interface FileRoutesByTo {
   '/portal/learn/$courseId/$lessonId': typeof AppPortalLearnCourseIdLessonIdRoute
   '/portal/mentorship/book/$mentorId': typeof AppPortalMentorshipBookMentorIdRoute
   '/admin/manage/applications': typeof AppAdminManageApplicationsIndexRoute
+  '/admin/manage/certifications': typeof AppAdminManageCertificationsIndexRoute
   '/admin/manage/courses': typeof AppAdminManageCoursesIndexRoute
   '/admin/reporting/annual-reports': typeof AppAdminReportingAnnualReportsIndexRoute
   '/admin/reporting/companies': typeof AppAdminReportingCompaniesIndexRoute
@@ -840,7 +849,6 @@ export interface FileRoutesById {
   '/_app/admin/manage/ai': typeof AppAdminManageAiRoute
   '/_app/admin/manage/assessments': typeof AppAdminManageAssessmentsRoute
   '/_app/admin/manage/audit': typeof AppAdminManageAuditRoute
-  '/_app/admin/manage/certifications': typeof AppAdminManageCertificationsRoute
   '/_app/admin/manage/communications': typeof AppAdminManageCommunicationsRoute
   '/_app/admin/manage/community': typeof AppAdminManageCommunityRoute
   '/_app/admin/manage/companies': typeof AppAdminManageCompaniesRoute
@@ -889,6 +897,7 @@ export interface FileRoutesById {
   '/_app/portal/reports/': typeof AppPortalReportsIndexRoute
   '/_app/portal/resources/': typeof AppPortalResourcesIndexRoute
   '/_app/admin/manage/applications/$applicationId': typeof AppAdminManageApplicationsApplicationIdRoute
+  '/_app/admin/manage/certifications/$offeringId': typeof AppAdminManageCertificationsOfferingIdRoute
   '/_app/admin/manage/courses/$courseId': typeof AppAdminManageCoursesCourseIdRoute
   '/_app/admin/reporting/annual-reports/$reportId': typeof AppAdminReportingAnnualReportsReportIdRoute
   '/_app/admin/reporting/companies/$companyId': typeof AppAdminReportingCompaniesCompanyIdRoute
@@ -902,6 +911,7 @@ export interface FileRoutesById {
   '/_app/portal/learn/$courseId/$lessonId': typeof AppPortalLearnCourseIdLessonIdRoute
   '/_app/portal/mentorship/book/$mentorId': typeof AppPortalMentorshipBookMentorIdRoute
   '/_app/admin/manage/applications/': typeof AppAdminManageApplicationsIndexRoute
+  '/_app/admin/manage/certifications/': typeof AppAdminManageCertificationsIndexRoute
   '/_app/admin/manage/courses/': typeof AppAdminManageCoursesIndexRoute
   '/_app/admin/reporting/annual-reports/': typeof AppAdminReportingAnnualReportsIndexRoute
   '/_app/admin/reporting/companies/': typeof AppAdminReportingCompaniesIndexRoute
@@ -936,7 +946,6 @@ export interface FileRouteTypes {
     | '/admin/manage/ai'
     | '/admin/manage/assessments'
     | '/admin/manage/audit'
-    | '/admin/manage/certifications'
     | '/admin/manage/communications'
     | '/admin/manage/community'
     | '/admin/manage/companies'
@@ -985,6 +994,7 @@ export interface FileRouteTypes {
     | '/portal/reports/'
     | '/portal/resources/'
     | '/admin/manage/applications/$applicationId'
+    | '/admin/manage/certifications/$offeringId'
     | '/admin/manage/courses/$courseId'
     | '/admin/reporting/annual-reports/$reportId'
     | '/admin/reporting/companies/$companyId'
@@ -998,6 +1008,7 @@ export interface FileRouteTypes {
     | '/portal/learn/$courseId/$lessonId'
     | '/portal/mentorship/book/$mentorId'
     | '/admin/manage/applications/'
+    | '/admin/manage/certifications/'
     | '/admin/manage/courses/'
     | '/admin/reporting/annual-reports/'
     | '/admin/reporting/companies/'
@@ -1028,7 +1039,6 @@ export interface FileRouteTypes {
     | '/admin/manage/ai'
     | '/admin/manage/assessments'
     | '/admin/manage/audit'
-    | '/admin/manage/certifications'
     | '/admin/manage/communications'
     | '/admin/manage/community'
     | '/admin/manage/companies'
@@ -1077,6 +1087,7 @@ export interface FileRouteTypes {
     | '/portal/reports'
     | '/portal/resources'
     | '/admin/manage/applications/$applicationId'
+    | '/admin/manage/certifications/$offeringId'
     | '/admin/manage/courses/$courseId'
     | '/admin/reporting/annual-reports/$reportId'
     | '/admin/reporting/companies/$companyId'
@@ -1090,6 +1101,7 @@ export interface FileRouteTypes {
     | '/portal/learn/$courseId/$lessonId'
     | '/portal/mentorship/book/$mentorId'
     | '/admin/manage/applications'
+    | '/admin/manage/certifications'
     | '/admin/manage/courses'
     | '/admin/reporting/annual-reports'
     | '/admin/reporting/companies'
@@ -1125,7 +1137,6 @@ export interface FileRouteTypes {
     | '/_app/admin/manage/ai'
     | '/_app/admin/manage/assessments'
     | '/_app/admin/manage/audit'
-    | '/_app/admin/manage/certifications'
     | '/_app/admin/manage/communications'
     | '/_app/admin/manage/community'
     | '/_app/admin/manage/companies'
@@ -1174,6 +1185,7 @@ export interface FileRouteTypes {
     | '/_app/portal/reports/'
     | '/_app/portal/resources/'
     | '/_app/admin/manage/applications/$applicationId'
+    | '/_app/admin/manage/certifications/$offeringId'
     | '/_app/admin/manage/courses/$courseId'
     | '/_app/admin/reporting/annual-reports/$reportId'
     | '/_app/admin/reporting/companies/$companyId'
@@ -1187,6 +1199,7 @@ export interface FileRouteTypes {
     | '/_app/portal/learn/$courseId/$lessonId'
     | '/_app/portal/mentorship/book/$mentorId'
     | '/_app/admin/manage/applications/'
+    | '/_app/admin/manage/certifications/'
     | '/_app/admin/manage/courses/'
     | '/_app/admin/reporting/annual-reports/'
     | '/_app/admin/reporting/companies/'
@@ -1403,13 +1416,6 @@ declare module '@tanstack/react-router' {
       path: '/admin/manage/audit'
       fullPath: '/admin/manage/audit'
       preLoaderRoute: typeof AppAdminManageAuditRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/admin/manage/certifications': {
-      id: '/_app/admin/manage/certifications'
-      path: '/admin/manage/certifications'
-      fullPath: '/admin/manage/certifications'
-      preLoaderRoute: typeof AppAdminManageCertificationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/admin/manage/communications': {
@@ -1748,6 +1754,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminManageApplicationsApplicationIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/manage/certifications/': {
+      id: '/_app/admin/manage/certifications/'
+      path: '/admin/manage/certifications'
+      fullPath: '/admin/manage/certifications/'
+      preLoaderRoute: typeof AppAdminManageCertificationsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/manage/certifications/$offeringId': {
+      id: '/_app/admin/manage/certifications/$offeringId'
+      path: '/admin/manage/certifications/$offeringId'
+      fullPath: '/admin/manage/certifications/$offeringId'
+      preLoaderRoute: typeof AppAdminManageCertificationsOfferingIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/manage/courses/': {
       id: '/_app/admin/manage/courses/'
       path: '/admin/manage/courses'
@@ -1938,7 +1958,6 @@ interface AppRouteChildren {
   AppAdminManageAiRoute: typeof AppAdminManageAiRoute
   AppAdminManageAssessmentsRoute: typeof AppAdminManageAssessmentsRoute
   AppAdminManageAuditRoute: typeof AppAdminManageAuditRoute
-  AppAdminManageCertificationsRoute: typeof AppAdminManageCertificationsRoute
   AppAdminManageCommunicationsRoute: typeof AppAdminManageCommunicationsRoute
   AppAdminManageCommunityRoute: typeof AppAdminManageCommunityRoute
   AppAdminManageCompaniesRoute: typeof AppAdminManageCompaniesRoute
@@ -1980,6 +1999,7 @@ interface AppRouteChildren {
   AppPortalReportsIndexRoute: typeof AppPortalReportsIndexRoute
   AppPortalResourcesIndexRoute: typeof AppPortalResourcesIndexRoute
   AppAdminManageApplicationsApplicationIdRoute: typeof AppAdminManageApplicationsApplicationIdRoute
+  AppAdminManageCertificationsOfferingIdRoute: typeof AppAdminManageCertificationsOfferingIdRoute
   AppAdminManageCoursesCourseIdRoute: typeof AppAdminManageCoursesCourseIdRoute
   AppAdminReportingAnnualReportsReportIdRoute: typeof AppAdminReportingAnnualReportsReportIdRoute
   AppAdminReportingCompaniesCompanyIdRoute: typeof AppAdminReportingCompaniesCompanyIdRoute
@@ -1989,6 +2009,7 @@ interface AppRouteChildren {
   AppPortalLearnCourseIdLessonIdRoute: typeof AppPortalLearnCourseIdLessonIdRoute
   AppPortalMentorshipBookMentorIdRoute: typeof AppPortalMentorshipBookMentorIdRoute
   AppAdminManageApplicationsIndexRoute: typeof AppAdminManageApplicationsIndexRoute
+  AppAdminManageCertificationsIndexRoute: typeof AppAdminManageCertificationsIndexRoute
   AppAdminManageCoursesIndexRoute: typeof AppAdminManageCoursesIndexRoute
   AppAdminReportingAnnualReportsIndexRoute: typeof AppAdminReportingAnnualReportsIndexRoute
   AppAdminReportingCompaniesIndexRoute: typeof AppAdminReportingCompaniesIndexRoute
@@ -2011,7 +2032,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminManageAiRoute: AppAdminManageAiRoute,
   AppAdminManageAssessmentsRoute: AppAdminManageAssessmentsRoute,
   AppAdminManageAuditRoute: AppAdminManageAuditRoute,
-  AppAdminManageCertificationsRoute: AppAdminManageCertificationsRoute,
   AppAdminManageCommunicationsRoute: AppAdminManageCommunicationsRoute,
   AppAdminManageCommunityRoute: AppAdminManageCommunityRoute,
   AppAdminManageCompaniesRoute: AppAdminManageCompaniesRoute,
@@ -2054,6 +2074,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppPortalResourcesIndexRoute: AppPortalResourcesIndexRoute,
   AppAdminManageApplicationsApplicationIdRoute:
     AppAdminManageApplicationsApplicationIdRoute,
+  AppAdminManageCertificationsOfferingIdRoute:
+    AppAdminManageCertificationsOfferingIdRoute,
   AppAdminManageCoursesCourseIdRoute: AppAdminManageCoursesCourseIdRoute,
   AppAdminReportingAnnualReportsReportIdRoute:
     AppAdminReportingAnnualReportsReportIdRoute,
@@ -2068,6 +2090,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppPortalLearnCourseIdLessonIdRoute: AppPortalLearnCourseIdLessonIdRoute,
   AppPortalMentorshipBookMentorIdRoute: AppPortalMentorshipBookMentorIdRoute,
   AppAdminManageApplicationsIndexRoute: AppAdminManageApplicationsIndexRoute,
+  AppAdminManageCertificationsIndexRoute:
+    AppAdminManageCertificationsIndexRoute,
   AppAdminManageCoursesIndexRoute: AppAdminManageCoursesIndexRoute,
   AppAdminReportingAnnualReportsIndexRoute:
     AppAdminReportingAnnualReportsIndexRoute,

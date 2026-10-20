@@ -68,7 +68,7 @@ export function CeoDashboard({
             value={Math.round(stats.completionRate)}
             suffix="%"
             icon={GraduationCap}
-            tone="gold"
+            tone="coral"
             progress={stats.completionRate}
             to="/portal/company/team"
             hint={`${stats.completed} of ${stats.activated} activated employees finished their path (not out of everyone invited)`}
@@ -131,7 +131,7 @@ export function CeoDashboard({
                 to="/portal/certification"
                 className="flex items-center gap-3 rounded-xl border p-3 text-sm hover:border-blue"
               >
-                <Award className="size-5 text-gold-700" aria-hidden /> Company certification
+                <Award className="size-5 text-coral-700" aria-hidden /> Company certification
               </Link>
               <Link
                 to="/portal/community"

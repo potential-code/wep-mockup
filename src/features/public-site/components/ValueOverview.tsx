@@ -51,7 +51,7 @@ function TiltCard({ theme: t }: { theme: (typeof THEMES)[number] }) {
   const my = useMotionValue(50)
   const rx = useSpring(0, { stiffness: 180, damping: 18 })
   const ry = useSpring(0, { stiffness: 180, damping: 18 })
-  const spot = useMotionTemplate`radial-gradient(420px circle at ${mx}% ${my}%, rgba(214,164,74,0.28), transparent 45%)`
+  const spot = useMotionTemplate`radial-gradient(420px circle at ${mx}% ${my}%, rgba(240,73,62,0.28), transparent 45%)`
 
   const onMove = (e: MouseEvent<HTMLButtonElement>) => {
     if (reduced) return
@@ -95,18 +95,18 @@ function TiltCard({ theme: t }: { theme: (typeof THEMES)[number] }) {
       />
       <span
         aria-hidden
-        className="absolute top-5 left-5 rounded-full border border-white/20 bg-navy-900/60 px-3 py-1 font-heading font-semibold text-gold text-xs backdrop-blur-md"
+        className="absolute top-5 left-5 rounded-full border border-white/20 bg-navy-900/60 px-3 py-1 font-heading font-medium text-coral-300 text-xs backdrop-blur-md"
       >
         {t.n}
       </span>
       <div className="relative grid gap-3 p-6 [transform:translateZ(40px)] sm:p-7">
-        <h3 className="font-bold font-heading text-2xl">{t.title}</h3>
+        <h3 className="font-medium font-heading text-2xl">{t.title}</h3>
         <span
           aria-hidden
-          className="h-0.5 w-10 origin-left bg-gold transition-all duration-500 group-hover:w-20"
+          className="h-0.5 w-10 origin-left bg-coral transition-all duration-500 group-hover:w-20"
         />
-        <p className="text-sm text-white/80 leading-relaxed">{t.text}</p>
-        <span className="inline-flex items-center gap-2 font-medium text-gold text-sm">
+        <p className="text-sm text-white/90 leading-relaxed">{t.text}</p>
+        <span className="inline-flex items-center gap-2 font-medium text-coral-300 text-sm">
           {t.cta}
           <ArrowRight
             className="size-4 transition-transform duration-300 group-hover:translate-x-1.5"

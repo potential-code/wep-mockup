@@ -73,7 +73,7 @@ export function PersonalCards({
         label="Next clinic"
         to={clinicId ? `/portal/clinics/${clinicId}` : '/portal/clinics'}
       >
-        <p className="font-heading font-semibold text-navy leading-snug">{clinicTitle ?? '—'}</p>
+        <p className="font-heading font-medium text-navy leading-snug">{clinicTitle ?? '—'}</p>
         {clinicRegistered ? (
           <StatusBadge tone="info">Registered</StatusBadge>
         ) : clinic.eligible ? (
@@ -87,7 +87,7 @@ export function PersonalCards({
       <InfoTile icon={Handshake} label="Next booked session" to={next?.to ?? '/portal/mentorship'}>
         {next ? (
           <>
-            <p className="font-heading font-semibold text-navy leading-snug">{next.title}</p>
+            <p className="font-heading font-medium text-navy leading-snug">{next.title}</p>
             <p className="text-muted-foreground text-sm">{formatDateTime(next.at)}</p>
           </>
         ) : (

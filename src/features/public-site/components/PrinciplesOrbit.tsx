@@ -19,13 +19,13 @@ export function PrinciplesOrbit() {
       <svg aria-hidden viewBox="0 0 400 400" className="absolute inset-0 size-full" fill="none">
         <defs>
           <radialGradient id="orbit-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#167CB3" stopOpacity="0.35" />
-            <stop offset="70%" stopColor="#153B55" stopOpacity="0" />
+            <stop offset="0%" stopColor="#006fa8" stopOpacity="0.35" />
+            <stop offset="70%" stopColor="#263955" stopOpacity="0" />
           </radialGradient>
-          <linearGradient id="orbit-gold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#D6A44A" stopOpacity="0" />
-            <stop offset="50%" stopColor="#D6A44A" />
-            <stop offset="100%" stopColor="#D6A44A" stopOpacity="0" />
+          <linearGradient id="orbit-coral" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#F0493E" stopOpacity="0" />
+            <stop offset="50%" stopColor="#F0493E" />
+            <stop offset="100%" stopColor="#F0493E" stopOpacity="0" />
           </linearGradient>
         </defs>
         <circle cx="200" cy="200" r="200" fill="url(#orbit-glow)" />
@@ -66,7 +66,7 @@ export function PrinciplesOrbit() {
           cx="200"
           cy="200"
           r="164"
-          stroke="url(#orbit-gold)"
+          stroke="url(#orbit-coral)"
           strokeWidth="2"
           strokeDasharray="160 870"
           className={
@@ -82,11 +82,13 @@ export function PrinciplesOrbit() {
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.9, type: 'spring', stiffness: 120, damping: 14 }}
-        className="absolute inset-[31%] grid place-items-center rounded-full border border-white/20 bg-white/[0.07] text-center shadow-[0_0_80px_-10px_rgba(214,164,74,0.45),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md"
+        className="absolute inset-[31%] grid place-items-center rounded-full border border-white/20 bg-white/[0.07] text-center shadow-[0_0_80px_-10px_rgba(240,73,62,0.45),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md"
       >
         <div>
-          <p className="font-bold font-heading text-6xl text-gold leading-none sm:text-7xl">7</p>
-          <p className="mt-1 font-medium text-[11px] text-white/80 uppercase tracking-[0.22em]">
+          <p className="font-semibold font-heading text-6xl text-coral leading-none sm:text-7xl">
+            7
+          </p>
+          <p className="mt-1 font-medium text-[11px] text-white/90 uppercase tracking-[0.22em]">
             Principles
           </p>
         </div>

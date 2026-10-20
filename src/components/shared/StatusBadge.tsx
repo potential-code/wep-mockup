@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-export type Tone = 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'locked' | 'gold'
+export type Tone = 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'locked' | 'coral'
 
 const TONES: Record<Tone, { cls: string; icon: LucideIcon }> = {
   success: { cls: 'bg-success-soft text-success ring-success/20', icon: CheckCircle2 },
@@ -19,7 +19,7 @@ const TONES: Record<Tone, { cls: string; icon: LucideIcon }> = {
   info: { cls: 'bg-blue-50 text-blue-600 ring-blue/20', icon: Info },
   neutral: { cls: 'bg-muted text-muted-foreground ring-border', icon: CircleDashed },
   locked: { cls: 'bg-secondary text-navy ring-border', icon: Lock },
-  gold: { cls: 'bg-gold-50 text-gold-700 ring-gold/30', icon: CheckCircle2 },
+  coral: { cls: 'bg-coral-50 text-coral-700 ring-coral/30', icon: CheckCircle2 },
 }
 
 /** Status pill. Always icon + text, never colour alone. */
@@ -70,7 +70,7 @@ const STATUS: Record<string, [Tone, string]> = {
   // actions
   ceo_review: ['warning', 'CEO review'],
   in_progress: ['info', 'In progress'],
-  evidence_submitted: ['gold', 'Evidence submitted'],
+  evidence_submitted: ['coral', 'Evidence submitted'],
   complete: ['success', 'Complete'],
   needs_revision: ['danger', 'Needs revision'],
   // listings
@@ -89,7 +89,7 @@ const STATUS: Record<string, [Tone, string]> = {
   registered: ['info', 'Registered'],
   waitlisted: ['warning', 'Waitlisted'],
   completed: ['neutral', 'Completed'],
-  recording: ['gold', 'Recording available'],
+  recording: ['coral', 'Recording available'],
   full: ['warning', 'Full'],
   attended: ['success', 'Attended'],
   no_show: ['danger', 'No show'],

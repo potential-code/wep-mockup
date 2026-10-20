@@ -47,7 +47,7 @@ export function ReadOnlySections({
               <IndicatorsReadOnly indicators={indicators} previous={previous?.indicators} />
               {evidence ? (
                 <div className="grid gap-2">
-                  <h3 className="font-heading font-semibold text-navy text-sm">Evidence files</h3>
+                  <h3 className="font-heading font-medium text-navy text-sm">Evidence files</h3>
                   <EvidenceList report={evidence} people={people} />
                 </div>
               ) : null}

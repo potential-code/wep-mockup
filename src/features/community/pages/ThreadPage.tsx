@@ -90,7 +90,7 @@ export function ThreadPage() {
           ) : null}
           <span className="text-muted-foreground">· {relativeTime(t.createdAt)}</span>
           {t.isAnnouncement ? (
-            <StatusBadge tone="gold" icon={Pin}>
+            <StatusBadge tone="coral" icon={Pin}>
               Announcement
             </StatusBadge>
           ) : t.pinned ? (
@@ -179,7 +179,7 @@ export function ThreadPage() {
         </div>
       </article>
       <section aria-label="Replies" className="grid gap-3">
-        <h2 className="font-heading font-semibold text-lg text-navy">
+        <h2 className="font-heading font-medium text-lg text-navy">
           {t.replies.length} {t.replies.length === 1 ? 'reply' : 'replies'}
         </h2>
         {t.replies.length === 0 ? (
