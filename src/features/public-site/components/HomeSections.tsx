@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, CalendarDays, ChevronDown, Clock, GraduationCap, Lock } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
-import { useState } from 'react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
+import { useRef, useState } from 'react'
+import { Magnetic } from '@/components/motion/Magnetic'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { BrushRing, EdgeRule, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { PrincipleTag } from '@/components/shared/PrincipleTag'
@@ -135,7 +136,7 @@ function FeaturedEvent({ e }: { e: PublicEvent }) {
   return (
     <motion.article
       whileHover="hover"
-      className="group relative isolate flex h-full min-h-[440px] flex-col justify-end overflow-hidden rounded-3xl bg-navy-900 p-6 text-white shadow-lift sm:p-8"
+      className="group shine relative isolate flex h-full min-h-[440px] flex-col justify-end overflow-hidden rounded-3xl bg-navy-900 p-6 text-white shadow-lift sm:p-8"
     >
       <motion.img
         src={ev.image}
@@ -429,20 +430,34 @@ export function CommunitySection() {
 }
 
 export function CtaBand() {
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
   return (
-    <section className="relative isolate overflow-hidden bg-navy-900 py-24 text-white sm:py-32">
-      <img
+    <section
+      ref={ref}
+      className="relative isolate overflow-hidden bg-blue-600 py-24 text-white sm:py-32"
+    >
+      <motion.img
         src={images.sections.ctaBand.src}
         alt=""
         loading="lazy"
-        className="-z-20 absolute inset-0 size-full object-cover"
+        style={{ y: imgY }}
+        className="-z-20 absolute inset-0 size-full scale-125 object-cover"
       />
-      <div className="-z-10 absolute inset-0 bg-[linear-gradient(90deg,rgba(15,24,40,0.95),rgba(38,57,85,0.75))]" />
+      <div className="-z-10 absolute inset-0 bg-[linear-gradient(90deg,rgba(0,58,96,0.94),rgba(0,84,135,0.78)_55%,rgba(0,111,168,0.45))]" />
       <GearCluster size={420} className="-z-10 -top-20 -right-20" />
-      <ForAllBars className="-z-10 right-[8%] bottom-[-40px] hidden md:block" size={320} />
+      <motion.div
+        aria-hidden
+        className="-z-10 pointer-events-none absolute right-[8%] bottom-[-40px] hidden md:block"
+        animate={{ y: [0, -14, 0], rotate: [0, -3, 0] }}
+        transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+      >
+        <ForAllBars className="relative" size={320} />
+      </motion.div>
       <EdgeRule className="top-0" />
       <Reveal className="container-public grid max-w-3xl gap-6 ps-4 sm:ps-6 lg:ms-[max(0px,calc((100vw-1200px)/2))]">
-        <p className="font-medium text-coral-300 text-xs uppercase tracking-[0.2em]">
+        <p className="font-medium text-white/90 text-xs uppercase tracking-[0.2em]">
           Eligible companies
         </p>
         <h2 className="text-balance font-medium font-heading text-4xl leading-tight sm:text-5xl">
@@ -453,18 +468,22 @@ export function CtaBand() {
           portal is activated.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="coral" size="xl" className="group rounded-full">
-            <Link to="/join">
-              Apply to join WEPs{' '}
-              <ArrowRight
-                className="transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden
-              />
-            </Link>
-          </Button>
-          <Button asChild variant="outline-light" size="xl" className="rounded-full">
-            <Link to="/application-status">Check application status</Link>
-          </Button>
+          <Magnetic>
+            <Button asChild variant="coral" size="xl" className="group pulse-ring rounded-full">
+              <Link to="/join">
+                Apply to join WEPs{' '}
+                <ArrowRight
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </Link>
+            </Button>
+          </Magnetic>
+          <Magnetic>
+            <Button asChild variant="outline-light" size="xl" className="rounded-full">
+              <Link to="/application-status">Check application status</Link>
+            </Button>
+          </Magnetic>
         </div>
       </Reveal>
     </section>

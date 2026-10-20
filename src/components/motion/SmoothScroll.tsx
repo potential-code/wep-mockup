@@ -37,5 +37,23 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       lenisInstance = null
     }
   }, [reduced])
+  // Content that loads later (the signatory map, images) shifts every section below it.
+  // Re-measure scroll triggers whenever the page height settles on a new value.
+  useEffect(() => {
+    let last = document.body.scrollHeight
+    let timer = 0
+    const ro = new ResizeObserver(() => {
+      const h = document.body.scrollHeight
+      if (Math.abs(h - last) < 2) return
+      last = h
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => ScrollTrigger.refresh(), 150)
+    })
+    ro.observe(document.body)
+    return () => {
+      ro.disconnect()
+      window.clearTimeout(timer)
+    }
+  }, [])
   return <>{children}</>
 }

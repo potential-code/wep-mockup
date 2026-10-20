@@ -2,7 +2,9 @@ import { useGSAP } from '@gsap/react'
 import { Link } from '@tanstack/react-router'
 import { gsap } from 'gsap'
 import { ArrowRight } from 'lucide-react'
-import { useRef } from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { useEffect, useRef } from 'react'
+import { Magnetic } from '@/components/motion/Magnetic'
 import { BrushRing, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
 import { Button } from '@/components/ui/button'
 import { images } from '@/config/images'
@@ -12,6 +14,24 @@ import { PrinciplesOrbit } from './PrinciplesOrbit'
 export function HomeHero() {
   const root = useRef<HTMLElement>(null)
   const reduced = usePrefersReducedMotion()
+  // Cursor parallax: the orbit drifts with the pointer, the line-work drifts against it.
+  const px = useSpring(useMotionValue(0), { stiffness: 60, damping: 18 })
+  const py = useSpring(useMotionValue(0), { stiffness: 60, damping: 18 })
+  const orbitX = useTransform(px, (v) => v * 28)
+  const orbitY = useTransform(py, (v) => v * 20)
+  const motifX = useTransform(px, (v) => v * -18)
+  const motifY = useTransform(py, (v) => v * -14)
+  useEffect(() => {
+    const el = root.current
+    if (!el || reduced) return
+    const onPointer = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect()
+      px.set((e.clientX - r.left) / r.width - 0.5)
+      py.set((e.clientY - r.top) / r.height - 0.5)
+    }
+    el.addEventListener('pointermove', onPointer)
+    return () => el.removeEventListener('pointermove', onPointer)
+  }, [reduced, px, py])
 
   useGSAP(
     () => {
@@ -62,12 +82,18 @@ export function HomeHero() {
         aria-hidden
         className="-z-10 absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(0,58,96,0.45)] to-transparent"
       />
-      <GearCluster size={380} className="-z-10 -bottom-24 -left-24 opacity-70" />
-      <ForAllBars className="-z-10 top-24 right-[-40px] hidden md:block" size={280} />
-      <BrushRing
-        size={620}
-        className="-z-10 top-1/2 right-[max(-6rem,calc((100vw-1200px)/2-6rem))] hidden -translate-y-1/2 lg:block"
-      />
+      <motion.div
+        aria-hidden
+        style={{ x: motifX, y: motifY }}
+        className="-z-10 pointer-events-none absolute inset-0"
+      >
+        <GearCluster size={380} className="-bottom-24 -left-24 opacity-70" />
+        <ForAllBars className="top-24 right-[-40px] hidden md:block" size={280} />
+        <BrushRing
+          size={620}
+          className="top-1/2 right-[max(-6rem,calc((100vw-1200px)/2-6rem))] hidden -translate-y-1/2 lg:block"
+        />
+      </motion.div>
       <div
         aria-hidden
         className="-z-10 absolute top-0 bottom-0 left-[max(1rem,calc((100vw-1200px)/2))] w-px bg-gradient-to-b from-transparent via-white/10 to-transparent"
@@ -97,23 +123,30 @@ export function HomeHero() {
             advancing gender equality.
           </p>
           <div data-hero="cta" className="flex flex-wrap gap-3">
-            <Button asChild variant="coral" size="xl" className="group rounded-full">
-              <Link to="/join">
-                Join WEPs{' '}
-                <ArrowRight
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                  aria-hidden
-                />
-              </Link>
-            </Button>
-            <Button asChild variant="outline-light" size="xl" className="rounded-full">
-              <Link to="/sign-in">Sign in</Link>
-            </Button>
+            <Magnetic>
+              <Button asChild variant="coral" size="xl" className="group rounded-full">
+                <Link to="/join">
+                  Join WEPs{' '}
+                  <ArrowRight
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden
+                  />
+                </Link>
+              </Button>
+            </Magnetic>
+            <Magnetic>
+              <Button asChild variant="outline-light" size="xl" className="rounded-full">
+                <Link to="/sign-in">Sign in</Link>
+              </Button>
+            </Magnetic>
           </div>
         </div>
-        <div className="mx-auto w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none">
+        <motion.div
+          style={{ x: orbitX, y: orbitY }}
+          className="mx-auto w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none"
+        >
           <PrinciplesOrbit />
-        </div>
+        </motion.div>
       </div>
     </section>
   )

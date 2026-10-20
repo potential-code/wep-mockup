@@ -37,7 +37,19 @@ export function GlobalNetwork() {
         />
 
         <div className="relative mb-12 overflow-hidden rounded-3xl bg-[linear-gradient(110deg,var(--blue-600),var(--blue)_45%,var(--cyan))] p-6 text-white shadow-lift sm:p-8">
-          <ForAllBars size={220} className="-top-10 -right-6 opacity-90" />
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute -top-10 -right-6"
+            animate={{ y: [0, -10, 0], rotate: [0, 2, 0] }}
+            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+          >
+            <ForAllBars size={220} className="relative opacity-90" />
+          </motion.div>
+          {/* Light sweep across the band on a slow loop. */}
+          <div
+            aria-hidden
+            className="-skew-x-12 pointer-events-none absolute inset-y-0 -left-1/3 w-1/4 animate-[sweep_7s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/12 to-transparent"
+          />
           <dl className="relative grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s, i) => (
               <motion.div
@@ -46,10 +58,14 @@ export function GlobalNetwork() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="grid gap-1 border-white/25 lg:border-l lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
+                whileHover={{ y: -4 }}
+                className="group/stat grid cursor-default gap-1 border-white/25 lg:border-l lg:pl-6 lg:first:border-l-0 lg:first:pl-0"
               >
                 <dt className="order-2 flex items-center gap-2 text-sm text-white/90">
-                  <s.icon className="size-4 shrink-0" aria-hidden />
+                  <s.icon
+                    className="size-4 shrink-0 transition-transform duration-300 group-hover/stat:-rotate-12 group-hover/stat:scale-125"
+                    aria-hidden
+                  />
                   {s.label}
                 </dt>
                 <dd className="order-1 font-semibold font-heading text-4xl tabular-nums sm:text-5xl">

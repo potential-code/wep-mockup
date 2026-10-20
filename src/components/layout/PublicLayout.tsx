@@ -81,14 +81,21 @@ function PublicHeader() {
   const [open, setOpen] = useState(false)
   useMotionValueEvent(scrollY, 'change', (y) => setCompact(y > 40))
   const sectionLink = useSectionLink()
+  const overHero = pathname === '/'
   const active = useActiveSection(pathname === '/')
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu on navigation
   useEffect(() => setOpen(false), [pathname])
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 bg-black transition-all duration-300',
-        compact ? 'py-2.5 shadow-lg shadow-black/30' : 'py-4',
+        'fixed inset-x-0 top-0 z-50 transition-[background-color,padding,box-shadow,backdrop-filter] duration-500',
+        compact
+          ? 'bg-black py-2.5 shadow-lg shadow-black/30'
+          : overHero
+            ? // Over the home hero: a soft dark fade and light blur keep the links readable
+              // while the photo shows through.
+              'bg-[linear-gradient(180deg,rgba(0,20,36,0.62),rgba(0,20,36,0.18))] py-4 backdrop-blur-[6px]'
+            : 'bg-black py-4',
       )}
     >
       {pathname === '/' ? (

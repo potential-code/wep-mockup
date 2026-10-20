@@ -118,7 +118,7 @@ export function ListingCard({
   return (
     <motion.article
       whileHover={{ y: -4 }}
-      className="group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-lift"
+      className="group shine flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-lift"
     >
       <div className="aspect-[16/10] overflow-hidden">
         <img

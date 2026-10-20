@@ -52,7 +52,7 @@ export function PublicResourceCard({ resource: r }: { resource: Resource }) {
     </>
   )
   const cls =
-    'group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-lift'
+    'group shine flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-lift'
   return r.official && r.sourceUrl ? (
     <motion.a
       whileHover={{ y: -4 }}

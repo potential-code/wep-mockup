@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { geoMercator, geoPath } from 'd3-geo'
+import { type GeoPath, geoMercator, geoPath } from 'd3-geo'
+import type { Feature } from 'geojson'
 import { motion } from 'motion/react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { feature } from 'topojson-client'
 import type { GeometryCollection, Topology } from 'topojson-specification'
 import worldUrl from 'world-atlas/countries-110m.json?url'
@@ -34,6 +35,27 @@ const H = 520
 
 type Shape = { id: string; d: string; centroid: [number, number] }
 
+/** Centre of a country's largest landmass, so e.g. Alaska doesn't pull the US into Canada. */
+function mainlandCentroid(f: Feature, path: GeoPath): [number, number] {
+  const g = f.geometry
+  if (g?.type !== 'MultiPolygon') return path.centroid(f) as [number, number]
+  let best: Feature = f
+  let bestArea = -1
+  for (const coordinates of g.coordinates) {
+    const part: Feature = {
+      type: 'Feature',
+      properties: {},
+      geometry: { type: 'Polygon', coordinates },
+    }
+    const a = path.area(part)
+    if (a > bestArea) {
+      bestArea = a
+      best = part
+    }
+  }
+  return path.centroid(best) as [number, number]
+}
+
 async function loadShapes(): Promise<Shape[]> {
   const topo = (await fetch(worldUrl).then((r) => r.json())) as Topology<{
     countries: GeometryCollection
@@ -53,7 +75,7 @@ async function loadShapes(): Promise<Shape[]> {
   return features.map((f, i) => ({
     id: f.id === undefined ? `unassigned-${i}` : String(f.id),
     d: path(f) ?? '',
-    centroid: path.centroid(f) as [number, number],
+    centroid: mainlandCentroid(f, path),
   }))
 }
 
@@ -86,6 +108,34 @@ export function SignatoryMap({
   )
   const [selected, setSelected] = useState<string>('')
   const [hover, setHover] = useState<string | null>(null)
+  const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null)
+  // Tooltip follows the pointer over the map.
+  const frame = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = frame.current
+    if (!el) return
+    const move = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect()
+      setCursor({ x: e.clientX - r.left, y: e.clientY - r.top })
+    }
+    const leave = () => setCursor(null)
+    el.addEventListener('pointermove', move)
+    el.addEventListener('pointerleave', leave)
+    return () => {
+      el.removeEventListener('pointermove', move)
+      el.removeEventListener('pointerleave', leave)
+    }
+  }, [])
+  const hovered = hover ? byMapId.get(hover) : undefined
+  // The five largest networks get a soft pulse so the eye finds them first.
+  const leaders = useMemo(
+    () =>
+      [...countries]
+        .filter((c) => c.mapId)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5),
+    [countries],
+  )
   const active =
     countries.find((c) => c.iso2 === selected) ?? (hover ? byMapId.get(hover) : undefined)
   const activeShape = shapes?.find((s) => s.id === active?.mapId)
@@ -121,7 +171,7 @@ export function SignatoryMap({
         </p>
       </div>
 
-      <div className="relative">
+      <div ref={frame} className="relative">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           role="img"
@@ -153,6 +203,32 @@ export function SignatoryMap({
                 )
               })
             : null}
+          {shapes
+            ? leaders.map((c, i) => {
+                const shape = shapes.find((s) => s.id === c.mapId)
+                if (!shape) return null
+                return (
+                  <g key={c.iso2} className="pointer-events-none">
+                    <circle
+                      cx={shape.centroid[0]}
+                      cy={shape.centroid[1]}
+                      r="7"
+                      fill="var(--coral)"
+                      className="origin-center animate-ping opacity-60 [transform-box:fill-box]"
+                      style={{ animationDelay: `${i * 0.35}s`, animationDuration: '2.4s' }}
+                    />
+                    <circle
+                      cx={shape.centroid[0]}
+                      cy={shape.centroid[1]}
+                      r="3"
+                      fill="var(--coral)"
+                      stroke="#fff"
+                      strokeWidth="1.2"
+                    />
+                  </g>
+                )
+              })
+            : null}
           {activeShape ? (
             <circle
               cx={activeShape.centroid[0]}
@@ -165,6 +241,18 @@ export function SignatoryMap({
             />
           ) : null}
         </svg>
+        {hovered && cursor ? (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-10 hidden rounded-xl bg-navy-900/95 px-3 py-2 text-white shadow-lift backdrop-blur sm:block"
+            style={{ left: cursor.x + 14, top: cursor.y + 14 }}
+          >
+            <p className="font-medium text-sm">{hovered.name}</p>
+            <p className="text-white/90 text-xs tabular-nums">
+              {formatNumber(hovered.count)} {hovered.count === 1 ? 'signatory' : 'signatories'}
+            </p>
+          </div>
+        ) : null}
         {shapes ? null : (
           <div className="absolute inset-0 animate-pulse rounded-xl bg-blue-50" aria-hidden />
         )}

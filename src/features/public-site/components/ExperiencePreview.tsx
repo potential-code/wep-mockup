@@ -8,7 +8,7 @@ import {
   TrendingUp,
   Unlock,
 } from 'lucide-react'
-import { AnimatePresence, motion, useInView } from 'motion/react'
+import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'motion/react'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { CountUp } from '@/components/motion/CountUp'
 import { BrushRing, ForAllBars, GearCluster } from '@/components/shared/BrandMotif'
@@ -180,16 +180,22 @@ function AppWindow({
   active: number
   children: ReactNode
 }) {
+  const frame = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: frame, offset: ['start end', 'end start'] })
+  const stageY = useTransform(scrollYProgress, [0, 1], [60, -60])
+  const stageRotate = useTransform(scrollYProgress, [0, 1], [-2, 2])
   return (
-    <div className="relative">
-      {/* Brand stage behind the window: cyan panel with the double bars and a brush ring. */}
-      <div
+    <div ref={frame} className="relative">
+      {/* Brand stage behind the window: cyan panel with the double bars and a brush ring.
+          It scrolls a little slower than the window for depth. */}
+      <motion.div
         aria-hidden
-        className="-z-10 absolute -inset-x-4 -top-8 bottom-10 overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,var(--cyan),var(--blue)_60%,var(--blue-600))] shadow-lift sm:-inset-x-8 lg:translate-x-6"
+        style={{ y: stageY, rotate: stageRotate }}
+        className="-z-10 absolute -inset-x-4 -top-8 bottom-10 overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,var(--cyan),var(--blue)_60%,var(--blue-600))] shadow-lift sm:-inset-x-8 lg:left-6 lg:-right-14"
       >
         <ForAllBars size={260} className="-right-10 -bottom-16" />
         <BrushRing size={300} className="-top-24 -left-20" />
-      </div>
+      </motion.div>
       <div className="overflow-hidden rounded-3xl border border-navy/10 bg-white shadow-lift">
         <div className="flex items-center gap-2 border-b bg-surface px-4 py-3">
           <span className="size-2.5 rounded-full bg-[#ff6159]" />

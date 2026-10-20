@@ -2,7 +2,6 @@ import { useGSAP } from '@gsap/react'
 import { JOURNEY_STAGES } from '@shared/reference'
 import { gsap } from 'gsap'
 import { BarChart3, type LucideIcon, Megaphone, PenLine, Rocket, Search, Users } from 'lucide-react'
-import { motion } from 'motion/react'
 import { useRef } from 'react'
 import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion'
 import { cn } from '@/lib/utils'
@@ -63,26 +62,49 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
       const setActive = (p: number) => {
         for (const el of steps) {
           const i = Number(el.dataset.index)
-          el.dataset.active = String(p >= (i + 0.35) / N)
+          el.dataset.active = String(p >= (i + 0.5) / N - 0.01)
         }
       }
+
+      // Desktop: pin the section and draw the wave stage by stage. Each node pops and its
+      // card rises in as the line reaches it, so the story reads left to right.
       mm.add('(min-width: 1024px)', () => {
-        gsap.fromTo(
+        const section = root.current?.closest('section')
+        if (!section) return
+        const cards = gsap.utils.toArray<HTMLElement>('[data-card="desktop"]')
+        const nodes = gsap.utils.toArray<HTMLElement>('[data-node]')
+        gsap.set(cards, { autoAlpha: 0, y: (i: number) => (i % 2 === 0 ? -36 : 36), scale: 0.96 })
+        gsap.set(nodes, { scale: 0.5, autoAlpha: 0.35 })
+        const tl = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: section,
+            // Tall sections pin once the timeline is fully on screen.
+            start: () =>
+              section.offsetHeight > window.innerHeight ? 'bottom bottom' : 'center center',
+            end: () => `+=${N * 260}`,
+            pin: true,
+            scrub: 0.7,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (st) => setActive(st.progress),
+          },
+        })
+        tl.fromTo(
           '[data-wave-fill]',
           { clipPath: 'inset(0 100% 0 0)' },
-          {
-            clipPath: 'inset(0 0% 0 0)',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '[data-wave]',
-              start: 'top 75%',
-              end: 'bottom 35%',
-              scrub: 0.6,
-              onUpdate: (st) => setActive(st.progress),
-            },
-          },
+          { clipPath: 'inset(0 0% 0 0)', duration: N },
+          0,
         )
+        nodes.forEach((node, i) => {
+          tl.to(node, { scale: 1, autoAlpha: 1, duration: 0.25, ease: 'back.out(3)' }, i + 0.4)
+        })
+        cards.forEach((c, i) => {
+          tl.to(c, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: 'power3.out' }, i + 0.3)
+        })
       })
+
+      // Mobile and tablet: the rail fills with scroll and each card slides in on its own.
       mm.add('(max-width: 1023px)', () => {
         gsap.fromTo(
           '[data-rail-fill]',
@@ -99,35 +121,43 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
             },
           },
         )
+        for (const c of gsap.utils.toArray<HTMLElement>('[data-card="mobile"]')) {
+          gsap.from(c, {
+            autoAlpha: 0,
+            x: 28,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: c, start: 'top 88%', once: true },
+          })
+        }
       })
       return () => mm.revert()
     },
     { scope: root, dependencies: [reduced] },
   )
 
-  const card = (i: number) => {
+  const card = (i: number, variant: 'desktop' | 'mobile') => {
     const s = JOURNEY_STAGES[i]
     if (!s) return null
     const Icon = ICONS[s.id] ?? Search
     return (
-      <motion.article
-        data-card
-        initial={reduced ? false : { opacity: 0, y: i % 2 === 0 ? -28 : 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      <article
+        data-card={variant}
         className={cn(
           'group/card relative h-full rounded-2xl border p-5 transition-all duration-500',
           dark
             ? 'border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-coral/40 hover:bg-white/[0.08]'
             : 'border-border bg-card shadow-card hover:shadow-lift',
-          'hover:-translate-y-1 group-data-[active=true]:border-coral/30',
+          'hover:-translate-y-1 group-data-[active=true]:border-coral/40',
+          dark &&
+            'group-data-[active=true]:bg-white/[0.09] group-data-[active=true]:shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)]',
         )}
       >
         <div className="flex items-center justify-between">
           <span
             className={cn(
-              'grid size-10 place-items-center rounded-xl transition-colors duration-500',
+              'grid size-10 place-items-center rounded-xl transition-all duration-500',
+              '[&>svg]:transition-transform [&>svg]:duration-500 group-data-[active=true]:[&>svg]:-rotate-12 group-hover/card:[&>svg]:scale-110',
               dark ? 'bg-white/10 text-white/90' : 'bg-blue-50 text-blue',
               'group-data-[active=true]:bg-coral-600 group-data-[active=true]:text-white',
             )}
@@ -138,7 +168,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
             className={cn(
               'font-semibold font-heading text-3xl tabular-nums transition-colors duration-500',
               dark ? 'text-white/10' : 'text-navy/10',
-              'group-data-[active=true]:text-coral/60',
+              'group-data-[active=true]:text-white/40',
             )}
           >
             0{i + 1}
@@ -157,7 +187,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
         >
           {s.description}
         </p>
-      </motion.article>
+      </article>
     )
   }
 
@@ -225,6 +255,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
                 style={top ? { top: '100%', height: reach } : { bottom: '100%', height: reach }}
               />
               <span
+                data-node
                 className={cn(
                   '-translate-x-1/2 absolute left-1/2 z-10 grid size-10 place-items-center rounded-full border-2 font-bold font-heading text-sm transition-all duration-500',
                   dark
@@ -240,7 +271,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
               >
                 {i + 1}
               </span>
-              {card(i)}
+              {card(i, 'desktop')}
             </li>
           )
         })}
@@ -280,7 +311,7 @@ export function JourneyTimeline({ tone = 'dark' }: { tone?: 'dark' | 'light' }) 
               >
                 {i + 1}
               </span>
-              {card(i)}
+              {card(i, 'mobile')}
             </li>
           ))}
         </ol>
