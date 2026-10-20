@@ -135,15 +135,15 @@ function AppSidebar() {
   return (
     <Sidebar collapsible="offcanvas" className="border-none">
       <SidebarMotifs />
-      <SidebarHeader className="relative px-4 pt-5 pb-3">
+      <SidebarHeader className="relative px-5 pt-6 pb-4">
         <Link
           to={homeFor(user)}
           className="block rounded-md focus-visible:outline-gold"
           onClick={() => setOpenMobile(false)}
         >
-          <WepsLogo className="h-auto w-full max-w-[200px]" />
+          <WepsLogo className="h-auto w-[172px] max-w-full sm:h-auto" />
         </Link>
-        <p className="mt-2 truncate font-medium text-[11px] text-white/50 uppercase tracking-[0.14em]">
+        <p className="mt-3 truncate font-medium text-[10px] text-white/50 uppercase tracking-[0.16em]">
           {user.role === 'global_admin'
             ? 'UN Women workspace'
             : user.role === 'mentor'

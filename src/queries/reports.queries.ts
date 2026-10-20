@@ -23,6 +23,7 @@ export const useAttachReportEvidence = () =>
     mutationFn: (v: { year: number; fileName: string; note?: string }) =>
       svc.attachReportEvidence(v.year, v.fileName, v.note),
   })
+export const useFillSampleReport = () => useMutation({ mutationFn: svc.fillSampleReport })
 export const useRequestApproval = () => useMutation({ mutationFn: svc.requestApproval })
 export const useSubmitReport = () =>
   useMutation({

@@ -31,6 +31,8 @@ export function ReportEditorPage() {
   const [submitOpen, setSubmitOpen] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [justSubmitted, setJustSubmitted] = useState<number | null>(null)
+  // Bumped after a sample fill so the open section editor reloads its text.
+  const [filled, setFilled] = useState(0)
 
   if (!can('reports.view'))
     return (
@@ -84,6 +86,7 @@ export function ReportEditorPage() {
             canSubmit={canSubmit}
             remaining={remaining}
             onSubmit={() => setSubmitOpen(true)}
+            onFilled={() => setFilled((n) => n + 1)}
           />
         }
         className="mb-0 sm:mb-0"
@@ -164,7 +167,7 @@ export function ReportEditorPage() {
         <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
           <SectionNavigator report={report} active={active} onSelect={setActive} />
           <SectionEditor
-            key={active}
+            key={`${active}-${filled}`}
             report={report}
             sectionKey={active}
             prefill={supportPrefill}

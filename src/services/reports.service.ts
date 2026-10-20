@@ -210,6 +210,41 @@ export async function saveIndicators(year: number, indicators: ReportIndicator[]
   return out(r)
 }
 
+/** Demo text for empty sections, so a presenter can reach submission in one click. */
+const SAMPLE_SECTIONS: Partial<Record<ReportSectionKey, string>> = {
+  snapshot:
+    'We are a regional employer with operations across several sites. Women make up a growing share of our workforce, and leadership has committed to the Women’s Empowerment Principles.',
+  narrative:
+    'This year we focused on fair recruitment, supplier inclusion and better workforce data. Our baseline assessment set the priorities for a company action plan owned by department leads.',
+  actions:
+    'Structured interviews now cover manager-level hiring. Department leads own the priority actions in our action plan, and completed actions are backed by reviewed evidence.',
+  support:
+    'Teams used WEPs resources, completed their department learning paths and attended expert clinics on inclusive recruitment and procurement.',
+  principles:
+    'Principle 2: structured interviews and a shortlist review for manager-level roles. Principle 5: a supplier register that records women-owned businesses. Principle 7: quarterly workforce data reviewed by the executive team.',
+  indicators:
+    'Workforce figures come from the HR system extract at year end. The pay gap and supplier spend values are left blank until the first pay gap analysis and the supplier register are complete.',
+  challenges:
+    'Data on supplier ownership is still incomplete, and store-level participation in learning is uneven. Next year we will complete the first pay gap analysis, extend structured interviews to stores, and set a target for spend with women-owned suppliers.',
+}
+
+/** Demo only: fill empty required sections with sample text and mark them complete. */
+export async function fillSampleReport(year: number) {
+  await delay(300)
+  const { user, r } = editable(year)
+  for (const s of SECTION_META) {
+    if (s.key === 'declaration') continue
+    if (!r.sections[s.key].trim()) r.sections[s.key] = SAMPLE_SECTIONS[s.key] ?? ''
+    r.sectionComplete[s.key] = true
+    const cr = r.changeRequests.find((c) => c.section === s.key && !c.resolved)
+    if (cr) cr.resolved = true
+  }
+  r.preparerId = r.preparerId ?? user.id
+  r.updatedAt = now()
+  commit()
+  return out(r)
+}
+
 export async function attachReportEvidence(year: number, fileName: string, note?: string) {
   await delay(350)
   const { user, r } = editable(year)
