@@ -18,6 +18,13 @@ import {
   pct,
   reportStatusFor,
 } from './metrics'
+import {
+  type NetworkCompany,
+  networkCompanies,
+  networkReportStatus,
+  networkRow,
+  scopedNetwork,
+} from './network.service'
 import { pointsBalance } from './points.service'
 
 export interface ReportingFilters {
@@ -51,6 +58,9 @@ const scopedApproved = (f: ReportingFilters) =>
   scopedCompanies(f).filter((c) => c.signatoryStatus === 'approved')
 const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
 const monthPrefix = (i: number) => `2026-${String(4 + i).padStart(2, '0')}`
+// Network support demand split across departments (HR and Procurement lead, as in the portal).
+const DEPT_WEIGHTS = [0.24, 0.2, 0.15, 0.14, 0.14, 0.13]
+const spread = (total: number, i: number) => Math.round(total * (DEPT_WEIGHTS[i] ?? 0))
 
 export async function getExecutiveDashboard(f: ReportingFilters = {}) {
   await delay(350)
@@ -80,23 +90,46 @@ export async function getExecutiveDashboard(f: ReportingFilters = {}) {
   const withPlans = approved.filter((c) =>
     db.actions.some((a) => a.companyId === c.id && a.status !== 'draft'),
   )
+  // The wider signatory network (weps.org scale) adds to every company-level figure.
+  const net = scopedNetwork(f)
+  const userShare = f.department ? 1 / DEPARTMENTS.length : 1
+  const netUsers = (pick: (n: (typeof net)[number]) => number) =>
+    Math.round(net.reduce((t, n) => t + pick(n), 0) * userShare)
+  const netStatus = (s: ReportStatus) =>
+    net.filter((n) => networkReportStatus(n, year) === s).length
+  const netAccepted = netStatus('accepted')
+
   const funnel = [
     {
       stage: 'Applications submitted',
-      value: all.length + (hasCompanyScope(f) ? 0 : rejectedApps),
+      value: all.length + net.length + (hasCompanyScope(f) ? 0 : rejectedApps),
       to: '/admin/manage/applications',
     },
-    { stage: 'Approved companies', value: approved.length, to: '/admin/reporting/signatories' },
+    {
+      stage: 'Approved companies',
+      value: approved.length + net.length,
+      to: '/admin/reporting/signatories',
+    },
     {
       stage: 'Activated companies',
-      value: approved.filter((c) => companyMembers(c.id).filter(isActivated).length > 1).length,
+      value:
+        approved.filter((c) => companyMembers(c.id).filter(isActivated).length > 1).length +
+        net.filter((n) => n.activated > 1).length,
       to: '/admin/reporting/companies',
     },
-    { stage: 'Assessed companies', value: assessed.length, to: '/admin/reporting/assessments' },
-    { stage: 'With action plans', value: withPlans.length, to: '/admin/reporting/assessments' },
+    {
+      stage: 'Assessed companies',
+      value: assessed.length + net.filter((n) => n.assessed).length,
+      to: '/admin/reporting/assessments',
+    },
+    {
+      stage: 'With action plans',
+      value: withPlans.length + net.filter((n) => n.hasPlan).length,
+      to: '/admin/reporting/assessments',
+    },
     {
       stage: 'Reporting (accepted)',
-      value: accepted.length,
+      value: accepted.length + netAccepted,
       to: '/admin/reporting/annual-reports',
     },
   ]
@@ -114,7 +147,7 @@ export async function getExecutiveDashboard(f: ReportingFilters = {}) {
   )
     .map((s) => ({
       status: s,
-      count: approved.filter((c) => reportStatusFor(c.id, year) === s).length,
+      count: approved.filter((c) => reportStatusFor(c.id, year) === s).length + netStatus(s),
     }))
     .filter((r) => r.count > 0)
 
@@ -204,38 +237,59 @@ export async function getExecutiveDashboard(f: ReportingFilters = {}) {
   ]
 
   const byRegion = new Map<string, number>()
-  for (const c of approved) byRegion.set(c.region, (byRegion.get(c.region) ?? 0) + 1)
+  for (const c of [...approved, ...net.map((n) => n.company)])
+    byRegion.set(c.region, (byRegion.get(c.region) ?? 0) + 1)
+  const netClinic = netUsers((n) => n.clinic.registered)
+  const netBookings = netUsers((n) => n.bookings)
 
-  const demand = DEPARTMENTS.map((d) => ({
+  const demand = DEPARTMENTS.map((d, i) => ({
     department: d.short,
-    clinic: db.registrations.filter(
-      (r) =>
-        r.status !== 'cancelled' &&
-        scopedUserIds.has(r.userId) &&
-        db.users.find((u) => u.id === r.userId)?.department === d.id,
-    ).length,
-    mentoring: db.bookings.filter(
-      (b) =>
-        scopedUserIds.has(b.userId) && db.users.find((u) => u.id === b.userId)?.department === d.id,
-    ).length,
+    clinic:
+      spread(netClinic, i) +
+      db.registrations.filter(
+        (r) =>
+          r.status !== 'cancelled' &&
+          scopedUserIds.has(r.userId) &&
+          db.users.find((u) => u.id === r.userId)?.department === d.id,
+      ).length,
+    mentoring:
+      spread(netBookings, i) +
+      db.bookings.filter(
+        (b) =>
+          scopedUserIds.has(b.userId) &&
+          db.users.find((u) => u.id === b.userId)?.department === d.id,
+      ).length,
   }))
+
+  const activatedTotal = activated.length + netUsers((n) => n.activated)
+  const completedTotal = completed.length + netUsers((n) => n.completed)
+  const registeredTotal = attendance.registered + netUsers((n) => n.clinic.registered)
+  const attendedTotal = attendance.attended + netUsers((n) => n.clinic.attended)
+  const overdueTotal =
+    approved.reduce((n, c) => n + actionStats(c.id).overdue, 0) +
+    net.reduce((t, n) => t + n.actions.overdue, 0)
+  const overdueCompanies =
+    approved.filter((c) => actionStats(c.id).overdue > 0).length +
+    net.filter((n) => n.actions.overdue > 0).length
 
   return out({
     period: `Reporting year ${year} · data as of ${new Date(now()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`,
-    scope: { companies: all.length, users: users.length },
+    scope: { companies: all.length + net.length, users: users.length + netUsers((n) => n.invited) },
     cards: {
-      approvedSignatories: approved.length,
-      activeCompanies: approved.filter(isActiveThisMonth).length,
-      activatedUsers: activated.length,
-      invitedUsers: users.filter((u) => u.invitationStatus !== 'revoked').length,
-      completedPaths: completed.length,
-      learningCompletion: pct(completed.length, activated.length),
-      clinicAttendance: attendance.rate,
-      clinicAttended: attendance.attended,
-      clinicRegistered: attendance.registered,
-      reportingCompletion: pct(accepted.length, approved.length),
-      reportsAccepted: accepted.length,
-      reportsRequired: approved.length,
+      approvedSignatories: approved.length + net.length,
+      activeCompanies:
+        approved.filter(isActiveThisMonth).length + net.filter((n) => n.active).length,
+      activatedUsers: activatedTotal,
+      invitedUsers:
+        users.filter((u) => u.invitationStatus !== 'revoked').length + netUsers((n) => n.invited),
+      completedPaths: completedTotal,
+      learningCompletion: pct(completedTotal, activatedTotal),
+      clinicAttendance: pct(attendedTotal, registeredTotal),
+      clinicAttended: attendedTotal,
+      clinicRegistered: registeredTotal,
+      reportingCompletion: pct(accepted.length + netAccepted, approved.length + net.length),
+      reportsAccepted: accepted.length + netAccepted,
+      reportsRequired: approved.length + net.length,
     },
     funnel,
     statusDist,
@@ -244,7 +298,7 @@ export async function getExecutiveDashboard(f: ReportingFilters = {}) {
     demand,
     insights: [
       {
-        text: `${approved.reduce((n, c) => n + actionStats(c.id).overdue, 0)} company actions are overdue across ${approved.filter((c) => actionStats(c.id).overdue > 0).length} companies; most relate to people practices.`,
+        text: `${overdueTotal.toLocaleString('en-GB')} company actions are overdue across ${overdueCompanies.toLocaleString('en-GB')} companies; most relate to people practices.`,
         to: '/admin/reporting/assessments',
       },
       {
@@ -259,40 +313,44 @@ export async function getExecutiveDashboard(f: ReportingFilters = {}) {
   })
 }
 
-export async function getCompaniesTable(f: ReportingFilters = {}) {
+/** `network` adds the wider signatory network after the portal's own companies. */
+export async function getCompaniesTable(f: ReportingFilters = {}, network = false) {
   await delay()
   requireCapability('admin.reporting')
   const year = f.year ?? db.settings.reportingYear
-  return out(
-    scopedCompanies(f).map((c) => {
-      const s = companyUserStats(c.id)
-      const ceo = db.users.find((u) => u.id === c.ceoId)
-      const fp = db.users.find((u) => u.id === c.focalPointId)
-      return {
-        company: c,
-        ...s,
-        reportStatus: reportStatusFor(c.id, year),
-        actions: actionStats(c.id),
-        active: isActiveThisMonth(c),
-        activeTeams: new Set(
-          companyMembers(c.id)
-            .filter(isActivated)
-            .map((u) => u.department)
-            .filter(Boolean),
-        ).size,
-        contacts: [ceo, fp]
-          .filter(Boolean)
-          .map((u) => fullName(u as NonNullable<typeof u>))
-          .join(', '),
-        application: db.applications.find((a) => a.companyId === c.id),
-      }
-    }),
-  )
+  const own = scopedCompanies(f).map((c) => {
+    const s = companyUserStats(c.id)
+    const ceo = db.users.find((u) => u.id === c.ceoId)
+    const fp = db.users.find((u) => u.id === c.focalPointId)
+    return {
+      company: c,
+      ...s,
+      reportStatus: reportStatusFor(c.id, year),
+      actions: actionStats(c.id),
+      active: isActiveThisMonth(c),
+      activeTeams: new Set(
+        companyMembers(c.id)
+          .filter(isActivated)
+          .map((u) => u.department)
+          .filter(Boolean),
+      ).size,
+      contacts: [ceo, fp]
+        .filter(Boolean)
+        .map((u) => fullName(u as NonNullable<typeof u>))
+        .join(', '),
+      application: db.applications.find((a) => a.companyId === c.id) as
+        | (typeof db.applications)[number]
+        | undefined,
+    }
+  })
+  return out([...own, ...(network ? scopedNetwork(f).map((n) => networkRow(n, year)) : [])])
 }
 
 export async function getCompanyDetail(companyId: string) {
   await delay()
   requireCapability('admin.reporting')
+  const n = networkCompanies().find((x) => x.company.id === companyId)
+  if (n) return out(networkDetail(n))
   const c = findOr404(db.companies, (x) => x.id === companyId, 'Company')
   const members = companyMembers(c.id)
   return out({
@@ -324,6 +382,32 @@ export async function getCompanyDetail(companyId: string) {
       (r) => members.some((m) => m.id === r.userId) && r.status !== 'cancelled',
     ).length,
   })
+}
+
+/** Summary-only profile for a network company: no portal records behind it. */
+function networkDetail(n: NetworkCompany) {
+  const row = networkRow(n, db.settings.reportingYear)
+  return {
+    company: n.company,
+    stats: {
+      invited: row.invited,
+      activated: row.activated,
+      completed: row.completed,
+      activationRate: row.activationRate,
+      completionRate: row.completionRate,
+    },
+    actions: [] as { action: (typeof db.actions)[number]; overdue: boolean; owner?: User }[],
+    reports: [] as typeof db.reports,
+    members: [] as { user: User; completed: boolean; points: number }[],
+    application: undefined as (typeof db.applications)[number] | undefined,
+    purchases: [] as {
+      purchase: (typeof db.purchases)[number]
+      offering?: (typeof db.offerings)[number]
+    }[],
+    listings: [] as typeof db.listings,
+    bookings: n.bookings,
+    registrations: n.clinic.registered,
+  }
 }
 
 export async function getUsersTable(f: ReportingFilters = {}) {

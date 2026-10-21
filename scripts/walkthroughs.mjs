@@ -135,16 +135,20 @@ record('localStorage cleared', (await page.evaluate(() => localStorage.length)) 
 /* --------------------------------------------------------------- §26 numbers --- */
 await walkthrough(0, 'Numbers on a fresh db (§26)', async () => {
   await go('/admin/reporting', 'u-admin')
-  await check('Admin: 8 approved signatories', () =>
-    expectVisible(link('Approved signatories: 8. Open records'), 'Approved signatories: 8'),
+  // Portal companies plus the wider weps.org network (13,462 signatories).
+  await check('Admin: 13,462 approved signatories', () =>
+    expectVisible(link('Approved signatories: 13462. Open records'), 'Approved signatories: 13462'),
   )
-  await check('Admin: 96 of 120 activated', async () => {
-    await expectVisible(link('Activated users: 96. Open records'), 'Activated users: 96')
-    await expectVisible(main().getByText('96 of 120 invited users'), '96 of 120 text')
+  await check('Admin: 100,607 of 165,608 activated', async () => {
+    await expectVisible(link('Activated users: 100607. Open records'), 'Activated users: 100607')
+    await expectVisible(main().getByText('100,607 of 165,608 invited users'), 'activated text')
   })
-  await check('Admin: reporting completion 62.5% (5 of 8)', async () => {
-    await expectVisible(link('Annual reporting completion: 62.5%. Open records'), '62.5%')
-    await expectVisible(main().getByText('5 of 8 required 2026 reports accepted'), '5 of 8')
+  await check('Admin: reporting completion 34.8% (4,690 of 13,462)', async () => {
+    await expectVisible(link('Annual reporting completion: 34.8%. Open records'), '34.8%')
+    await expectVisible(
+      main().getByText('4,690 of 13,462 required 2026 reports accepted'),
+      '4,690 of 13,462',
+    )
   })
   await shot('admin-exec-dashboard')
   await go('/portal', 'u-leila')

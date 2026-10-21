@@ -9,6 +9,7 @@ import {
 import { useMemo, useState } from 'react'
 import { ErrorState, PageSkeleton } from '@/components/shared/States'
 import { Button } from '@/components/ui/button'
+import { formatNumber } from '@/lib/format'
 import { useExecutiveDashboard } from '@/queries/admin.queries'
 import { ChartCard } from '../components/ChartCard'
 import { BarsChart, DonutChart, FunnelBars } from '../components/charts'
@@ -63,7 +64,7 @@ export function ExecutiveDashboardPage() {
       eyebrow={d?.period ?? `Reporting year ${filters.year}`}
       description={
         d
-          ? `${d.cards.approvedSignatories} approved signatories, ${d.cards.activatedUsers} of ${d.cards.invitedUsers} invited users activated, and ${d.cards.reportsAccepted} of ${d.cards.reportsRequired} ${filters.year} annual reports accepted.`
+          ? `${formatNumber(d.cards.approvedSignatories)} approved signatories, ${formatNumber(d.cards.activatedUsers)} of ${formatNumber(d.cards.invitedUsers)} invited users activated, and ${formatNumber(d.cards.reportsAccepted)} of ${formatNumber(d.cards.reportsRequired)} ${filters.year} annual reports accepted.`
           : 'Programme-wide view of participation, learning and reporting.'
       }
     >
@@ -91,7 +92,7 @@ export function ExecutiveDashboardPage() {
                 metric="active_companies"
                 label="Active companies"
                 value={d.cards.activeCompanies}
-                hint={`of ${d.cards.approvedSignatories} approved, active this month.`}
+                hint={`of ${formatNumber(d.cards.approvedSignatories)} approved, active this month.`}
                 icon={Building2}
                 to="/admin/reporting/companies"
                 search={search}
@@ -101,7 +102,7 @@ export function ExecutiveDashboardPage() {
                 metric="activated_users"
                 label="Activated users"
                 value={d.cards.activatedUsers}
-                hint={`${d.cards.activatedUsers} of ${d.cards.invitedUsers} invited users`}
+                hint={`${formatNumber(d.cards.activatedUsers)} of ${formatNumber(d.cards.invitedUsers)} invited users`}
                 icon={UserCheck}
                 to="/admin/reporting/users"
                 search={search}
@@ -115,7 +116,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.learningCompletion}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.completedPaths} of ${d.cards.activatedUsers} activated users`}
+                hint={`${formatNumber(d.cards.completedPaths)} of ${formatNumber(d.cards.activatedUsers)} activated users`}
                 icon={GraduationCap}
                 to="/admin/reporting/learning"
                 search={search}
@@ -128,7 +129,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.clinicAttendance}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.clinicAttended} of ${d.cards.clinicRegistered} registered`}
+                hint={`${formatNumber(d.cards.clinicAttended)} of ${formatNumber(d.cards.clinicRegistered)} registered`}
                 icon={CalendarCheck}
                 to="/admin/reporting/learning"
                 search={search}
@@ -141,7 +142,7 @@ export function ExecutiveDashboardPage() {
                 value={d.cards.reportingCompletion}
                 suffix="%"
                 decimals={1}
-                hint={`${d.cards.reportsAccepted} of ${d.cards.reportsRequired} required ${filters.year} reports accepted`}
+                hint={`${formatNumber(d.cards.reportsAccepted)} of ${formatNumber(d.cards.reportsRequired)} required ${filters.year} reports accepted`}
                 icon={ClipboardCheck}
                 to="/admin/reporting/annual-reports"
                 search={search}

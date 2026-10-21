@@ -216,7 +216,7 @@ export function DataTable<T>({
 
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
         <p className="text-muted-foreground" aria-live="polite">
-          {sorted.length} {sorted.length === 1 ? 'record' : 'records'}
+          {sorted.length.toLocaleString('en-GB')} {sorted.length === 1 ? 'record' : 'records'}
         </p>
         <div className="flex items-center gap-2">
           {onExport ? (

@@ -8,6 +8,12 @@ export const useExecutiveDashboard = (f: rep.ReportingFilters) =>
   useQuery({ queryKey: qk('exec', f), queryFn: () => rep.getExecutiveDashboard(f) })
 export const useCompaniesTable = (f: rep.ReportingFilters) =>
   useQuery({ queryKey: qk('companies-table', f), queryFn: () => rep.getCompaniesTable(f) })
+/** Portal companies followed by the wider signatory network (Companies and Signatories). */
+export const useNetworkCompaniesTable = (f: rep.ReportingFilters) =>
+  useQuery({
+    queryKey: qk('companies-table', 'network', f),
+    queryFn: () => rep.getCompaniesTable(f, true),
+  })
 export const useCompanyDetail = (id: string) =>
   useQuery({ queryKey: qk('company-detail', id), queryFn: () => rep.getCompanyDetail(id) })
 export const useUsersTable = (f: rep.ReportingFilters) =>

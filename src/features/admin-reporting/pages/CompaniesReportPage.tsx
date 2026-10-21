@@ -2,14 +2,14 @@ import { useMemo, useState } from 'react'
 import type { Column } from '@/components/shared/DataTable'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
 import { CompanyLogo } from '@/components/shared/UserAvatar'
-import { useCompaniesTable } from '@/queries/admin.queries'
+import { useNetworkCompaniesTable } from '@/queries/admin.queries'
 import { useGoto, useReportingFilters } from '../components/filters'
 import { QueryState } from '../components/QueryState'
 import { ReportingShell } from '../components/ReportingShell'
 import { ReportTable } from '../components/ReportTable'
 import { TableFilter } from '../components/TableFilter'
 
-type Row = NonNullable<ReturnType<typeof useCompaniesTable>['data']>[number]
+type Row = NonNullable<ReturnType<typeof useNetworkCompaniesTable>['data']>[number]
 
 export const COMPANY_COLUMNS: Column<Row>[] = [
   {
@@ -85,7 +85,7 @@ export const COMPANY_COLUMNS: Column<Row>[] = [
 
 export function CompaniesReportPage() {
   const { filters } = useReportingFilters()
-  const q = useCompaniesTable(filters)
+  const q = useNetworkCompaniesTable(filters)
   const go = useGoto()
   const [status, setStatus] = useState('all')
   const [overdue, setOverdue] = useState('all')

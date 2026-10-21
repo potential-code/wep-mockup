@@ -3,13 +3,13 @@ import type { Column } from '@/components/shared/DataTable'
 import { WorkflowStatus } from '@/components/shared/StatusBadge'
 import { CompanyLogo } from '@/components/shared/UserAvatar'
 import { formatDate, relativeTime } from '@/lib/format'
-import { useCompaniesTable } from '@/queries/admin.queries'
+import { useNetworkCompaniesTable } from '@/queries/admin.queries'
 import { useGoto, useReportingFilters } from '../components/filters'
 import { QueryState } from '../components/QueryState'
 import { ReportingShell } from '../components/ReportingShell'
 import { ReportTable } from '../components/ReportTable'
 
-type Row = NonNullable<ReturnType<typeof useCompaniesTable>['data']>[number]
+type Row = NonNullable<ReturnType<typeof useNetworkCompaniesTable>['data']>[number]
 
 const COLUMNS: Column<Row>[] = [
   {
@@ -101,7 +101,7 @@ const COLUMNS: Column<Row>[] = [
 
 export function SignatoriesPage() {
   const { filters } = useReportingFilters()
-  const q = useCompaniesTable(filters)
+  const q = useNetworkCompaniesTable(filters)
   const go = useGoto()
   const rows = useMemo(
     () => (q.data ?? []).filter((r) => r.company.signatoryStatus === 'approved'),

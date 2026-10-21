@@ -3,7 +3,7 @@
  * 2026). Separate from the demo portfolio, which stays at the brief's seed numbers.
  * Tuple: [map id (ISO 3166 numeric, or null), ISO alpha-2, country name, signatories].
  */
-export const GLOBAL_SIGNATORIES_TOTAL = 13460
+export const GLOBAL_SIGNATORIES_TOTAL = 13462
 
 export const GLOBAL_SIGNATORIES: [string | null, string, string, number][] = [
   ['076', 'BR', 'Brazil', 987],
